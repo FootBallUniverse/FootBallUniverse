@@ -9,7 +9,7 @@ public class DebugControlScript : MonoBehaviour {
 	private float timeCounter = 0.0f;
 	private float timer       = 0.0f;
 	private float fps         = 0.0f;
-
+	
 	// Use this for initialization
 	void Start () {
 		this.isDebugMode = true;
@@ -35,6 +35,13 @@ public class DebugControlScript : MonoBehaviour {
 		}
 	}
 
+	//----------------------------------------------------------------------
+	// FPSを計測し、メンバに格納
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  計測されたFPS（メンバに直接格納）
+	// @Date    2014/10/7/11:30  @Update 2014/10/7/9:30  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void CountFPS()
 	{
 		this.timeCounter -= Time.deltaTime;
@@ -50,3 +57,5 @@ public class DebugControlScript : MonoBehaviour {
 		}
 	}
 }
+
+// End of File
