@@ -61,29 +61,29 @@ public class InputXBOX360 : MonoBehaviour{
     public static string P1_XBOX_DPAD_Y = "P1_DPAD_Y";                              // Player1 DPADのY方向
     public static string P1_XBOX_RTLT = "P1_RTLT";                                  // Player1 RTLTボタン
 
-    const string P2_XBOX_RIGHT_ANALOG_X = "P2_RIGHT_ANALOG_X";              // Player2 右アナログスティックのX方向
-    const string P2_XBOX_RIGHT_ANALOG_Y = "P2_RIGHT_ANALOG_Y";              // Player2 右アナログスティックのY方向
-    const string P2_XBOX_LEFT_ANALOG_X = "P2_LEFT_ANALOG_X";                // Player2 左アナログスティックのX方向
-    const string P2_XBOX_LEFT_ANALOG_Y = "P2_LEFT_ANALOG_Y";                // Player2 左アナログスティックのY方向
-    const string P2_XBOX_DPAD_X = "P2_DPAD_X";                              // Player2 DPADのX方向  
-    const string P2_XBOX_DPAD_Y = "P2_DPAD_Y";                              // Player2 DPADのY方向
-    const string P2_XBOX_RTLT = "P2_RTLT";                                  // Player2 RTLTボタン
+    public static string P2_XBOX_RIGHT_ANALOG_X = "P2_RIGHT_ANALOG_X";              // Player2 右アナログスティックのX方向
+    public static string P2_XBOX_RIGHT_ANALOG_Y = "P2_RIGHT_ANALOG_Y";              // Player2 右アナログスティックのY方向
+    public static string P2_XBOX_LEFT_ANALOG_X = "P2_LEFT_ANALOG_X";                // Player2 左アナログスティックのX方向
+    public static string P2_XBOX_LEFT_ANALOG_Y = "P2_LEFT_ANALOG_Y";                // Player2 左アナログスティックのY方向
+    public static string P2_XBOX_DPAD_X = "P2_DPAD_X";                              // Player2 DPADのX方向  
+    public static string P2_XBOX_DPAD_Y = "P2_DPAD_Y";                              // Player2 DPADのY方向
+    public static string P2_XBOX_RTLT = "P2_RTLT";                                  // Player2 RTLTボタン
 
-    const string P3_XBOX_RIGHT_ANALOG_X = "P3_RIGHT_ANALOG_X";              // Player3 右アナログスティックのX方向
-    const string P3_XBOX_RIGHT_ANALOG_Y = "P3_RIGHT_ANALOG_Y";              // Player3 右アナログスティックのY方向
-    const string P3_XBOX_LEFT_ANALOG_X = "P3_LEFT_ANALOG_X";                // Player3 左アナログスティックのX方向
-    const string P3_XBOX_LEFT_ANALOG_Y = "P3_LEFT_ANALOG_Y";                // Player3 左アナログスティックのY方向
-    const string P3_XBOX_DPAD_X = "P3_DPAD_X";                              // Player3 DPADのX方向  
-    const string P3_XBOX_DPAD_Y = "P3_DPAD_Y";                              // Player3 DPADのY方向
-    const string P3_XBOX_RTLT = "P3_RTLT";                                  // Player3 RTLTボタン
+    public static string P3_XBOX_RIGHT_ANALOG_X = "P3_RIGHT_ANALOG_X";              // Player3 右アナログスティックのX方向
+    public static string P3_XBOX_RIGHT_ANALOG_Y = "P3_RIGHT_ANALOG_Y";              // Player3 右アナログスティックのY方向
+    public static string P3_XBOX_LEFT_ANALOG_X = "P3_LEFT_ANALOG_X";                // Player3 左アナログスティックのX方向
+    public static string P3_XBOX_LEFT_ANALOG_Y = "P3_LEFT_ANALOG_Y";                // Player3 左アナログスティックのY方向
+    public static string P3_XBOX_DPAD_X = "P3_DPAD_X";                              // Player3 DPADのX方向  
+    public static string P3_XBOX_DPAD_Y = "P3_DPAD_Y";                              // Player3 DPADのY方向
+    public static string P3_XBOX_RTLT = "P3_RTLT";                                  // Player3 RTLTボタン
 
-    const string P4_XBOX_RIGHT_ANALOG_X = "P4_RIGHT_ANALOG_X";              // Player4 右アナログスティックのX方向
-    const string P4_XBOX_RIGHT_ANALOG_Y = "P4_RIGHT_ANALOG_Y";              // Player4 右アナログスティックのY方向
-    const string P4_XBOX_LEFT_ANALOG_X = "P4_LEFT_ANALOG_X";                // Player4 左アナログスティックのX方向
-    const string P4_XBOX_LEFT_ANALOG_Y = "P4_LEFT_ANALOG_Y";                // Player4 左アナログスティックのY方向
-    const string P4_XBOX_DPAD_X = "P4_DPAD_X";                              // Player4 DPADのX方向  
-    const string P4_XBOX_DPAD_Y = "P4_DPAD_Y";                              // Player4 DPADのY方向
-    const string P4_XBOX_RT = "P4_RTLT";                                    // Player4 RTLTボタン
+    public static string P4_XBOX_RIGHT_ANALOG_X = "P4_RIGHT_ANALOG_X";              // Player4 右アナログスティックのX方向
+    public static string P4_XBOX_RIGHT_ANALOG_Y = "P4_RIGHT_ANALOG_Y";              // Player4 右アナログスティックのY方向
+    public static string P4_XBOX_LEFT_ANALOG_X = "P4_LEFT_ANALOG_X";                // Player4 左アナログスティックのX方向
+    public static string P4_XBOX_LEFT_ANALOG_Y = "P4_LEFT_ANALOG_Y";                // Player4 左アナログスティックのY方向
+    public static string P4_XBOX_DPAD_X = "P4_DPAD_X";                              // Player4 DPADのX方向  
+    public static string P4_XBOX_DPAD_Y = "P4_DPAD_Y";                              // Player4 DPADのY方向
+    public static string P4_XBOX_RT = "P4_RTLT";                                    // Player4 RTLTボタン
 
     private float x;
     private float speed = 0.05f;

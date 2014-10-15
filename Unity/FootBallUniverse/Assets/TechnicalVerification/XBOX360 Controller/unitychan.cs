@@ -14,8 +14,6 @@ public class unitychan : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        rigidbody.centerOfMass = new Vector3(0.0f, 100.0f, 0.0f);
-
         m_pos = this.transform.localPosition;
         m_pos_old = m_pos;
 	}
@@ -27,7 +25,6 @@ public class unitychan : MonoBehaviour {
         xAngle += Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y) * 10;
 
         Quaternion q = Quaternion.Euler(xAngle,yAngle,0.0f);
-        Debug.Log("y = " + q.eulerAngles.y );
         transform.rotation = q;
         
 
