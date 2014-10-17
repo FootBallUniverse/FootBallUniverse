@@ -20,3 +20,14 @@ C:\Users\epia\Desktop\新しいフォルダー (2)\FootBallUniverse\Temp\bin\Deb
 C:\Users\epia\Desktop\新しいフォルダー (2)\FootBallUniverse\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
 C:\Users\epia\Desktop\新しいフォルダー (2)\FootBallUniverse\obj\Debug\Assembly-CSharp.dll
 C:\Users\epia\Desktop\新しいフォルダー (2)\FootBallUniverse\obj\Debug\Assembly-CSharp.pdb
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\obj\Debug\Assembly-CSharp.dll
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\obj\Debug\Assembly-CSharp.pdb
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\Temp\bin\Debug\Assembly-CSharp.dll
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\Temp\bin\Debug\UnityEditor.dll
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\Temp\bin\Debug\UnityEngine.dll
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\Temp\bin\Debug\Mono.Cecil.dll
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\Temp\bin\Debug\nunit.framework.dll
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\Temp\bin\Debug\Unity.DataContract.dll
+C:\OH\at_14a_417\Futer\FootBallUniverse\Unity\FootBallUniverse\Temp\bin\Debug\ICSharpCode.NRefactory.dll

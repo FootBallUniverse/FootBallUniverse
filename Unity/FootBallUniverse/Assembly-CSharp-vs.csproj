@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_5_3;UNITY_4_5;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_4;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -46,8 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ChooseTeam\Prefab\ChooseTeamDamy.cs" />
+     <Compile Include="Assets\ChooseTeam\Scripts\ChooseTeamScripts.cs" />
      <Compile Include="Assets\Game\Scripts\DebugControlScript.cs" />
      <Compile Include="Assets\Game\Scripts\DebugMenuScript.cs" />
+     <Compile Include="Assets\Global\Scripts\CSoundFade.cs" />
+     <Compile Include="Assets\Global\Scripts\CSoundPlayer.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\LanguageSelection.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIButton.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIButtonActivate.cs" />
@@ -134,9 +138,54 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
      <Compile Include="Assets\Resources\Model\damy.cs" />
-     <Compile Include="Assets\Resources\Sound\damy1.cs" />
-     <Compile Include="Assets\Resources\Texture\damy2.cs" />
+     <Compile Include="Assets\Resources\Sound\BGM\BGM.cs" />
+     <Compile Include="Assets\Resources\Sound\SE\SE.cs" />
+     <Compile Include="Assets\Result\Prefab\ResultDamyPrefab.cs" />
+     <Compile Include="Assets\Result\Scripts\ResultDamy.cs" />
+     <Compile Include="Assets\TechnicalVerification\3DMap\Scripts\Maker.cs" />
+     <Compile Include="Assets\TechnicalVerification\3DMap\Scripts\Map.cs" />
+     <Compile Include="Assets\TechnicalVerification\3DMap\Scripts\MapTestScript.cs" />
+     <Compile Include="Assets\TechnicalVerification\3DMap\Scripts\Player.cs" />
+     <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\CActionPlayer.cs" />
+     <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\CPlayer.cs" />
+     <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\CPlayer1.cs" />
+     <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\CPlayer2.cs" />
+     <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\CPlayer3.cs" />
+     <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\CPlayer4.cs" />
+     <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\CPlayerManager.cs" />
      <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\InputXBOX360.cs" />
+     <Compile Include="Assets\TechnicalVerification\XBOX360 Controller\unitychan.cs" />
+     <Compile Include="Assets\Title\Scripts\title.cs" />
+     <Compile Include="Assets\Tutorial\Prefab\TutorialPrefab.cs" />
+     <Compile Include="Assets\Tutorial\Scripts\TutorialScripts.cs" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\GUI - Text Shader (SoftClip).shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (AlphaClip).shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\GUI - Text Shader (AlphaClip).shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (SoftClip).shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (SoftClip).shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (SoftClip).shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font.shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
+     <None Include="Assets\TechnicalVerification\XBOX360 Controller\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
