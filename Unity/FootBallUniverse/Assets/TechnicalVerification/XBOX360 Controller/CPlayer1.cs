@@ -15,18 +15,62 @@ public class CPlayer1 : CPlayer {
         m_pos = this.transform.localPosition;
         m_pos = m_old_pos;
         m_angle = new Vector3(0.0f, 0.0f);
+        m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
         m_action = new CActionPlayer();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        
-        this.Move();
-        this.Rotation();
-        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_LEFT_ANALOG_PRESS))
-        {
-            this.Dash();
+        switch (m_cameraStatus)
+        { 
+            // 通常移動モード
+            case CPlayerManager.eCAMERA_STATUS.eNORMAL:
+                switch (m_status)
+                {
+                    // 何もしてない状態
+                    case CPlayerManager.ePLAYER_STATUS.eNONE:
+                        this.Move();
+                        this.Rotation();
+                        // ダッシュ初期化
+                        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_LEFT_ANALOG_PRESS))
+                        {
+                            m_action.InitDash(5.0f);
+                            m_status = CPlayerManager.ePLAYER_STATUS.eDASH;
+                        }
+
+                        // カメラモード変更
+                        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_RIGHT_ANALOG_PRESS))
+                        {
+                            m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eROCKON;
+                        }
+
+                        break;
+
+                    // ダッシュ中
+                    case CPlayerManager.ePLAYER_STATUS.eDASH:
+                        if (this.Dash() == true)
+                            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                        break;
+
+
+                }
+
+                this.transform.localPosition = m_pos;
+                break;
+
+            // ロックオン移動モード
+            case  CPlayerManager.eCAMERA_STATUS.eROCKON:
+                switch (m_status)
+                {
+                    case CPlayerManager.ePLAYER_STATUS.eNONE:
+                        break;
+
+                }
+                break;
+
+
         }
     }
 
@@ -41,8 +85,8 @@ public class CPlayer1 : CPlayer {
     {
         Vector3 speed = new Vector3(0.0f, 0.0f, 0.0f);
         speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * 0.2f;
-        speed.y = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * 0.2f;
-        this.transform.localPosition = m_action.Move(ref m_pos, speed, this.transform.forward, this.transform.right);
+        speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * 0.2f;
+        m_action.Move(ref m_pos, speed, this.transform.forward, this.transform.right);
     }
 
     //----------------------------------------------------------------------
@@ -65,13 +109,11 @@ public class CPlayer1 : CPlayer {
     // プレイヤーのダッシュ
     //----------------------------------------------------------------------
     // @Param	none		
-    // @Return	none
-    // @Date	2014/10/16  @Update 2014/10/16  @Author T.Kawashita     
+    // @Return	bool    ダッシュが終了したかどうか
+    // @Date	2014/10/16  @Update 2014/10/17  @Author T.Kawashita     
     //----------------------------------------------------------------------
-    private void Dash()
+    private bool Dash()
     {
-
-     //   this.transform.localPosition = m_action.Dash(ref m_pos, m_speed,this.transform.forward);
+        return m_action.Dash(ref m_pos, this.transform.forward);
     }
-
 }
