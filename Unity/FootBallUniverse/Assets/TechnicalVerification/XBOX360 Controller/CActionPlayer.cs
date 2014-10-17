@@ -9,6 +9,12 @@ using System.Collections;
 
 public class CActionPlayer {
 
+    private int m_dashWholeFrame;     // ダッシュ全体速度
+    private int m_dashDeceFrame;      // 減速開始速度
+    private float m_dashSpeed;        // ダッシュのスピード
+    private float m_dashDeceSpeed;    // ダッシュの減速量
+    private int m_dashFrame;          // ダッシュのフレーム
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -18,6 +24,11 @@ public class CActionPlayer {
     //----------------------------------------------------------------------
     public CActionPlayer()
     {
+        m_dashWholeFrame = 0;
+        m_dashDeceFrame = 0;
+        m_dashSpeed = 0.0f;
+        m_dashDeceSpeed = 0.0f;
+        m_dashFrame = 0;
     }
 
 
@@ -41,7 +52,7 @@ public class CActionPlayer {
     //----------------------------------------------------------------------
     // @Param	_outRot 回転角度の結果 _rotX X方向回転角度  _rotY Y方向回転角度
     // @Return	Vector3 回転角度の結果
-    // @Date	2014/10/16  @Update 2014/10/16  @Author 2014/10/16      
+    // @Date	2014/10/16  @Update 2014/10/16  @Author T.Kawashita      
     //----------------------------------------------------------------------
     public Quaternion Rotation(ref Vector3 _outRot, float _rotX, float _rotY)
     {
@@ -55,16 +66,54 @@ public class CActionPlayer {
     //----------------------------------------------------------------------
     // プレイヤーのダッシュ
     //----------------------------------------------------------------------
-    // @Param	_dashPos ダッシュした後の位置 _speed スピード
-	// @Param   _forward 前方向ベクトル	
-    // @Return	Vector3 ダッシュした後の位置
-    // @Date	2014/10/16  @Update 2014/10/16  @Author 2014/10/16      
+    // @Param	_dashPos 現在位置 _forward 前方向ベクトル	
+    // @Return	bool　ダッシュが終わったかどうか
+    // @Date	2014/10/16  @Update 2014/10/17  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public Vector3 Dash(ref Vector3 _dashPos, Vector3 _speed, Vector3 _foarward, Vector3 _right)
+    public bool Dash(ref Vector3 _dashPos, Vector3 _foarward)
     {
-        _dashPos += _speed.z * _foarward + _speed.x * _right;
+        m_dashFrame ++;
+        
+        // 減速開始フレームになった場合はスピードを減速させていく
+        if (m_dashFrame >= m_dashDeceFrame)
+        {
+            m_dashSpeed -= m_dashDeceSpeed;
+        }
 
-        return _dashPos;
+        Debug.Log(m_dashSpeed);
+
+        // 移動させる
+        _dashPos += m_dashSpeed * _foarward;
+
+        // ダッシュ終了
+        if (m_dashFrame >= m_dashWholeFrame)
+            return true;
+
+        return false;
+    }
+
+
+    //----------------------------------------------------------------------
+    // プレイヤーのダッシュの初期化
+    //----------------------------------------------------------------------
+    // @Param	_dashSpeed  ダッシュスピード		
+    // @Return	none
+    // @Date	2014/10/17  @Update 2014/10/17  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void InitDash(float _dashSpeed)
+    {
+        m_dashWholeFrame = 10;
+        m_dashDeceFrame = 7;
+        m_dashSpeed = _dashSpeed;
+        m_dashFrame = 0;
+
+        // ダッシュの減速量計算
+        m_dashDeceSpeed = _dashSpeed / (float)( m_dashWholeFrame - m_dashDeceFrame );
+
+
+        Debug.Log("dashDeceSpeed:" + m_dashDeceSpeed);
+
+  
     }
 
 }

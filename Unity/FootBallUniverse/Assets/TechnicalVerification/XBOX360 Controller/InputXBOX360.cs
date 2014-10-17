@@ -147,8 +147,11 @@ public class InputXBOX360 : MonoBehaviour{
         if (Input.GetKeyDown(P2_XBOX_RIGHT_ANALOG_PRESS))
             Debug.Log("2P RightAnalogが押された");
 
-        if (Input.GetAxis(P1_XBOX_RIGHT_ANALOG_Y) >= 0.2f)
-            Debug.Log("tet");
+        if (Input.GetKeyDown(P3_XBOX_A))
+            Debug.Log("P3:Aボタン");
+
+        if (Input.GetKeyDown(P4_XBOX_A))
+            Debug.Log("P4:Aボタン");
 
  //       unitychan.transform.localRotation = Quaternion.AngleAxis(dInp.x, Vector3.up);
  //       camera.transform.localPosition = new Vector3(leftInp.x * 10, leftInp.y * 10 + 1.0f, -2.0f);
