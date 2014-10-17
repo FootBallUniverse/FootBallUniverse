@@ -31,5 +31,5 @@ public class unitychan : MonoBehaviour {
         m_pos_old += (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * 0.2f) * transform.forward;
 
         this.transform.position = m_pos_old;
-     }
+    }
 }
