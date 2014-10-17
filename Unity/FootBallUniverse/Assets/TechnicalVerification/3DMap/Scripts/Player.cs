@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class damy2 : MonoBehaviour {
-
+public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
