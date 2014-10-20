@@ -18,14 +18,20 @@ public class Maker : MonoBehaviour {
 		Mesh workMesh = this.hightPole.GetComponent<MeshFilter>().mesh;
 		Vector3[] vertices = workMesh.vertices;
 
+		// マップ上の座標を算出する
+		workVec    = this.playerData.transform.position;
+		workVec.x += this.mapData.GetComponent<Map>().mapsize / 2;
+		workVec.y += this.mapData.GetComponent<Map>().mapsize / 2;
+		workVec.z += this.mapData.GetComponent<Map>().mapsize / 2;
+		workVec    = workVec / this.mapData.GetComponent<Map>().mapsize;
+		workVec.x -= 0.5f;
+		workVec.y -= 0.5f;
+		workVec.z -= 0.5f;
+
 		// xz軸をあわせる
-		workVec = playerData.transform.position;
-		workVec.y = 0.0f;
-		this.transform.localPosition = workVec;
+		this.transform.localPosition = new Vector3(workVec.x, 0.0f, workVec.z);
 		// ポインタのy軸を合わせる
-		workVec = playerData.transform.position;
-		workVec.x = workVec.z = 0.0f;
-		this.pointer.transform.localPosition = workVec;
+		this.pointer.transform.localPosition = new Vector3(0.0f,workVec.y,0.0f);
 		// ポインタの向きを合わせる
 		this.pointer.transform.localEulerAngles = playerData.transform.localEulerAngles;
 		
@@ -42,6 +48,16 @@ public class Maker : MonoBehaviour {
 		workMesh.RecalculateBounds();
 	}
 
+
+	//----------------------------------------------------------------------
+	// マップマーカーの初期化
+	//----------------------------------------------------------------------
+	// @Param   playerData  マーキングしたいゲームオブジェクト
+	//          setColor    マーカーの色
+	// @Return  none
+	// @Date    2014/10/13/09:32
+	// @Update  2014/10/20/09:30  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	public void Init(GameObject playerData,Color setColor)
 	{
 		Mesh workMesh;
@@ -51,6 +67,7 @@ public class Maker : MonoBehaviour {
 		if (playerData == null) return;
 
 		// オブジェクト設定
+		this.mapData   = this.gameObject.transform.root.gameObject;
 		this.pointer = this.gameObject.transform.FindChild("Pointer").gameObject;
 		this.hightPole = this.gameObject.transform.FindChild("HeightPole").gameObject;
 		this.quad = this.gameObject.transform.FindChild("Quad").gameObject;
@@ -67,21 +84,6 @@ public class Maker : MonoBehaviour {
 		workMesh.vertices = vertices;
 		workMesh.RecalculateBounds();
 
-		// Pointer
-		/*
-		workMesh = this.pointer.GetComponent<MeshFilter>().mesh;
-		vertices = workMesh.vertices;
-
-		vertices[0].x = vertices[0].y = 0.0f;
-		vertices[0].z += 5.0f;
-		vertices[3] = vertices[2] = vertices[1] = vertices[0];
-
-		workMesh.vertices = vertices;
-		workMesh.RecalculateBounds();
-		 */
-
-		// テクスチャ指定
-		//this.quad.renderer.materials[0].mainTexture = Resources.Load("MapMakerTexture") as Texture;
 		// 色設定
 		this.playerData = playerData;
 		setColor.a = 0.5f;
@@ -90,3 +92,5 @@ public class Maker : MonoBehaviour {
 		this.pointer.renderer.material.color = setColor;
 	}
 }
+
+// End of File
