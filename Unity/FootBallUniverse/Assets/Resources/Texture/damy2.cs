@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class title : MonoBehaviour {
+public class damy2 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -10,9 +10,6 @@ public class title : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			Application.LoadLevel("ChooseTeam");
-		}
+	
 	}
 }
