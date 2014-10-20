@@ -87,6 +87,8 @@ public class CPlayer1 : CPlayer {
         speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * 0.2f;
         speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * 0.2f;
         m_action.Move(ref m_pos, speed, this.transform.forward, this.transform.right);
+
+        Debug.Log(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y).ToString());
     }
 
     //----------------------------------------------------------------------
