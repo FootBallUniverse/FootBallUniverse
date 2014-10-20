@@ -11,7 +11,7 @@ public class DebugSCamera : MonoBehaviour {
 	void Update () {
 		GameObject ball;
 		ball= GameObject.Find("Ball");
-		transform.localPosition = new Vector3(ball.transform.position.x-0.6f, ball.transform.position.y+0.4f, ball.transform.position.z);
+		transform.localPosition = new Vector3(ball.transform.position.x-5.0f, ball.transform.position.y+3.0f, ball.transform.position.z);
 		if (Input.GetKey(KeyCode.F1)) {
 			transform.Translate(0, 0, 1);
 		}
