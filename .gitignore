@@ -1,4 +1,3 @@
-
 # Unity
 [Ll]ibrary/
 [Tt]emp/
@@ -12,4 +11,4 @@
 *.user
 *.userprefs
 *.pidb
-/*.booproj
+*.booproj
