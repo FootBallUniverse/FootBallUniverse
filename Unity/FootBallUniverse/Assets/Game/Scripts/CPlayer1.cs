@@ -84,8 +84,8 @@ public class CPlayer1 : CPlayer {
     private void Move()
     {
         Vector3 speed = new Vector3(0.0f, 0.0f, 0.0f);
-        speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * 0.2f;
-        speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * 0.2f;
+        speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * 1.0f;
+        speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * 1.0f;
         m_action.Move(ref m_pos, speed, this.transform.forward, this.transform.right);
 
         Debug.Log(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y).ToString());
