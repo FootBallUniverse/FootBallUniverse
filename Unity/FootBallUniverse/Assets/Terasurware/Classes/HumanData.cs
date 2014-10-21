@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Entity_HumanData : ScriptableObject
+public class HumanData : ScriptableObject
 {	
 	public List<Param> param = new List<Param> ();
 

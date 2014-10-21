@@ -6,9 +6,9 @@ using System.Xml.Serialization;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 
-public class Human_importer : AssetPostprocessor
+public class FootBallUniverse_importer : AssetPostprocessor
 {
-    private static readonly string filePath = "Assets/Resources/Data/Human.xls";
+    private static readonly string filePath = "Assets/Resources/Data/FootBallUniverse.xls";
     private static readonly string[] sheetNames = { "HumanData", };
     
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
@@ -27,10 +27,10 @@ public class Human_importer : AssetPostprocessor
                     var exportPath = "Assets/Resources/Data/" + sheetName + ".asset";
                     
                     // check scriptable object
-                    var data = (Entity_HumanData)AssetDatabase.LoadAssetAtPath(exportPath, typeof(Entity_HumanData));
+                    var data = (HumanData)AssetDatabase.LoadAssetAtPath(exportPath, typeof(HumanData));
                     if (data == null)
                     {
-                        data = ScriptableObject.CreateInstance<Entity_HumanData>();
+                        data = ScriptableObject.CreateInstance<HumanData>();
                         AssetDatabase.CreateAsset((ScriptableObject)data, exportPath);
                         data.hideFlags = HideFlags.NotEditable;
                     }
@@ -50,7 +50,7 @@ public class Human_importer : AssetPostprocessor
                         IRow row = sheet.GetRow(i);
                         ICell cell = null;
                         
-                        var p = new Entity_HumanData.Param();
+                        var p = new HumanData.Param();
 			
 					cell = row.GetCell(0); p.id = (int)(cell == null ? 0 : cell.NumericCellValue);
 					cell = row.GetCell(1); p.jpn_name = (cell == null ? "" : cell.StringCellValue);
