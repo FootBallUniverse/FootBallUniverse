@@ -80,8 +80,6 @@ public class CActionPlayer {
             m_dashSpeed -= m_dashDeceSpeed;
         }
 
-        Debug.Log(m_dashSpeed);
-
         // 移動させる
         _dashPos += m_dashSpeed * _foarward;
 
@@ -110,10 +108,6 @@ public class CActionPlayer {
         // ダッシュの減速量計算
         m_dashDeceSpeed = _dashSpeed / (float)( m_dashWholeFrame - m_dashDeceFrame );
 
-
-        Debug.Log("dashDeceSpeed:" + m_dashDeceSpeed);
-
-  
     }
 
 }
