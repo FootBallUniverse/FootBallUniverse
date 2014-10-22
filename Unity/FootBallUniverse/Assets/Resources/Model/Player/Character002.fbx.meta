@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 441a3cb830da4aa4188e7b57527a90e2
+guid: 9c3f3435c951d7d42916fcdc2f037dad
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -8,32 +8,22 @@ ModelImporter:
     100004: pasted__pPlane3
     100006: polySurface8
     100008: polySurface9
-    100010: pPlane1
-    100012: pPlane2
-    100014: pPlane3
-    100016: transform1
-    100018: transform2
-    100020: transform3
+    100010: pPlane3
+    100012: transform1
+    100014: transform2
+    100016: transform3
     400000: //RootNode
     400002: group
     400004: pasted__pPlane3
     400006: polySurface8
     400008: polySurface9
-    400010: pPlane1
-    400012: pPlane2
-    400014: pPlane3
-    400016: transform1
-    400018: transform2
-    400020: transform3
+    400010: pPlane3
+    400012: transform1
+    400014: transform2
+    400016: transform3
     2300000: polySurface9
-    2300002: pPlane1
-    2300004: pPlane2
     3300000: polySurface9
-    3300002: pPlane1
-    3300004: pPlane2
-    4300000: pPlane1
-    4300002: pPlane2
-    4300004: polySurface9
+    4300000: polySurface9
     9500000: //RootNode
   materials:
     importMaterials: 1

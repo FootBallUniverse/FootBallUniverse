@@ -9,6 +9,7 @@ public class unitychan : MonoBehaviour {
     private float xAngle = 0.0f;
     private float zAngle = 0.0f;
 
+
     private Vector3 m_pos;
     private Vector3 m_pos_old;
 
