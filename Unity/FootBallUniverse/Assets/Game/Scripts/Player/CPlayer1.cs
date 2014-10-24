@@ -3,22 +3,19 @@ using System.Collections;
 
 public class CPlayer1 : CPlayer {
 
-    // プレイヤーの動きクラス
-    private CActionPlayer m_action;
-
     const float DASH_SPEED = 1.0f;
     private Vector3 m_speed;
 
 	// Use this for initialization
 	void Start () {
 
+        this.Init();
         m_pos = this.transform.localPosition;
-        m_pos = m_old_pos;
         m_angle = new Vector3(0.0f, 0.0f);
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
-        m_action = new CActionPlayer();
+        m_human = CHumanManager.GetInstance().GetWorldInstance(CHumanManager.eWORLD.eBRAZIL);
 	}
 	
 	// Update is called once per frame
@@ -84,8 +81,8 @@ public class CPlayer1 : CPlayer {
     private void Move()
     {
         Vector3 speed = new Vector3(0.0f, 0.0f, 0.0f);
-        speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * 1.0f;
-        speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * 1.0f;
+        speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * m_human.m_playerMoveSpeed;
+        speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * m_human.m_playerMoveSpeed;
         m_action.Move(ref m_pos, speed, this.transform.forward, this.transform.right);
     }
 
