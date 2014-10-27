@@ -2,15 +2,18 @@
 using System.Collections;
  
 public class Entry_3 : MonoBehaviour {
-	// 速度
+	
+    // 速度
 	public Vector2 SPEED = new Vector2(0.05f, 0.01f);
+
 	// エントリーしたかどうかの確認用フラグ
-	bool in_flag = false;
-	public static int up_count = 0;
+	private bool m_inFlag;
+	public static int m_upCount;
 	
 	// Use this for initialization
 	void Start () {
-	
+        m_inFlag = false;
+        m_upCount = 0;
 	}
 	
 	// Update is called once per frame
@@ -25,40 +28,29 @@ public class Entry_3 : MonoBehaviour {
 		// 現在位置をPositionに代入
 		Vector2 Position = transform.position;
 		
-		// 左キーを1度も押していなければ
-		if(in_flag == false)
+		// エントリー出来るかどうか
+		if(m_inFlag == false)
 		{
-			// 左キーを押し続けていたら
-			if(Input.GetKeyDown("right"))
+			// エントリー
+			if(Input.GetKeyDown( KeyCode.Alpha3 ) ||
+               Input.GetKeyDown( InputXBOX360.P3_XBOX_A ))
 			{
-				in_flag = true;
+                Debug.Log("Player3 Entry");
+				m_inFlag = true;
 			}
 		}
-		if(in_flag == true && up_count <=10)
+
+		if(m_inFlag == true && m_upCount <=10)
 		{
 			// 代入したPositionに対して加算減算を行う
 			Position.y += SPEED.y;
 			// フラグをTrueに変えて再度加算しないようにする
-			up_count ++;
+			m_upCount ++;
 		}
+
 		// 現在の位置に加算減算を行ったPositionを代入する
 		transform.position = Position;
 	}
  
  
 }
-/*
-		if(Input.GetKey("right")){ // 右キーを押し続けていたら
-			// 代入したPositionに対して加算減算を行う
-			Position.x += SPEED.x;
-		} else if(Input.GetKey("up")){ // 上キーを押し続けていたら
-			// 代入したPositionに対して加算減算を行う
-			Position.y += SPEED.y;
-		} else if(Input.GetKey("down")){ // 下キーを押し続けていたら
-			// 代入したPositionに対して加算減算を行う
-			Position.y -= SPEED.y;
-		}
-		
-		// 現在の位置に加算減算を行ったPositionを代入する
-		transform.position = Position;
-*/
