@@ -15,6 +15,13 @@ public class CActionPlayer {
     private float m_dashDeceSpeed;    // ダッシュの減速量
     private int m_dashFrame;          // ダッシュのフレーム
 
+
+    private int m_shootFrame;         // シュートのフレーム
+    private int m_shootMotionLength;  // シュート全体の長さ
+    private int m_shootTakeOfFrame;   // シュートモーションに入るまでの時間
+    private float m_shootInitSpeed;   // シュート速度
+
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -29,6 +36,11 @@ public class CActionPlayer {
         m_dashSpeed = 0.0f;
         m_dashDeceSpeed = 0.0f;
         m_dashFrame = 0;
+
+        m_shootFrame = 0;
+        m_shootMotionLength = 0;
+        m_shootTakeOfFrame = 0;
+        m_shootInitSpeed = 0.0f;
     }
 
 
@@ -90,6 +102,28 @@ public class CActionPlayer {
         return false;
     }
 
+    //----------------------------------------------------------------------
+    // プレイヤーのシュート
+    //----------------------------------------------------------------------
+    // @Param			
+    // @Return	bool    シュートが終わったかどうか
+    // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public bool Shoot()
+    {
+
+        m_shootFrame++;
+
+        // シュート終了
+        if (m_shootFrame >= m_shootMotionLength)
+        {
+            Debug.Log("シュート終了");
+            return true;
+        }
+
+        return false;
+     }
+
 
     //----------------------------------------------------------------------
     // プレイヤーのダッシュの初期化
@@ -108,6 +142,23 @@ public class CActionPlayer {
         // ダッシュの減速量計算
         m_dashDeceSpeed = _dashSpeed / (float)( m_dashWholeFrame - m_dashDeceFrame );
 
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーのシュートの初期化
+    //----------------------------------------------------------------------
+    // @Param	_initShootSpeed     シュートの初速度
+	// @Param   _shootMotionLength  シュートの全体フレーム
+    // @Param   _takeOfFrame
+    // @Return	none
+    // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void InitShoot(float _initShootSpeed, int _shootMotionLength, int _takeOfFrame)
+    {
+        m_shootFrame = 0;
+        m_shootInitSpeed = _initShootSpeed;
+        m_shootMotionLength = _shootMotionLength;
+        m_shootTakeOfFrame = _takeOfFrame;
     }
 
 }
