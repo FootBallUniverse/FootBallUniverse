@@ -16,6 +16,7 @@ public class CPlayer : MonoBehaviour {
 
     protected CActionPlayer m_action;   // プレイヤーのアクション
     protected CHuman m_human;           // プレイヤーの国のインスタンス
+    protected bool m_isBall;            // ボールを持っているかどうか
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -33,6 +34,8 @@ public class CPlayer : MonoBehaviour {
 
         m_human = new CHuman();
         m_action = new CActionPlayer();
+
+        m_isBall = false;
     }
 
     //----------------------------------------------------------------------
@@ -53,6 +56,8 @@ public class CPlayer : MonoBehaviour {
         m_human = new CHuman();
         m_action = new CActionPlayer();
 
+        m_isBall = false;
+
         return true;
     }
 
@@ -60,5 +65,17 @@ public class CPlayer : MonoBehaviour {
 	void Update () {	
 	}
 
-
+    //----------------------------------------------------------------------
+    // ゲームがプレイ中かどうか判定
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    protected void CheckGamePlay()
+    { 
+        // ゲーム終了かどうか判定
+        if (CGameManager.m_isGamePlay == false)
+            m_status = CPlayerManager.ePLAYER_STATUS.eEND;  // 終了していたらステータス変更
+    }
 }

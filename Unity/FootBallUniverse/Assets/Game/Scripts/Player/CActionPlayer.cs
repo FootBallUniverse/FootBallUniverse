@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//----------------------------------------------------
-// プレイヤーの動きクラス
-// 基本的にプレイヤーのクラスにこのクラスを
-// インスタンス化させたものを持たせて動きをさせる
-//----------------------------------------------------
+//----------------------------------------------------------------------
+// CActionPlayer
+//----------------------------------------------------------------------
+// @Info
+// @Date	  @Update   @Author       
+//----------------------------------------------------------------------
 public class CActionPlayer {
 
     private int m_dashWholeFrame;     // ダッシュ全体速度
@@ -103,26 +104,30 @@ public class CActionPlayer {
     //----------------------------------------------------------------------
     // プレイヤーのシュート
     //----------------------------------------------------------------------
-    // @Param	_soccerBall サッカーボールのスクリプト
-	// @Param   _forward    プレイヤーの前方向ベクトル	
+    // @Param	_player     プレイヤーのゲームオブジェクト
+	// @Param   _forward    プレイヤーの前方向ベクトル
+	// @Param   _isBall     プレイヤーがボールを持っているかどうか
     // @Return	bool    シュートが終わったかどうか
-    // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
+    // @Date	2014/10/27  @Update 2014/10/28  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public bool Shoot(CSoccerBall _soccerBall,Vector3 _forward)
+    public bool Shoot(GameObject _player,Vector3 _forward,ref bool _isBall)
     {
-
         m_shootFrame++;
 
-        // シュート状態切り替え
+        // シュート状態に切り替わった場合はスクリプトの中身を変更
         if (m_shootFrame == m_shootTakeOfFrame)
         {
-            _soccerBall.rigidbody.velocity = _forward * m_shootInitSpeed;
-            _soccerBall.rigidbody.angularVelocity = _forward * 1.0f;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.velocity = _forward * m_shootInitSpeed;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 1.0f;
+            _isBall = false;    // プレイヤーのボールではない状態にする
+            Debug.Log("シュート→反動状態");
         }
-        
+
+        // シュートモーション終わりの時間になった場合はコンポーネントを切り替えて終了
         if( m_shootFrame == m_shootMotionLength )
         {
-            Debug.Log("シュート終了");
+            _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
+            Debug.Log("反動状態終わり→シュートモーション終了");
             return true;
         }
 

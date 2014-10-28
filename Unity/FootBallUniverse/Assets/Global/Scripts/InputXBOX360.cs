@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InputXBOX360 : MonoBehaviour{
+public class InputXBOX360
+{
 
     //----------------------------------------------------
     // XBOXコントローラーの定数データ
@@ -85,106 +86,7 @@ public class InputXBOX360 : MonoBehaviour{
     public static string P4_XBOX_DPAD_Y = "P4_DPAD_Y";                              // Player4 DPADのY方向
     public static string P4_XBOX_RT = "P4_RTLT";                                    // Player4 RTLTボタン
 
-    private float x;
     private float speed = 0.05f;
     const float thumbstickDeadZone = 0.3f;
-
-    void Start()
-    {
-        x = 0.0f;
-    }
-
-    void Update()
-    {
-        GetButton();
-    }
-
-    //----------------------------------------------------------------------
-    // ボタンの取得
-    //----------------------------------------------------------------------
-    // @Param   なし	
-    // @Return	なし
-    // @Date	10月8日15:30  @Update 10月8日15:30  @Author T.Kawashita       
-    //----------------------------------------------------------------------
-    public void GetButton()
-    {
-        if (Input.GetKeyDown(P1_XBOX_A))
-            Debug.Log("1P Aが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_B))
-            Debug.Log("1P Bが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_X))
-            Debug.Log("1P Xが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_Y))
-            Debug.Log("1P Yが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_R))
-            Debug.Log("1P Rが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_L))
-            Debug.Log("1P Lが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_START))
-            Debug.Log("1P STARTが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_BACK))
-            Debug.Log("1P BACKが押された");
-
-        if (Input.GetKeyDown(P2_XBOX_A))
-            Debug.Log("2P Aが押された");
-
-        if( Input.GetKeyDown(P2_XBOX_B))
-            Debug.Log("2P Bが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_RIGHT_ANALOG_PRESS))
-            Debug.Log("1P RightAnalogが押された");
-
-        if (Input.GetKeyDown(P1_XBOX_LEFT_ANALOG_PRESS))
-            Debug.Log("1P LeftAnalogが押された");
-
-        if (Input.GetKeyDown(P2_XBOX_RIGHT_ANALOG_PRESS))
-            Debug.Log("2P RightAnalogが押された");
-
-        if (Input.GetKeyDown(P3_XBOX_A))
-            Debug.Log("P3:Aボタン");
-
-        if (Input.GetKeyDown(P4_XBOX_A))
-            Debug.Log("P4:Aボタン");
-
- //       unitychan.transform.localRotation = Quaternion.AngleAxis(dInp.x, Vector3.up);
- //       camera.transform.localPosition = new Vector3(leftInp.x * 10, leftInp.y * 10 + 1.0f, -2.0f);
-
-        float ltrt;
-        ltrt = Input.GetAxis(P1_XBOX_RTLT);
-
-        /*
-        if (Input.GetAxisRaw(XBOX_RIGHT_ANALOG_X) > thumbstickDeadZone || Input.GetAxisRaw(XBOX_RIGHT_ANALOG_X) < -thumbstickDeadZone)
-        {
-            float axisInput = Input.GetAxisRaw(XBOX_RIGHT_ANALOG_X);
-            Debug.Log(axisInput);
-        }
-
-        if (Input.GetAxisRaw(XBOX_RIGHT_ANALOG_Y) > thumbstickDeadZone || Input.GetAxisRaw(XBOX_RIGHT_ANALOG_Y) < -thumbstickDeadZone)
-        {
-            float axisInput = Input.GetAxisRaw(XBOX_RIGHT_ANALOG_Y);
-            Debug.Log(axisInput);
-        }
-
-        if (Input.GetAxisRaw(XBOX_LEFT_ANALOG_X) > thumbstickDeadZone || Input.GetAxisRaw(XBOX_LEFT_ANALOG_X) < -thumbstickDeadZone)
-        {
-            float axisInput = Input.GetAxisRaw(XBOX_LEFT_ANALOG_X);
-            Debug.Log(axisInput);
-        }
-
-        if (Input.GetAxisRaw(XBOX_LEFT_ANALOG_Y) > thumbstickDeadZone || Input.GetAxisRaw(XBOX_LEFT_ANALOG_Y) < -thumbstickDeadZone)
-        {
-            float axisInput = Input.GetAxisRaw(XBOX_LEFT_ANALOG_Y);
-            Debug.Log(axisInput);
-        }
-         * */
-
-    }
 
 }

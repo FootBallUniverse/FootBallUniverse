@@ -22,7 +22,8 @@ public class CPlayerManager {
         eTACKLE,
         eHOLD,
         ePATH,
-        eTACKLEDAMAGE
+        eTACKLEDAMAGE,
+        eEND
     };
 
 }
