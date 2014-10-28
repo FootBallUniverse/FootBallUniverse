@@ -30,11 +30,19 @@ public class CPlayer1 : CPlayer {
                     case CPlayerManager.ePLAYER_STATUS.eNONE:
                         this.Move();
                         this.Rotation();
+                        this.DebugKey();
                         // ダッシュ初期化
                         if (Input.GetKeyDown(InputXBOX360.P1_XBOX_LEFT_ANALOG_PRESS))
                         {
                             m_action.InitDash(5.0f);
                             m_status = CPlayerManager.ePLAYER_STATUS.eDASH;
+                        }
+
+                        // シュート
+                        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_R))
+                        {
+                            m_action.InitShoot(m_human.m_shootInitSpeed, m_human.m_shootMotionLength, m_human.m_shootTakeOfFrame);
+                            m_status = CPlayerManager.ePLAYER_STATUS.eSHOOT;
                         }
 
                         // カメラモード変更
@@ -48,6 +56,12 @@ public class CPlayer1 : CPlayer {
                     // ダッシュ中
                     case CPlayerManager.ePLAYER_STATUS.eDASH:
                         if (this.Dash() == true)
+                            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                        break;
+
+                    // シュートモーション
+                    case CPlayerManager.ePLAYER_STATUS.eSHOOT:
+                        if (this.Shoot() == true)
                             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
                         break;
 
@@ -112,5 +126,38 @@ public class CPlayer1 : CPlayer {
     private bool Dash()
     {
         return m_action.Dash(ref m_pos, this.transform.forward);
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーのシュート
+    //----------------------------------------------------------------------
+    // @Param			
+    // @Return	
+    // @Date	  @Update   @Author       
+    //----------------------------------------------------------------------
+    private bool Shoot()
+    {
+        return m_action.Shoot(this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>(),this.transform.forward);
+    }
+
+
+    //----------------------------------------------------------------------
+    // デバッグ用メソッド
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void DebugKey()
+    {
+        // Bが押されたらサッカーボールをプレイヤーの足元にセットして
+        // サッカーボールをこのプレイヤーにセット
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Vector3 pos = new Vector3(this.transform.FindChild("player").transform.localPosition.x, 
+                                      this.transform.FindChild("player").transform.localPosition.y + 0.03f,
+                                      this.transform.FindChild("player").transform.localPosition.z + 0.1f);
+            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(pos);
+        }
     }
 }

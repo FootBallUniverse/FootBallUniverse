@@ -6,7 +6,6 @@ using System.Collections;
 // 基本的にプレイヤーのクラスにこのクラスを
 // インスタンス化させたものを持たせて動きをさせる
 //----------------------------------------------------
-
 public class CActionPlayer {
 
     private int m_dashWholeFrame;     // ダッシュ全体速度
@@ -42,7 +41,6 @@ public class CActionPlayer {
         m_shootTakeOfFrame = 0;
         m_shootInitSpeed = 0.0f;
     }
-
 
     //----------------------------------------------------------------------
     // プレイヤーの移動
@@ -82,7 +80,7 @@ public class CActionPlayer {
     // @Return	bool　ダッシュが終わったかどうか
     // @Date	2014/10/16  @Update 2014/10/17  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public bool Dash(ref Vector3 _dashPos, Vector3 _foarward)
+    public bool Dash(ref Vector3 _dashPos, Vector3 _forward)
     {
         m_dashFrame ++;
         
@@ -93,7 +91,7 @@ public class CActionPlayer {
         }
 
         // 移動させる
-        _dashPos += m_dashSpeed * _foarward;
+        _dashPos += m_dashSpeed * _forward;
 
         // ダッシュ終了
         if (m_dashFrame >= m_dashWholeFrame)
@@ -105,17 +103,24 @@ public class CActionPlayer {
     //----------------------------------------------------------------------
     // プレイヤーのシュート
     //----------------------------------------------------------------------
-    // @Param			
+    // @Param	_soccerBall サッカーボールのスクリプト
+	// @Param   _forward    プレイヤーの前方向ベクトル	
     // @Return	bool    シュートが終わったかどうか
     // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public bool Shoot()
+    public bool Shoot(CSoccerBall _soccerBall,Vector3 _forward)
     {
 
         m_shootFrame++;
 
-        // シュート終了
-        if (m_shootFrame >= m_shootMotionLength)
+        // シュート状態切り替え
+        if (m_shootFrame == m_shootTakeOfFrame)
+        {
+            _soccerBall.rigidbody.velocity = _forward * m_shootInitSpeed;
+            _soccerBall.rigidbody.angularVelocity = _forward * 1.0f;
+        }
+        
+        if( m_shootFrame == m_shootMotionLength )
         {
             Debug.Log("シュート終了");
             return true;
@@ -123,7 +128,6 @@ public class CActionPlayer {
 
         return false;
      }
-
 
     //----------------------------------------------------------------------
     // プレイヤーのダッシュの初期化

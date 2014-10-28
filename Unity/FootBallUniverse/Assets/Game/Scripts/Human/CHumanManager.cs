@@ -9,14 +9,14 @@ public class CHumanManager{
     private const int m_worldNum = 4;
     private const int m_humanStatusNum = 27;
 
-    // CSVのデータ
-    private string[,] m_csvData;
-
     public static CJapanHuman m_japanHuman;
     public static CBrazilHuman m_brazilHuman;
     public static CSpainHuman m_spainHuman;
     public static CEnglandHuman m_englandHuman;
 
+    /// <summary>
+    /// 国情報
+    /// </summary>
     public enum eWORLD
     {
         eJAPAN,
@@ -39,7 +39,6 @@ public class CHumanManager{
         m_spainHuman = new CSpainHuman();
         m_englandHuman = new CEnglandHuman();
     
-        m_csvData = new string[m_worldNum,m_humanStatusNum];
         this.SetData();
     }
 
@@ -54,7 +53,6 @@ public class CHumanManager{
     {
         return m_humanManager;
     }
-
 
     //----------------------------------------------------------------------
     // 更新
@@ -78,14 +76,17 @@ public class CHumanManager{
     {
         // CSVファイルをロード
         string path = Application.dataPath + "/Resources/CSV/HumanData.csv";
-        CCSVLoader.Loader(ref m_csvData, path,m_worldNum );
+        string[,] csvData = new string[m_worldNum,m_humanStatusNum];
+        CCSVLoader.GetInstance().Loader(ref csvData, path,m_worldNum );
 
+        // 変換用ワーク作成
         string[] work = new string[m_humanStatusNum];
 
-        m_japanHuman.Set(CUtility.ChangeArray(ref work, m_csvData, 0));
-        m_spainHuman.Set(CUtility.ChangeArray(ref work, m_csvData, 1));
-        m_englandHuman.Set(CUtility.ChangeArray(ref work, m_csvData, 2));
-        m_brazilHuman.Set(CUtility.ChangeArray(ref work, m_csvData, 3));
+        // データをセットしていく
+        m_japanHuman.Set(CUtility.ChangeArray(ref work, csvData, 0));
+        m_spainHuman.Set(CUtility.ChangeArray(ref work, csvData, 1));
+        m_englandHuman.Set(CUtility.ChangeArray(ref work, csvData, 2));
+        m_brazilHuman.Set(CUtility.ChangeArray(ref work, csvData, 3));
     }
 
     //----------------------------------------------------------------------

@@ -2,7 +2,7 @@
 using System.Collections;
 
 [System.Serializable]
-public class CHuman : MonoBehaviour{
+public class CHuman : Object {
 
     public int m_id;                         // ID
     public string m_name;                    // 名前

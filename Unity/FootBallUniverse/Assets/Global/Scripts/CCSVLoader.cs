@@ -14,7 +14,7 @@ public class CCSVLoader {
     // @Return	none
     // @Date	2014/10/24  @Update 2014/10/24  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public CCSVLoader()
+    private CCSVLoader()
     { 
     }
 
@@ -39,7 +39,7 @@ public class CCSVLoader {
     // @Return	none
     // @Date	2014/10/24  @Update 2014/10/24  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public static void Loader(ref string[,] _data, string _path,int _line)
+    public void Loader(ref string[,] _data, string _path,int _line)
     {
         FileInfo fi = new FileInfo(_path);
         using (StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.GetEncoding("Shift_JIS")))
