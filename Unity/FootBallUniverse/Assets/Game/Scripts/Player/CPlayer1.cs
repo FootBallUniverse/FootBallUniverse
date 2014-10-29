@@ -158,7 +158,7 @@ public class CPlayer1 : CPlayer {
         // シュートが打てる状態になったら(ボールが手持ちにある場合）
         if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE)
         {
-            if (Input.GetKeyDown(InputXBOX360.P1_XBOX_R) && m_isBall == true)
+            if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RTLT) && m_isBall)
             {
                 m_action.InitShoot(m_human.m_shootInitSpeed, m_human.m_shootMotionLength, m_human.m_shootTakeOfFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.eSHOOT;
