@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ResultDamy : MonoBehaviour {
+public class Result : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

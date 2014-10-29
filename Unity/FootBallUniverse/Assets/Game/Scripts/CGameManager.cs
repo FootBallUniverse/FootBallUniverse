@@ -88,7 +88,20 @@ public class CGameManager : MonoBehaviour {
     // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private void GameEnd()
-    { 
+    {
+        // 60Fたったかどうか計算
+        m_frame += Time.deltaTime;
+        if (m_frame >= 1.0f)
+        {
+            m_frame = 0;
+            CGameData.m_gameEndTime--;
+            Debug.Log("Resultまで残り:" + CGameData.m_gameEndTime);
+            if (CGameData.m_gameEndTime <= 0)
+            {
+                // リザルト画面に遷移のためのブラックアウト
+                Application.LoadLevel("Result");
+            } 
+        }
     }
 
     //----------------------------------------------------------------------
@@ -115,6 +128,7 @@ public class CGameManager : MonoBehaviour {
                 {
                     m_isGamePlay = false;
                     m_nowStatus = eSTATUS.eEND;
+                    m_frame = 0;
                     Debug.Log("Game END");
                     return true;
                 }

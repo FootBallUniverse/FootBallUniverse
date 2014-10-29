@@ -9,6 +9,7 @@ public class CGameData
 
     public const int m_dataNum = 2;     // データ数
     public static int m_gamePlayTime;   // ゲームのプレイ時間
+    public static int m_gameEndTime;    // ゲームが終了した後の待機時間
     public static float m_ballDecRec;   // ゲーム時のボールにかかる空気抵抗（仮）
     public static bool m_isTimer;       // ゲームのタイマーのON/OFF
 
@@ -65,7 +66,8 @@ public class CGameData
     {
         m_gamePlayTime = int.Parse(_arrayData[0]);
         m_ballDecRec = float.Parse(_arrayData[1]);
-        
+        m_gameEndTime = 10;
+
         return true;
     }
 
