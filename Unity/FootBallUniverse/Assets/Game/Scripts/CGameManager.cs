@@ -128,7 +128,7 @@ public class CGameManager : MonoBehaviour {
                 {
                     m_isGamePlay = false;
                     m_nowStatus = eSTATUS.eEND;
-                    m_frame = 0;
+                    m_frame = 0.0f;
                     Debug.Log("Game END");
                     return true;
                 }
@@ -175,8 +175,20 @@ public class CGameManager : MonoBehaviour {
             Input.GetKeyDown(InputXBOX360.P1_XBOX_START))
         {
             CGameData.m_isTimer ^= true;
-            Debug.Log("Timer : " + CGameData.m_isTimer);
+            Debug.Log("Stop : " + CGameData.m_isTimer);
         }
+
+        // 残り時間を0秒にする
+        if (Input.GetKeyDown(KeyCode.Escape) ||
+            InputXBOX360.IsGetAllSelectButton())
+        {
+            m_isGamePlay = false;
+            CGameData.m_gamePlayTime = 0;
+            m_nowStatus = eSTATUS.eEND;
+            m_frame = 0.0f;
+            Debug.Log("残り時間を0秒にしました");
+        }
+
     }
 
 }

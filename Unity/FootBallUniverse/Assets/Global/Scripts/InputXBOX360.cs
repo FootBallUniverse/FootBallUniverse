@@ -89,4 +89,57 @@ public class InputXBOX360
     private float speed = 0.05f;
     const float thumbstickDeadZone = 0.3f;
 
+
+//***************************************************************************************************
+//                                          メソッド
+//                              @Author T.Kawashita @Date 2014/10/29
+//***************************************************************************************************
+
+    //----------------------------------------------------------------------
+    // スタートボタンが押されたかどうかを判定
+    // (全コントローラー）
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	bool    押されたかどうか
+    // @Date	2014/10/29  @Update 2014/10/29  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static bool IsGetAllStartButton()
+    {
+        if (Input.GetKeyDown(P1_XBOX_START) ||
+            Input.GetKeyDown(P2_XBOX_START) ||
+            Input.GetKeyDown(P3_XBOX_START) ||
+            Input.GetKeyDown(P4_XBOX_START))
+        {
+            // 押された
+            return true;
+        }
+
+        // 押されていない
+        return false;
+    }
+
+    //----------------------------------------------------------------------
+    // セレクトボタンが押されたかどうかを判定
+    // (全コントローラー)
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	bool    押されたかどうか
+    // @Date	2014/10/29  @Update 2014/10/29  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static bool IsGetAllSelectButton()
+    {
+        if (Input.GetKeyDown(P1_XBOX_BACK)||
+            Input.GetKeyDown(P2_XBOX_BACK)||
+            Input.GetKeyDown(P3_XBOX_BACK)||
+            Input.GetKeyDown(P4_XBOX_BACK))
+        {
+            // 押された
+            return true;
+        }
+
+        // 押されていない
+        return false;
+    }
+
+
 }
