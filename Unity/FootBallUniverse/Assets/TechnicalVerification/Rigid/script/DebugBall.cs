@@ -5,7 +5,8 @@ public class DebugBall : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		GameObject player;
+		player= GameObject.Find("Character001");
 	}
 	
 	// Update is called once per frame
@@ -42,6 +43,12 @@ public class DebugBall : MonoBehaviour {
 		if (Input.GetKey(KeyCode.X)) {
 //			Debug.Log ("X");
 			rigidbody.AddForce(Vector3.down * speed, ForceMode.Force);
+		}
+
+		if (Input.GetKey(KeyCode.Space)) {
+			//			Debug.Log ("X");
+
+			rigidbody.AddForce(Vector3.forward * 10, ForceMode.VelocityChange);
 		}
 
 		// ボール位置リセット
