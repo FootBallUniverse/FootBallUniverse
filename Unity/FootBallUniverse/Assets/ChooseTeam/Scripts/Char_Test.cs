@@ -24,7 +24,6 @@ public class Char_Test : MonoBehaviour {
 		radian = Mathf.PI/180.0f*degree;
 		Position.x = centerx+r*Mathf.Cos(radian);
 		Position.z = centerz+r*Mathf.Sin(radian)/2;
-		//this._xscale = this._yscale=this._alpha=this._y;
 		degree += 5.0f;
 		Debug.Log(degree);
 		transform.position = Position;

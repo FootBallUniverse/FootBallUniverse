@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-public class Player_Rotate : MonoBehaviour
+public class Player_Script : MonoBehaviour
 {
-    struct TEAM_NO
+    public struct TEAM_NO
     {
         public GameObject m_Country;    // チームの国名
         public int m_TeamColor;         // チーム色
@@ -18,7 +17,7 @@ public class Player_Rotate : MonoBehaviour
 
     };
 	// 速度
-	/*public TEAM_NO[] m_Country = new TEAM_NO[4];
+	public TEAM_NO[] m_Country = new TEAM_NO[4];
 	public Vector2 SPEED = new Vector2(0.05f, 0.01f);
 	Vector3[] Position = new Vector3[4];
 	// Use this for initialization
@@ -50,8 +49,8 @@ public class Player_Rotate : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
+       // if(Input.GetKeyDown(KeyCode.A))
+       // {
             for (int i = 0; i < 4; i++)
             {
 			    switch(m_Country[i].m_Flag){
@@ -107,7 +106,8 @@ public class Player_Rotate : MonoBehaviour
 						
 					    break;
 			    }
+                m_Country[i].m_Country.transform.position = Position[i];
 		    }
-        }
-	}*/
+        //}
+	}
 }
