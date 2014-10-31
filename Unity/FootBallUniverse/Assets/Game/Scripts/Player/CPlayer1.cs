@@ -22,7 +22,11 @@ public class CPlayer1 : CPlayer {
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
         m_human = CHumanManager.GetInstance().GetWorldInstance(CHumanManager.eWORLD.eBRAZIL);
-  	}
+        
+
+        Color color = Color.red;
+        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
+    }
 
     //----------------------------------------------------------------------
     // 更新
@@ -103,8 +107,19 @@ public class CPlayer1 : CPlayer {
     private void Move()
     {
         Vector3 speed = new Vector3(0.0f, 0.0f, 0.0f);
-        speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * m_human.m_playerMoveSpeed;
-        speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * m_human.m_playerMoveSpeed;
+        // ボールを持っている場合は遅くなる
+        if (m_isBall == true)
+        {
+            speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * m_human.m_playerMoveSpeedHold;
+            speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * m_human.m_playerMoveSpeedHold;
+        }
+        else
+        {
+            speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * m_human.m_playerMoveSpeed;
+            speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * m_human.m_playerMoveSpeed;
+        }
+     
+        // 移動アクション
         m_action.Move(ref m_pos, speed, this.transform.forward, this.transform.right);
     }
 
@@ -186,9 +201,9 @@ public class CPlayer1 : CPlayer {
         // サッカーボールをこのプレイヤーにセット
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Vector3 pos = new Vector3(this.transform.FindChild("player").transform.localPosition.x, 
-                                      this.transform.FindChild("player").transform.localPosition.y + 0.03f,
-                                      this.transform.FindChild("player").transform.localPosition.z + 0.1f);
+            Vector3 pos = new Vector3(this.transform.FindChild("Player1Camera").transform.localPosition.x, 
+                                      this.transform.FindChild("Player1Camera").transform.localPosition.y + 0.03f,
+                                      this.transform.FindChild("Player1Camera").transform.localPosition.z + 0.1f);
 
             // まだプレイヤーのボールではない場合はプレイヤーのボールに設定
             if (m_isBall == false)
@@ -196,9 +211,9 @@ public class CPlayer1 : CPlayer {
                 GameObject.Find("BallGameObject").transform.FindChild("SoccerBall").parent = this.transform;
                 m_isBall = true;
             }
-            
-            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(pos);
-        }
 
+            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().Init(pos);
+        }
     }
+
 }

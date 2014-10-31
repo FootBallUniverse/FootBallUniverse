@@ -9,8 +9,8 @@ public class Map : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameObject workObject;
-		makerPrefab = Resources.Load("MapMaker") as GameObject;
-		
+		//makerPrefab = Resources.Load("MapMaker") as GameObject;
+
 		// マップ用テクスチャ貼り付け
 		workObject = this.transform.root.FindChild("MapBaseX").gameObject;
 		workObject.renderer.material.mainTexture = Resources.Load("Texture/MapBaseXTex") as Texture;

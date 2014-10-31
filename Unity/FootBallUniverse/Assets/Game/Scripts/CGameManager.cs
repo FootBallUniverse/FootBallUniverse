@@ -22,6 +22,8 @@ public class CGameManager : MonoBehaviour {
    
     public static bool m_isGamePlay;  // ゲームがプレイ中かどうか
 
+    public static int[] m_isPoint;    // 両チームの得点
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -34,6 +36,9 @@ public class CGameManager : MonoBehaviour {
         m_nowStatus = eSTATUS.eGAME;
         m_frame = 0;
         m_isGamePlay = true;
+        m_isPoint = new int[2];
+        m_isPoint[0] = 0;       // 1P&2Pチーム初期化
+        m_isPoint[1] = 0;       // 3P&4Pチーム初期化
 
         CGameData.GetInstance().Init();
         this.LoadData();
@@ -122,7 +127,6 @@ public class CGameManager : MonoBehaviour {
             {
                 m_frame = 0;
                 CGameData.m_gamePlayTime--;
-                Debug.Log(CGameData.m_gamePlayTime);
 
                 if (CGameData.m_gamePlayTime <= 0)
                 {
