@@ -14,10 +14,10 @@ public class DebugSCamera : MonoBehaviour {
 	void Update () {
 		GameObject ball;
 		GameObject player;
-		ball= GameObject.Find("Ball");
+		ball= GameObject.Find("SoccerBall");
 		player= GameObject.Find("Character001");
-		if(MCstate) transform.localPosition = new Vector3(ball.transform.position.x-5.0f, ball.transform.position.y+3.0f, ball.transform.position.z);
-		else transform.localPosition = new Vector3(player.transform.position.x-5.0f, player.transform.position.y+3.0f, player.transform.position.z);
+		if(MCstate) transform.position = new Vector3(ball.transform.position.x-5.0f, ball.transform.position.y+3.0f, ball.transform.position.z);
+		else transform.position = new Vector3(player.transform.position.x-5.0f, player.transform.position.y+3.0f, player.transform.position.z);
 
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			if(MCstate)MCstate = false;
