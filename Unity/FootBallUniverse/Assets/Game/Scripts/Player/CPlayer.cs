@@ -5,7 +5,6 @@ using System.Collections;
 // プレイヤーの基本的なクラス
 // 基底クラス
 //----------------------------------------------------
-
 public class CPlayer : MonoBehaviour {
 
     protected CPlayerManager.ePLAYER_STATUS m_status;
@@ -17,6 +16,12 @@ public class CPlayer : MonoBehaviour {
     protected CActionPlayer m_action;   // プレイヤーのアクション
     protected CHuman m_human;           // プレイヤーの国のインスタンス
     protected bool m_isBall;            // ボールを持っているかどうか
+
+    protected GameObject m_p12DPanel;   // 2Dのプレイヤー1用パネル
+    protected GameObject m_p22DPanel;   // 2Dのプレイヤー2用パネル
+    protected GameObject m_p32DPanel;   // 2Dのプレイヤー3用パネル
+    protected GameObject m_p42DPanel;   // 2Dのプレイヤー4用パネル
+
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -34,6 +39,8 @@ public class CPlayer : MonoBehaviour {
 
         m_human = new CHuman();
         m_action = new CActionPlayer();
+
+
 
         m_isBall = false;
     }
@@ -78,4 +85,5 @@ public class CPlayer : MonoBehaviour {
         if (CGameManager.m_isGamePlay == false)
             m_status = CPlayerManager.ePLAYER_STATUS.eEND;  // 終了していたらステータス変更
     }
+
 }
