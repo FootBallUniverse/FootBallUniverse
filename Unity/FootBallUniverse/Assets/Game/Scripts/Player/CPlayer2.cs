@@ -4,9 +4,14 @@ using System.Collections;
 public class CPlayer2 : CPlayer {
 
 
-
-	// Use this for initialization
-	void Start () {
+    //----------------------------------------------------------------------
+    // コンストラクタ
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/10/30  @Update 2014/10/30  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    void Start () {
 
         this.Init();
         m_pos = this.transform.localPosition;
@@ -19,9 +24,19 @@ public class CPlayer2 : CPlayer {
         m_p32DPanel = obj.transform.FindChild("Player3Panel").gameObject;
         m_p42DPanel = obj.transform.FindChild("Player4Panel").gameObject;
 
+        // プレイヤーの情報をマップにセット
+        Color color = Color.red;
+        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
+
 	}
-	
-	// Update is called once per frame
+
+    //----------------------------------------------------------------------
+    // 更新
+    //----------------------------------------------------------------------
+    // @Param   none			
+    // @Return	none
+    // @Date	2014/10/31  @Update 2014/10/31  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Update () {
 
 	}
@@ -37,7 +52,8 @@ public class CPlayer2 : CPlayer {
     void OnWillRenderObject()
     {
         // 自分のカメラなら無効
-        if ("Player2Camera" == Camera.current.name)
+        if ("Player2Camera" == Camera.current.name ||
+            "SceneCamera" == Camera.current.name)
             return;
 
         GameObject camera = GameObject.Find(Camera.current.name);

@@ -1,15 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CPlayer3 : MonoBehaviour {
+public class CPlayer3 : CPlayer {
 
-	// Use this for initialization
+
+    //----------------------------------------------------------------------
+    // コンストラクタ
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/10/31  @Update 2014/10/31  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        this.Init();
+        m_pos = this.transform.localPosition;
+        m_human = CHumanManager.GetInstance().GetWorldInstance(CHumanManager.eWORLD.eJAPAN);
+	    
+        // プレイヤーの情報をマップにセット
+        Color color = Color.blue;
+        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
+    
+    }
+
+    //----------------------------------------------------------------------
+    // 更新
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/10/31  @Update 2014/10/31  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+	void Update () {    
 	
 	}
 }

@@ -11,7 +11,7 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/15  @Update 2014/10/15  @Author T.Kawashita      
+    // @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void Start () {
 
@@ -23,9 +23,11 @@ public class CPlayer1 : CPlayer {
 
         m_human = CHumanManager.GetInstance().GetWorldInstance(CHumanManager.eWORLD.eBRAZIL);
         
-
+        // プレイヤーの情報をマップにセット
         Color color = Color.red;
         CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
+
+        animation.CrossFade("walk");
     }
 
     //----------------------------------------------------------------------
