@@ -34,7 +34,8 @@ public class Entry_1 : MonoBehaviour
             // エントリー
             if (Input.GetKeyDown(KeyCode.Alpha1) ||
                 Input.GetKeyDown(KeyCode.Space) ||
-                Input.GetKeyDown(InputXBOX360.P1_XBOX_A))
+                Input.GetKeyDown(InputXBOX360.P1_XBOX_A) ||
+                InputXBOX360.IsGetAllStartButton() == true)
             {
                 Debug.Log("Player1 Entry");
                 m_inFlag = true;

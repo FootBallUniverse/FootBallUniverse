@@ -24,7 +24,7 @@ public class Entry_4 : MonoBehaviour
         // 移動処理
         Move();
     }
-
+        
     // 移動関数
     void Move()
     {
@@ -34,7 +34,8 @@ public class Entry_4 : MonoBehaviour
             // エントリー
             if (Input.GetKeyDown(KeyCode.Alpha4) ||
                 Input.GetKeyDown(KeyCode.Space) ||
-                Input.GetKeyDown(InputXBOX360.P4_XBOX_A))
+                Input.GetKeyDown(InputXBOX360.P4_XBOX_A) ||
+                InputXBOX360.IsGetAllStartButton() == true )
             {
                 Debug.Log("Player4 Entry");
                 m_inFlag = true;
