@@ -7,16 +7,16 @@ using System.Collections;
 //----------------------------------------------------
 public class CPlayer : MonoBehaviour {
 
-    protected CPlayerManager.ePLAYER_STATUS m_status;
-    protected CPlayerManager.eCAMERA_STATUS m_cameraStatus;
-    protected Vector3 m_pos;        // 位置座標
-    protected Vector3 m_old_pos;    // 前回座標
-    protected Vector3 m_angle;      // 回転角度
+    public CPlayerManager.ePLAYER_STATUS m_status;
+    public CPlayerManager.eCAMERA_STATUS m_cameraStatus;
+    public Vector3 m_pos;        // 位置座標
+    public Vector3 m_speed;      // 移動量
+    public Vector3 m_angle;      // 回転角度
 
-    protected CActionPlayer m_action;   // プレイヤーのアクション
+    protected CPlayerAction m_action;       // プレイヤーのアクション
     protected CPlayerAnimator m_animator;   // プレイヤーのアニメーション
-    protected CHuman m_human;           // プレイヤーの国のインスタンス
-    protected bool m_isBall;            // ボールを持っているかどうか
+    public CHuman m_human;                  // プレイヤーの国のインスタンス
+    public bool m_isBall;                   // ボールを持っているかどうか
 
     protected GameObject m_p12DPanel;   // 2Dのプレイヤー1用パネル
     protected GameObject m_p22DPanel;   // 2Dのプレイヤー2用パネル
@@ -33,13 +33,13 @@ public class CPlayer : MonoBehaviour {
     //----------------------------------------------------------------------
 	void Start () {
         m_pos = new Vector3();
-        m_old_pos = new Vector3();
+        m_speed = new Vector3();
         m_angle = new Vector3();
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
         m_human = new CHuman();
-        m_action = new CActionPlayer();
+        m_action = new CPlayerAction();
 
         m_isBall = false;
     }
@@ -54,20 +54,26 @@ public class CPlayer : MonoBehaviour {
     protected bool Init()
     {
         m_pos = new Vector3();
-        m_old_pos = new Vector3();
+        m_speed = new Vector3();
         m_angle = new Vector3();
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
         m_human = new CHuman();
-        m_action = new CActionPlayer();
+        m_action = new CPlayerAction();
 
         m_isBall = false;
 
         return true;
     }
 
-	// Update is called once per frame
+    //----------------------------------------------------------------------
+    // 更新
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Update () {	
 	}
 
@@ -83,6 +89,17 @@ public class CPlayer : MonoBehaviour {
         // ゲーム終了かどうか判定
         if (CGameManager.m_isGamePlay == false)
             m_status = CPlayerManager.ePLAYER_STATUS.eEND;  // 終了していたらステータス変更
+    }
+
+    //----------------------------------------------------------------------
+    // 移動(仮想関数)
+    //----------------------------------------------------------------------
+    // @Param	Vector3     移動量
+    // @Return	none
+    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public virtual void Move(Vector3 _speed)
+    {
     }
 
 }

@@ -17,12 +17,14 @@ public class CGameManager : MonoBehaviour {
         eEND,   // ゲーム終了状態
     }
 
-    private eSTATUS m_nowStatus;      // ゲームの現在のステータス
-    private float m_frame;            // タイマー調整用フレーム
+    private eSTATUS m_nowStatus;        // ゲームの現在のステータス
+    private float m_frame;              // タイマー調整用フレーム
    
-    public static bool m_isGamePlay;  // ゲームがプレイ中かどうか
+    public static bool m_isGamePlay;    // ゲームがプレイ中かどうか
 
-    public static int[] m_isPoint;    // 両チームの得点
+    public static int[] m_isPoint;      // 両チームの得点
+
+    private CSoundPlayer m_soundPlayer; // サウンドプレイヤー
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -42,6 +44,8 @@ public class CGameManager : MonoBehaviour {
 
         CGameData.GetInstance().Init();
         this.LoadData();
+
+        m_soundPlayer = new CSoundPlayer();
 	}
 
     //----------------------------------------------------------------------
