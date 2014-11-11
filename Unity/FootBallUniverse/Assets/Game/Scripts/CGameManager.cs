@@ -33,7 +33,7 @@ public class CGameManager : MonoBehaviour {
     //----------------------------------------------------------------------
     void Awake () {
 
-        m_nowStatus = eSTATUS.eGAME;
+        m_nowStatus = eSTATUS.eWAIT;
         m_frame = 0;
         m_isGamePlay = true;
         m_isPoint = new int[2];
@@ -66,10 +66,25 @@ public class CGameManager : MonoBehaviour {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/10/28  @Update 2014/11/10  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private void GameWait()
     {
+        m_frame += Time.deltaTime;
+
+        // 60Fカウント
+        if (m_frame >= 1.0f)
+        {
+        }
+
+
+        // セレクトボタンでレディ画面をスキップ
+        if (InputXBOX360.IsGetAllSelectButton() == true)
+        {
+            m_nowStatus = eSTATUS.eGAME;
+            m_frame = 0;
+            m_isGamePlay = true;
+        }
     }
 
     //----------------------------------------------------------------------

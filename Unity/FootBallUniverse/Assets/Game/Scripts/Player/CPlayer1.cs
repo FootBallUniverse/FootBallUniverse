@@ -6,6 +6,7 @@ public class CPlayer1 : CPlayer {
     const float DASH_SPEED = 1.0f;
     private Vector3 m_speed;
 
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -27,7 +28,8 @@ public class CPlayer1 : CPlayer {
         Color color = Color.red;
         CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 
-        animation.CrossFade("walk");
+        // プレイヤーのアニメーターをセット
+        m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
     }
 
     //----------------------------------------------------------------------
@@ -123,6 +125,8 @@ public class CPlayer1 : CPlayer {
      
         // 移動アクション
         m_action.Move(ref m_pos, speed, this.transform.forward, this.transform.right);
+
+       m_animator.Move(speed);
     }
 
     //----------------------------------------------------------------------

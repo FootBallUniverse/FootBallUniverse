@@ -14,6 +14,7 @@ public class CPlayer : MonoBehaviour {
     protected Vector3 m_angle;      // 回転角度
 
     protected CActionPlayer m_action;   // プレイヤーのアクション
+    protected CPlayerAnimator m_animator;   // プレイヤーのアニメーション
     protected CHuman m_human;           // プレイヤーの国のインスタンス
     protected bool m_isBall;            // ボールを持っているかどうか
 
@@ -39,8 +40,6 @@ public class CPlayer : MonoBehaviour {
 
         m_human = new CHuman();
         m_action = new CActionPlayer();
-
-
 
         m_isBall = false;
     }
