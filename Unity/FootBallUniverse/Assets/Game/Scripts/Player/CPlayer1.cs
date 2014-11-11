@@ -3,9 +3,6 @@ using System.Collections;
 
 public class CPlayer1 : CPlayer {
 
-    const float DASH_SPEED = 1.0f;
-    private Vector3 m_speed;
-
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -17,17 +14,20 @@ public class CPlayer1 : CPlayer {
 
         this.Init();
         m_pos = this.transform.localPosition;
+        m_speed = new Vector3(0.0f,0.0f,0.0f);
         m_angle = new Vector3(0.0f, 0.0f);
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
+        // 国の情報をセット
         m_human = CHumanManager.GetInstance().GetWorldInstance(CHumanManager.eWORLD.eBRAZIL);
         
         // プレイヤーの情報をマップにセット
         Color color = Color.red;
         CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 
-        animation.CrossFade("walk");
+        // プレイヤーのアニメーターをセット
+        m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
     }
 
     //----------------------------------------------------------------------
@@ -35,7 +35,7 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/15  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/10/15  @Update 2014/11/11  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void Update () 
     {
@@ -46,12 +46,25 @@ public class CPlayer1 : CPlayer {
             case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot(); break;  // シュート中
             case CPlayerManager.ePLAYER_STATUS.eEND: break;                         // 終了
         }
+    }
 
-        this.transform.localPosition = m_pos;
+    //----------------------------------------------------------------------
+    // フレームの最後の更新
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    void LateUpdate()
+    {
+        // アニメーション
+        this.Animation();
+
+        m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
+        this.transform.localPosition = m_pos;       // 保存用位置座標を更新
 
         // ゲームが終了しているかどうか判定
         this.CheckGamePlay();
-
     }
 
     //----------------------------------------------------------------------
@@ -63,7 +76,10 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     private void PlayerStatusNone()
     {
-        this.Move();        // 移動
+        // 移動
+        Vector3 speed = new Vector3(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X), 0.0f, Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y));
+        this.Move(speed);
+        
         this.Rotation();    // 回転
         this.Dash();        // ダッシュ
         this.Shoot();       // シュート
@@ -76,7 +92,7 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/10/28  @Update 2014/11/11  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private void PlayerStatusDash()
     {
@@ -102,27 +118,26 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // プレイヤーの移動
     //----------------------------------------------------------------------
-    // @Param	none		
+    // @Param	Vector3     移動量		
     // @Return	none
-    // @Date	2014/10/16  @Update 2014/10/16  @Author T.Kawashita      
+    // @Date	2014/10/16  @Update 2014/11/11  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void Move()
+    public override void Move(Vector3 _speed)
     {
-        Vector3 speed = new Vector3(0.0f, 0.0f, 0.0f);
         // ボールを持っている場合は遅くなる
         if (m_isBall == true)
         {
-            speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * m_human.m_playerMoveSpeedHold;
-            speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * m_human.m_playerMoveSpeedHold;
+            m_speed.x += _speed.x * m_human.m_playerMoveSpeedHold;
+            m_speed.z += _speed.z * m_human.m_playerMoveSpeedHold;
         }
         else
         {
-            speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) * m_human.m_playerMoveSpeed;
-            speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y) * m_human.m_playerMoveSpeed;
+            m_speed.x += _speed.x * m_human.m_playerMoveSpeed;
+            m_speed.z += _speed.z * m_human.m_playerMoveSpeed;
         }
      
         // 移動アクション
-        m_action.Move(ref m_pos, speed, this.transform.forward, this.transform.right);
+        m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right);
     }
 
     //----------------------------------------------------------------------
@@ -201,6 +216,7 @@ public class CPlayer1 : CPlayer {
     {
         // Bが押されたらサッカーボールをプレイヤーの足元にセットして
         // サッカーボールをこのプレイヤーにセット
+        /*
         if (Input.GetKeyDown(KeyCode.B))
         {
             Vector3 pos = new Vector3(this.transform.FindChild("Player1Camera").transform.localPosition.x, 
@@ -216,6 +232,19 @@ public class CPlayer1 : CPlayer {
 
             this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().Init(pos);
         }
+         * */
     }
 
+    //----------------------------------------------------------------------
+    // アニメーション
+    //----------------------------------------------------------------------
+    // @Param	none
+    // @Return	none
+    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void Animation()
+    {
+        // 移動アニメーション
+        m_animator.Move(m_speed);
+    }
 }

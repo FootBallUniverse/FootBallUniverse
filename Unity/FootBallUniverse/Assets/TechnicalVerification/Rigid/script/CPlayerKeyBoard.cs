@@ -13,7 +13,6 @@ public class CPlayerKeyBoard : CPlayer {
 	void Start () {
 
         m_pos = this.transform.localPosition;
-        m_pos = m_old_pos;
         m_angle = new Vector3(0.0f, 0.0f);
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
