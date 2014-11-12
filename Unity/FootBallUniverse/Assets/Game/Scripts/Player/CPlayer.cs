@@ -18,10 +18,7 @@ public class CPlayer : MonoBehaviour {
     public CHuman m_human;                  // プレイヤーの国のインスタンス
     public bool m_isBall;                   // ボールを持っているかどうか
 
-    protected GameObject m_p12DPanel;   // 2Dのプレイヤー1用パネル
-    protected GameObject m_p22DPanel;   // 2Dのプレイヤー2用パネル
-    protected GameObject m_p32DPanel;   // 2Dのプレイヤー3用パネル
-    protected GameObject m_p42DPanel;   // 2Dのプレイヤー4用パネル
+
 
 
     //----------------------------------------------------------------------
@@ -100,6 +97,17 @@ public class CPlayer : MonoBehaviour {
     //----------------------------------------------------------------------
     public virtual void Move(Vector3 _speed)
     {
+    }
+
+    //----------------------------------------------------------------------
+    // 回転(仮想関数)
+    //----------------------------------------------------------------------
+    // @Param	Vector2     回転量		
+    // @Return	none
+    // @Date	2014/11/12  @Update 2014/11/12  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public virtual void Rotation(Vector2 _angle)
+    { 
     }
 
 }

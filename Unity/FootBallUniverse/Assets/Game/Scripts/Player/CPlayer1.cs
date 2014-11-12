@@ -79,8 +79,11 @@ public class CPlayer1 : CPlayer {
         // 移動
         Vector3 speed = new Vector3(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X), 0.0f, Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y));
         this.Move(speed);
-        
-        this.Rotation();    // 回転
+
+        // 回転
+        Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));
+        this.Rotation(angle);
+    
         this.Dash();        // ダッシュ
         this.Shoot();       // シュート
 
@@ -143,16 +146,15 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // プレイヤーの回転
     //----------------------------------------------------------------------
-    // @Param	none		
+    // @Param	Vector2     回転量		
     // @Return	none
-    // @Date	2014/10/16  @Update 2014/10/16   @Author T.Kawashita      
+    // @Date	2014/10/16  @Update 2014/11/12   @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void Rotation()
+    public override void Rotation(Vector2 _angle)
     {
         Vector2 angle;
-        Quaternion q;
-        angle.x = Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X) * m_human.m_cameraMoveSpeed;
-        angle.y = Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y) * m_human.m_cameraMoveSpeed;
+        angle.x = _angle.x * m_human.m_cameraMoveSpeed;
+        angle.y = _angle.y * m_human.m_cameraMoveSpeed;
         this.transform.localRotation = m_action.Rotation(ref m_angle, angle.x, angle.y);
     }
 
