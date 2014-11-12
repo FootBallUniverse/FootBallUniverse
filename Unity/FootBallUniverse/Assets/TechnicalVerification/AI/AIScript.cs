@@ -72,7 +72,7 @@ public class TeamAI
 			}
 			else
 			{
-				this.haveBallPlayer = null;
+				//this.haveBallPlayer = null;
 			}
 		}
 	}

@@ -6,7 +6,11 @@ public class CPlayerManager {
     // マネージャーのインスタンス
     public static CPlayerManager m_playerManager = new CPlayerManager();
 
-    GameObject m_mapObject;
+    // マップのオブジェクト
+    public GameObject m_mapObject;
+
+    // ボールの管理クラス
+    public CSoccerBallManager m_soccerBallManager;
 
     // カメラのモード
     public enum eCAMERA_STATUS
@@ -41,6 +45,7 @@ public class CPlayerManager {
     public CPlayerManager()
     {
         m_mapObject = GameObject.Find("Map").gameObject;
+        m_soccerBallManager = GameObject.Find("BallGameObject").GetComponent<CSoccerBallManager>();
     }
 
     //----------------------------------------------------------------------
