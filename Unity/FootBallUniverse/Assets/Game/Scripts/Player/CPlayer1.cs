@@ -152,10 +152,11 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     public override void Rotation(Vector2 _angle)
     {
-        Vector2 angle;
-        angle.x = _angle.x * m_human.m_cameraMoveSpeed;
-        angle.y = _angle.y * m_human.m_cameraMoveSpeed;
-        this.transform.localRotation = m_action.Rotation(ref m_angle, angle.x, angle.y);
+        Vector3 angle = new Vector3(0.0f,0.0f,0.0f);
+        angle.y = _angle.x * m_human.m_cameraMoveSpeed;
+        angle.x = _angle.y * m_human.m_cameraMoveSpeed;
+        this.transform.Rotate(angle);
+//        this.transform.Rotate(m_action.Rotation(ref m_angle, angle.x, angle.y));
     }
 
     //----------------------------------------------------------------------

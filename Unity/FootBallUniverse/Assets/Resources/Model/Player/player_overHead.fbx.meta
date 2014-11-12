@@ -1,0 +1,193 @@
+fileFormatVersion: 2
+guid: 6d3cd0e3489847b40b48b21390dbf4ba
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: asi1_L1
+    100002: asi1_R
+    100004: //RootNode
+    100006: FOOT_L
+    100008: FOOT_R
+    100010: group1
+    100012: hiji_L
+    100014: hiji_R
+    100016: hiza_L
+    100018: hiza_R
+    100020: ikHandle1
+    100022: ikHandle2
+    100024: jet
+    100026: joint10
+    100028: joint11
+    100030: joint12
+    100032: joint13
+    100034: joint14
+    100036: joint16
+    100038: joint17
+    100040: joint19
+    100042: joint20
+    100044: joint21
+    100046: joint24
+    100048: joint25
+    100050: joint26
+    100052: joint27
+    100054: joint28
+    100056: joint30
+    100058: joint31
+    100060: joint33
+    100062: joint34
+    100064: joint35
+    100066: joint36
+    100068: joint37
+    100070: joint38
+    100072: joint39
+    100074: joint40
+    100076: kata_L
+    100078: kata_R
+    100080: koshi
+    100082: kubi1
+    100084: kubi2
+    100086: locator_L
+    100088: locator_R
+    100090: mune
+    100092: nurbsCircle1
+    100094: pasted__joint36
+    100096: pasted__joint37
+    100098: pasted__joint38
+    100100: pasted__joint39
+    100102: pasted__joint40
+    100104: pasted__nurbsCircle1
+    100106: pasted__nurbsCircle1 1
+    100108: pasted__nurbsCircle2
+    100110: pasted__nurbsCircle3
+    100112: pasted__nurbsCircle4
+    100114: pasted__pasted__nurbsCircle1
+    100116: pasted__pasted__nurbsCircle1 1
+    100118: pasted__pasted__nurbsCircle2
+    100120: pasted__pasted__pasted__nurbsCircle1
+    100122: polySurface14
+    100124: root
+    100126: sakotu
+    100128: top
+    400000: asi1_L1
+    400002: asi1_R
+    400004: //RootNode
+    400006: FOOT_L
+    400008: FOOT_R
+    400010: group1
+    400012: hiji_L
+    400014: hiji_R
+    400016: hiza_L
+    400018: hiza_R
+    400020: ikHandle1
+    400022: ikHandle2
+    400024: jet
+    400026: joint10
+    400028: joint11
+    400030: joint12
+    400032: joint13
+    400034: joint14
+    400036: joint16
+    400038: joint17
+    400040: joint19
+    400042: joint20
+    400044: joint21
+    400046: joint24
+    400048: joint25
+    400050: joint26
+    400052: joint27
+    400054: joint28
+    400056: joint30
+    400058: joint31
+    400060: joint33
+    400062: joint34
+    400064: joint35
+    400066: joint36
+    400068: joint37
+    400070: joint38
+    400072: joint39
+    400074: joint40
+    400076: kata_L
+    400078: kata_R
+    400080: koshi
+    400082: kubi1
+    400084: kubi2
+    400086: locator_L
+    400088: locator_R
+    400090: mune
+    400092: nurbsCircle1
+    400094: pasted__joint36
+    400096: pasted__joint37
+    400098: pasted__joint38
+    400100: pasted__joint39
+    400102: pasted__joint40
+    400104: pasted__nurbsCircle1
+    400106: pasted__nurbsCircle1 1
+    400108: pasted__nurbsCircle2
+    400110: pasted__nurbsCircle3
+    400112: pasted__nurbsCircle4
+    400114: pasted__pasted__nurbsCircle1
+    400116: pasted__pasted__nurbsCircle1 1
+    400118: pasted__pasted__nurbsCircle2
+    400120: pasted__pasted__pasted__nurbsCircle1
+    400122: polySurface14
+    400124: root
+    400126: sakotu
+    400128: top
+    4300000: polySurface14
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: polySurface14
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
