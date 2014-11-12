@@ -3,13 +3,12 @@ using System.Collections;
 
 public class title : MonoBehaviour {
     
-    private int m_StartCount;
+    public int m_StartCount;
 
     public Entry_1 m_entry1;
     public Entry_2 m_entry2;
     public Entry_3 m_entry3;
     public Entry_4 m_entry4;
-
 	// Use this for initialization
     void Start()
     {
@@ -19,11 +18,12 @@ public class title : MonoBehaviour {
         GameObject entry2 = this.transform.FindChild("entry_wait_state_2").gameObject;
         GameObject entry3 = this.transform.FindChild("entry_wait_state_3").gameObject;
         GameObject entry4 = this.transform.FindChild("entry_wait_state_4").gameObject;
-
+    
         m_entry1 = entry1.GetComponent<Entry_1>();
         m_entry2 = entry2.GetComponent<Entry_2>();
         m_entry3 = entry3.GetComponent<Entry_3>();
         m_entry4 = entry4.GetComponent<Entry_4>();
+
 
     }
 
