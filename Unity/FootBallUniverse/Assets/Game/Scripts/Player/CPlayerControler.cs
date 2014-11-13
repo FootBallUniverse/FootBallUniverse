@@ -155,9 +155,7 @@ public class CPlayerControler : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.B) && m_player.m_isBall == false)
         {
             // ボールの位置をセット
-            Vector3 pos = new Vector3(m_player.m_pos.x,
-                                       m_player.m_pos.y + 0.05f,
-                                       m_player.m_pos.z + 0.1f);
+            Vector3 pos = new Vector3(0.0f,0.05f,0.1f);
 
             // プレイヤーのボールに設定
             CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(this.transform,pos);

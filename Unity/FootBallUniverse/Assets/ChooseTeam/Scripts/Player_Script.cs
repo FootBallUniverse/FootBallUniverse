@@ -102,8 +102,15 @@ public class Player_Script : MonoBehaviour
 
                 m_Country[i].m_Country.transform.position = Position[i];
 
+                // 前に来た国のスプライトのデプスのみ変更
+                if (m_Country[i].m_Flag == 2)
+                    m_Country[i].m_Country.transform.FindChild("flag_" + i.ToString()).gameObject.GetComponent<UISprite>().depth = 2;
+                else
+                    m_Country[i].m_Country.transform.FindChild("flag_" + i.ToString()).gameObject.GetComponent<UISprite>().depth = 0;
             }
+
             m_Count++;
+            
             if (m_Count >= 18)
             {
                 for (int i = 0; i < 4; i++)
@@ -141,6 +148,7 @@ public class Player_Script : MonoBehaviour
                     {
                         Position[i].z = 0.0f;
                     }
+
                     m_Country[i].m_Country.transform.position = Position[i];
                 }
                 m_Count = 0;
@@ -167,6 +175,13 @@ public class Player_Script : MonoBehaviour
                 m_Country[i].degree -= 5.0f;
 
                 m_Country[i].m_Country.transform.position = Position[i];
+
+                // 前に来た国のスプライトのデプスのみ変更
+                if (m_Country[i].m_Flag == 0)
+                    m_Country[i].m_Country.transform.FindChild("flag_" + i.ToString()).gameObject.GetComponent<UISprite>().depth = 2;
+                else
+                    m_Country[i].m_Country.transform.FindChild("flag_" + i.ToString()).gameObject.GetComponent<UISprite>().depth = 0;
+
 
             }
             m_Count++;
