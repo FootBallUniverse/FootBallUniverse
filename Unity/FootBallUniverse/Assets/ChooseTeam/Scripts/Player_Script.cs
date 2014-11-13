@@ -101,14 +101,7 @@ public class Player_Script : MonoBehaviour
                 m_Country[i].degree += 5.0f;
 
                 m_Country[i].m_Country.transform.position = Position[i];
-
-                // 前に来た国のスプライトのデプスのみ変更
-                if (m_Country[i].m_Flag == 2)
-                    m_Country[i].m_Country.transform.FindChild("flag_" + i.ToString()).gameObject.GetComponent<UISprite>().depth = 2;
-                else
-                    m_Country[i].m_Country.transform.FindChild("flag_" + i.ToString()).gameObject.GetComponent<UISprite>().depth = 0;
             }
-
             m_Count++;
             
             if (m_Count >= 18)
@@ -149,10 +142,19 @@ public class Player_Script : MonoBehaviour
                         Position[i].z = 0.0f;
                     }
 
+                    if (Position[i].x == 0.0f && Position[i].z == -0.31f)
+                    {
+                        Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
+                    }
                     m_Country[i].m_Country.transform.position = Position[i];
+                    // 前に来た国のスプライトのデプスのみ変更
+                    /*if (m_Country[i].m_Flag == 1)
+                        m_Country[i].m_Country.transform.FindChild("flag_" + i).gameObject.GetComponent<UISprite>().depth = 2;
+                     */
                 }
                 m_Count = 0;
                 m_Right_RotateFlag = false;
+                
             }
 
         }
@@ -175,13 +177,7 @@ public class Player_Script : MonoBehaviour
                 m_Country[i].degree -= 5.0f;
 
                 m_Country[i].m_Country.transform.position = Position[i];
-
-                // 前に来た国のスプライトのデプスのみ変更
-                if (m_Country[i].m_Flag == 0)
-                    m_Country[i].m_Country.transform.FindChild("flag_" + i.ToString()).gameObject.GetComponent<UISprite>().depth = 2;
-                else
-                    m_Country[i].m_Country.transform.FindChild("flag_" + i.ToString()).gameObject.GetComponent<UISprite>().depth = 0;
-
+                
 
             }
             m_Count++;
@@ -191,8 +187,8 @@ public class Player_Script : MonoBehaviour
                 {
                     m_Country[i].m_Flag--;
 
-                    // フラグが4以上になった場合0にする
-                    if (m_Country[i].m_Flag <= 0)
+                    // フラグが-1以下になった場合0にする
+                    if (m_Country[i].m_Flag <= -1)
                     {
                         m_Country[i].m_Flag = 3;
                     }
@@ -222,7 +218,19 @@ public class Player_Script : MonoBehaviour
                     {
                         Position[i].z = 0.0f;
                     }
+
+                    if (Position[i].x == 0.0f && Position[i].z == -0.31f)
+                    {
+                        Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
+                    }
+                    
                     m_Country[i].m_Country.transform.position = Position[i];
+                   // 前に来た国のスプライトのデプスのみ変更
+                   /* if (m_Country[i].m_Flag == 0)
+                    {
+                        m_Country[i].m_Country.transform.FindChild("flag_" + i).gameObject.GetComponent<UISprite>().depth = 2;
+                    }*/
+                 //  Debug.Log(m_Country[i].m_Country.transform.FindChild("flag_" + i).gameObject.GetComponent<UISprite>().depth);
                 }
                 m_Count = 0;
                 m_Left_RotateFlag = false;
