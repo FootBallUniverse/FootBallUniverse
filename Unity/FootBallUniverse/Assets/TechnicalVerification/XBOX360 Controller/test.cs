@@ -11,12 +11,12 @@ public class test : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RTLT) == true)
+        if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == true)
         {
             Debug.Log("RTが押された！");
         }
 
-        if (InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_RTLT) == true)
+        if (InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == true)
             Debug.Log("LTが押された！");
 	}
 }

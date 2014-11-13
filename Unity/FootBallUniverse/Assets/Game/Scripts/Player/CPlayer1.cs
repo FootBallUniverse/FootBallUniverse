@@ -44,6 +44,7 @@ public class CPlayer1 : CPlayer {
             case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone(); break;    // 何もしてない状態
             case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash(); break;    // ダッシュ中
             case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot(); break;  // シュート中
+            case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass(); break;
             case CPlayerManager.ePLAYER_STATUS.eEND: break;                         // 終了
         }
     }
@@ -84,10 +85,9 @@ public class CPlayer1 : CPlayer {
         Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));
         this.Rotation(angle);
     
-        this.Dash();        // ダッシュ
-        this.Shoot();       // シュート
+        this.Dash();                    // ダッシュ
+        this.PassShootDecision();       // パスかシュートの判定
 
-        this.DebugKey();    // デバッグ
     }
 
     //----------------------------------------------------------------------
@@ -115,6 +115,20 @@ public class CPlayer1 : CPlayer {
     {
         // シュート状態が終わったら通常状態に遷移
         if (this.Shoot() == true)
+            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーがパス中の状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void PlayerStatusPass()
+    {
+        // パス状態が終わったら通常状態に遷移
+        if (this.Pass() == true)
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
     }
 
@@ -186,57 +200,52 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	bool    シュート状態が終わったかどうか
-    // @Date	2014/10/27  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/10/27  @Update 2014/11/13  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private bool Shoot()
-    {
-        // シュートが打てる状態になったら(ボールが手持ちにある場合）
-        if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE)
-        {
-            if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RTLT) && m_isBall)
-            {
-                m_action.InitShoot(m_human.m_shootInitSpeed, m_human.m_shootMotionLength, m_human.m_shootTakeOfFrame);
-                m_status = CPlayerManager.ePLAYER_STATUS.eSHOOT;
-                return false;
-            }
-        }
-        
+    {        
         // シュート中
-        else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOT)
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOT)
             return m_action.Shoot(this.gameObject, this.transform.forward, ref m_isBall);
 
         return false;
     }
 
     //----------------------------------------------------------------------
-    // デバッグ用メソッド
+    // プレイヤーのパス関連処理
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	bool    パス状態が終わったかどうか
+    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private bool Pass()
+    {
+        // パス中
+        if (m_status == CPlayerManager.ePLAYER_STATUS.ePASS)
+            return m_action.Pass(this.gameObject, this.transform.forward, ref m_isBall);
+
+        return false;
+    }
+
+    //----------------------------------------------------------------------
+    // パスとシュートの判定
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/27  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void DebugKey()
+    private void PassShootDecision()
     {
-        // Bが押されたらサッカーボールをプレイヤーの足元にセットして
-        // サッカーボールをこのプレイヤーにセット
-        /*
-        if (Input.GetKeyDown(KeyCode.B))
+        // シュートかパスが打てる状態になったら(ボールが手持ちにある場合）
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE)
         {
-            Vector3 pos = new Vector3(this.transform.FindChild("Player1Camera").transform.localPosition.x, 
-                                      this.transform.FindChild("Player1Camera").transform.localPosition.y + 0.03f,
-                                      this.transform.FindChild("Player1Camera").transform.localPosition.z + 0.1f);
-
-            // まだプレイヤーのボールではない場合はプレイヤーのボールに設定
-            if (m_isBall == false)
+            if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) && m_isBall == true)
             {
-                GameObject.Find("BallGameObject").transform.FindChild("SoccerBall").parent = this.transform;
-                m_isBall = true;
+                InputXBOX360.RTButtonPress(InputXBOX360.P1_XBOX_RT);
+                m_action.InitPass(m_human.m_shootInitSpeed, m_human.m_shootMotionLength, m_human.m_shootTakeOfFrame);
+                m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
             }
-
-            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().Init(pos);
         }
-
-         * * */
     }
 
     //----------------------------------------------------------------------

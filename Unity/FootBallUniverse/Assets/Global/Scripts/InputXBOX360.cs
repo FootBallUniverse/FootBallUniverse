@@ -3,7 +3,6 @@ using System.Collections;
 
 public class InputXBOX360
 {
-
     //----------------------------------------------------
     // XBOXコントローラーの定数データ
     //----------------------------------------------------
@@ -60,7 +59,8 @@ public class InputXBOX360
     public static string P1_XBOX_LEFT_ANALOG_Y = "P1_LEFT_ANALOG_Y";                // Player1 左アナログスティックのY方向
     public static string P1_XBOX_DPAD_X = "P1_DPAD_X";                              // Player1 DPADのX方向  
     public static string P1_XBOX_DPAD_Y = "P1_DPAD_Y";                              // Player1 DPADのY方向
-    public static string P1_XBOX_RTLT = "P1_RTLT";                                  // Player1 RTLTボタン
+    public static string P1_XBOX_RT = "P1_RT";                                      // Player1 RTボタン
+    public static string P1_XBOX_LT = "P1_LT";                                      // Player1 LTボタン
 
     public static string P2_XBOX_RIGHT_ANALOG_X = "P2_RIGHT_ANALOG_X";              // Player2 右アナログスティックのX方向
     public static string P2_XBOX_RIGHT_ANALOG_Y = "P2_RIGHT_ANALOG_Y";              // Player2 右アナログスティックのY方向
@@ -68,7 +68,8 @@ public class InputXBOX360
     public static string P2_XBOX_LEFT_ANALOG_Y = "P2_LEFT_ANALOG_Y";                // Player2 左アナログスティックのY方向
     public static string P2_XBOX_DPAD_X = "P2_DPAD_X";                              // Player2 DPADのX方向  
     public static string P2_XBOX_DPAD_Y = "P2_DPAD_Y";                              // Player2 DPADのY方向
-    public static string P2_XBOX_RTLT = "P2_RTLT";                                  // Player2 RTLTボタン
+    public static string P2_XBOX_RT = "P2_RT";                                      // Player2 RTボタン
+    public static string P2_XBOX_LT = "P2_LT";                                      // Player2 LTボタン
 
     public static string P3_XBOX_RIGHT_ANALOG_X = "P3_RIGHT_ANALOG_X";              // Player3 右アナログスティックのX方向
     public static string P3_XBOX_RIGHT_ANALOG_Y = "P3_RIGHT_ANALOG_Y";              // Player3 右アナログスティックのY方向
@@ -86,9 +87,8 @@ public class InputXBOX360
     public static string P4_XBOX_DPAD_Y = "P4_DPAD_Y";                              // Player4 DPADのY方向
     public static string P4_XBOX_RT = "P4_RTLT";                                    // Player4 RTLTボタン
 
-    private float speed = 0.05f;
-    const float thumbstickDeadZone = 0.3f;
-
+    public static float m_rtPress = 0;
+    public static float m_ltPress = 0;
 
 //***************************************************************************************************
 //                                          メソッド
@@ -104,7 +104,7 @@ public class InputXBOX360
     //----------------------------------------------------------------------
     public static bool IsGetRTButton(string _rtKeyName)
     {
-        if (Input.GetAxis(_rtKeyName) <= -1.0f)
+        if (Input.GetAxis(_rtKeyName) >= 1.0f)
         {
             // 押された
             return true;
@@ -132,6 +132,50 @@ public class InputXBOX360
         // 押されていない
         return false;
 
+    }
+
+    //----------------------------------------------------------------------
+    // RTボタンが押され続けているかどうかを判定
+    //----------------------------------------------------------------------
+    // @Param	string  コントローラーの番号低数値		
+    // @Return	int     どれぐらいの時間押されているか(frame)
+    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static int RTButtonPress(string _rtKeyName)
+    {
+        if (IsGetRTButton(_rtKeyName) == true)
+        {
+            m_rtPress += Time.deltaTime * 60;
+            int frame = (int)m_rtPress;
+            return frame;
+        }
+        else
+        {
+            m_rtPress = 0.0f;
+            return 0;
+        }
+    }
+
+    //----------------------------------------------------------------------
+    // LTボタンが押され続けているかどうかを判定
+    //----------------------------------------------------------------------
+    // @Param	string  コントローラーの番号低数値		
+    // @Return	int     どれぐらいの時間押されているか(frame)
+    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static int LTButtonPress(string _ltKeyName)
+    {
+        if (IsGetRTButton(_ltKeyName) == true)
+        {
+            m_ltPress += Time.deltaTime * 60;
+            int frame = (int)m_ltPress;
+            return frame;
+        }
+        else
+        {
+            m_ltPress = 0.0f;
+            return 0;
+        } 
     }
 
     //----------------------------------------------------------------------

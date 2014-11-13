@@ -30,7 +30,7 @@ public class CPlayerManager {
         eSMASHSHOOT,
         eTACKLE,
         eHOLD,
-        ePATH,
+        ePASS,
         eTACKLEDAMAGE,
         eEND
     };

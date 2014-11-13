@@ -14,10 +14,15 @@ public class CPlayerAction {
     private float m_dashDeceSpeed;    // ダッシュの減速量
     private int m_dashFrame;          // ダッシュのフレーム
 
-    private int m_shootFrame;         // シュートのフレーム
+    private float m_shootFrame;       // シュートのフレーム
     private int m_shootMotionLength;  // シュート全体の長さ
-    private int m_shootTakeOfFrame;   // シュートモーションに入るまでの時間
+    private int m_shootTakeOfFrame;   // シュートが足を離れるまでの時間
     private float m_shootInitSpeed;   // シュート速度
+
+    private float m_passFrame;        // パスのフレーム
+    private int m_passMotionLength;   // パス全体の長さ 
+    private int m_passTakeOfFrame;    // パスが足を離れるまでの時間
+    private float m_passInitSpeed;    // パス速度
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -34,10 +39,15 @@ public class CPlayerAction {
         m_dashDeceSpeed = 0.0f;
         m_dashFrame = 0;
 
-        m_shootFrame = 0;
+        m_shootFrame = 0.0f;
         m_shootMotionLength = 0;
         m_shootTakeOfFrame = 0;
         m_shootInitSpeed = 0.0f;
+
+        m_passFrame = 0.0f;
+        m_passMotionLength = 0;
+        m_passTakeOfFrame = 0;
+        m_passInitSpeed = 0.0f;
     }
 
     //----------------------------------------------------------------------
@@ -68,9 +78,6 @@ public class CPlayerAction {
         _outRot.x += _rotY;
 
         return _outRot;
-
-//        return Quaternion.Euler(_outRot.x, _outRot.y, 0.0f);
-        
     }
 
     //----------------------------------------------------------------------
@@ -101,6 +108,38 @@ public class CPlayerAction {
     }
 
     //----------------------------------------------------------------------
+    // プレイヤーのパス
+    //----------------------------------------------------------------------
+    // @Param	_player     プレイヤーのゲームオブジェクト
+	// @Param   _forward    プレイヤーの前方向ベクトル
+	// @Param   _isBall     プレイヤーがボールを持っているかどうか
+    // @Return	bool        パスが終わったかどうか
+    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public bool Pass(GameObject _player, Vector3 _forward, ref bool _isBall)
+    {
+        // 60Fたったかどうか計算
+        m_passFrame += Time.deltaTime;
+
+        // パス状態に切り替わった場合はスクリプトの中身を変更
+        if (m_passFrame >= m_passTakeOfFrame / 60 && _isBall == true)
+        {
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.velocity = _forward * m_passInitSpeed;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 1.0f;
+            _isBall = false;
+        }
+
+        // パスモーション終わりの時間になった場合はコンポーネントを切り替えて終了
+        if (m_passFrame >= (float)m_passMotionLength / 60)
+        {
+            _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
+            return true;
+        }
+
+        return false;
+    }
+
+    //----------------------------------------------------------------------
     // プレイヤーのシュート
     //----------------------------------------------------------------------
     // @Param	_player     プレイヤーのゲームオブジェクト
@@ -111,25 +150,25 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     public bool Shoot(GameObject _player,Vector3 _forward,ref bool _isBall)
     {
-        m_shootFrame++;
+        // 60Fたったかどうか計算
+        m_shootFrame += Time.deltaTime;
 
         // シュート状態に切り替わった場合はスクリプトの中身を変更
-        if (m_shootFrame == m_shootTakeOfFrame)
+        if (m_shootFrame >= (float)m_shootTakeOfFrame / 60 && _isBall == true)
         {
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.velocity = _forward * m_shootInitSpeed;
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 1.0f;
             _isBall = false;    // プレイヤーのボールではない状態にする
-            Debug.Log("シュート→反動状態");
         }
 
         // シュートモーション終わりの時間になった場合はコンポーネントを切り替えて終了
-        if( m_shootFrame == m_shootMotionLength )
+        if( m_shootFrame >= (float)m_shootMotionLength / 60 )
         {
             _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
-            Debug.Log("反動状態終わり→シュートモーション終了");
             return true;
         }
 
+        // シュートモーション終了していない
         return false;
      }
 
@@ -157,16 +196,32 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     // @Param	_initShootSpeed     シュートの初速度
 	// @Param   _shootMotionLength  シュートの全体フレーム
-    // @Param   _takeOfFrame
+    // @Param   _shootTakeOfFrame
     // @Return	none
     // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public void InitShoot(float _initShootSpeed, int _shootMotionLength, int _takeOfFrame)
+    public void InitShoot(float _initShootSpeed, int _shootMotionLength, int _shootTakeOfFrame)
     {
-        m_shootFrame = 0;
+        m_shootFrame = 0.0f;
         m_shootInitSpeed = _initShootSpeed;
         m_shootMotionLength = _shootMotionLength;
-        m_shootTakeOfFrame = _takeOfFrame;
+        m_shootTakeOfFrame = _shootTakeOfFrame;
     }
 
+    //----------------------------------------------------------------------
+    // プレイヤーのパスの初期化
+    //----------------------------------------------------------------------
+    // @Param	_initPassSpeed      パスの初速度
+	// @Param   _passMotionLength   パスの全体フレーム
+	// @Paramm  _passTakeOfFrame    どのタイミングで足を離れるか
+    // @Return	none
+    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void InitPass(float _initPassSpeed, int _passMotionLength, int _passTakeOfFrame)
+    {
+        m_passFrame = 0.0f;
+        m_passInitSpeed = _initPassSpeed;
+        m_passMotionLength = _passMotionLength;
+        m_passTakeOfFrame = _passTakeOfFrame;
+    }
 }
