@@ -235,7 +235,8 @@ public class CPlayer1 : CPlayer {
 
             this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().Init(pos);
         }
-         * */
+
+         * * */
     }
 
     //----------------------------------------------------------------------
