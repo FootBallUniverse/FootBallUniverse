@@ -32,6 +32,7 @@ public class CGameManager : MonoBehaviour {
     // @Param	none		
     // @Return	none
     // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
+	//          2014/11/13  @Update 2014/11/13  @Author T.Takeuchi       シーン移動しても消滅しない処理追加
     //----------------------------------------------------------------------
     void Awake () {
 
@@ -46,6 +47,9 @@ public class CGameManager : MonoBehaviour {
         this.LoadData();
 
         m_soundPlayer = new CSoundPlayer();
+
+		// シーン移動しても消滅しない
+		DontDestroyOnLoad(this);
 	}
 
     //----------------------------------------------------------------------
