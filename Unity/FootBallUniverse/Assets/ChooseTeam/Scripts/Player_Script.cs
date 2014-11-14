@@ -31,8 +31,12 @@ public class Player_Script : MonoBehaviour
         m_Country[1].m_Country = transform.Find("England").gameObject;
         m_Country[2].m_Country = transform.Find("Brazil").gameObject;
         m_Country[3].m_Country = transform.Find("Japan").gameObject;
-       
-       // m_Country[3].m_Sprit = m_Country[3].m_Country.GetComponent<
+
+        m_Country[0].m_Sprit = m_Country[0].m_Country.transform.FindChild("flag_0").GetComponent<UISprite>();
+        m_Country[1].m_Sprit = m_Country[1].m_Country.transform.FindChild("flag_1").GetComponent<UISprite>();
+        m_Country[2].m_Sprit = m_Country[2].m_Country.transform.FindChild("flag_2").GetComponent<UISprite>();
+        m_Country[3].m_Sprit = m_Country[3].m_Country.transform.FindChild("flag_3").GetComponent<UISprite>();       
+
        // 位置計算用の変数に代入
        Position[0] = m_Country[0].m_Country.transform.position;
        Position[1] = m_Country[1].m_Country.transform.position;
@@ -101,6 +105,13 @@ public class Player_Script : MonoBehaviour
                 m_Country[i].degree += 5.0f;
 
                 m_Country[i].m_Country.transform.position = Position[i];
+
+                // 前に来た国のスプライトのデプスのみ変更
+                if (m_Country[i].m_Flag == 2)
+                    m_Country[i].m_Sprit.depth = 2;
+                else
+                    m_Country[i].m_Sprit.depth = 0;
+
             }
             m_Count++;
             
@@ -147,10 +158,6 @@ public class Player_Script : MonoBehaviour
                         Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
                     }
                     m_Country[i].m_Country.transform.position = Position[i];
-                    // 前に来た国のスプライトのデプスのみ変更
-                    /*if (m_Country[i].m_Flag == 1)
-                        m_Country[i].m_Country.transform.FindChild("flag_" + i).gameObject.GetComponent<UISprite>().depth = 2;
-                     */
                 }
                 m_Count = 0;
                 m_Right_RotateFlag = false;
@@ -177,7 +184,12 @@ public class Player_Script : MonoBehaviour
                 m_Country[i].degree -= 5.0f;
 
                 m_Country[i].m_Country.transform.position = Position[i];
-                
+
+                // 前に来た国のスプライトのデプスのみ変更
+                if (m_Country[i].m_Flag == 0)
+                    m_Country[i].m_Sprit.depth = 2;
+                else
+                    m_Country[i].m_Sprit.depth = 0;
 
             }
             m_Count++;
