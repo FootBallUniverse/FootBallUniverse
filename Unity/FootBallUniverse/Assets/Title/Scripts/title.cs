@@ -3,7 +3,7 @@ using System.Collections;
 
 public class title : MonoBehaviour {
 
-    private int m_StartCount;
+    public int m_StartCount;
 
     private Entry_1     m_entry1;
     private Entry_2     m_entry2;
@@ -15,7 +15,6 @@ public class title : MonoBehaviour {
     void Start()
     {
         m_StartCount = 0;
-
         GameObject entry1 = this.transform.FindChild("entry_wait_state_1").gameObject;
         GameObject entry2 = this.transform.FindChild("entry_wait_state_2").gameObject;
         GameObject entry3 = this.transform.FindChild("entry_wait_state_3").gameObject;
@@ -26,14 +25,13 @@ public class title : MonoBehaviour {
         m_entry3 = entry3.GetComponent<Entry_3>();
         m_entry4 = entry4.GetComponent<Entry_4>();
         m_Fade   = Fade.GetComponent<Title_Fade>();
-
+       
 
     }
 
 	// Update is called once per frame
 	void Update () 
     {
-
         if (m_entry1.m_inFlag == true &&
             m_entry2.m_inFlag == true &&
             m_entry3.m_inFlag == true &&
@@ -44,23 +42,20 @@ public class title : MonoBehaviour {
         else
         {
             m_SceneFlag = false;
+            m_StartCount = 0;
         }
         if (m_SceneFlag == true)
         {
-            if (m_StartCount >= 100)
+            if (m_StartCount >= 200)
             {
                 Application.LoadLevel("ChooseTeam");
             }
-            else if (m_StartCount >= 20)
+            else if (m_StartCount >= 100)
             {
                 m_Fade.m_FadeFlag = true;
+                
             }
             m_StartCount++;
-        }
-        else
-        {
-            m_Fade.m_FadeFlag = false;
-            m_StartCount = 0;
         }
        
         // スペースキーで強制的に次のシーンに飛ばす

@@ -3,6 +3,8 @@ using System.Collections;
  
 public class Entry_4 : MonoBehaviour
 {
+    // 親情報の取得用
+    title m_Title;
     // 速度
     public Vector2 SPEED = new Vector2(0.05f, 0.01f);
     // エントリーしたかどうかの確認用フラグ
@@ -16,7 +18,11 @@ public class Entry_4 : MonoBehaviour
         // キャンセル用に初期位置を保存
         Position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         m_inFlag = false;
+
+        GameObject Entry_time = this.transform.parent.gameObject;
+        m_Title = Entry_time.GetComponent<title>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -45,7 +51,7 @@ public class Entry_4 : MonoBehaviour
         }
 
         // エントリーキャンセルする場合
-        if (m_inFlag == true)
+        if (m_inFlag == true && m_Title.m_StartCount <= 100)
         {
             // エントリーキャンセル
             if (Input.GetKeyDown(KeyCode.R) ||

@@ -35,6 +35,7 @@ public class Title_Fade : MonoBehaviour {
                 //        m_tweenAlpha.Play(true);
 
                 TweenAlpha.Begin(this.gameObject, 1, 0);
+            }
         }
         //if( Input.GetKeyDown(KeyCode.J) )
         if(m_FadeFlag == true)
