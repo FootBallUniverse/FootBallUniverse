@@ -48,9 +48,10 @@ public class CGameManager : MonoBehaviour {
         this.LoadData();
 
         m_soundPlayer = new CSoundPlayer();
+		m_playerPoint = new int[4];
 
 		// シーン移動しても消滅しない
-		DontDestroyOnLoad(this);
+		//DontDestroyOnLoad(this);
 	}
 
     //----------------------------------------------------------------------

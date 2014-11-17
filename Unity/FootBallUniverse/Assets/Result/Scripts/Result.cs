@@ -13,16 +13,36 @@ public class Result : MonoBehaviour {
 	//          2014/11/15  @Update 2014/11/15  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void Start (){
+		
+	}
+
+	void Init()
+	{
 		// チーム得点・国旗設置
 		for (int i = 0; i < 3; i++)
 		{
-			GameObject.Find("Score"+i).GetComponent<DrawNumber>().number = CGameManager.m_isPoint[i];
-			GameObject.Find("Flag" + i);
+			GameObject.Find("Score" + i).GetComponent<DrawNumber>().number = CGameManager.m_isPoint[i];
+
+			switch (TeamData.teamNationality[i])
+			{
+				case TeamData.TEAM_NATIONALITY.BRASIL:
+					GameObject.Find("Flag" + i).GetComponent<UISprite>().spriteName = "BRA";
+					break;
+				case TeamData.TEAM_NATIONALITY.ENGLAND:
+					GameObject.Find("Flag" + i).GetComponent<UISprite>().spriteName = "ENG";
+					break;
+				case TeamData.TEAM_NATIONALITY.ESPANA:
+					GameObject.Find("Flag" + i).GetComponent<UISprite>().spriteName = "ESP";
+					break;
+				case TeamData.TEAM_NATIONALITY.JAPAN:
+					GameObject.Find("Flag" + i).GetComponent<UISprite>().spriteName = "JPN";
+					break;
+			}
 		}
 		// プレイヤー得点
-		for (int i = 1; i < 5; i ++)
+		for (int i = 1; i < 5; i++)
 		{
-			GameObject.Find("Player"+i+"Score").GetComponent<DrawNumber>().number = CGameManager.m_playerPoint[i-1];
+			GameObject.Find("Player" + i + "Score").GetComponent<DrawNumber>().number = CGameManager.m_playerPoint[i - 1];
 		}
 
 		// どっちか買ったか判定
@@ -50,6 +70,8 @@ public class Result : MonoBehaviour {
 	//          2014/11/15  @Update 2014/11/15  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void Update () {
+
+		Init();
 
 		// デバッグ用スペースキーが押されたら強制的にタイトル画面へ
 		if (Input.GetKeyDown(KeyCode.Space) ||
