@@ -15,12 +15,12 @@ public class CHuman : Object {
     public int m_shootMotionLengthSmash;     // スマッシュシュートの長さ
     public int m_shootTakeOfFrame;           // シュートモーションの中でボールが足を離れる時間
     public int m_shootTakeOfFrameSmash;      // スマッシュシュートのモーションの中でボールが足を離れる時間
-    public int m_shootRangeRadiusSmash;      //　スマッシュシュートが出来るときの距離
+    public float m_shootRangeRadiusSmash;    // スマッシュシュートが出来るときの距離
     public int m_shootWaitMotionLength;      // シュートモーションの待機時間
     public float m_passInitSpeed;            // パスの初速度
     public int m_passMotionLength;           // パスモーションの長さ
     public int m_passTakeOfFrame;            // パスモーションの中でボールが足を離れる時間
-    public int m_holdRangeRadius;            // ボールを取る範囲
+    public float m_holdRangeRadius;          // ボールを取る範囲
     public int m_holdMotionLength;           // ホールドモーションの長さ
     public int m_holdMotionLengthPass;       // パスホールドモーションの長さ
     public float m_dashInitSpeed;            // ダッシュの初速度
@@ -28,9 +28,13 @@ public class CHuman : Object {
     public int m_dashDecFrame;               // ダッシュが減速し始める時間
     public float m_tackleInitSpeed;          // タックルの初速度
     public int m_tackleMotionLength;         // タックルのモーションの長さ
-    public int m_tackleMotionChangeLength;   // タックルの溜め時間
+    public int m_tackleChangeLength;         // タックルの溜め時間
     public int m_tackleDecFrame;             // タックルが減速し始める時間
     public int m_tackleDamegeLength;         // タックルのダメージの長さ
+    public int m_shootChargeLength;          // シュートのチャージ時間
+    public int m_passChargeLength;           // パスのチャージ時間
+    public int m_dashChargeLength;           // ダッシュのチャージ時間
+    public float m_cameraMoveSpeedCharging;  // チャージしているときのカメラの移動速度
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -74,12 +78,12 @@ public class CHuman : Object {
         m_shootMotionLengthSmash = int.Parse(_value[8]);
         m_shootTakeOfFrame = int.Parse(_value[9]);
         m_shootTakeOfFrameSmash = int.Parse( _value[10] );
-        m_shootRangeRadiusSmash = int.Parse( _value[11] );
+        m_shootRangeRadiusSmash = float.Parse( _value[11] );
         m_shootWaitMotionLength = int.Parse( _value[12] );
         m_passInitSpeed = float.Parse( _value[13] );
         m_passMotionLength = int.Parse( _value[14] );
         m_passTakeOfFrame = int.Parse( _value[15] );
-        m_holdRangeRadius = int.Parse( _value[16] );
+        m_holdRangeRadius = float.Parse( _value[16] );
         m_holdMotionLength = int.Parse( _value[17] );
         m_holdMotionLengthPass = int.Parse( _value[18] );
         m_dashInitSpeed = float.Parse( _value[19] );
@@ -87,10 +91,13 @@ public class CHuman : Object {
         m_dashDecFrame = int.Parse( _value[21] );
         m_tackleInitSpeed = float.Parse( _value[22] );
         m_tackleMotionLength = int.Parse( _value[23] );
-        m_tackleMotionChangeLength = int.Parse(_value[24]);
+        m_tackleChangeLength = int.Parse(_value[24]);
         m_tackleDecFrame = int.Parse( _value[25] );
-        m_tackleDamegeLength = int.Parse( _value[26] );     
-
+        m_tackleDamegeLength = int.Parse( _value[26] );
+        m_shootChargeLength = int.Parse(_value[27]);
+        m_passChargeLength = int.Parse(_value[28]);
+        m_dashChargeLength = int.Parse(_value[29]);
+        m_cameraMoveSpeedCharging = float.Parse(_value[30]);
 
     }
 

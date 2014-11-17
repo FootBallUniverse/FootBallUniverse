@@ -8,11 +8,11 @@ using System.Collections;
 //----------------------------------------------------------------------
 public class CPlayerAction {
 
-    private int m_dashWholeFrame;     // ダッシュ全体速度
-    private int m_dashDeceFrame;      // 減速開始速度
-    private float m_dashSpeed;        // ダッシュのスピード
-    private float m_dashDeceSpeed;    // ダッシュの減速量
-    private int m_dashFrame;          // ダッシュのフレーム
+    private int m_dashMotionLength;   // ダッシュ全体速度
+    private int m_dashDecFrame;       // 減速開始速度
+    private float m_dashInitSpeed;    // ダッシュの初速度
+    private float m_dashDecSpeed;     // ダッシュの減速量
+    private float m_dashFrame;        // ダッシュのフレーム
 
     private float m_shootFrame;       // シュートのフレーム
     private int m_shootMotionLength;  // シュート全体の長さ
@@ -33,10 +33,10 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     public CPlayerAction()
     {
-        m_dashWholeFrame = 0;
-        m_dashDeceFrame = 0;
-        m_dashSpeed = 0.0f;
-        m_dashDeceSpeed = 0.0f;
+        m_dashMotionLength = 0;
+        m_dashDecFrame = 0;
+        m_dashInitSpeed = 0.0f;
+        m_dashDecSpeed = 0.0f;
         m_dashFrame = 0;
 
         m_shootFrame = 0.0f;
@@ -89,19 +89,20 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     public bool Dash(ref Vector3 _dashPos, Vector3 _forward)
     {
-        m_dashFrame ++;
-        
+        // フレームをデルタタイムで足していく
+        m_dashFrame += Time.deltaTime;
+
         // 減速開始フレームになった場合はスピードを減速させていく
-        if (m_dashFrame >= m_dashDeceFrame)
+        if (m_dashFrame >= (float)m_dashDecFrame / 60 )
         {
-            m_dashSpeed -= m_dashDeceSpeed;
+            m_dashInitSpeed -= m_dashDecSpeed;
         }
 
-        // 移動させる
-        _dashPos += m_dashSpeed * _forward;
+        // 前方向に移動させる
+        _dashPos += m_dashInitSpeed * _forward;
 
         // ダッシュ終了
-        if (m_dashFrame >= m_dashWholeFrame)
+        if (m_dashFrame >= (float)m_dashMotionLength / 60)
             return true;
 
         return false;
@@ -122,7 +123,7 @@ public class CPlayerAction {
         m_passFrame += Time.deltaTime;
 
         // パス状態に切り替わった場合はスクリプトの中身を変更
-        if (m_passFrame >= m_passTakeOfFrame / 60 && _isBall == true)
+        if (m_passFrame >= (float)m_passTakeOfFrame / 60 && _isBall == true)
         {
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.velocity = _forward * m_passInitSpeed;
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 1.0f;
@@ -164,6 +165,7 @@ public class CPlayerAction {
         // シュートモーション終わりの時間になった場合はコンポーネントを切り替えて終了
         if( m_shootFrame >= (float)m_shootMotionLength / 60 )
         {
+            Debug.Log("硬直終了");
             _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
             return true;
         }
@@ -175,20 +177,33 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     // プレイヤーのダッシュの初期化
     //----------------------------------------------------------------------
-    // @Param	_dashSpeed  ダッシュスピード		
+    // @Param	float    ダッシュの初速度
+	// @Param   int      ダッシュのモーションの長さ      
+    // @Param   int      ダッシュが減速し始める時間
     // @Return	none
-    // @Date	2014/10/17  @Update 2014/10/17  @Author T.Kawashita      
+    // @Date	2014/10/17  @Update 2014/11/14  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public void InitDash(float _dashSpeed)
+    public void InitDash(float _dashInitSpeed, int _dashMotionLength, int _dashDecFrame)
     {
-        m_dashWholeFrame = 10;
-        m_dashDeceFrame = 7;
-        m_dashSpeed = _dashSpeed;
-        m_dashFrame = 0;
+        m_dashMotionLength = _dashMotionLength;
+        m_dashDecFrame = _dashDecFrame;
+        m_dashInitSpeed = _dashInitSpeed;
+        m_dashFrame = 0.0f;
 
         // ダッシュの減速量計算
-        m_dashDeceSpeed = _dashSpeed / (float)( m_dashWholeFrame - m_dashDeceFrame );
+        m_dashDecSpeed = _dashInitSpeed / (float)( m_dashMotionLength - m_dashDecFrame );
 
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーのタックルの初期化
+    //----------------------------------------------------------------------
+    // @Param	_tackleSpeed    タックルスピード		
+    // @Return	none
+    // @Date	2014/11/14  @Update 2014/11/14  @Author 2014/11/14      
+    //----------------------------------------------------------------------
+    public void InitTackle(float _initTackleSpeed, int _tackleMotionLength, int _tackleDecFrame)
+    { 
     }
 
     //----------------------------------------------------------------------

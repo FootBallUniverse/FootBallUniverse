@@ -4,16 +4,20 @@ using System.Collections;
 
 public class CPlayerAnimator : MonoBehaviour{
 
-    // flag管理
     public Animator m_animator;
 
     private int m_oldAnimation; // 前回のアニメーションのID
 
+    // flag管理
     public int m_isWait;
     public int m_isFrontMove;
     public int m_isBackMove;
     public int m_isRightMove;
     public int m_isLeftMove;
+    public int m_isNormalShoot;
+    public int m_isKickCharge;
+    public int m_isDash;
+    public int m_isDashCharge;
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -31,6 +35,10 @@ public class CPlayerAnimator : MonoBehaviour{
         m_isBackMove = Animator.StringToHash("isBackMove");
         m_isRightMove = Animator.StringToHash("isRightMove");
         m_isLeftMove = Animator.StringToHash("isLeftMove");
+        m_isNormalShoot = Animator.StringToHash("isNormalShoot");
+        m_isKickCharge = Animator.StringToHash("isKickCharge");
+        m_isDash = Animator.StringToHash("isDash");
+        m_isDashCharge = Animator.StringToHash("isDashCharge");
 
         m_oldAnimation = m_isWait;
 
@@ -39,6 +47,10 @@ public class CPlayerAnimator : MonoBehaviour{
         m_animator.SetBool(m_isBackMove, false);
         m_animator.SetBool(m_isRightMove, false);
         m_animator.SetBool(m_isLeftMove, false);
+        m_animator.SetBool(m_isNormalShoot, false);
+        m_animator.SetBool(m_isKickCharge, false);
+        m_animator.SetBool(m_isDash, false);
+        m_animator.SetBool(m_isDashCharge, false);
 	}
 
     //----------------------------------------------------------------------
@@ -108,6 +120,45 @@ public class CPlayerAnimator : MonoBehaviour{
             }
         }
 
+    }
+
+    //----------------------------------------------------------------------
+    // アニメーションの変更
+    //----------------------------------------------------------------------
+    // @Param	int         アニメーションID		
+    // @Return	none
+    // @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void ChangeAnimation(int _animationId)
+    {
+        m_animator.Play("Dash");
+        m_oldAnimation = _animationId;
+    }
+
+    //----------------------------------------------------------------------
+    // アニメーションの変更
+    //----------------------------------------------------------------------
+    // @Param	string		
+    // @Return	none
+    // @Date	2014/11/17  @Update 2014//11/17  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void ChangeAnimation(string _animationName)
+    {
+        m_animator.Play(_animationName);
+    }
+
+    //----------------------------------------------------------------------
+    // アニメーションの変更（トリガー）
+    //----------------------------------------------------------------------
+    // @Param	int         アニメーションID		
+    // @Return	none
+    // @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void ChangeAnimationOnTrigger(int _animationId)
+    {
+        m_animator.SetBool(m_oldAnimation, false);
+        m_animator.SetTrigger(_animationId);
+        m_oldAnimation = _animationId;
     }
 
 }

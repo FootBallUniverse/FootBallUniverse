@@ -1,5 +1,5 @@
 id,name,player_moveSpeed,player_moveSpeed_holded,camera_moveSpeed,shoot_initSpeed,shoot_initSpeed_smash,shoot_motionLength,shoot_motionLength_smash,shoot_takeofFrame,shoot_takeofFrame_smash,shoot_rangeRadius_smash,shootwait_motionLength,pass_initSpeed,pass_motionLength,pass_takeofFrame,hold_rangeRadius,hold_motionLength,hold_motionLength_pass,dash_initSpeed,dash_motionLength,dash_decFrame,tackle_initSpeed,tackle_motionLength,tackle_chargeLength,tackle_decFrame,tackle_damageLength,shoot_chargeLength,pass_chargeLength,dash_chargeLength,camera_moveSpeed_charging
-1,japan,0.1000,0.0833,0.1000,0.1667,0.2000,30,60,0,0,3.3000,0,0.1333,20,0,2.2000,30,15,0.2000,30,20,0.1500,120,60,60,60,60,0,0,0.0500
-2,spain,0.1000,0.0833,0.1000,0.1667,0.2000,30,60,0,0,3.0000,0,0.1400,10,0,2.0000,15,5,0.2000,30,20,0.1500,120,60,60,60,60,0,0,0.0500
-3,england,0.1000,0.0833,0.1000,0.1750,0.2100,30,60,0,0,3.0000,0,0.1333,20,0,2.0000,30,15,0.2000,30,20,0.1500,120,60,60,60,40,0,0,0.0500
-4,brazil,0.1050,0.0875,0.1000,0.1667,0.2000,30,60,0,0,3.0000,0,0.1333,20,0,2.0000,30,15,0.2100,30,20,0.1650,120,60,60,60,60,0,0,0.0500
+1,japan,0.05,0.0833,0.4,0.1667,0.2,70,60,10,0,3.3,0,0.1333,20,0,2.2,30,15,0.2,40,15,0.15,120,60,60,60,60,0,0,0.2
+2,spain,0.05,0.0833,0.4,0.1667,0.2,70,60,10,0,3,0,0.14,10,0,2,15,5,0.2,40,15,0.15,120,60,60,60,60,0,0,0.2
+3,england,0.05,0.0833,0.4,0.175,0.21,70,60,10,0,3,0,0.1333,20,0,2,30,15,0.2,40,15,0.15,120,60,60,60,40,0,0,0.2
+4,brazil,0.06,0.0875,0.4,3,0.2,70,60,10,0,3,0,2,20,0,2,30,15,0.2,40,15,0.165,120,60,60,60,60,0,0,0.2
