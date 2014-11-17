@@ -35,6 +35,9 @@ public class CHuman : Object {
     public int m_passChargeLength;           // パスのチャージ時間
     public int m_dashChargeLength;           // ダッシュのチャージ時間
     public float m_cameraMoveSpeedCharging;  // チャージしているときのカメラの移動速度
+    public int m_shootChargeLengthMax;       // シュートのチャージの最大時間
+    public int m_dashChargeLengthMax;        // ダッシュのチャージの最大時間
+    public float m_tackleHitRadius;          // タックルの当たる範囲
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -98,6 +101,9 @@ public class CHuman : Object {
         m_passChargeLength = int.Parse(_value[28]);
         m_dashChargeLength = int.Parse(_value[29]);
         m_cameraMoveSpeedCharging = float.Parse(_value[30]);
+        m_shootChargeLengthMax = int.Parse(_value[31]);
+        m_dashChargeLengthMax = int.Parse(_value[32]);
+        m_tackleHitRadius = float.Parse(_value[33]);
 
     }
 

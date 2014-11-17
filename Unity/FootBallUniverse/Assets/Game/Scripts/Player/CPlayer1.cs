@@ -39,6 +39,7 @@ public class CPlayer1 : CPlayer {
         {
             case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone();          break;    // 何もしてない状態
             case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash();          break;    // ダッシュ中
+            case CPlayerManager.ePLAYER_STATUS.eTACKLE: PlayerStatusTackle();      break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot();        break;    // シュート中
             case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass();          break;    // パス中
             case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                 // チャージ中
@@ -52,12 +53,12 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
+    // @Date	2014/11/11  @Update 2014/11/17  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void LateUpdate()
     {
         // アニメーション
-        this.Animation();
+        this.MoveAnimation();
 
         m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
         this.transform.localPosition = m_pos;       // 保存用位置座標を更新
@@ -71,7 +72,7 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/10/28  @Update 2014/11/17  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private void PlayerStatusNone()
     {
@@ -83,9 +84,8 @@ public class CPlayer1 : CPlayer {
         Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));
         this.Rotation(angle);
     
-        this.DashTackleDecision();      // ダッシュ
-        this.PassShootDecision();       // パスかシュートの判定
-
+        this.LTDashTackle();        // ダッシュかタックルの判定
+        this.RTShootPass();         // パスかシュートの判定
     }
 
     //----------------------------------------------------------------------
@@ -99,6 +99,20 @@ public class CPlayer1 : CPlayer {
     {
         // ダッシュ状態が終わったらプレイヤーのステータス変更
         if (this.Dash() == true)
+            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーがタックル中の状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void PlayerStatusTackle()
+    {
+        // タックル状態が終わったらプレイヤーのステータス変更
+        if (this.Tackle() == true)
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
     }
 
@@ -145,11 +159,11 @@ public class CPlayer1 : CPlayer {
 
         // シュートチャージ中ならシュートの処理のみ
         if( m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE )
-            this.PassShootDecision();       // パスかシュートの判定
+            this.ShootHold();               // シュートホールド状態
 
         // ダッシュチャージ中ならダッシュの処理のみ
         if (m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
-            this.DashTackleDecision();      // ダッシュかタックルの判定
+            this.DashHold();                // ダッシュホールド状態
     }
 
     //----------------------------------------------------------------------
@@ -217,6 +231,20 @@ public class CPlayer1 : CPlayer {
     }
 
     //----------------------------------------------------------------------
+    // プレイヤーのタックル関連処理
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private bool Tackle()
+    {
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE)
+            return m_action.Tackle(ref m_pos, this.transform.forward);
+        return false;
+    }
+
+    //----------------------------------------------------------------------
     // プレイヤーのシュート関連処理
     //----------------------------------------------------------------------
     // @Param	none		
@@ -249,33 +277,65 @@ public class CPlayer1 : CPlayer {
     }
 
     //----------------------------------------------------------------------
-    // パスとシュートの判定
+    // RTボタンが押された時
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
     // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void PassShootDecision()
+    private void RTShootPass()
     {
         // シュートかパスが打てる状態になったら(ボールが手持ちにある場合）
-        if ((m_status == CPlayerManager.ePLAYER_STATUS.eNONE || m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE )
-            && m_isBall == true && InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == true)
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
+             m_isBall == true && 
+             InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == true && 
+             InputXBOX360.m_isRTPress == false )
         {
-            m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P1_XBOX_RT);
             m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
-            m_animator.ChangeAnimation("KickCharge");
+            InputXBOX360.m_isRTPress = true;
+            return;
+        }
+
+        else if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false)
+        {
+            InputXBOX360.m_isRTPress = false;
+        }
+    }
+
+    //----------------------------------------------------------------------
+    // シュートのホールド待機状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void ShootHold()
+    {
+        if( InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) )
+            // チャージフレーム取得
+            m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P1_XBOX_RT);
+
+        // チャージ時間が一定量以上ならシュートホールド状態終了
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE && 
+            m_isBall == true && 
+            m_chargeFrame >= m_human.m_shootChargeLengthMax)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_animator.ChangeAnimation(m_animator.m_isWait);
+            InputXBOX360.InitRTLT();
             return;
         }
         
-        if(m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE && m_isBall == true &&
-           InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false)
+        // RTボタンが離されたらシュートかチャージ
+        if(m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE && 
+            m_isBall == true &&
+            InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false)
         {
             // チャージ時間が一定量以上ならシュート
             if (m_chargeFrame >= m_human.m_shootChargeLength)
             {
                 m_action.InitShoot(m_human.m_shootInitSpeed, m_human.m_shootMotionLength, m_human.m_shootTakeOfFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.eSHOOT;
-                m_animator.ChangeAnimation("NormalShoot");
             }
             // シュートじゃなくてチャージ時間が一定量以上ならパス
             else if (m_chargeFrame >= m_human.m_passChargeLength)
@@ -283,85 +343,107 @@ public class CPlayer1 : CPlayer {
                 m_action.InitPass(m_human.m_passInitSpeed, m_human.m_passMotionLength, m_human.m_passTakeOfFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
             }
-            // それ以外の場合はそのまま戻る
-            else
-            {
-                m_animator.ChangeAnimation(m_animator.m_isWait);
-                m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-            }
 
             // 初期化
-            InputXBOX360.RTButtonPress(InputXBOX360.P1_XBOX_RT);
-            m_chargeFrame = 0;
+            m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P1_XBOX_RT);
         }
     }
 
     //----------------------------------------------------------------------
-    // ダッシュとタックルの判定
+    // LTボタンが押された時
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
     // @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void DashTackleDecision()
+    private void LTDashTackle()
     {
         // ダッシュが出来る状態になったら(ボールを持っていなかったら)
-        if ((m_status == CPlayerManager.ePLAYER_STATUS.eNONE || m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
-            && m_isBall == false && InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == true)
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
+             m_isBall == false && 
+             InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == true &&
+             InputXBOX360.m_isLTPress == false)
         {
-            // 通常状態の場合はアニメーション切り替え
-            if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE)
-            {
-                m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
-                m_animator.ChangeAnimation("DashCharge");
-            }
+            m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
+            InputXBOX360.m_isLTPress = true;
+            return;
+        }
 
+        else if( InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT ) == false )
+        {
+            InputXBOX360.m_isLTPress = false;
+        }
+    }
+
+    //----------------------------------------------------------------------
+    // ダッシュのホールド待機状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void DashHold()
+    {
+        if( InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_LT) )
+            // チャージフレーム取得
             m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P1_XBOX_LT);
-            
+        
+        // チャージ時間が一定量以上になったらチャージ状態終了
+        if( m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
+            m_isBall == false &&
+            m_chargeFrame >= m_human.m_dashChargeLengthMax )
+        {
+            m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_animator.ChangeAnimation(m_animator.m_isWait);
+            InputXBOX360.InitRTLT();
             return;
         }
 
         // LTボタンが離されたら
-        if (m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE && m_isBall == false &&
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
+            m_isBall == false &&
             InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == false)
         {
             // チャージ時間が一定量以上ならタックル
             if (m_chargeFrame >= m_human.m_tackleChangeLength)
             {
-//                m_action.InitShoot(m_human.m_shootInitSpeed, m_human.m_shootMotionLength, m_human.m_shootTakeOfFrame);
-//                m_status = CPlayerManager.ePLAYER_STATUS.eSHOOT;
-//                m_animator.ChangeAnimation(m_animator.m_isNormalShoot);
+                m_action.InitTackle(m_human.m_tackleInitSpeed, m_human.m_tackleMotionLength, m_human.m_tackleDecFrame);
+                m_status = CPlayerManager.ePLAYER_STATUS.eTACKLE;
             }
             // タックルじゃなくてチャージ時間が一定量以上ならダッシュ
             else if (m_chargeFrame >= m_human.m_dashChargeLength)
             {
                 m_action.InitDash(m_human.m_dashInitSpeed, m_human.m_dashMotionLength, m_human.m_dashDecFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.eDASH;
-                m_animator.ChangeAnimation("Dash");
-            }
-            // それ以外の場合はそのまま戻る
-            else
-            {
-                m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-                m_animator.ChangeAnimation(m_animator.m_isWait);
             }
 
             // 初期化
-            InputXBOX360.LTButtonPress(InputXBOX360.P1_XBOX_LT);
-            m_chargeFrame = 0;
+            m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P1_XBOX_LT);
         }
     }
 
     //----------------------------------------------------------------------
-    // アニメーション
+    // 移動アニメーション
     //----------------------------------------------------------------------
     // @Param	none
     // @Return	none
     // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void Animation()
+    private void MoveAnimation()
     {
-        // 移動アニメーション
-        m_animator.Move(m_speed);
+        switch (m_status)
+        {
+            case CPlayerManager.ePLAYER_STATUS.eNONE: 
+                m_animator.Move(m_speed); break;
+            case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE: 
+                m_animator.ShootCharge(); break;
+            case CPlayerManager.ePLAYER_STATUS.eSHOOT:
+                m_animator.Shoot(); break;
+            case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE:
+                m_animator.DashCharge(); break;
+            case CPlayerManager.ePLAYER_STATUS.eDASH:
+                m_animator.Dash(); break;
+
+        }
     }
 }

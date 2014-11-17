@@ -89,6 +89,8 @@ public class InputXBOX360
 
     public static float m_rtPress = 0;
     public static float m_ltPress = 0;
+    public static bool m_isRTPress = false;
+    public static bool m_isLTPress = false;
 
 //***************************************************************************************************
 //                                          メソッド
@@ -176,6 +178,19 @@ public class InputXBOX360
             m_ltPress = 0.0f;
             return 0;
         } 
+    }
+
+    //----------------------------------------------------------------------
+    // RTとLTボタンの初期化
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static void InitRTLT()
+    {
+        m_rtPress = 0;
+        m_ltPress = 0;
     }
 
     //----------------------------------------------------------------------

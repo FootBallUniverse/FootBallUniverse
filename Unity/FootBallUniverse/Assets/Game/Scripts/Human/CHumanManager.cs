@@ -7,7 +7,7 @@ public class CHumanManager{
     private static CHumanManager m_humanManager = new CHumanManager();
 
     private const int m_worldNum = 4;
-    private const int m_humanStatusNum = 31;
+    private const int m_humanStatusNum = 34;
 
     public static CJapanHuman m_japanHuman;
     public static CBrazilHuman m_brazilHuman;

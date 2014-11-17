@@ -8,11 +8,11 @@ using System.Collections;
 //----------------------------------------------------------------------
 public class CPlayerAction {
 
-    private int m_dashMotionLength;   // ダッシュ全体速度
-    private int m_dashDecFrame;       // 減速開始速度
-    private float m_dashInitSpeed;    // ダッシュの初速度
-    private float m_dashDecSpeed;     // ダッシュの減速量
     private float m_dashFrame;        // ダッシュのフレーム
+    private int m_dashMotionLength;   // ダッシュ全体のフレーム
+    private float m_dashDecSpeed;     // ダッシュの減速量
+    private int m_dashDecFrame;       // ダッシュの減速開始フレーム
+    private float m_dashInitSpeed;    // ダッシュの初速度
 
     private float m_shootFrame;       // シュートのフレーム
     private int m_shootMotionLength;  // シュート全体の長さ
@@ -23,6 +23,12 @@ public class CPlayerAction {
     private int m_passMotionLength;   // パス全体の長さ 
     private int m_passTakeOfFrame;    // パスが足を離れるまでの時間
     private float m_passInitSpeed;    // パス速度
+
+    private float m_tackleFrame;      // タックルのフレーム
+    private int m_tackleMotionLength; // タックル全体のフレーム
+    private float m_tackleDecSpeed;   // タックルの減速量
+    private int m_tackleDecFrame;     // タックルの減速開始フレーム
+    private float m_tackleInitSpeed;  // タックルの初速度
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -35,9 +41,9 @@ public class CPlayerAction {
     {
         m_dashMotionLength = 0;
         m_dashDecFrame = 0;
-        m_dashInitSpeed = 0.0f;
         m_dashDecSpeed = 0.0f;
         m_dashFrame = 0;
+        m_dashInitSpeed = 0.0f;
 
         m_shootFrame = 0.0f;
         m_shootMotionLength = 0;
@@ -48,6 +54,12 @@ public class CPlayerAction {
         m_passMotionLength = 0;
         m_passTakeOfFrame = 0;
         m_passInitSpeed = 0.0f;
+
+        m_tackleInitSpeed = 0.0f;
+        m_tackleFrame = 0;
+        m_tackleDecSpeed = 0.0f;
+        m_tackleDecFrame = 0;
+        m_tackleMotionLength = 0;
     }
 
     //----------------------------------------------------------------------
@@ -103,6 +115,35 @@ public class CPlayerAction {
 
         // ダッシュ終了
         if (m_dashFrame >= (float)m_dashMotionLength / 60)
+            return true;
+
+        return false;
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーのタックル
+    //----------------------------------------------------------------------
+    // @Param   _tacklePos  現在位置
+    // @Param   _forward    前方向ベクトル    		
+    // @Return	bool    タックルが終わったかどうか
+    // @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public bool Tackle(ref Vector3 _tacklePos, Vector3 _forward)
+    {
+        // フレームをデルタタイムで足していく
+        m_tackleFrame += Time.deltaTime;
+
+        // 減速開始フレームになった場合はスピードを減速させていく
+        if (m_dashFrame >= (float)m_dashDecFrame / 60)
+        {
+            m_dashInitSpeed -= m_dashDecSpeed;
+        }
+
+        // 前方向に移動させる
+        _tacklePos += m_tackleInitSpeed * _forward;
+
+        // タックル終了
+        if (m_tackleFrame >= (float)m_tackleMotionLength / 60)
             return true;
 
         return false;
@@ -165,7 +206,6 @@ public class CPlayerAction {
         // シュートモーション終わりの時間になった場合はコンポーネントを切り替えて終了
         if( m_shootFrame >= (float)m_shootMotionLength / 60 )
         {
-            Debug.Log("硬直終了");
             _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
             return true;
         }
@@ -202,8 +242,15 @@ public class CPlayerAction {
     // @Return	none
     // @Date	2014/11/14  @Update 2014/11/14  @Author 2014/11/14      
     //----------------------------------------------------------------------
-    public void InitTackle(float _initTackleSpeed, int _tackleMotionLength, int _tackleDecFrame)
-    { 
+    public void InitTackle(float _tackleInitSpeed, int _tackleMotionLength, int _tackleDecFrame)
+    {
+        m_tackleMotionLength = _tackleMotionLength;
+        m_tackleDecFrame = _tackleDecFrame;
+        m_tackleInitSpeed = _tackleInitSpeed;
+        m_tackleFrame = 0.0f;
+
+        // タックルの減速量計算
+        m_tackleDecSpeed = _tackleInitSpeed / (float)( m_tackleMotionLength - m_tackleDecFrame );
     }
 
     //----------------------------------------------------------------------
