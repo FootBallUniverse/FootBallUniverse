@@ -23,6 +23,7 @@ public class CGameManager : MonoBehaviour {
     public static bool m_isGamePlay;    // ゲームがプレイ中かどうか
 
     public static int[] m_isPoint;      // 両チームの得点
+	public static int[] m_playerPoint;  // 両チームプレイヤーの個人的得点
 
     private CSoundPlayer m_soundPlayer; // サウンドプレイヤー
 
