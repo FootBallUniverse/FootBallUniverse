@@ -104,7 +104,7 @@ public class InputXBOX360
     //----------------------------------------------------------------------
     public static bool IsGetRTButton(string _rtKeyName)
     {
-        if (Input.GetAxis(_rtKeyName) >= 1.0f)
+        if (Input.GetAxisRaw(_rtKeyName) >= 1.0f)
         {
             // 押された
             return true;
@@ -123,7 +123,7 @@ public class InputXBOX360
     //----------------------------------------------------------------------
     public static bool IsGetLTButton(string _ltKeyName)
     {
-        if (Input.GetAxis(_ltKeyName) >= 1.0f)
+        if (Input.GetAxisRaw(_ltKeyName) >= 1.0f)
         {
             // 押された
             return true;

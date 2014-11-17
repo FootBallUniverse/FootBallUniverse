@@ -51,7 +51,7 @@ public class Button_3 : MonoBehaviour
         }
 
         // エントリーキャンセルする場合
-        if (m_inFlag == true && m_Title.m_StartCount <= 100)
+        if (m_inFlag == true && m_Title.m_StartCount < 1)
         {
             // エントリーキャンセル
             if (Input.GetKeyDown(KeyCode.E) ||

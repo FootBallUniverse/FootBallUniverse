@@ -24,7 +24,7 @@ public class CPlayerKeyBoard : CPlayer {
 	void Update () {
 		this.rigidbody.velocity = Vector3.zero;
 		this.rigidbody.angularVelocity = Vector3.zero;
-		switch (m_cameraStatus)
+		switch (m_cameraStatus) 
         { 
             // 通常移動モード
             case CPlayerManager.eCAMERA_STATUS.eNORMAL:

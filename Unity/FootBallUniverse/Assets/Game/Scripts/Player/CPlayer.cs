@@ -16,6 +16,8 @@ public class CPlayer : MonoBehaviour {
     protected CPlayerAction m_action;       // プレイヤーのアクション
     protected CPlayerAnimator m_animator;   // プレイヤーのアニメーション
     public CHuman m_human;                  // プレイヤーの国のインスタンス
+
+    public int m_chargeFrame;               // チャージ時のフレーム数
     public bool m_isBall;                   // ボールを持っているかどうか
 
     //----------------------------------------------------------------------
@@ -35,6 +37,7 @@ public class CPlayer : MonoBehaviour {
         m_human = new CHuman();
         m_action = new CPlayerAction();
 
+        m_chargeFrame = 0;
         m_isBall = false;
     }
 
@@ -47,15 +50,16 @@ public class CPlayer : MonoBehaviour {
     //----------------------------------------------------------------------
     protected bool Init()
     {
-        m_pos = new Vector3();
-        m_speed = new Vector3();
-        m_angle = new Vector3();
+        m_pos = new Vector3(0.0f,0.0f,0.0f);
+        m_speed = new Vector3(0.0f,0.0f,0.0f);
+        m_angle = new Vector3(0.0f,0.0f,0.0f);
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
         m_human = new CHuman();
         m_action = new CPlayerAction();
 
+        m_chargeFrame = 0;
         m_isBall = false;
 
         return true;
