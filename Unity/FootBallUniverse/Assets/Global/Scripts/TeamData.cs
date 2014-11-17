@@ -16,6 +16,6 @@ public class TeamData
 	// シングルトン用
 	private static TeamData teamData = new TeamData();
 
-	public static TEAM_NATIONALITY teanNationalityRight;
+	public static TEAM_NATIONALITY teamNationalityRight;
 	public static TEAM_NATIONALITY teamNationalityLeft;
 };
