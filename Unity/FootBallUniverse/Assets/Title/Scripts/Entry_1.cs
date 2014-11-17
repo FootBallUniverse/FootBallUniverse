@@ -50,7 +50,7 @@ public class Entry_1 : MonoBehaviour
         }
 
         // エントリーキャンセルする場合　フラグがTRUE、尚且つキャラ選択画面への遷移のカウントが一定値以内の時
-        if (m_inFlag == true && m_Title.m_StartCount <= 100)
+        if (m_inFlag == true && m_Title.m_StartCount <= 1)
         {
             // エントリーキャンセル
             if (Input.GetKeyDown(KeyCode.Q) ||
