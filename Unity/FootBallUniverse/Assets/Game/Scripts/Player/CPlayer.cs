@@ -53,7 +53,7 @@ public class CPlayer : MonoBehaviour {
         m_pos = new Vector3(0.0f,0.0f,0.0f);
         m_speed = new Vector3(0.0f,0.0f,0.0f);
         m_angle = new Vector3(0.0f,0.0f,0.0f);
-        m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        m_status = CPlayerManager.ePLAYER_STATUS.eWAIT;
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
         m_human = new CHuman();

@@ -23,6 +23,7 @@ public class CPlayerManager {
     public enum ePLAYER_STATUS
     {
         eWAIT,
+        eCOUNTDOWN,
         eNONE,
         eDASH,
         eSHOOTCHARGE,

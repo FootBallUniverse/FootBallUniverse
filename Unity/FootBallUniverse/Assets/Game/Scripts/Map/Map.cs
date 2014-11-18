@@ -12,9 +12,9 @@ public class Map : MonoBehaviour {
 		//makerPrefab = Resources.Load("MapMaker") as GameObject;
 
 		// マップ用テクスチャ貼り付け
-		workObject = this.transform.root.FindChild("MapBaseX").gameObject;
+		workObject = this.transform.FindChild("MapBaseX").gameObject;
 		workObject.renderer.material.mainTexture = Resources.Load("Texture/Game/MapBaseXTex") as Texture;
-		workObject = this.transform.root.FindChild("MapBaseY").gameObject;
+		workObject = this.transform.FindChild("MapBaseY").gameObject;
 		workObject.renderer.material.mainTexture = Resources.Load("Texture/Game/MapBaseYTex") as Texture;
 		workObject.renderer.material.color = new Color(6.0f / 255.0f, 66.0f / 255.0f, 159.0f / 255.0f, 90.0f / 255.0f);
 		// 6 66 159 90

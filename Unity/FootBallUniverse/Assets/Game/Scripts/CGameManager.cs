@@ -10,14 +10,15 @@ using System.Collections;
 public class CGameManager : MonoBehaviour {
 
     // ゲームのステータス
-    private enum eSTATUS
+    public enum eSTATUS
     { 
-        eWAIT,  // 開始待機状態
-        eGAME,  // ゲームプレイ中状態
-        eEND,   // ゲーム終了状態
+        eWAIT,      // 開始待機状態
+        eCOUNTDOWN, // 開始カウントダウン状態
+        eGAME,      // ゲームプレイ中状態
+        eEND,       // ゲーム終了状態
     }
-
-    private eSTATUS m_nowStatus;        // ゲームの現在のステータス
+        
+    public static eSTATUS m_nowStatus;  // ゲームの現在のステータス
     private float m_frame;              // タイマー調整用フレーム
    
     public static bool m_isGamePlay;    // ゲームがプレイ中かどうか
@@ -59,15 +60,16 @@ public class CGameManager : MonoBehaviour {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/27  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/10/27  @Update 2014/11/18  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Update () {
 
         switch (m_nowStatus)
         {
-            case eSTATUS.eWAIT: GameWait(); break;  // ゲーム開始待機状態
-            case eSTATUS.eGAME: GamePlay(); break;  // ゲームプレイ状態
-            case eSTATUS.eEND: GameEnd();   break;  // ゲーム終了状態
+            case eSTATUS.eWAIT: GameWait();        break;   // ゲーム開始待機状態
+            case eSTATUS.eCOUNTDOWN: CountDown(); break;
+            case eSTATUS.eGAME: GamePlay();        break;   // ゲームプレイ状態
+            case eSTATUS.eEND: GameEnd();          break;   // ゲーム終了状態
         }
     }
 
@@ -85,8 +87,8 @@ public class CGameManager : MonoBehaviour {
         // 60Fカウント
         if (m_frame >= 1.0f)
         {
-        }
 
+        }
 
         // セレクトボタンでレディ画面をスキップ
         if (InputXBOX360.IsGetAllSelectButton() == true)
@@ -95,6 +97,18 @@ public class CGameManager : MonoBehaviour {
             m_frame = 0;
             m_isGamePlay = true;
         }
+    }
+
+    //----------------------------------------------------------------------
+    // カウントダウン状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/18  @Update 2014/11/18  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void CountDown()
+    { 
+
     }
 
     //----------------------------------------------------------------------
