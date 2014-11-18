@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player_Script : MonoBehaviour
-{
-    public struct TEAM_NO
+public class Player_1_Script : MonoBehaviour {
+
+	  public struct TEAM_NO
     {
         public GameObject m_Country;    // チームの国名
         public UISprite m_Sprit;        // 
@@ -15,6 +15,7 @@ public class Player_Script : MonoBehaviour
         public float centerz;           // 
         public int m_Flag;              // モデルの位置を表す数値
     };
+    
     // 速度
     public TEAM_NO[] m_Country = new TEAM_NO[4];
     public Vector2 SPEED = new Vector2(0.05f, 0.01f);
@@ -26,11 +27,14 @@ public class Player_Script : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        // 必要データの読込み
+        GameObject m_TeamData = GameObject.Find("TeamData");
+        
         // モデルの呼び出し
-        m_Country[0].m_Country = transform.Find("Spain").gameObject;
-        m_Country[1].m_Country = transform.Find("England").gameObject;
-        m_Country[2].m_Country = transform.Find("Brazil").gameObject;
-        m_Country[3].m_Country = transform.Find("Japan").gameObject;
+        m_Country[0].m_Country = transform.Find("Spain_1").gameObject;
+        m_Country[1].m_Country = transform.Find("England_1").gameObject;
+        m_Country[2].m_Country = transform.Find("Brazil_1").gameObject;
+        m_Country[3].m_Country = transform.Find("Japan_1").gameObject;
 
         m_Country[0].m_Sprit = m_Country[0].m_Country.transform.FindChild("flag_0").GetComponent<UISprite>();
         m_Country[1].m_Sprit = m_Country[1].m_Country.transform.FindChild("flag_1").GetComponent<UISprite>();
@@ -60,7 +64,6 @@ public class Player_Script : MonoBehaviour
 
        }
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -81,10 +84,15 @@ public class Player_Script : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Application.LoadLevel("Title");
+        }
         // 右回転処理
         Right_Rotate();
         // 左回転処理
         Left_Rotate();
+
     }
 
     //=========================================================================================//
@@ -159,6 +167,7 @@ public class Player_Script : MonoBehaviour
                     }
                     m_Country[i].m_Country.transform.position = Position[i];
                 }
+                
                 m_Count = 0;
                 m_Right_RotateFlag = false;
                 
@@ -250,3 +259,4 @@ public class Player_Script : MonoBehaviour
         }
     }
 }
+
