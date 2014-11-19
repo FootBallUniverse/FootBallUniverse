@@ -16,8 +16,7 @@ public class CKickOff : MonoBehaviour {
         m_tweenAlpha = this.GetComponent<TweenAlpha>();
         m_tweenScale = this.GetComponent<TweenScale>();
 
-        this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
-        this.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
+        this.transform.GetComponent<TweenPosition>().Play(true);
 
         m_tweenAlpha.from = 0.0f;
         m_tweenAlpha.to = 1.0f;
@@ -25,10 +24,6 @@ public class CKickOff : MonoBehaviour {
         m_tweenAlpha.delay = 0.0f;
         m_tweenAlpha.Play(true);
 
-        m_tweenScale.from = new Vector3(0.0f, 0.0f, 0.0f);
-        m_tweenScale.to = new Vector3(1000.0f, 300.0f, 0.0f);
-        m_tweenScale.duration = 1.0f;
-        m_tweenScale.delay = 0.0f;
         m_tweenScale.Play(true);
 	}
 	
