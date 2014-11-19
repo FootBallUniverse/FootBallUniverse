@@ -21,8 +21,7 @@ public class Result : MonoBehaviour {
 		// チーム得点・国旗設置
 		for (int i = 0; i < 3; i++)
 		{
-			GameObject.Find("Score" + i).GetComponent<DrawNumber>().number = CGameManager.m_isPoint[i];
-
+			GameObject.Find("Score" + i).GetComponent<DrawNumber>().number = 3;// = CGameManager.m_isPoint[i];
 			switch (TeamData.teamNationality[i])
 			{
 				case TeamData.TEAM_NATIONALITY.BRASIL:
