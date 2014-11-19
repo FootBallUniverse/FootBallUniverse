@@ -15,6 +15,8 @@ public class CGameManager : MonoBehaviour {
         eWAIT,      // 開始待機状態
         eCOUNTDOWN, // 開始カウントダウン状態
         eGAME,      // ゲームプレイ中状態
+        eENDWAIT,   // ゲーム終了待機状態
+        eFADEOUT,   // 最後のフェードアウト状態
         eEND,       // ゲーム終了状態
     }
         
@@ -60,16 +62,23 @@ public class CGameManager : MonoBehaviour {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/27  @Update 2014/11/18  @Author T.Kawashita      
+    // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita 
+    // @Update  2014/11/18  GameEndをGameEndWaitに変更  @Author T.Kawashita 
     //----------------------------------------------------------------------
 	void Update () {
 
         switch (m_nowStatus)
         {
             case eSTATUS.eWAIT: GameWait();        break;   // ゲーム開始待機状態
-            case eSTATUS.eCOUNTDOWN: CountDown(); break;
+            case eSTATUS.eCOUNTDOWN: CountDown();  break;   // ゲーム開始カウントダウン中
             case eSTATUS.eGAME: GamePlay();        break;   // ゲームプレイ状態
-            case eSTATUS.eEND: GameEnd();          break;   // ゲーム終了状態
+            case eSTATUS.eENDWAIT: GameEndWait();  break;   // ゲーム終了待機状態
+            case eSTATUS.eEND:                 
+                // リザルト画面に遷移させる
+                Application.LoadLevel("Result");
+                break;
+
+            default:                               break;
         }
     }
 
@@ -125,13 +134,14 @@ public class CGameManager : MonoBehaviour {
     }
 
     //----------------------------------------------------------------------
-    // ゲーム終了状態
+    // ゲーム終了待機状態
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita     
+    // @Update  2014/11/18  ゲーム終了待機状態に変更
     //----------------------------------------------------------------------
-    private void GameEnd()
+    private void GameEndWait()
     {
         // 60Fたったかどうか計算
         m_frame += Time.deltaTime;
@@ -139,11 +149,13 @@ public class CGameManager : MonoBehaviour {
         {
             m_frame = 0;
             CGameData.m_gameEndTime--;
+
+            // ここで何か終わりの表示
             Debug.Log("Resultまで残り:" + CGameData.m_gameEndTime);
             if (CGameData.m_gameEndTime <= 0)
             {
-                // リザルト画面に遷移のためのブラックアウト
-                Application.LoadLevel("Result");
+                // ゲーム終了待機が終わったらフェードアウトさせる
+                m_nowStatus = eSTATUS.eFADEOUT;
             } 
         }
     }
@@ -170,9 +182,8 @@ public class CGameManager : MonoBehaviour {
                 if (CGameData.m_gamePlayTime <= 0)
                 {
                     m_isGamePlay = false;
-                    m_nowStatus = eSTATUS.eEND;
+                    m_nowStatus = eSTATUS.eENDWAIT;
                     m_frame = 0.0f;
-                    Debug.Log("Game END");
                     return true;
                 }
             }

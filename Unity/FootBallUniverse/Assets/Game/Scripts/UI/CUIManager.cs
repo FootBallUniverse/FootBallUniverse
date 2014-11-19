@@ -17,11 +17,11 @@ public class CUIManager : MonoBehaviour {
         eFADEOUT,
         eCOUNTDOWN,
         eGAME,
+        eENDWAIT,
     }
     public eUISTATUS m_uiStatus;           // UIの状態
 
-    private float m_gameFrame;              // フレーム調整用
-    public GameObject m_gameObject;         // UI用GameObject
+    public GameObject m_gameObject;        // UI用GameObject
     public GameObject m_uiPanel;           // UI用パネル
 
 	// Use this for initialization
@@ -41,48 +41,64 @@ public class CUIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        m_gameFrame += Time.deltaTime;
-
         // 今のゲームの状態によってUIを切り替える
         switch (CGameManager.m_nowStatus)
         {
            // 待機中状態
            case CGameManager.eSTATUS.eWAIT:
-                if (m_gameFrame >= 1.0f)
+                switch (m_uiStatus)
                 {
-                    switch (m_uiStatus)
-                    {
-                        case eUISTATUS.eWAIT:
-                            m_gameObject.AddComponent<CFadeIn>(); // フェードイン用スクリプト追加
-                            m_uiStatus = eUISTATUS.eFADEIN;
-                            break;
+                    case eUISTATUS.eWAIT:
+                        m_gameObject.AddComponent<CFadeIn>(); // フェードイン用スクリプト追加
+                        m_uiStatus = eUISTATUS.eFADEIN;
+                        break;
 
-                        case eUISTATUS.eFADEIN:
-                            if (m_gameObject == false)
-                            {
-                                m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
-                                m_gameObject.transform.parent = m_uiPanel.transform;
-                                m_uiStatus = eUISTATUS.eCOUNTDOWN;
-                                CGameManager.m_nowStatus = CGameManager.eSTATUS.eCOUNTDOWN;
-                            }
-                            break;
-                    }
-
-                    m_gameFrame = 0.0f;
+                    case eUISTATUS.eFADEIN:
+                        if (m_gameObject == false)
+                        {
+                            m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
+                            m_gameObject.transform.parent = m_uiPanel.transform;
+                            m_uiStatus = eUISTATUS.eCOUNTDOWN;
+                            CGameManager.m_nowStatus = CGameManager.eSTATUS.eCOUNTDOWN;
+                        }
+                        break;
                 }
 
                 break;
 
+            // カウントダウン中
             case CGameManager.eSTATUS.eCOUNTDOWN:
-                if (m_gameFrame >= 1.0f && m_gameObject == false)
+                if (m_gameObject == false)
                 {
                     m_uiStatus = eUISTATUS.eGAME;
                     CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;
-                    m_gameFrame = 0.0f;
                 }
                 break;
 
+           // ゲーム中
            case CGameManager.eSTATUS.eGAME:
+                break;
+
+            case CGameManager.eSTATUS.eFADEOUT:
+                switch (m_uiStatus)
+                {   
+                    case eUISTATUS.eGAME:
+                        // ゲーム中の状態から遷移した場合はフェードアウトの準備をする
+                        m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                        m_gameObject.AddComponent<CFadeOut>();
+                        m_gameObject.transform.parent = m_uiPanel.transform;
+                        m_uiStatus = eUISTATUS.eFADEOUT;
+                        break;
+
+                    case eUISTATUS.eFADEOUT:
+                        // フェードアウトが終了したらゲームを終了させる
+                        if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
+                        {
+                            CGameManager.m_nowStatus = CGameManager.eSTATUS.eEND;
+                        }   
+                        break;
+
+                }
                 break;
 
             case CGameManager.eSTATUS.eEND:
