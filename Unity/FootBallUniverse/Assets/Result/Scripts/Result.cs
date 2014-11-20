@@ -16,32 +16,50 @@ public class Result : MonoBehaviour {
 
 	void Init()
 	{
-		/*
 		// チーム得点・国旗設置
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 2; i++)
 		{
-			GameObject.Find("Score" + i).GetComponent<DrawNumber>().number = 3;// = CGameManager.m_isPoint[i];
+			GameObject.Find("MainPanel").transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.teamScore[i];
+			GameObject.Find("SubPanel0").transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.teamScore[i];
+			GameObject.Find("SubPanel1").transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.teamScore[i];
+
 			switch (TeamData.teamNationality[i])
 			{
 				case TeamData.TEAM_NATIONALITY.BRASIL:
-					GameObject.Find("Flag" + i).GetComponent<UISprite>().spriteName = "BRA";
+					GameObject.Find("MainPanel").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "BRA";
+					GameObject.Find("SubPanel0").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "BRA";
+					GameObject.Find("SubPanel1").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "BRA";
 					break;
 				case TeamData.TEAM_NATIONALITY.ENGLAND:
-					GameObject.Find("Flag" + i).GetComponent<UISprite>().spriteName = "ENG";
+					GameObject.Find("MainPanel").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ENG";
+					GameObject.Find("SubPanel0").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ENG";
+					GameObject.Find("SubPanel1").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ENG";
 					break;
 				case TeamData.TEAM_NATIONALITY.ESPANA:
-					GameObject.Find("Flag" + i).GetComponent<UISprite>().spriteName = "ESP";
+					GameObject.Find("MainPanel").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ESP";
+					GameObject.Find("SubPanel0").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ESP";
+					GameObject.Find("SubPanel1").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ESP";
 					break;
 				case TeamData.TEAM_NATIONALITY.JAPAN:
-					GameObject.Find("Flag" + i).GetComponent<UISprite>().spriteName = "JPN";
+					GameObject.Find("MainPanel").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "JPN";
+					GameObject.Find("SubPanel0").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "JPN";
+					GameObject.Find("SubPanel1").transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "JPN";
 					break;
 			}
 		}
+
+
 		// プレイヤー得点
-		for (int i = 1; i < 5; i++)
+		for (int i = 0; i < 2; i++)
 		{
-			GameObject.Find("Player" + i + "Score").GetComponent<DrawNumber>().number = CGameManager.m_playerPoint[i - 1];
+			for (int j = 0; i < 2; j++)
+			{
+				GameObject.Find("Player" + i + "Score").GetComponent<DrawNumber>().number = TeamData.playerScore[i, j];
+			}
 		}
+
+
+
 
 		// どっちか買ったか判定
 		if (CGameManager.m_isPoint[0] > CGameManager.m_isPoint[1])
@@ -56,7 +74,6 @@ public class Result : MonoBehaviour {
 		{
 			// 引き分け
 		}
-		 * */
 	}
 
 
