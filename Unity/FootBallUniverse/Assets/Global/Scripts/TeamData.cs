@@ -25,5 +25,5 @@ public class TeamData
 
 	public static TEAM_NATIONALITY[] teamNationality = new TEAM_NATIONALITY[2];  // 国籍
 	public static int[] teamScore = new int[2];                                  // スコア
-	public static var goalLog = new ArrayList;                                                   // 
+	//public static var goalLog = new ArrayList;                                                   // 
 };
