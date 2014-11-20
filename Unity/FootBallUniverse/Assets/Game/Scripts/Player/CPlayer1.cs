@@ -13,6 +13,10 @@ public class CPlayer1 : CPlayer {
     void Start () {
 
         this.Init();
+
+        // プレイヤーのデータをセット
+        CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_1);
+
         m_pos = this.transform.localPosition;
 
         // 国の情報をセット
