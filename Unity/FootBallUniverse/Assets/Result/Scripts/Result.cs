@@ -12,12 +12,11 @@ public class Result : MonoBehaviour {
 	// @Date    2014/10/29  @Update 2014/10/29  @Author T.Kawashita
 	//          2014/11/15  @Update 2014/11/15  @Author T.Takeuchi
 	//----------------------------------------------------------------------
-	void Start (){
-		
-	}
+	void Start (){}
 
 	void Init()
 	{
+		/*
 		// チーム得点・国旗設置
 		for (int i = 0; i < 3; i++)
 		{
@@ -57,6 +56,7 @@ public class Result : MonoBehaviour {
 		{
 			// 引き分け
 		}
+		 * */
 	}
 
 
