@@ -17,13 +17,15 @@ public class Player_1_Script : MonoBehaviour {
     };
     
     // 速度
-    public TEAM_NO[] m_Country = new TEAM_NO[4];
     public Vector2 SPEED = new Vector2(0.05f, 0.01f);
 
+    public TEAM_NO[] m_Country = new TEAM_NO[4];
     Vector3[] Position = new Vector3[4];
+    public bool m_Right_RotateFlag;
+    public bool m_Left_RotateFlag;
     int m_Count = 0;
-    bool m_Right_RotateFlag;
-    bool m_Left_RotateFlag;
+
+    Fade_1 m_Fade_flag;
     // Use this for initialization
     void Start()
     {
@@ -35,11 +37,13 @@ public class Player_1_Script : MonoBehaviour {
         m_Country[1].m_Country = transform.Find("England_1").gameObject;
         m_Country[2].m_Country = transform.Find("Brazil_1").gameObject;
         m_Country[3].m_Country = transform.Find("Japan_1").gameObject;
+        GameObject m_Fade = transform.FindChild("Fade").gameObject;
 
         m_Country[0].m_Sprit = m_Country[0].m_Country.transform.FindChild("flag_0").GetComponent<UISprite>();
         m_Country[1].m_Sprit = m_Country[1].m_Country.transform.FindChild("flag_1").GetComponent<UISprite>();
         m_Country[2].m_Sprit = m_Country[2].m_Country.transform.FindChild("flag_2").GetComponent<UISprite>();
         m_Country[3].m_Sprit = m_Country[3].m_Country.transform.FindChild("flag_3").GetComponent<UISprite>();       
+        m_Fade_flag = m_Fade.GetComponent<Fade_1>();
 
        // 位置計算用の変数に代入
        Position[0] = m_Country[0].m_Country.transform.position;
@@ -67,7 +71,7 @@ public class Player_1_Script : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
@@ -75,7 +79,7 @@ public class Player_1_Script : MonoBehaviour {
                 m_Right_RotateFlag = true;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
@@ -86,7 +90,12 @@ public class Player_1_Script : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Application.LoadLevel("Title");
+            m_Fade_flag.m_FadeFlag += 1;
+            if (m_Fade_flag.m_FadeFlag > 2)
+            {
+                m_Fade_flag.m_FadeFlag = 0;
+            }
+            //Application.LoadLevel("Title");
         }
         // 右回転処理
         Right_Rotate();
@@ -116,9 +125,9 @@ public class Player_1_Script : MonoBehaviour {
 
                 // 前に来た国のスプライトのデプスのみ変更
                 if (m_Country[i].m_Flag == 2)
-                    m_Country[i].m_Sprit.depth = 2;
+                    m_Country[i].m_Sprit.depth = 6;
                 else
-                    m_Country[i].m_Sprit.depth = 0;
+                    m_Country[i].m_Sprit.depth = 4;
 
             }
             m_Count++;
@@ -196,9 +205,9 @@ public class Player_1_Script : MonoBehaviour {
 
                 // 前に来た国のスプライトのデプスのみ変更
                 if (m_Country[i].m_Flag == 0)
-                    m_Country[i].m_Sprit.depth = 2;
+                    m_Country[i].m_Sprit.depth = 6;
                 else
-                    m_Country[i].m_Sprit.depth = 0;
+                    m_Country[i].m_Sprit.depth = 4;
 
             }
             m_Count++;
