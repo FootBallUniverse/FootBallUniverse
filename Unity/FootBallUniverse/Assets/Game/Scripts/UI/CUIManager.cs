@@ -79,6 +79,10 @@ public class CUIManager : MonoBehaviour {
            case CGameManager.eSTATUS.eGAME:
                 break;
 
+            // ゴールした後のUI
+            case CGameManager.eSTATUS.eGOAL:
+                break;
+
             case CGameManager.eSTATUS.eFADEOUT:
                 switch (m_uiStatus)
                 {   

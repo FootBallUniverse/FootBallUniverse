@@ -115,4 +115,17 @@ public class CPlayer : MonoBehaviour {
     { 
     }
 
+    //----------------------------------------------------------------------
+    // データをプレイヤーにセット
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    protected void SetData()
+    {
+        // 位置をセット
+        this.transform.localPosition = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
+
+    }
 }

@@ -12,12 +12,14 @@ public class CGameManager : MonoBehaviour {
     // ゲームのステータス
     public enum eSTATUS
     { 
-        eWAIT,      // 開始待機状態
-        eCOUNTDOWN, // 開始カウントダウン状態
-        eGAME,      // ゲームプレイ中状態
-        eENDWAIT,   // ゲーム終了待機状態
-        eFADEOUT,   // 最後のフェードアウト状態
-        eEND,       // ゲーム終了状態
+        eWAIT,              // 開始待機状態
+        eCOUNTDOWN,         // 開始カウントダウン状態
+        eGAME,              // ゲームプレイ中状態
+        eENDWAIT,           // ゲーム終了待機状態
+        eFADEOUT,           // 最後のフェードアウト状態
+        eGOAL,              // ゴール状態
+        eGOALPERFOMANCE,    // ゴール時の演出
+        eEND,               // ゲーム終了状態
     }
         
     public static eSTATUS m_nowStatus;  // ゲームの現在のステータス
@@ -72,6 +74,7 @@ public class CGameManager : MonoBehaviour {
             case eSTATUS.eWAIT: GameWait();        break;   // ゲーム開始待機状態
             case eSTATUS.eCOUNTDOWN: CountDown();  break;   // ゲーム開始カウントダウン中
             case eSTATUS.eGAME: GamePlay();        break;   // ゲームプレイ状態
+            case eSTATUS.eGOAL: Goal();            break;   // ゴールした後の状態  
             case eSTATUS.eENDWAIT: GameEndWait();  break;   // ゲーム終了待機状態
             case eSTATUS.eEND:                 
                 // リザルト画面に遷移させる
@@ -118,6 +121,17 @@ public class CGameManager : MonoBehaviour {
     private void CountDown()
     { 
 
+    }
+
+    //----------------------------------------------------------------------
+    // ゴール状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void Goal()
+    { 
     }
 
     //----------------------------------------------------------------------

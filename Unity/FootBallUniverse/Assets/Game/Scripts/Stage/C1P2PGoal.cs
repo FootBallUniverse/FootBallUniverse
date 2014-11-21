@@ -47,6 +47,8 @@ public class C1P2PGoal : MonoBehaviour {
             CGameManager.m_isPoint[0] += 1;
             
             Debug.Log("1P&2P:" + CGameManager.m_isPoint[0] + " 3P&4P:" + CGameManager.m_isPoint[1] );
-		}
+
+            CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
+        }
 	}
 }

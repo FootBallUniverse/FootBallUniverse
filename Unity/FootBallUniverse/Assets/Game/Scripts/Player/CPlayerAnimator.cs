@@ -15,6 +15,7 @@ public class CPlayerAnimator : MonoBehaviour{
     public int m_isRightMove;
     public int m_isLeftMove;
     public int m_isNormalShoot;
+    public int m_isPass;
     public int m_isKickCharge;
     public int m_isDash;
     public int m_isDashCharge;
@@ -35,6 +36,7 @@ public class CPlayerAnimator : MonoBehaviour{
         m_isBackMove = Animator.StringToHash("isBackMove");
         m_isRightMove = Animator.StringToHash("isRightMove");
         m_isLeftMove = Animator.StringToHash("isLeftMove");
+        m_isPass = Animator.StringToHash("isPass");
         m_isNormalShoot = Animator.StringToHash("isNormalShoot");
         m_isKickCharge = Animator.StringToHash("isKickCharge");
         m_isDash = Animator.StringToHash("isDash");
@@ -48,6 +50,7 @@ public class CPlayerAnimator : MonoBehaviour{
         m_animator.SetBool(m_isRightMove, false);
         m_animator.SetBool(m_isLeftMove, false);
         m_animator.SetBool(m_isNormalShoot, false);
+        m_animator.SetBool(m_isPass, false);
         m_animator.SetBool(m_isKickCharge, false);
         m_animator.SetBool(m_isDash, false);
         m_animator.SetBool(m_isDashCharge, false);
@@ -160,7 +163,7 @@ public class CPlayerAnimator : MonoBehaviour{
     }
 
     //----------------------------------------------------------------------
-    // ダッシュ
+    // ダッシュのアニメーション
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
@@ -172,16 +175,28 @@ public class CPlayerAnimator : MonoBehaviour{
     }
 
     //----------------------------------------------------------------------
-    // アニメーション
+    // アニメーションの変更
     //----------------------------------------------------------------------
-    // @Param			
-    // @Return	
-    // @Date	  @Update   @Author       
+    // @Param	int    アニメーションのハッシュID		
+    // @Return	none
+    // @Date	2014/11/15  @Update 2014/11/15  @Author T.Kawashita      
     //----------------------------------------------------------------------
     public void ChangeAnimation(int _animationHash)
     {
         m_animator.SetBool(m_oldAnimation,false);
         m_animator.SetBool(_animationHash,true);
         m_oldAnimation = _animationHash;
+    }
+
+    //----------------------------------------------------------------------
+    // パスのアニメーション
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void Pass()
+    {
+        this.ChangeAnimation(m_isPass);
     }
 }
