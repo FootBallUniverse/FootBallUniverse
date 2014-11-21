@@ -67,7 +67,7 @@ public class Player_3_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
@@ -75,7 +75,7 @@ public class Player_3_Script : MonoBehaviour
                 m_Right_RotateFlag = true;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.I))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
@@ -84,7 +84,7 @@ public class Player_3_Script : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Application.LoadLevel("Title");
         }
@@ -115,9 +115,9 @@ public class Player_3_Script : MonoBehaviour
 
                 // 前に来た国のスプライトのデプスのみ変更
                 if (m_Country[i].m_Flag == 2)
-                    m_Country[i].m_Sprit.depth = 2;
+                    m_Country[i].m_Sprit.depth = 6;
                 else
-                    m_Country[i].m_Sprit.depth = 0;
+                    m_Country[i].m_Sprit.depth = 4;
 
             }
             m_Count++;
@@ -194,9 +194,9 @@ public class Player_3_Script : MonoBehaviour
 
                 // 前に来た国のスプライトのデプスのみ変更
                 if (m_Country[i].m_Flag == 0)
-                    m_Country[i].m_Sprit.depth = 2;
+                    m_Country[i].m_Sprit.depth = 6;
                 else
-                    m_Country[i].m_Sprit.depth = 0;
+                    m_Country[i].m_Sprit.depth = 4;
 
             }
             m_Count++;

@@ -3,6 +3,9 @@ using System.Collections;
 
 public class CPlayerManager {
 
+    public const int m_playerNum = 8;
+    public const int m_dataNum = 5;
+
     // マネージャーのインスタンス
     public static CPlayerManager m_playerManager = new CPlayerManager();
 
@@ -37,6 +40,19 @@ public class CPlayerManager {
         eEND
     };
 
+    // プレイヤーの番号
+    public const int PLAYER_1 = 0;
+    public const int PLAYER_2 = 1;
+    public const int AI_1 = 2;
+    public const int AI_2 = 3;
+    public const int PLAYER_3 = 4;
+    public const int PLAYER_4 = 5;
+    public const int AI_3 = 6;
+    public const int AI_4 = 7;
+    
+    // プレイヤーのCSVデータ
+    public string[,] m_csvData;
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -48,6 +64,7 @@ public class CPlayerManager {
     {
         m_mapObject = GameObject.Find("Map").gameObject;
         m_soccerBallManager = GameObject.Find("BallGameObject").GetComponent<CSoccerBallManager>();
+        this.SetData();
     }
 
     //----------------------------------------------------------------------
@@ -65,4 +82,32 @@ public class CPlayerManager {
         return true;
     }
 
+    //----------------------------------------------------------------------
+    // データをセット
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/20  @Update 2014/11/20  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void SetData()
+    {
+        // CSVファイルをロード
+        string path = Application.dataPath + "/Resources/CSV/PlayerData.csv";
+        m_csvData = new string[m_playerNum, m_dataNum];
+        CCSVLoader.GetInstance().Loader(ref m_csvData, path, m_playerNum);
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーのデータをセット
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/20  @Update 2014/11/20  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void SetPlayerData(CPlayerData _playerData,int _playerNo)
+    {
+        string[] work = new string[m_dataNum];
+
+        _playerData.Set(CUtility.ChangeArray(ref work, m_csvData, _playerNo));
+    }
 }

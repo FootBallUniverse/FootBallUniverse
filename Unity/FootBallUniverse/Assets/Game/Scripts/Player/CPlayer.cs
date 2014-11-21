@@ -13,6 +13,8 @@ public class CPlayer : MonoBehaviour {
     public Vector3 m_speed;      // 移動量
     public Vector3 m_angle;      // 回転角度
 
+    public CPlayerData m_playerData;        // プレイヤーのデータ
+
     protected CPlayerAction m_action;       // プレイヤーのアクション
     protected CPlayerAnimator m_animator;   // プレイヤーのアニメーション
     public CHuman m_human;                  // プレイヤーの国のインスタンス
@@ -35,6 +37,7 @@ public class CPlayer : MonoBehaviour {
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
         m_human = new CHuman();
+        m_playerData = new CPlayerData();
         m_action = new CPlayerAction();
 
         m_chargeFrame = 0;
@@ -57,6 +60,7 @@ public class CPlayer : MonoBehaviour {
         m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
 
         m_human = new CHuman();
+        m_playerData = new CPlayerData();
         m_action = new CPlayerAction();
 
         m_chargeFrame = 0;
