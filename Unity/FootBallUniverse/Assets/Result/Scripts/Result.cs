@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class Result : MonoBehaviour {
-
-
 	//----------------------------------------------------------------------
 	// コンストラクタ
 	//----------------------------------------------------------------------
@@ -12,8 +10,15 @@ public class Result : MonoBehaviour {
 	// @Date    2014/10/29  @Update 2014/10/29  @Author T.Kawashita
 	//          2014/11/15  @Update 2014/11/15  @Author T.Takeuchi
 	//----------------------------------------------------------------------
-	void Start (){}
+	void Start() { Init(); }
 
+	//----------------------------------------------------------------------
+	// 初期化（試合結果を反映）
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/11/21  @Update 2014/11/21  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void Init()
 	{
 		// チーム得点・国旗設置
@@ -52,7 +57,7 @@ public class Result : MonoBehaviour {
 		// プレイヤー得点
 		for (int i = 0; i < 2; i++)
 		{
-			for (int j = 0; i < 2; j++)
+			for (int j = 0; j < 2; j++)
 			{
 				//GameObject.Find("Player" + i + "Score").GetComponent<DrawNumber>().number = TeamData.playerScore[i, j];
 			}
@@ -62,6 +67,7 @@ public class Result : MonoBehaviour {
 
 
 		// どっちか買ったか判定
+		/*
 		if (CGameManager.m_isPoint[0] > CGameManager.m_isPoint[1])
 		{
 			// 左チーム勝利
@@ -74,6 +80,7 @@ public class Result : MonoBehaviour {
 		{
 			// 引き分け
 		}
+		 * */
 	}
 
 
@@ -87,8 +94,6 @@ public class Result : MonoBehaviour {
 	//----------------------------------------------------------------------
 	void Update () {
 
-		Init();
-
 		// デバッグ用スペースキーが押されたら強制的にタイトル画面へ
 		if (Input.GetKeyDown(KeyCode.Space) ||
 			InputXBOX360.IsGetAllStartButton() )
@@ -100,3 +105,5 @@ public class Result : MonoBehaviour {
 		}
 	}
 }
+
+// End of File
