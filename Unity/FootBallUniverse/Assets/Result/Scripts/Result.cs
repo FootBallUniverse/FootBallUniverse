@@ -54,7 +54,7 @@ public class Result : MonoBehaviour {
 		{
 			for (int j = 0; i < 2; j++)
 			{
-				GameObject.Find("Player" + i + "Score").GetComponent<DrawNumber>().number = TeamData.playerScore[i, j];
+				//GameObject.Find("Player" + i + "Score").GetComponent<DrawNumber>().number = TeamData.playerScore[i, j];
 			}
 		}
 
