@@ -16,6 +16,7 @@ public class CPlayer1 : CPlayer {
 
         // プレイヤーのデータをセット
         CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_1);
+        this.SetData();
 
         m_pos = this.transform.localPosition;
 
@@ -288,7 +289,7 @@ public class CPlayer1 : CPlayer {
     }
 
     //----------------------------------------------------------------------
-    // プレイヤーのシュート関連処理
+    // プレイヤーのシュート
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	bool    シュート状態が終わったかどうか
@@ -304,7 +305,7 @@ public class CPlayer1 : CPlayer {
     }
 
     //----------------------------------------------------------------------
-    // プレイヤーのパス関連処理
+    // プレイヤーのパス
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	bool    パス状態が終わったかどうか
@@ -480,6 +481,8 @@ public class CPlayer1 : CPlayer {
                 m_animator.Move(m_speed); break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE: 
                 m_animator.ShootCharge(); break;
+            case CPlayerManager.ePLAYER_STATUS.ePASS:
+                m_animator.Pass(); break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOT:
                 m_animator.Shoot(); break;
             case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE:

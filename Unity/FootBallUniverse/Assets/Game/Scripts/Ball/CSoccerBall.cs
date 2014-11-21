@@ -19,6 +19,7 @@ public class CSoccerBall : MonoBehaviour {
     // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Start () {
+        this.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
         m_pos = new Vector3();
         m_pos = this.transform.localPosition;
         this.rigidbody.drag = CGameData.m_ballDecRec;           // 空気抵抗をセット
