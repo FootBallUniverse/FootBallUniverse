@@ -84,13 +84,17 @@ public class CPlayer : MonoBehaviour {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
+    // @Date	2014/10/28  @Update 2014/11/21  @Author T.Kawashita      
     //----------------------------------------------------------------------
     protected void CheckGamePlay()
     { 
         // ゲーム終了かどうか判定
         if (CGameManager.m_isGamePlay == false)
             m_status = CPlayerManager.ePLAYER_STATUS.eEND;  // 終了していたらステータス変更
+    
+        // ゴールを決めたかどうか判定
+        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGOALPERFOMANCE)
+            m_status = CPlayerManager.ePLAYER_STATUS.eGOAL; // ゴール状態に遷移
     }
 
     //----------------------------------------------------------------------

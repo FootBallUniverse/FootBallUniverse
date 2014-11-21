@@ -24,6 +24,9 @@ public class CSoccerBall : MonoBehaviour {
         m_pos = this.transform.localPosition;
         this.rigidbody.drag = CGameData.m_ballDecRec;           // 空気抵抗をセット
         this.rigidbody.angularDrag = CGameData.m_ballDecRec;    // 反射係数をセット
+
+        this.rigidbody.angularVelocity = new Vector3(Random.value * 10.0f, 0.0f, Random.value * 10.0f);
+
     }
 
     //----------------------------------------------------------------------
@@ -44,6 +47,19 @@ public class CSoccerBall : MonoBehaviour {
         this.rigidbody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
 
         return true;
+    }
+
+    //----------------------------------------------------------------------
+    // ゲーム開始時のボールの動き
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void StartGame()
+    {
+        this.rigidbody.velocity = new Vector3(Random.Range(-1.0f,1.0f) * 3.0f, Random.Range(-1.0f,1.0f) * 3.0f, 0.0f);
+        Debug.Log(this.rigidbody.velocity);
     }
 
     //----------------------------------------------------------------------

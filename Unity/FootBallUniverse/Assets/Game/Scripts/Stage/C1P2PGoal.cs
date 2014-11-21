@@ -48,6 +48,9 @@ public class C1P2PGoal : MonoBehaviour {
             
             Debug.Log("1P&2P:" + CGameManager.m_isPoint[0] + " 3P&4P:" + CGameManager.m_isPoint[1] );
 
+            collision.gameObject.GetComponent<CSoccerBall>().Init(new Vector3(collision.gameObject.transform.localPosition.x,
+                                                                              collision.gameObject.transform.localPosition.y,
+                                                                              collision.gameObject.transform.localPosition.z));
             CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
         }
 	}
