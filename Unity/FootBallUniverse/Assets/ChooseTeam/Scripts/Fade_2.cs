@@ -29,27 +29,13 @@ public class Fade_2 : MonoBehaviour
     {
         if (m_FadeFlag == 0)
         {
-            if (m_tweenAlpha.enabled == false)
-            {
-                m_tweenAlpha = this.gameObject.GetComponent<TweenAlpha>();
-                m_tweenAlpha.from = 1;
-                m_tweenAlpha.to = 0;
-
-                //        m_tweenAlpha.Play(true);
-
-                TweenAlpha.Begin(this.gameObject, 1, 0);
-            }
+            // 何もしない
+            // 絶対ニダ
         }
         //if( Input.GetKeyDown(KeyCode.J) )
         if (m_FadeFlag == 1)
         {
-            if (m_tweenAlpha.enabled == false)
-            {
-                m_tweenAlpha.from = 0;
-                m_tweenAlpha.to = 1;
-
-                TweenAlpha.Begin(this.gameObject, 0.1f, 0.5f);
-            }
+            this.transform.GetComponent<UISprite>().alpha = 0.75f;
         }
 
         //if( Input.GetKeyDown(KeyCode.J) )
@@ -57,10 +43,16 @@ public class Fade_2 : MonoBehaviour
         {
             if (m_tweenAlpha.enabled == false)
             {
-                m_tweenAlpha.from = 0;
-                m_tweenAlpha.to = 1;
-
                 TweenAlpha.Begin(this.gameObject, 1, 1);
+            }
+        }
+
+        if (m_FadeFlag == 3)
+        {
+            if (m_tweenAlpha.enabled == false)
+            {
+                this.transform.GetComponent<UISprite>().alpha = 0.0f;
+                m_FadeFlag = 0;
             }
         }
 
