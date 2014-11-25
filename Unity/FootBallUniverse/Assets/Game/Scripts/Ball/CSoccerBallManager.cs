@@ -5,6 +5,7 @@ public class CSoccerBallManager : MonoBehaviour {
 
     // サッカーボールのインスタンス
     public GameObject m_soccerBall;
+    public bool m_isStartGame;
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -14,6 +15,8 @@ public class CSoccerBallManager : MonoBehaviour {
     // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Start () {
+
+        m_isStartGame = false;
 
         // サッカーボールをセット
         m_soccerBall = this.gameObject.transform.FindChild("SoccerBall").gameObject;
@@ -27,7 +30,11 @@ public class CSoccerBallManager : MonoBehaviour {
     // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Update () {
-	
+        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME && m_isStartGame == false)
+        {
+            m_soccerBall.GetComponent<CSoccerBall>().StartGame();
+            m_isStartGame = true;
+        }
 	}
 
     //----------------------------------------------------------------------

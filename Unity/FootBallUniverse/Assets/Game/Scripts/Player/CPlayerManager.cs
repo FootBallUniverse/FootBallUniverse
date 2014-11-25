@@ -37,6 +37,9 @@ public class CPlayerManager {
         eHOLD,
         ePASS,
         eTACKLEDAMAGE,
+        eGOAL,
+        eGOALPERFOMANCE,
+        eGOALWAIT,
         eEND
     };
 

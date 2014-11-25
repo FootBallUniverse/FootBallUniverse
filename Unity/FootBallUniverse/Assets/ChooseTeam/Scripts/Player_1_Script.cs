@@ -23,9 +23,11 @@ public class Player_1_Script : MonoBehaviour {
     Vector3[] Position = new Vector3[4];
     public bool m_Right_RotateFlag;
     public bool m_Left_RotateFlag;
+    public bool m_SceneFlag;
     int m_Count = 0;
 
-    Fade_1 m_Fade_flag;
+    Fade_1 m_Fade_flag_1;
+    //Fade_2 m_Fade_flag_2;
     // Use this for initialization
     void Start()
     {
@@ -37,13 +39,15 @@ public class Player_1_Script : MonoBehaviour {
         m_Country[1].m_Country = transform.Find("England_1").gameObject;
         m_Country[2].m_Country = transform.Find("Brazil_1").gameObject;
         m_Country[3].m_Country = transform.Find("Japan_1").gameObject;
-        GameObject m_Fade = transform.FindChild("Fade").gameObject;
+        GameObject m_Fade_1 = transform.FindChild("Fade_In_Out_1").gameObject;
+       // GameObject m_Fade_2 = transform.Find("Fade_In_Out_2").gameObject;
 
         m_Country[0].m_Sprit = m_Country[0].m_Country.transform.FindChild("flag_0").GetComponent<UISprite>();
         m_Country[1].m_Sprit = m_Country[1].m_Country.transform.FindChild("flag_1").GetComponent<UISprite>();
         m_Country[2].m_Sprit = m_Country[2].m_Country.transform.FindChild("flag_2").GetComponent<UISprite>();
-        m_Country[3].m_Sprit = m_Country[3].m_Country.transform.FindChild("flag_3").GetComponent<UISprite>();       
-        m_Fade_flag = m_Fade.GetComponent<Fade_1>();
+        m_Country[3].m_Sprit = m_Country[3].m_Country.transform.FindChild("flag_3").GetComponent<UISprite>();
+       // m_Fade_flag_2 = m_Fade_2.GetComponent<Fade_2>();
+        m_Fade_flag_1 = m_Fade_1.GetComponent<Fade_1>();
 
        // 位置計算用の変数に代入
        Position[0] = m_Country[0].m_Country.transform.position;
@@ -71,37 +75,45 @@ public class Player_1_Script : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (m_Fade_flag_1.m_FadeFlag == 0)
         {
-            // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
-            if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
+            if (Input.GetKeyDown(KeyCode.D))
             {
-                m_Right_RotateFlag = true;
+                // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
+                if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
+                {
+                    m_Right_RotateFlag = true;
+                }
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
-            if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+            else if (Input.GetKeyDown(KeyCode.A))
             {
-                m_Left_RotateFlag = true;
+                // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
+                if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+                {
+                    m_Left_RotateFlag = true;
+                }
             }
+
+            // 右回転処理
+            Right_Rotate();
+            // 左回転処理
+            Left_Rotate();
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        // Shiftが押されたら遷移
+        if (Input.GetKeyDown(KeyCode.LeftShift) && m_Fade_flag_1.m_FadeFlag == 0)
         {
-            m_Fade_flag.m_FadeFlag += 1;
-            if (m_Fade_flag.m_FadeFlag > 2)
-            {
-                m_Fade_flag.m_FadeFlag = 0;
-            }
-            //Application.LoadLevel("Title");
+            m_Fade_flag_1.m_FadeFlag = 1;
         }
-        // 右回転処理
-        Right_Rotate();
-        // 左回転処理
-        Left_Rotate();
-
+        else if (Input.GetKeyDown(KeyCode.LeftShift) && m_Fade_flag_1.m_FadeFlag == 1)
+        {
+            m_SceneFlag = true;
+            m_Fade_flag_1.m_FadeFlag = 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftControl) && m_Fade_flag_1.m_FadeFlag == 1)
+        {
+            m_Fade_flag_1.m_FadeFlag = 3;
+        }
     }
 
     //=========================================================================================//

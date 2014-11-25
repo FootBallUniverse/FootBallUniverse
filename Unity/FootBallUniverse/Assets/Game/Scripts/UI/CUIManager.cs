@@ -18,6 +18,9 @@ public class CUIManager : MonoBehaviour {
         eCOUNTDOWN,
         eGAME,
         eENDWAIT,
+        eGOAL,
+        eGOALFADEOUT,
+        eGOALFADEIN,
     }
     public eUISTATUS m_uiStatus;           // UIの状態
 
@@ -81,6 +84,7 @@ public class CUIManager : MonoBehaviour {
 
             // ゴールした後のUI
             case CGameManager.eSTATUS.eGOAL:
+                m_uiStatus = eUISTATUS.eGOAL;
                 break;
 
             case CGameManager.eSTATUS.eFADEOUT:
@@ -106,6 +110,41 @@ public class CUIManager : MonoBehaviour {
                 break;
 
             case CGameManager.eSTATUS.eEND:
+                break;
+
+            // ゴールの待機状態に変わった場合
+            case CGameManager.eSTATUS.eGOALWAIT:
+                switch (m_uiStatus)
+                {
+                    case eUISTATUS.eGOAL:
+                        m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                        m_gameObject.AddComponent<CFadeOut>();
+                        m_gameObject.transform.parent = m_uiPanel.transform;
+                        m_uiStatus = eUISTATUS.eGOALFADEOUT;
+                        break;
+
+                    case eUISTATUS.eGOALFADEOUT:
+                        // フェードアウトが終了したらフェードインスタート
+                        if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
+                        {
+                            m_uiStatus = eUISTATUS.eGOALFADEIN;
+                            GameObject.Destroy(m_gameObject);
+                            m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                            m_gameObject.AddComponent<CFadeIn>();
+                            m_gameObject.transform.parent = m_uiPanel.transform;
+                        }
+                        break;
+
+                    case eUISTATUS.eGOALFADEIN:
+                        // フェードインが終了したらゲームの待機状態を変更
+                        if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
+                        {
+                            m_uiStatus = eUISTATUS.eGAME;
+                            CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;
+                        }
+                        break;
+                }
+
                 break;
         }
 	}

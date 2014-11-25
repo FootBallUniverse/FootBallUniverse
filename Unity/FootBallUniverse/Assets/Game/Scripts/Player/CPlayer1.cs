@@ -42,16 +42,17 @@ public class CPlayer1 : CPlayer {
     {
         switch (m_status)
         {
-            case CPlayerManager.ePLAYER_STATUS.eWAIT: PlayerStatusWait();           break;    // 始めの待機状態
-            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN: PlayerStatusCountDown(); break;    // カウントダウンの状態
-            case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone();           break;    // 何もしてない状態
-            case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash();           break;    // ダッシュ中
-            case CPlayerManager.ePLAYER_STATUS.eTACKLE: PlayerStatusTackle();       break;
-            case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot();         break;    // シュート中
-            case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass();           break;    // パス中
-            case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                  // チャージ中
-            case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge();   break;    // チャージ中
-            case CPlayerManager.ePLAYER_STATUS.eEND: break;                         // 終了
+            case CPlayerManager.ePLAYER_STATUS.eWAIT: PlayerStatusWait();               break;    // 始めの待機状態
+            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN: PlayerStatusGameStartWait(); break;    // カウントダウンの状態
+            case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone();               break;    // 何もしてない状態
+            case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash();               break;    // ダッシュ中
+            case CPlayerManager.ePLAYER_STATUS.eTACKLE: PlayerStatusTackle();           break;
+            case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot();             break;    // シュート中
+            case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass();               break;    // パス中
+            case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                      // チャージ中
+            case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge();       break;    // チャージ中
+            case CPlayerManager.ePLAYER_STATUS.eEND:                                    break;                         // 終了
+            case CPlayerManager.ePLAYER_STATUS.eGOAL:                                   break;    // ゴールした時は何もさせない
         }
     }
 
@@ -118,7 +119,7 @@ public class CPlayer1 : CPlayer {
     // @Return	none
     // @Date	2014/11/18  @Update 2014/11/18  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void PlayerStatusCountDown()
+    private void PlayerStatusGameStartWait()
     {
         // 回転
         Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));

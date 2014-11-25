@@ -18,7 +18,9 @@ public class CGameManager : MonoBehaviour {
         eENDWAIT,           // ゲーム終了待機状態
         eFADEOUT,           // 最後のフェードアウト状態
         eGOAL,              // ゴール状態
-        eGOALPERFOMANCE,    // ゴール時の演出
+        eGOALWAIT,          // ゴール終わった後の待機状態
+        eGOALPERFOMANCE,    // ゴールのパフォーマンス中
+        eRESTART,           // ゴール後のリスタート
         eEND,               // ゲーム終了状態
     }
         
@@ -71,11 +73,13 @@ public class CGameManager : MonoBehaviour {
 
         switch (m_nowStatus)
         {
-            case eSTATUS.eWAIT: GameWait();        break;   // ゲーム開始待機状態
-            case eSTATUS.eCOUNTDOWN: CountDown();  break;   // ゲーム開始カウントダウン中
-            case eSTATUS.eGAME: GamePlay();        break;   // ゲームプレイ状態
-            case eSTATUS.eGOAL: Goal();            break;   // ゴールした後の状態  
-            case eSTATUS.eENDWAIT: GameEndWait();  break;   // ゲーム終了待機状態
+            case eSTATUS.eWAIT: GameWait();        break;           // ゲーム開始待機状態
+            case eSTATUS.eCOUNTDOWN: CountDown();  break;           // ゲーム開始カウントダウン中
+            case eSTATUS.eGAME: GamePlay();        break;           // ゲームプレイ状態
+            case eSTATUS.eGOAL: Goal();            break;           // ゴールした後の状態
+            case eSTATUS.eGOALPERFOMANCE: GoalPerfomance(); break;  // ゴール後のパフォーマンス状態
+            case eSTATUS.eGOALWAIT: GoalWait();    break;           // ゴール後の待機状態
+            case eSTATUS.eENDWAIT: GameEndWait();  break;           // ゲーム終了待機状態
             case eSTATUS.eEND:                 
                 // リザルト画面に遷移させる
                 Application.LoadLevel("Result");
@@ -131,6 +135,41 @@ public class CGameManager : MonoBehaviour {
     // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private void Goal()
+    { 
+        // プレイヤーのアニメーションを再生
+
+        // ステータス変更
+        m_nowStatus = eSTATUS.eGOALPERFOMANCE;
+        m_frame = 0.0f;
+
+    }
+
+    //----------------------------------------------------------------------
+    // ゴールパフォーマンス状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void GoalPerfomance()
+    { 
+        m_frame += Time.deltaTime;
+        // アニメーション終わって少し時間がたったらフェードアウト
+        if (m_frame >= 4.0f)
+        {
+            m_nowStatus = eSTATUS.eGOALWAIT;
+            m_frame = 0.0f;
+        }
+    }
+
+    //----------------------------------------------------------------------
+    // ゴール後の待機状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void GoalWait()
     { 
     }
 
