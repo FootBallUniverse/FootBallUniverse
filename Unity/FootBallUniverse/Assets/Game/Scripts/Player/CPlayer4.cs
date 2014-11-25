@@ -13,7 +13,7 @@ public class CPlayer4 : CPlayer {
 	void Start () {
         this.Init();
         m_pos = this.transform.localPosition;
-        m_human = CHumanManager.GetInstance().GetWorldInstance(CHumanManager.eWORLD.eSPAIN);
+        m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[1]);
 
         // プレイヤーの情報をマップにセット
         Color color = Color.blue;

@@ -1,29 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CHumanManager{
-
-    // シングルトンのためのインスタンス
-    private static CHumanManager m_humanManager = new CHumanManager();
+public class CHumanManager : MonoBehaviour {
 
     private const int m_worldNum = 4;
     private const int m_humanStatusNum = 34;
 
     public static CJapanHuman m_japanHuman;
-    public static CBrazilHuman m_brazilHuman;
+    public static CBrasilHuman m_brasilHuman;
     public static CSpainHuman m_spainHuman;
     public static CEnglandHuman m_englandHuman;
-
-    /// <summary>
-    /// 国情報
-    /// </summary>
-    public enum eWORLD
-    {
-        eJAPAN,
-        eSPAIN,
-        eENGLAND,
-        eBRAZIL
-    };
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -32,26 +18,14 @@ public class CHumanManager{
     // @Return	none
     // @Date	2014/10/24  @Update 2014/10/24  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public CHumanManager()
+    void Start()
     {
         m_japanHuman = new CJapanHuman();
-        m_brazilHuman = new CBrazilHuman();
+        m_brasilHuman = new CBrasilHuman();
         m_spainHuman = new CSpainHuman();
         m_englandHuman = new CEnglandHuman();
-    
-        this.SetData();
-    }
 
-    //----------------------------------------------------------------------
-    // シングルトン実装
-    //----------------------------------------------------------------------
-    // @Param	none		
-    // @Return	CHumanManager このクラスの唯一のインスタンス
-    // @Date	2014/10/24  @Update 2014/10/24  @Author T.Kawashita      
-    //----------------------------------------------------------------------
-    public static CHumanManager GetInstance()
-    {
-        return m_humanManager;
+        this.SetData();
     }
 
     //----------------------------------------------------------------------
@@ -86,7 +60,7 @@ public class CHumanManager{
         m_japanHuman.Set(CUtility.ChangeArray(ref work, csvData, 0));
         m_spainHuman.Set(CUtility.ChangeArray(ref work, csvData, 1));
         m_englandHuman.Set(CUtility.ChangeArray(ref work, csvData, 2));
-        m_brazilHuman.Set(CUtility.ChangeArray(ref work, csvData, 3));
+        m_brasilHuman.Set(CUtility.ChangeArray(ref work, csvData, 3));
     }
 
     //----------------------------------------------------------------------
@@ -96,25 +70,25 @@ public class CHumanManager{
     // @Return	CHuman  取得された国のインスタンス
     // @Date	2014/10/24  @Update 2014/10/24  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public CHuman GetWorldInstance(eWORLD _world)
+    public static CHuman GetWorldInstance(TeamData.TEAM_NATIONALITY _world)
     {
         switch (_world)
         {
             // 日本
-            case eWORLD.eJAPAN:
+            case TeamData.TEAM_NATIONALITY.JAPAN:
                 return m_japanHuman;
             
             // スペイン
-            case eWORLD.eSPAIN:
+            case TeamData.TEAM_NATIONALITY.ESPANA:
                 return m_spainHuman;
 
             // イングランド
-            case eWORLD.eENGLAND:
+            case TeamData.TEAM_NATIONALITY.ENGLAND:
                 return m_englandHuman;
 
             // ブラジル
-            case eWORLD.eBRAZIL:
-                return m_brazilHuman;
+            case TeamData.TEAM_NATIONALITY.BRASIL:
+                return m_brasilHuman;
         }
 
         return null;

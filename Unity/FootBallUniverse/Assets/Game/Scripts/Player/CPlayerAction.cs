@@ -174,6 +174,7 @@ public class CPlayerAction {
         // パスモーション終わりの時間になった場合はコンポーネントを切り替えて終了
         if (m_passFrame >= (float)m_passMotionLength / 60)
         {
+            CSoccerBallManager.m_nowPlayer = CSoccerBallManager.eNONE;
             _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
             return true;
         }
@@ -206,6 +207,7 @@ public class CPlayerAction {
         // シュートモーション終わりの時間になった場合はコンポーネントを切り替えて終了
         if( m_shootFrame >= (float)m_shootMotionLength / 60 )
         {
+            CSoccerBallManager.m_nowPlayer = CSoccerBallManager.eNONE;
             _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
             return true;
         }

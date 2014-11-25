@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class CBrazilHuman : CHuman{
+public class CBrasilHuman : CHuman{
 
     //----------------------------------------------------------------------
     // コンストラクタ

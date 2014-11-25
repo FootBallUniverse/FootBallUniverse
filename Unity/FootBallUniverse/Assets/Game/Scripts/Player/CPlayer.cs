@@ -15,8 +15,8 @@ public class CPlayer : MonoBehaviour {
 
     public CPlayerData m_playerData;        // プレイヤーのデータ
 
-    protected CPlayerAction m_action;       // プレイヤーのアクション
-    protected CPlayerAnimator m_animator;   // プレイヤーのアニメーション
+    public CPlayerAction m_action;          // プレイヤーのアクション
+    public CPlayerAnimator m_animator;       // プレイヤーのアニメーション
     public CHuman m_human;                  // プレイヤーの国のインスタンス
 
     public int m_chargeFrame;               // チャージ時のフレーム数

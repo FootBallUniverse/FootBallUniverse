@@ -160,6 +160,7 @@ public class CPlayerControler : MonoBehaviour {
             // サッカーボールに誰が現在保持しているかを設定
             CSoccerBallManager.m_shootPlayerNo = m_player.m_playerData.m_id;
             CSoccerBallManager.m_shootTeamNo = m_player.m_playerData.m_teamNo;
+            CSoccerBallManager.m_nowPlayer = m_player.m_playerData.m_id;
 
             // プレイヤーのボールに設定
             CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(this.transform,pos);

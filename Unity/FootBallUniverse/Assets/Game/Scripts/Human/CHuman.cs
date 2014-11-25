@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class CHuman : Object {
+
+public class CHuman {
 
     public int m_id;                         // ID
     public string m_name;                    // 名前

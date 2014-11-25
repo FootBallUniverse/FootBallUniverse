@@ -18,7 +18,7 @@ public class CPlayer2 : CPlayer
         m_pos = this.transform.localPosition;
 
         // 国の情報をセット
-        m_human = CHumanManager.GetInstance().GetWorldInstance(CHumanManager.eWORLD.eBRAZIL);
+        m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
 
         // プレイヤーの情報をマップにセット
         Color color = Color.red;
