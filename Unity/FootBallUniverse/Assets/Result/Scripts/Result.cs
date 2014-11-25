@@ -23,29 +23,15 @@ public class Result : MonoBehaviour {
 	{
 		GameObject logPrefab = Resources.Load("Prefab/Result/logPrefab") as GameObject;
 		GameObject[] panels  = new GameObject[3];
+		int[] logNo = new int[2] { 0, 0 };
 
 		// TEST_DATA
-		TeamData.SHOOT_LOG[] testData = new TeamData.SHOOT_LOG[5];
-		testData[0].playerNo = 0;
-		testData[0].teamNo = 0;
-		testData[0].time = 1;
-		testData[0].isGole = true;
-		testData[1].playerNo = 0;
-		testData[1].teamNo = 1;
-		testData[1].time = 2;
-		testData[1].isGole = true;
-		testData[2].playerNo = 1;
-		testData[2].teamNo = 0;
-		testData[2].time = 3;
-		testData[2].isGole = true;
-		testData[3].playerNo = 1;
-		testData[3].teamNo = 0;
-		testData[3].time = 4;
-		testData[3].isGole = true;
-		testData[4].playerNo = 1;
-		testData[4].teamNo = 1;
-		testData[4].time = 5;
-		testData[4].isGole = false;
+		TeamData.AddLog(0, 1, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(2, 3, 1, true);
+		TeamData.AddLog(3, 4, 1, true);
+		TeamData.AddLog(4, 4, 1, false);
+
 
 		// パネルデータ読込
 		panels[0] = GameObject.Find("MainPanel") as GameObject;
@@ -93,34 +79,41 @@ public class Result : MonoBehaviour {
 		// ログ表示
 		for (int i = 0; i < TeamData.GetCountLog(); i++)
 		{
-			Debug.Log("log_view : " + i);
-			TeamData.SHOOT_LOG log;
-			GameObject logObject;
-			int[] logNo = new int[2]{0,0};
+			GameObject[] logObject = new GameObject[2];
+			Vector3 workVec;
 
-			log = (TeamData.SHOOT_LOG)TeamData.GetLogData(i);
 			// シュートに成功していなかった場合（飛ばす）
-			if (log.isGole != true) continue;
+			if (TeamData.GetLogData(i).isGole != true) continue;
+
 			// シュートに成功した場合
-			logObject = Instantiate(logPrefab) as GameObject;
-			logObject.GetComponent<UILabel>().text = "Player" + log.playerNo + "     " + log.time + ":" + 0;
+			// ログ作成（情報セット）
+			logObject[0] = Instantiate(logPrefab) as GameObject;
+			logObject[1] = Instantiate(logPrefab) as GameObject;
+			// 親オブジェクト指定
+			logObject[0].transform.parent = panels[1].transform.FindChild("Logs").transform;
+			logObject[1].transform.parent = panels[2].transform.FindChild("Logs").transform;
+			//座標
+			workVec = new Vector3(-240, -25, 0);
+			if (TeamData.GetLogData(i).teamNo == 1) workVec.x *= -1;
+			workVec.y -= 30 * logNo[TeamData.GetLogData(i).teamNo];
+
+			logObject[0].transform.localPosition = workVec;
+			logObject[1].transform.localPosition = workVec;
+			// スケール
+			logObject[0].transform.localScale    = new Vector3(26, 26, 26);
+			logObject[1].transform.localScale    = new Vector3(26, 26, 26);
+			// ログ名変更
+			logObject[0].name = "T" + TeamData.GetLogData(i).teamNo + "_No" + logNo[TeamData.GetLogData(i).teamNo];
+			logObject[1].name = "T" + TeamData.GetLogData(i).teamNo + "_No" + logNo[TeamData.GetLogData(i).teamNo];
+			// テキスト変更
+			logObject[0].GetComponent<UILabel>().text = "Player" + TeamData.GetLogData(i).playerNo + "     " + TeamData.GetLogData(i).time + ":" + 0;
+			logObject[1].GetComponent<UILabel>().text = "Player" + TeamData.GetLogData(i).playerNo + "     " + TeamData.GetLogData(i).time + ":" + 0;
+			// ログNo加算
+			logNo[TeamData.GetLogData(i).teamNo]++;
 		}
 
-		/*
-		// どっちか買ったか判定
-		if (CGameManager.m_isPoint[0] > CGameManager.m_isPoint[1])
-		{
-			// 左チーム勝利
-		}
-		else if (CGameManager.m_isPoint[0] < CGameManager.m_isPoint[1])
-		{
-			// 右チーム勝利
-		}
-		else
-		{
-			// 引き分け
-		}
-		 */
+		// シュートログをクリア
+		TeamData.ClearLog();
 	}
 
 

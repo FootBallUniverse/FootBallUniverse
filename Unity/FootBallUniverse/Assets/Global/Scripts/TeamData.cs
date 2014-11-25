@@ -51,10 +51,10 @@ public class TeamData
 
 		// ログデータを作成しリストに挿入
 		SHOOT_LOG newData = new SHOOT_LOG();
-		newData.time = time;
-		newData.playerNo = playerNo;
-		newData.teamNo = teamNo;
-		newData.isGole = isGole;
+		newData.time      = time;
+		newData.playerNo  = playerNo;
+		newData.teamNo    = teamNo;
+		newData.isGole    = isGole;
 		logs.Add(newData);
 	}
 
@@ -127,8 +127,8 @@ public class TeamData
 	// @Date    2014/11/21  @Update 2014/11/21  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	public static SHOOT_LOG GetLogData(int logNo) { return (SHOOT_LOG)logs[logNo]; }  // シュートログデータ（引数要素目）を取得
-	public static void ClearLog() { logs.Clear(); }                                     // シュートログをクリア
-	public static int GetCountLog() { return logs.Count; }                              // シュートログ要素数を取得
+	public static void ClearLog() { logs.Clear(); }                                   // シュートログをクリア
+	public static int GetCountLog() { return logs.Count; }                            // シュートログ要素数を取得
 };
 
 // End of File
