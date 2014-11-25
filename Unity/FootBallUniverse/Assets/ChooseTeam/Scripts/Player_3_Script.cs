@@ -60,8 +60,8 @@ public class Player_3_Script : MonoBehaviour
        {
            m_Country[i].m_TeamColor = 0;
            m_Country[i].degree = 90.0f * i;
-           m_Country[i].r = 0.31f;
-           m_Country[i].centerx = 1.28f;
+           m_Country[i].r = 0.27f;
+           m_Country[i].centerx = 1.24f;
            m_Country[i].centerz = 0.0f;
            m_Country[i].radian = 0.0f;
            m_Country[i].m_Flag = i;
@@ -73,32 +73,27 @@ public class Player_3_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_Fade_flag_2.m_FadeFlag == 0)
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
+            if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
             {
-                // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
-                if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
-                {
-                    m_Right_RotateFlag = true;
-                }
+                m_Right_RotateFlag = true;
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
-                if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
-                {
-                    m_Left_RotateFlag = true;
-                }
-            }
-
-            // 右回転処理
-            Right_Rotate();
-            // 左回転処理
-            Left_Rotate();
         }
-
-        if (Input.GetKeyUp(KeyCode.RightShift) && m_Fade_flag_2.m_FadeFlag == 0)
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
+            if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+            {
+                m_Left_RotateFlag = true;
+            }
+        }
+        
+        if (Input.GetKeyUp(KeyCode.RightShift)     // シフトが押されたか
+            && m_Fade_flag_2.m_FadeFlag == 0       // フェードアウトしているか
+            && m_Right_RotateFlag == false         // 右回転しているか
+            && m_Left_RotateFlag == false)         // 左回転しているか)
         {
             m_Fade_flag_2.m_FadeFlag = 1;
         }
@@ -110,6 +105,19 @@ public class Player_3_Script : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.RightControl) && m_Fade_flag_2.m_FadeFlag == 1)
         {
             m_Fade_flag_2.m_FadeFlag = 3;
+        }
+
+        if (m_Fade_flag_2.m_FadeFlag == 0)
+        {
+            // 右回転処理
+            Right_Rotate();
+            // 左回転処理
+            Left_Rotate();
+        }
+        else
+        {
+            m_Right_RotateFlag = false;
+            m_Left_RotateFlag = false;
         }
     }
 
@@ -157,13 +165,13 @@ public class Player_3_Script : MonoBehaviour
                     {
                         Position[i].x = 0.97f;
                     }
-                    else if (Position[i].x >= 1.53)
+                    else if (Position[i].x >= 1.5)
                     {
-                        Position[i].x = 1.59f;
+                        Position[i].x = 1.52f;
                     }
                     else
                     {
-                        Position[i].x = 1.28f;
+                        Position[i].x = 1.24f;
                     }
 
                     if (Position[i].z >= 0.25)
@@ -179,7 +187,7 @@ public class Player_3_Script : MonoBehaviour
                         Position[i].z = 0.0f;
                     }
 
-                    if (Position[i].x == 1.280f && Position[i].z == -0.31f)
+                    if (Position[i].x == 1.280f && Position[i].z == -0.35f)
                     {
                         Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
                     }
@@ -241,23 +249,23 @@ public class Player_3_Script : MonoBehaviour
                     }
                     else
                     {
-                        Position[i].x = 1.28f;
+                        Position[i].x = 1.24f;
                     }
 
                     if (Position[i].z >= 0.25)
                     {
-                        Position[i].z = 0.31f;
+                        Position[i].z = 0.27f;
                     }
                     else if (Position[i].z <= -0.25)
                     {
-                        Position[i].z = -0.31f;
+                        Position[i].z = -0.35f;
                     }
                     else
                     {
                         Position[i].z = 0.0f;
                     }
 
-                    if (Position[i].x == 1.280f && Position[i].z == -0.31f)
+                    if (Position[i].x == 1.280f && Position[i].z == -0.35f)
                     {
                         Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
                     }

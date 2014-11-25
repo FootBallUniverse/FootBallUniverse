@@ -28,6 +28,7 @@ public class Player_1_Script : MonoBehaviour {
 
     Fade_1 m_Fade_flag_1;
     //Fade_2 m_Fade_flag_2;
+
     // Use this for initialization
     void Start()
     {
@@ -54,6 +55,7 @@ public class Player_1_Script : MonoBehaviour {
        Position[1] = m_Country[1].m_Country.transform.position;
        Position[2] = m_Country[2].m_Country.transform.position;
        Position[3] = m_Country[3].m_Country.transform.position;
+
        // カウント、回転フラグの初期化
        m_Count = 0;
        m_Right_RotateFlag = false;
@@ -74,34 +76,28 @@ public class Player_1_Script : MonoBehaviour {
     }
     // Update is called once per frame
     void Update()
-    {
-        if (m_Fade_flag_1.m_FadeFlag == 0)
+    { 
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
+            if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
             {
-                // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
-                if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
-                {
-                    m_Right_RotateFlag = true;
-                }
+                m_Right_RotateFlag = true;
             }
-            else if (Input.GetKeyDown(KeyCode.A))
-            {
-                // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
-                if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
-                {
-                    m_Left_RotateFlag = true;
-                }
-            }
-
-            // 右回転処理
-            Right_Rotate();
-            // 左回転処理
-            Left_Rotate();
         }
-
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
+            if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+            {
+                m_Left_RotateFlag = true;
+            }
+        }
         // Shiftが押されたら遷移
-        if (Input.GetKeyDown(KeyCode.LeftShift) && m_Fade_flag_1.m_FadeFlag == 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift)     // シフトが押されたか
+            && m_Fade_flag_1.m_FadeFlag == 0        // フェードアウトしているか
+            && m_Right_RotateFlag == false         // 右回転しているか
+            && m_Left_RotateFlag == false)         // 左回転しているか
         {
             m_Fade_flag_1.m_FadeFlag = 1;
         }
@@ -114,6 +110,21 @@ public class Player_1_Script : MonoBehaviour {
         {
             m_Fade_flag_1.m_FadeFlag = 3;
         }
+
+        if (m_Fade_flag_1.m_FadeFlag == 0)
+        {
+            // 右回転処理
+            Right_Rotate();
+            // 左回転処理
+            Left_Rotate();
+        }
+        else
+        {
+            m_Right_RotateFlag = false;
+            m_Left_RotateFlag = false;
+        }
+
+       
     }
 
     //=========================================================================================//
