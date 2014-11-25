@@ -47,8 +47,8 @@ public class CUIManager : MonoBehaviour {
         // 今のゲームの状態によってUIを切り替える
         switch (CGameManager.m_nowStatus)
         {
-           // 待機中状態
-           case CGameManager.eSTATUS.eWAIT:
+            // 待機中状態
+            case CGameManager.eSTATUS.eWAIT:
                 switch (m_uiStatus)
                 {
                     case eUISTATUS.eWAIT:
@@ -66,7 +66,6 @@ public class CUIManager : MonoBehaviour {
                         }
                         break;
                 }
-
                 break;
 
             // カウントダウン中
@@ -78,8 +77,8 @@ public class CUIManager : MonoBehaviour {
                 }
                 break;
 
-           // ゲーム中
-           case CGameManager.eSTATUS.eGAME:
+            // ゲーム中
+            case CGameManager.eSTATUS.eGAME:
                 break;
 
             // ゴールした後のUI
@@ -87,9 +86,10 @@ public class CUIManager : MonoBehaviour {
                 m_uiStatus = eUISTATUS.eGOAL;
                 break;
 
+            // ゲーム終了時のフェードアウト
             case CGameManager.eSTATUS.eFADEOUT:
                 switch (m_uiStatus)
-                {   
+                {
                     case eUISTATUS.eGAME:
                         // ゲーム中の状態から遷移した場合はフェードアウトの準備をする
                         m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
@@ -103,12 +103,12 @@ public class CUIManager : MonoBehaviour {
                         if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
                         {
                             CGameManager.m_nowStatus = CGameManager.eSTATUS.eEND;
-                        }   
+                        }
                         break;
-
                 }
                 break;
 
+            // 終了状態
             case CGameManager.eSTATUS.eEND:
                 break;
 
@@ -132,19 +132,20 @@ public class CUIManager : MonoBehaviour {
                             m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
                             m_gameObject.AddComponent<CFadeIn>();
                             m_gameObject.transform.parent = m_uiPanel.transform;
-                        }
-                        break;
-
-                    case eUISTATUS.eGOALFADEIN:
-                        // フェードインが終了したらゲームの待機状態を変更
-                        if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
-                        {
-                            m_uiStatus = eUISTATUS.eGAME;
-                            CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;
+                            CGameManager.m_nowStatus = CGameManager.eSTATUS.eRESTART;   // リスタート状態に変更
                         }
                         break;
                 }
+                break;
 
+            // リスタート
+            case CGameManager.eSTATUS.eRESTART:
+                // フェードインが終了したらゲームの待機状態を変更
+                if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
+                {
+                    m_uiStatus = eUISTATUS.eGAME;
+                    CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;
+                }
                 break;
         }
 	}

@@ -157,6 +157,10 @@ public class CPlayerControler : MonoBehaviour {
             // ボールの位置をセット
             Vector3 pos = new Vector3(0.0f,0.05f,0.1f);
 
+            // サッカーボールに誰が現在保持しているかを設定
+            CSoccerBallManager.m_shootPlayerNo = m_player.m_playerData.m_id;
+            CSoccerBallManager.m_shootTeamNo = m_player.m_playerData.m_teamNo;
+
             // プレイヤーのボールに設定
             CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(this.transform,pos);
             m_player.m_isBall = true;

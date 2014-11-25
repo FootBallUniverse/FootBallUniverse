@@ -51,8 +51,8 @@ public class CPlayer1 : CPlayer {
             case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass();               break;    // パス中
             case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                      // チャージ中
             case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge();       break;    // チャージ中
-            case CPlayerManager.ePLAYER_STATUS.eEND:                                    break;                         // 終了
-            case CPlayerManager.ePLAYER_STATUS.eGOAL:                                   break;    // ゴールした時は何もさせない
+            case CPlayerManager.ePLAYER_STATUS.eEND:                                    break;    // 終了
+            case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal();               break;    // ゴールした時は何もさせない
         }
     }
 
@@ -129,6 +129,23 @@ public class CPlayer1 : CPlayer {
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        }
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーのゴール中の状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/25  @Update 2014/11/25  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void PlayerStatusGoal()
+    {
+        // フェードインする状態になったら位置状態を初期化
+        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART)
+        {
+            this.Restart(); 
+
         }
     }
 
@@ -478,7 +495,9 @@ public class CPlayer1 : CPlayer {
     {
         switch (m_status)
         {
-            case CPlayerManager.ePLAYER_STATUS.eNONE: 
+            case CPlayerManager.ePLAYER_STATUS.eNONE:
+            case CPlayerManager.ePLAYER_STATUS.eWAIT:
+            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
                 m_animator.Move(m_speed); break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE: 
                 m_animator.ShootCharge(); break;

@@ -70,6 +70,29 @@ public class CPlayer : MonoBehaviour {
     }
 
     //----------------------------------------------------------------------
+    // ゴールした後のリスタート
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/25  @Update 2014/11/25  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    protected bool Restart()
+    {
+        // 位置と回転をセットしなおす
+        m_pos = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
+        m_angle = new Vector3(0.0f, 0.0f, 0.0f);
+        this.transform.localRotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+
+        // 状態を変更
+        this.m_status = CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN;
+
+        // アニメーションを元に戻す
+        this.m_speed = new Vector3(0.0f, 0.0f, 0.0f);
+
+        return true;
+    }
+
+    //----------------------------------------------------------------------
     // 更新
     //----------------------------------------------------------------------
     // @Param	none		
@@ -130,6 +153,5 @@ public class CPlayer : MonoBehaviour {
     {
         // 位置をセット
         this.transform.localPosition = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
-
     }
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class CPlayerManager {
 
     public const int m_playerNum = 8;
-    public const int m_dataNum = 5;
+    public const int m_dataNum = 6;
 
     // マネージャーのインスタンス
     public static CPlayerManager m_playerManager = new CPlayerManager();

@@ -25,12 +25,10 @@ public class CGameManager : MonoBehaviour {
     }
         
     public static eSTATUS m_nowStatus;  // ゲームの現在のステータス
+    public static int m_nowTime;        // 現在の時間
     private float m_frame;              // タイマー調整用フレーム
    
-    public static bool m_isGamePlay;    // ゲームがプレイ中かどうか
-
-    public static int[] m_isPoint;      // 両チームの得点
-	public static int[] m_playerPoint;  // 両チームプレイヤーの個人的得点
+    public static bool m_isGamePlay;    // ゲームのが進行中かどうか
 
     private CSoundPlayer m_soundPlayer; // サウンドプレイヤー
 
@@ -47,15 +45,9 @@ public class CGameManager : MonoBehaviour {
         m_nowStatus = eSTATUS.eWAIT;
         m_frame = 0;
         m_isGamePlay = true;
-        m_isPoint = new int[2];
-        m_isPoint[0] = 0;       // 1P&2Pチーム初期化
-        m_isPoint[1] = 0;       // 3P&4Pチーム初期化
 
         CGameData.GetInstance().Init();
         this.LoadData();
-
-        m_soundPlayer = new CSoundPlayer();
-		m_playerPoint = new int[4];
 
 		// シーン移動しても消滅しない
 		//DontDestroyOnLoad(this);
@@ -231,6 +223,7 @@ public class CGameManager : MonoBehaviour {
             {
                 m_frame = 0;
                 CGameData.m_gamePlayTime--;
+                m_nowTime++;
 
                 if (CGameData.m_gamePlayTime <= 0)
                 {

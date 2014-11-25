@@ -9,7 +9,7 @@ using System.Collections;
 //----------------------------------------------------------------------
 public class CSoccerBall : MonoBehaviour {
 
-    public Vector3 m_pos;  // 位置座標
+    public Vector3 m_pos;           // 位置座標
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -26,7 +26,6 @@ public class CSoccerBall : MonoBehaviour {
         this.rigidbody.angularDrag = CGameData.m_ballDecRec;    // 反射係数をセット
 
         this.rigidbody.angularVelocity = new Vector3(Random.value * 10.0f, 0.0f, Random.value * 10.0f);
-
     }
 
     //----------------------------------------------------------------------
@@ -59,7 +58,6 @@ public class CSoccerBall : MonoBehaviour {
     public void StartGame()
     {
         this.rigidbody.velocity = new Vector3(Random.Range(-1.0f,1.0f) * 3.0f, Random.Range(-1.0f,1.0f) * 3.0f, 0.0f);
-        Debug.Log(this.rigidbody.velocity);
     }
 
     //----------------------------------------------------------------------

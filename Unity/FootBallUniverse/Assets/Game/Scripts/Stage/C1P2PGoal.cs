@@ -43,11 +43,11 @@ public class C1P2PGoal : MonoBehaviour {
 	{
 		if (collision.gameObject == GameObject.Find ("SoccerBall")) 
         {
-			Debug.Log ("1P&2Pゴール!");
-            CGameManager.m_isPoint[0] += 1;
-            
-            Debug.Log("1P&2P:" + CGameManager.m_isPoint[0] + " 3P&4P:" + CGameManager.m_isPoint[1] );
+            // グローバルのゴールのデータに追加
+            TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, true);
+            Debug.Log(CSoccerBallManager.m_shootTeamNo + " ←team : player→ " + CSoccerBallManager.m_shootPlayerNo);
 
+            // ボールの初期化
             collision.gameObject.GetComponent<CSoccerBall>().Init(new Vector3(collision.gameObject.transform.localPosition.x,
                                                                               collision.gameObject.transform.localPosition.y,
                                                                               collision.gameObject.transform.localPosition.z));

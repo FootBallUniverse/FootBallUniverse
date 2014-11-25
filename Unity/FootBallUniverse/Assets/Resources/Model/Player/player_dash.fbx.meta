@@ -52,6 +52,9 @@ ModelImporter:
     100092: root
     100094: sakotu
     100096: top
+    100098: locator_L
+    100100: locator_R
+    100102: pasted__pasted__nurbsCircle1 1
     400000: asi1_L1
     400002: asi1_R
     400004: FOOT_L
@@ -101,6 +104,9 @@ ModelImporter:
     400092: root
     400094: sakotu
     400096: top
+    400098: locator_L
+    400100: locator_R
+    400102: pasted__pasted__nurbsCircle1 1
     4300000: polySurface14
     7400000: Take 001
     9500000: //RootNode

@@ -53,6 +53,8 @@ ModelImporter:
     100094: root
     100096: sakotu
     100098: top
+    100100: pasted__pasted__nurbsCircle1 1
+    100102: pasted__pasted__pasted__nurbsCircle1
     400000: asi1_L1
     400002: asi1_R
     400004: FOOT_L
@@ -103,6 +105,8 @@ ModelImporter:
     400094: root
     400096: sakotu
     400098: top
+    400100: pasted__pasted__nurbsCircle1 1
+    400102: pasted__pasted__pasted__nurbsCircle1
     4300000: polySurface14
     7400000: Take 001
     9500000: //RootNode
