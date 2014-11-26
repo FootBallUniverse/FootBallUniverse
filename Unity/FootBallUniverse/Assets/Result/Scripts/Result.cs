@@ -21,6 +21,80 @@ public class Result : MonoBehaviour {
 	//----------------------------------------------------------------------
 	void Init()
 	{
+		GameObject[] panels = new GameObject[3];
+
+		// パネルデータ読込
+		panels[0] = GameObject.Find("MainPanel") as GameObject;
+		panels[1] = GameObject.Find("SubPanel0") as GameObject;
+		panels[2] = GameObject.Find("SubPanel1") as GameObject;
+
+		// ドライバ
+		TeamData.teamNationality[0] = TeamData.TEAM_NATIONALITY.JAPAN;
+		TeamData.teamNationality[1] = TeamData.TEAM_NATIONALITY.ESPANA;
+
+		TeamData.AddLog(0, 1, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		TeamData.AddLog(1, 2, 0, true);
+		//TeamData.AddLog(2, 3, 1, true);
+		TeamData.AddLog(3, 4, 1, true);
+		TeamData.AddLog(4, 4, 1, false);
+		// ドライバ＿END
+
+		for (int j = 0; j < 3; j++)
+		{
+			for (int i = 0; i < 2; i++)
+			{
+				// チーム得点
+				panels[j].transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.GetTeamScore(i);
+				if (TeamData.GetTeamScore(i) < 10) panels[j].transform.FindChild("Score" + i).transform.FindChild("num02").transform.localPosition = new Vector3(0.0f, 0.0f);
+				else panels[j].transform.FindChild("Score" + i).transform.FindChild("num02").transform.localPosition = new Vector3(0.5f, 0.0f);
+
+				// 国旗国名
+				switch (TeamData.teamNationality[i])
+				{
+					case TeamData.TEAM_NATIONALITY.BRASIL:
+						panels[j].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "BRA_type1";
+						panels[j].transform.FindChild("CountryName" + i).GetComponent<UILabel>().text = "ブラジル";
+						break;
+					case TeamData.TEAM_NATIONALITY.ENGLAND:
+						panels[j].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ENG_type1";
+						panels[j].transform.FindChild("CountryName" + i).GetComponent<UILabel>().text = "イングランド";
+						break;
+					case TeamData.TEAM_NATIONALITY.ESPANA:
+						panels[j].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ESP_type1";
+						panels[j].transform.FindChild("CountryName" + i).GetComponent<UILabel>().text = "スペイン";
+						break;
+					case TeamData.TEAM_NATIONALITY.JAPAN:
+						panels[j].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "JPN_type1";
+						panels[j].transform.FindChild("CountryName" + i).GetComponent<UILabel>().text = "日本";
+						break;
+				}
+			}
+
+			// 結果表示
+			switch (TeamData.GetWinTeamNo())
+			{
+				case 0:
+					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "RED Team\n Victory";
+					break;
+				case 1:
+					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Blue Team\n Victory";
+					break;
+				case 2:
+					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Lose...";
+					break;
+			}
+		}
+		/*
 		GameObject logPrefab = Resources.Load("Prefab/Result/logPrefab") as GameObject;
 		GameObject[] panels  = new GameObject[3];
 		int[] logNo = new int[2] { 0, 0 };
@@ -111,6 +185,7 @@ public class Result : MonoBehaviour {
 			// ログNo加算
 			logNo[TeamData.GetLogData(i).teamNo]++;
 		}
+		 */
 
 		// シュートログをクリア
 		TeamData.ClearLog();

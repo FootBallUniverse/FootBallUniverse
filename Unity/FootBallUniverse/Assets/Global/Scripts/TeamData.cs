@@ -29,8 +29,6 @@ public class TeamData
 
 	// 各種データ（デバッグ時エラー防止のため初期値が入っています）
 	public static TEAM_NATIONALITY[] teamNationality = new TEAM_NATIONALITY[2] { TEAM_NATIONALITY.JAPAN, TEAM_NATIONALITY.BRASIL }; // 国籍
-	public static int[] teamScore = new int[2] { 10, 11 };             // チームスコア (削除予定）
-	public static int[,] playerScore = new int[2, 2] { { 10, 11 }, { 12, 13 } }; // プレイヤー別スコア（削除予定）
 	private static ArrayList logs = new ArrayList();               // ログデータ格納（カプセル化）
 
 	//================以下、シュートログ操作メソッド================
@@ -109,14 +107,14 @@ public class TeamData
 	//----------------------------------------------------------------------
 	// 勝利したチーム番号を取得
 	//----------------------------------------------------------------------
-	// @Return  勝利チーム番号（０か１    ３だと引き分け)
+	// @Return  勝利チーム番号（０か１    ２だと引き分け)
 	// @Date    2014/11/21  @Update 2014/11/21  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	public static int GetWinTeamNo()
 	{
 		int[] teamScore = new int[2] { GetTeamScore(0), GetTeamScore(1) };
 
-		if (teamScore[0] == teamScore[1]) return 3;
+		if (teamScore[0] == teamScore[1]) return 2;
 		else if (teamScore[0] > teamScore[1]) return 0;
 		else return 1;
 	}
