@@ -16,7 +16,7 @@ public class Loading_1 : MonoBehaviour
         m_Fadeout1 = m_Fade_1.GetComponent<Fade_1>();
         m_Loading1.x = 0.0f;
         m_Loading1.y = 2.0f;
-        m_Loading1.z = -0.34f;
+        m_Loading1.z = -0.6f;
 
     }
 
@@ -25,7 +25,7 @@ public class Loading_1 : MonoBehaviour
     {
         if (m_Fadeout1.m_FadeFlag == 2)
         {
-            m_Loading1.y = 0.05f;
+            m_Loading1.y = 0.1f;
             this.transform.Rotate(0, 0, 2);
         }
         else

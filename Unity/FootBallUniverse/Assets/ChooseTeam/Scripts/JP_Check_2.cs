@@ -15,9 +15,9 @@ public class JP_Check_2 : MonoBehaviour
         GameObject m_Fade_2 = m_Team_UI.transform.FindChild("Fade_In_Out_2").gameObject;
         m_TeamJP_2 = m_Team_UI.GetComponent<Player_3_Script>();
         m_Fade_JP_2 = m_Fade_2.GetComponent<Fade_2>();
-        m_Check_JP2.x = 1.28f;
+        m_Check_JP2.x = 4.0f;
         m_Check_JP2.y = 2.0f;
-        m_Check_JP2.z = -0.34f;
+        m_Check_JP2.z = -0.6f;
 
     }
 
@@ -26,7 +26,7 @@ public class JP_Check_2 : MonoBehaviour
     {
         if (m_Fade_JP_2.m_FadeFlag == 1 && m_TeamJP_2.m_Country[3].m_Flag == 3)
         {
-            m_Check_JP2.y = 0.0f;
+            m_Check_JP2.y = 0.2f;
         }
         else
         {

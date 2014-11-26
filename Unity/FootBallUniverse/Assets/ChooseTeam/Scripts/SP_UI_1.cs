@@ -27,7 +27,7 @@ public class SP_UI_1 : MonoBehaviour
         {
             if (m_team.m_Country[0].m_Flag == 3)
             {
-                m_UI.y = -0.05f;
+                m_UI.y = 0.1f;
             }
         }
         this.transform.position = m_UI;

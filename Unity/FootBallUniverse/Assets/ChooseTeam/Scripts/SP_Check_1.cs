@@ -17,7 +17,7 @@ public class SP_Check_1 : MonoBehaviour
         m_Fade_SP_1 = m_Fade_1.GetComponent<Fade_1>();
         m_Check_SP1.x = 0.0f;
         m_Check_SP1.y = 2.0f;
-        m_Check_SP1.z = -0.34f;
+        m_Check_SP1.z = -0.6f;
 
     }
 
@@ -26,7 +26,7 @@ public class SP_Check_1 : MonoBehaviour
     {
         if (m_Fade_SP_1.m_FadeFlag == 1 && m_TeamSP1.m_Country[0].m_Flag == 3)
         {
-            m_Check_SP1.y = 0.0f;
+            m_Check_SP1.y = 0.2f;
         }
         else
         {
