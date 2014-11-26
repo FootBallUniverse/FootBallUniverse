@@ -14,8 +14,8 @@ public class Loading_2 : MonoBehaviour
         GameObject m_Fade_1 = m_Team_UI.transform.FindChild("Fade_In_Out_2").gameObject;
         m_PlayerScript = m_Team_UI.GetComponent<Player_3_Script>();
         m_Fadeout2 = m_Fade_1.GetComponent<Fade_2>();
-        m_Loading2.x = 1.28f;
-        m_Loading2.y = 2.0f;
+        m_Loading2.x = 4.0f;
+        m_Loading2.y = 0.2f;
         m_Loading2.z = -0.34f;
 
     }

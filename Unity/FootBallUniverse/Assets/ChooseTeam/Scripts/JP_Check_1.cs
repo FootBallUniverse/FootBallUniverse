@@ -17,16 +17,16 @@ public class JP_Check_1 : MonoBehaviour
         m_Fade_JP_1 = m_Fade_1.GetComponent<Fade_1>();
         m_Check_JP1.x = 0.0f;
         m_Check_JP1.y = 2.0f;
-        m_Check_JP1.z = -0.34f;
+        m_Check_JP1.z = -0.6f;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (m_Fade_JP_1.m_FadeFlag == 1 && m_TeamJP_1.m_Country[3].m_Flag == 3 && m_Fade_JP_1.transform.GetComponent<UISprite>().alpha >= 0.5f)
+        if (m_Fade_JP_1.m_FadeFlag == 1 && m_TeamJP_1.m_Country[3].m_Flag == 3)
         {
-            m_Check_JP1.y = 0.0f;
+            m_Check_JP1.y = 0.2f;
         }
         else
         {

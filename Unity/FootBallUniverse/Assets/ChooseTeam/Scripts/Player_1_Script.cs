@@ -5,15 +5,16 @@ public class Player_1_Script : MonoBehaviour {
 
 	  public struct TEAM_NO
     {
-        public GameObject m_Country;    // チームの国名
-        public UISprite m_Sprit;        // 
-        public int m_TeamColor;         // チーム色
-        public float degree;            // 回転角度
-        public float radian;            // 
-        public float r;                 // 中心からの
-        public float centerx;           // 
-        public float centerz;           // 
-        public int m_Flag;              // モデルの位置を表す数値
+        public GameObject m_Country;            // チームの国名
+        public UISprite m_Sprit;                // 
+        public int m_TeamColor;                 // チーム色
+        public float degree;                    // 回転角度
+        public float radian;                    // 
+        public float r;                         // 中心からの
+        public float centerx;                   // 
+        public float centerz;                   // 
+        public int m_Flag;                      // モデルの位置を表す数値
+        public PlayerAnimator m_PlayerAnimator; // プレイヤーのアニメーター
     };
     
     // 速度
@@ -71,7 +72,7 @@ public class Player_1_Script : MonoBehaviour {
            m_Country[i].centerz = 0.0f;
            m_Country[i].radian = 0.0f;
            m_Country[i].m_Flag = i;
-
+           m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();
        }
     }
     // Update is called once per frame
@@ -150,7 +151,7 @@ public class Player_1_Script : MonoBehaviour {
                 if (m_Country[i].m_Flag == 2)
                     m_Country[i].m_Sprit.depth = 6;
                 else
-                    m_Country[i].m_Sprit.depth = 4;
+                    m_Country[i].m_Sprit.depth = 2;
 
             }
             m_Count++;
@@ -195,7 +196,13 @@ public class Player_1_Script : MonoBehaviour {
 
                     if (Position[i].x == 0.0f && Position[i].z == -0.31f)
                     {
+                        // m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
+                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isDashCharge);
                         Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
+                    }
+                    else
+                    {
+                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
                     }
                     m_Country[i].m_Country.transform.position = Position[i];
                 }
@@ -230,7 +237,7 @@ public class Player_1_Script : MonoBehaviour {
                 if (m_Country[i].m_Flag == 0)
                     m_Country[i].m_Sprit.depth = 6;
                 else
-                    m_Country[i].m_Sprit.depth = 4;
+                    m_Country[i].m_Sprit.depth = 2;
 
             }
             m_Count++;
@@ -274,7 +281,14 @@ public class Player_1_Script : MonoBehaviour {
 
                     if (Position[i].x == 0.0f && Position[i].z == -0.31f)
                     {
+                        // m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
+                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isDashCharge);
                         Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
+
+                    }
+                    else
+                    {
+                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
                     }
                     
                     m_Country[i].m_Country.transform.position = Position[i];
