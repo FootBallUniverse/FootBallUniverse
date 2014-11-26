@@ -18,7 +18,7 @@ public class CHumanManager : MonoBehaviour {
     // @Return	none
     // @Date	2014/10/24  @Update 2014/10/24  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    void Start()
+    void Awake()
     {
         m_japanHuman = new CJapanHuman();
         m_brasilHuman = new CBrasilHuman();

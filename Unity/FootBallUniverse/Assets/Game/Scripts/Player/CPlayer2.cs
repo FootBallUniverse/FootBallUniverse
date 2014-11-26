@@ -1,24 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+//----------------------------------------------------------------------
+// プレイヤー2のスクリプト
+//----------------------------------------------------------------------
+// @Update  2014/11/26      11月26日までのプレイヤー１の動き実装 
+// @Author  T.Kawashita 
+//----------------------------------------------------------------------
 public class CPlayer2 : CPlayer
 {
-
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita      
+    // @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita
+    // @Update  2014/11/26  プレイヤー１のスクリプトの追加部分  
     //----------------------------------------------------------------------
     void Start()
     {
-
         this.Init();
+
+        // プレイヤーのデータをセット
+        CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_2);
+        this.SetData();
+
         m_pos = this.transform.localPosition;
 
         // 国の情報をセット
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
+
+        // モデルのテクスチャを更新
 
         // プレイヤーの情報をマップにセット
         Color color = Color.red;
@@ -39,16 +52,17 @@ public class CPlayer2 : CPlayer
     {
         switch (m_status)
         {
-            case CPlayerManager.ePLAYER_STATUS.eWAIT: PlayerStatusWait(); break;    // 始めの待機状態
-            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN: PlayerStatusCountDown(); break;    // カウントダウンの状態
-            case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone(); break;    // 何もしてない状態
-            case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash(); break;    // ダッシュ中
-            case CPlayerManager.ePLAYER_STATUS.eTACKLE: PlayerStatusTackle(); break;
-            case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot(); break;    // シュート中
-            case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass(); break;    // パス中
-            case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                  // チャージ中
-            case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge(); break;    // チャージ中
-            case CPlayerManager.ePLAYER_STATUS.eEND: break;                         // 終了
+            case CPlayerManager.ePLAYER_STATUS.eWAIT: PlayerStatusWait();           break;      // 始めの待機状態
+            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN: PlayerStatusCountDown(); break;      // カウントダウンの状態
+            case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone();           break;      // 何もしてない状態
+            case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash();           break;      // ダッシュ中
+            case CPlayerManager.ePLAYER_STATUS.eTACKLE: PlayerStatusTackle();       break;      // タックル中
+            case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot();         break;      // シュート中
+            case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass();           break;      // パス中
+            case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                    // チャージ中
+            case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge();   break;      // チャージ中
+            case CPlayerManager.ePLAYER_STATUS.eEND:                                break;      // 終了
+            case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal();           break;      // ゴールした時は何もさせない
         }
     }
 
@@ -62,7 +76,7 @@ public class CPlayer2 : CPlayer
     void LateUpdate()
     {
         // アニメーション
-        this.MoveAnimation();
+        this.Animation();
 
         m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
         this.transform.localPosition = m_pos;       // 保存用位置座標を更新
@@ -125,6 +139,22 @@ public class CPlayer2 : CPlayer
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        }
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーのゴール中の状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/26  @Update 2014/11/26  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void PlayerStatusGoal()
+    {
+        // フェードインする状態になったら位置を初期化
+        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART)
+        {
+            this.Restart();
         }
     }
 
@@ -330,16 +360,16 @@ public class CPlayer2 : CPlayer
         if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
              m_isBall == true &&
              InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT) == true &&
-             InputXBOX360.m_isRTPress == false)
+             m_isRtPress)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
-            InputXBOX360.m_isRTPress = true;
+            m_isRtPress = true;
             return;
         }
 
         else if (InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT) == false)
         {
-            InputXBOX360.m_isRTPress = false;
+            m_isRtPress = false;
         }
     }
 
@@ -403,16 +433,16 @@ public class CPlayer2 : CPlayer
         if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
              m_isBall == false &&
              InputXBOX360.IsGetLTButton(InputXBOX360.P2_XBOX_LT) == true &&
-             InputXBOX360.m_isLTPress == false)
+             m_isLtPress == false)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
-            InputXBOX360.m_isLTPress = true;
+            m_isLtPress = true;
             return;
         }
 
         else if (InputXBOX360.IsGetLTButton(InputXBOX360.P2_XBOX_LT) == false)
         {
-            InputXBOX360.m_isLTPress = false;
+            m_isLtPress = false;
         }
     }
 
@@ -464,26 +494,32 @@ public class CPlayer2 : CPlayer
     }
 
     //----------------------------------------------------------------------
-    // 移動アニメーション
+    // アニメーション
     //----------------------------------------------------------------------
     // @Param	none
     // @Return	none
     // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void MoveAnimation()
+    private void Animation()
     {
         switch (m_status)
         {
             case CPlayerManager.ePLAYER_STATUS.eNONE:
+            case CPlayerManager.ePLAYER_STATUS.eWAIT:
+            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
                 m_animator.Move(m_speed); break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:
                 m_animator.ShootCharge(); break;
+            case CPlayerManager.ePLAYER_STATUS.ePASS:
+                m_animator.Pass();  break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOT:
                 m_animator.Shoot(); break;
             case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE:
                 m_animator.DashCharge(); break;
             case CPlayerManager.ePLAYER_STATUS.eDASH:
                 m_animator.Dash(); break;
+            case CPlayerManager.ePLAYER_STATUS.eTACKLE:
+                m_animator.Tackle(); break;
 
         }
     }

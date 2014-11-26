@@ -284,11 +284,8 @@ public class CGameManager : MonoBehaviour {
         {
             m_isGamePlay = false;
             CGameData.m_gamePlayTime = 0;
-            m_nowStatus = eSTATUS.eEND;
+            m_nowStatus = eSTATUS.eENDWAIT;
             m_frame = 0.0f;
-            Debug.Log("残り時間を0秒にしました");
         }
-
     }
-
 }

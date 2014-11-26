@@ -9,6 +9,7 @@ public class CPlayer : MonoBehaviour {
 
     public CPlayerManager.ePLAYER_STATUS m_status;
     public CPlayerManager.eCAMERA_STATUS m_cameraStatus;
+    
     public Vector3 m_pos;        // 位置座標
     public Vector3 m_speed;      // 移動量
     public Vector3 m_angle;      // 回転角度
@@ -20,6 +21,8 @@ public class CPlayer : MonoBehaviour {
     public CHuman m_human;                  // プレイヤーの国のインスタンス
 
     public int m_chargeFrame;               // チャージ時のフレーム数
+    public bool m_isRtPress;                // RTボタンが押され続けているか
+    public bool m_isLtPress;                // LTボタンが押され続けているか
     public bool m_isBall;                   // ボールを持っているかどうか
 
     //----------------------------------------------------------------------
@@ -41,6 +44,8 @@ public class CPlayer : MonoBehaviour {
         m_action = new CPlayerAction();
 
         m_chargeFrame = 0;
+        m_isRtPress = false;
+        m_isLtPress = false;
         m_isBall = false;
     }
 
@@ -64,6 +69,8 @@ public class CPlayer : MonoBehaviour {
         m_action = new CPlayerAction();
 
         m_chargeFrame = 0;
+        m_isRtPress = false;
+        m_isLtPress = false;
         m_isBall = false;
 
         return true;
@@ -88,6 +95,12 @@ public class CPlayer : MonoBehaviour {
 
         // アニメーションを元に戻す
         this.m_speed = new Vector3(0.0f, 0.0f, 0.0f);
+
+        // その他変数初期化
+        m_chargeFrame = 0;
+        m_isBall = false;
+        m_isLtPress = false;
+        m_isRtPress = false;
 
         return true;
     }

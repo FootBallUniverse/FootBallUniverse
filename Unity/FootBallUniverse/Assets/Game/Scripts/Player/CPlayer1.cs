@@ -69,7 +69,7 @@ public class CPlayer1 : CPlayer {
     void LateUpdate()
     {
         // アニメーション
-        this.MoveAnimation();
+        this.Animation();
 
         m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
         this.transform.localPosition = m_pos;       // 保存用位置座標を更新
@@ -144,11 +144,10 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     private void PlayerStatusGoal()
     {
-        // フェードインする状態になったら位置状態を初期化
+        // フェードインする状態になったら位置を初期化
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART)
         {
             this.Restart(); 
-
         }
     }
 
@@ -354,16 +353,17 @@ public class CPlayer1 : CPlayer {
         if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
              m_isBall == true && 
              InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == true && 
-             InputXBOX360.m_isRTPress == false )
+             m_isRtPress == false )
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
-            InputXBOX360.m_isRTPress = true;
+            m_isRtPress = true;
             return;
         }
 
+        // 離されたら押しっぱなしフラグOFF
         else if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false)
         {
-            InputXBOX360.m_isRTPress = false;
+            m_isRtPress = false;
         }
     }
 
@@ -376,8 +376,8 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     private void ShootHold()
     {
+        // 押されている間はチャージのフレーム取得
         if( InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) )
-            // チャージフレーム取得
             m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P1_XBOX_RT);
 
         // チャージ時間が一定量以上ならシュートホールド状態終了
@@ -427,16 +427,16 @@ public class CPlayer1 : CPlayer {
         if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
              m_isBall == false && 
              InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == true &&
-             InputXBOX360.m_isLTPress == false)
+             m_isLtPress == false)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
-            InputXBOX360.m_isLTPress = true;
+            m_isLtPress = true;
             return;
         }
 
         else if( InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT ) == false )
         {
-            InputXBOX360.m_isLTPress = false;
+            m_isLtPress = false;
         }
     }
 
@@ -488,13 +488,14 @@ public class CPlayer1 : CPlayer {
     }
 
     //----------------------------------------------------------------------
-    // 移動アニメーション
+    // アニメーション
     //----------------------------------------------------------------------
     // @Param	none
     // @Return	none
-    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
+    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita
+    // @Update  2014/11/26  タックルモーション追加  
     //----------------------------------------------------------------------
-    private void MoveAnimation()
+    private void Animation()
     {
         switch (m_status)
         {
@@ -512,6 +513,8 @@ public class CPlayer1 : CPlayer {
                 m_animator.DashCharge(); break;
             case CPlayerManager.ePLAYER_STATUS.eDASH:
                 m_animator.Dash(); break;
+            case CPlayerManager.ePLAYER_STATUS.eTACKLE:
+                m_animator.Tackle(); break;
 
         }
     }

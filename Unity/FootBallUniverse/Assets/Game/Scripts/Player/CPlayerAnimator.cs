@@ -18,6 +18,8 @@ public class CPlayerAnimator : MonoBehaviour{
     public int m_isPass;
     public int m_isKickCharge;
     public int m_isDash;
+    public int m_isTackle;
+    public int m_isTackleSuccess;
     public int m_isDashCharge;
 
     //----------------------------------------------------------------------
@@ -40,6 +42,8 @@ public class CPlayerAnimator : MonoBehaviour{
         m_isNormalShoot = Animator.StringToHash("isNormalShoot");
         m_isKickCharge = Animator.StringToHash("isKickCharge");
         m_isDash = Animator.StringToHash("isDash");
+        m_isTackle = Animator.StringToHash("isTackle");
+        m_isTackleSuccess = Animator.StringToHash("isTackleSuccess");
         m_isDashCharge = Animator.StringToHash("isDashCharge");
 
         m_oldAnimation = m_isWait;
@@ -53,6 +57,8 @@ public class CPlayerAnimator : MonoBehaviour{
         m_animator.SetBool(m_isPass, false);
         m_animator.SetBool(m_isKickCharge, false);
         m_animator.SetBool(m_isDash, false);
+        m_animator.SetBool(m_isTackle, false);
+        m_animator.SetBool(m_isTackleSuccess, false);
         m_animator.SetBool(m_isDashCharge, false);
 	}
 
@@ -172,6 +178,18 @@ public class CPlayerAnimator : MonoBehaviour{
     public void Dash()
     {
         this.ChangeAnimation(m_isDash);
+    }
+
+    //----------------------------------------------------------------------
+    // タックルアニメーション
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/26  @Update 2014/11/26  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void Tackle()
+    {
+        this.ChangeAnimation(m_isTackle);
     }
 
     //----------------------------------------------------------------------

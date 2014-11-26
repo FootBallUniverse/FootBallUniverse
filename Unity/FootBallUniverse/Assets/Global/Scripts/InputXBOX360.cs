@@ -89,8 +89,6 @@ public class InputXBOX360
 
     public static float m_rtPress = 0;
     public static float m_ltPress = 0;
-    public static bool m_isRTPress = false;
-    public static bool m_isLTPress = false;
 
 //***************************************************************************************************
 //                                          メソッド

@@ -17,7 +17,8 @@ public class CPlayerControler : MonoBehaviour {
         ePLAYER4
     }
 
-    public CPlayer m_player;                // 操作するプレイヤーのスクリプト
+    public GameObject m_player;
+    public CPlayer m_playerScript;          // 操作するプレイヤーのスクリプト
     private ePLAYER_STATUS m_playerStatus;  // 現在のプレイヤー
 
     //----------------------------------------------------------------------
@@ -30,10 +31,9 @@ public class CPlayerControler : MonoBehaviour {
     void Start () {
 
         // 最初はプレイヤー１のスクリプトを取得
-        m_player = this.gameObject.GetComponent<CPlayer1>();
+        m_playerScript = this.gameObject.GetComponent<CPlayer1>();
         m_playerStatus = ePLAYER_STATUS.ePLAYER1;
 	}
-
 
     //----------------------------------------------------------------------
     // 更新
@@ -62,20 +62,25 @@ public class CPlayerControler : MonoBehaviour {
         // 1P
         if (Input.GetKeyDown(KeyCode.Alpha1) && m_playerStatus != ePLAYER_STATUS.ePLAYER1)
         {
-            GameObject gameObject = GameObject.Find("Player1").transform.FindChild("Player").gameObject;
-            m_player = gameObject.GetComponent<CPlayer1>();
+            
+
+            // 1Pの情報を取得して1Pに切り替える
+            m_player = GameObject.Find("P1&P2").transform.FindChild("Player1").transform.FindChild("player").gameObject;
+            m_playerScript = gameObject.GetComponent<CPlayer1>();
             m_playerStatus = ePLAYER_STATUS.ePLAYER1;
         }
         // 2P
+        if (Input.GetKeyDown(KeyCode.Alpha2) && m_playerStatus != ePLAYER_STATUS.ePLAYER2)
+        {
+            m_player = GameObject.Find("P1&P2").transform.FindChild("Player2").transform.FindChild("player").gameObject;
+            m_playerScript = gameObject.GetComponent<CPlayer2>();
+            m_playerStatus = ePLAYER_STATUS.ePLAYER2;
+        }
 
         // 3P
 
         // 4P
 
-        // 移動
-        if (Input.GetKey(KeyCode.W))
-        {
-        }
 
     }
 
@@ -107,7 +112,7 @@ public class CPlayerControler : MonoBehaviour {
             speed.x -= 0.3f;
 
         // 移動関数
-        m_player.Move(speed);
+        m_playerScript.Move(speed);
 
     }
 
@@ -139,7 +144,7 @@ public class CPlayerControler : MonoBehaviour {
             angle.x -= 0.6f;
 
         // 回転関数
-        m_player.Rotation(angle);
+        m_playerScript.Rotation(angle);
     }
 
     //----------------------------------------------------------------------
@@ -152,19 +157,19 @@ public class CPlayerControler : MonoBehaviour {
     public void SetBall()
     {
         // Bが押されたらプレイヤーにボールをセット
-        if (Input.GetKeyDown(KeyCode.B) && m_player.m_isBall == false)
+        if (Input.GetKeyDown(KeyCode.B) && m_playerScript.m_isBall == false)
         {
             // ボールの位置をセット
             Vector3 pos = new Vector3(0.0f,0.05f,0.1f);
 
             // サッカーボールに誰が現在保持しているかを設定
-            CSoccerBallManager.m_shootPlayerNo = m_player.m_playerData.m_id;
-            CSoccerBallManager.m_shootTeamNo = m_player.m_playerData.m_teamNo;
-            CSoccerBallManager.m_nowPlayer = m_player.m_playerData.m_id;
+            CSoccerBallManager.m_shootPlayerNo = m_playerScript.m_playerData.m_id;
+            CSoccerBallManager.m_shootTeamNo = m_playerScript.m_playerData.m_teamNo;
+            CSoccerBallManager.m_nowPlayer = m_playerScript.m_playerData.m_id;
 
             // プレイヤーのボールに設定
             CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(this.transform,pos);
-            m_player.m_isBall = true;
+            m_playerScript.m_isBall = true;
         }
     }
 }
