@@ -18,16 +18,15 @@ public class Player_1_Script : MonoBehaviour {
     };
     
     // 速度
-    public Vector2 SPEED = new Vector2(0.05f, 0.01f);
-
+    private Vector2 SPEED = new Vector2(0.05f, 0.01f);
     public TEAM_NO[] m_Country = new TEAM_NO[4];
-    Vector3[] Position = new Vector3[4];
+    public Vector3[] Position = new Vector3[4];
     public bool m_Right_RotateFlag;
     public bool m_Left_RotateFlag;
     public bool m_SceneFlag;
     int m_Count = 0;
 
-    Fade_1 m_Fade_flag_1;
+    public Fade_1 m_Fade_flag_1;
     //Fade_2 m_Fade_flag_2;
 
     // Use this for initialization
@@ -37,11 +36,11 @@ public class Player_1_Script : MonoBehaviour {
         GameObject m_TeamData = GameObject.Find("TeamData");
         
         // モデルの呼び出し
+        GameObject m_Fade_1 = transform.FindChild("Fade_In_Out_1").gameObject;
         m_Country[0].m_Country = transform.Find("Spain_1").gameObject;
         m_Country[1].m_Country = transform.Find("England_1").gameObject;
         m_Country[2].m_Country = transform.Find("Brazil_1").gameObject;
         m_Country[3].m_Country = transform.Find("Japan_1").gameObject;
-        GameObject m_Fade_1 = transform.FindChild("Fade_In_Out_1").gameObject;
        // GameObject m_Fade_2 = transform.Find("Fade_In_Out_2").gameObject;
 
         m_Country[0].m_Sprit = m_Country[0].m_Country.transform.FindChild("flag_0").GetComponent<UISprite>();

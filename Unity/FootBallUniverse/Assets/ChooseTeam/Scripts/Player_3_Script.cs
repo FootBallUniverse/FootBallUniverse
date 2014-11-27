@@ -25,7 +25,7 @@ public class Player_3_Script : MonoBehaviour
     public bool m_Right_RotateFlag;
     public bool m_Left_RotateFlag;
     public bool m_SceneFlag;
-    Fade_2 m_Fade_flag_2;
+    public Fade_2 m_Fade_flag_2;
 
     private float m_CenterPos;
     
