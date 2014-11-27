@@ -72,7 +72,8 @@ public class CPlayer1 : CPlayer {
         this.Animation();
 
         m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
-        this.transform.localPosition = m_pos;       // 保存用位置座標を更新
+        this.rigidbody.MovePosition(m_pos);
+        // this.transform.localPosition = m_pos;       // 保存用位置座標を更新
 
         // ゲームが終了しているかどうか判定
         this.CheckGamePlay();
@@ -241,6 +242,7 @@ public class CPlayer1 : CPlayer {
         // ボールを持っている場合は遅くなる
         if (m_isBall == true)
         {
+            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, 0.05f, 0.1f));
             m_speed.x += _speed.x * m_human.m_playerMoveSpeedHold;
             m_speed.z += _speed.z * m_human.m_playerMoveSpeedHold;
         }
@@ -249,6 +251,8 @@ public class CPlayer1 : CPlayer {
             m_speed.x += _speed.x * m_human.m_playerMoveSpeed;
             m_speed.z += _speed.z * m_human.m_playerMoveSpeed;
         }
+
+        m_pos = this.transform.localPosition;
      
         // 移動アクション
         m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right);
