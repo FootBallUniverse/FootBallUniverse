@@ -21,6 +21,9 @@ public class CPlayerControler : MonoBehaviour {
     public CPlayer m_playerScript;          // 操作するプレイヤーのスクリプト
     private ePLAYER_STATUS m_playerStatus;  // 現在のプレイヤー
 
+    public float PLAYER_MOVE_SPEED = 0.6f;
+    public float PLAYER_ROTATION_SPEED = 0.6f;
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -31,7 +34,8 @@ public class CPlayerControler : MonoBehaviour {
     void Start () {
 
         // 最初はプレイヤー１のスクリプトを取得
-        m_playerScript = this.gameObject.GetComponent<CPlayer1>();
+        m_playerScript = this.gameObject.transform.parent.GetComponent<CPlayer1>();
+        m_player = this.gameObject.transform.parent.gameObject;
         m_playerStatus = ePLAYER_STATUS.ePLAYER1;
 	}
 
@@ -62,26 +66,52 @@ public class CPlayerControler : MonoBehaviour {
         // 1P
         if (Input.GetKeyDown(KeyCode.Alpha1) && m_playerStatus != ePLAYER_STATUS.ePLAYER1)
         {
-            
-
             // 1Pの情報を取得して1Pに切り替える
             m_player = GameObject.Find("P1&P2").transform.FindChild("Player1").transform.FindChild("player").gameObject;
-            m_playerScript = gameObject.GetComponent<CPlayer1>();
+
+            // コントローラーの位置を変更
+            this.ChangeControler(m_player.transform);
+
+            m_playerScript = m_player.GetComponent<CPlayer1>();
             m_playerStatus = ePLAYER_STATUS.ePLAYER1;
+
+
         }
         // 2P
         if (Input.GetKeyDown(KeyCode.Alpha2) && m_playerStatus != ePLAYER_STATUS.ePLAYER2)
         {
+            // 2Pの情報を取得して2Pに切り替える
             m_player = GameObject.Find("P1&P2").transform.FindChild("Player2").transform.FindChild("player").gameObject;
-            m_playerScript = gameObject.GetComponent<CPlayer2>();
+
+            this.ChangeControler(m_player.transform);
+
+            m_playerScript = m_player.GetComponent<CPlayer2>();
             m_playerStatus = ePLAYER_STATUS.ePLAYER2;
         }
 
         // 3P
+        if (Input.GetKeyDown(KeyCode.Alpha3) && m_playerStatus != ePLAYER_STATUS.ePLAYER3)
+        { 
+        }
 
         // 4P
+        if (Input.GetKeyDown(KeyCode.Alpha4) && m_playerStatus != ePLAYER_STATUS.ePLAYER4)
+        { 
+        }
 
 
+    }
+
+    //----------------------------------------------------------------------
+    // コントローラーの切り替え
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/27  @Update 2014/11/27  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void ChangeControler(Transform _parent)
+    {
+        this.transform.parent = _parent;
     }
 
     //----------------------------------------------------------------------
@@ -97,19 +127,19 @@ public class CPlayerControler : MonoBehaviour {
 
         // 前移動
         if (Input.GetKey(KeyCode.W))
-            speed.z += 0.3f;
+            speed.z += PLAYER_MOVE_SPEED;
 
         // 後移動
         if (Input.GetKey(KeyCode.S))
-            speed.z -= 0.3f;
+            speed.z -= PLAYER_MOVE_SPEED;
 
         // 右移動
         if (Input.GetKey(KeyCode.D))
-            speed.x += 0.3f;
+            speed.x += PLAYER_MOVE_SPEED;
 
         // 左移動
         if (Input.GetKey(KeyCode.A))
-            speed.x -= 0.3f;
+            speed.x -= PLAYER_MOVE_SPEED;
 
         // 移動関数
         m_playerScript.Move(speed);
@@ -129,19 +159,19 @@ public class CPlayerControler : MonoBehaviour {
 
         // 前回転
         if (Input.GetKey(KeyCode.UpArrow))
-            angle.y += 0.6f;
+            angle.y += PLAYER_ROTATION_SPEED;
 
         // 後回転
         if (Input.GetKey(KeyCode.DownArrow))
-            angle.y -= 0.6f;
+            angle.y -= PLAYER_ROTATION_SPEED;
 
         // 右回転
         if (Input.GetKey(KeyCode.RightArrow))
-            angle.x += 0.6f;
+            angle.x += PLAYER_ROTATION_SPEED;
 
         // 左回転
         if (Input.GetKey(KeyCode.LeftArrow))
-            angle.x -= 0.6f;
+            angle.x -= PLAYER_ROTATION_SPEED;
 
         // 回転関数
         m_playerScript.Rotation(angle);
@@ -168,7 +198,7 @@ public class CPlayerControler : MonoBehaviour {
             CSoccerBallManager.m_nowPlayer = m_playerScript.m_playerData.m_id;
 
             // プレイヤーのボールに設定
-            CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(this.transform,pos);
+            CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(m_player.transform,pos);
             m_playerScript.m_isBall = true;
         }
     }
