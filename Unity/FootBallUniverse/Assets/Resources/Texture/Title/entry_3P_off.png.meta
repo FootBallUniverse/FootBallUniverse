@@ -1,11 +1,19 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: daa58273e31fa0445b6a0298837a8936
+=======
+guid: a0d6d5c31caea2a418bf641dfcc47432
+>>>>>>> fe389bafe5beeec96d6eddb6247ab0be4b198be0
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
+<<<<<<< HEAD
     enableMipMap: 1
+=======
+    enableMipMap: 0
+>>>>>>> fe389bafe5beeec96d6eddb6247ab0be4b198be0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -17,6 +25,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
+<<<<<<< HEAD
   isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
@@ -29,6 +38,20 @@ TextureImporter:
     mipBias: -1
     wrapMode: -1
   nPOTScale: 1
+=======
+  isReadable: 1
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: 5
+  maxTextureSize: 4096
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+>>>>>>> fe389bafe5beeec96d6eddb6247ab0be4b198be0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 0

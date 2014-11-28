@@ -1,0 +1,299 @@
+fileFormatVersion: 2
+guid: 5986da51a132a69448db5b42e3d5b218
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: asi1_L1
+    100002: asi1_R
+    100004: FOOT_L
+    100006: FOOT_R
+    100008: group1
+    100010: hiji_L
+    100012: hiji_R
+    100014: hiza_L
+    100016: hiza_R
+    100018: jet
+    100020: joint10
+    100022: joint11
+    100024: joint12
+    100026: joint13
+    100028: joint14
+    100030: joint16
+    100032: joint17
+    100034: joint19
+    100036: joint20
+    100038: joint21
+    100040: joint24
+    100042: joint25
+    100044: joint26
+    100046: joint27
+    100048: joint28
+    100050: joint30
+    100052: joint31
+    100054: joint33
+    100056: joint34
+    100058: joint35
+    100060: kata_L
+    100062: kata_R
+    100064: koshi
+    100066: kubi1
+    100068: kubi2
+    100070: locator_L
+    100072: locator_R
+    100074: mune
+    100076: nurbsCircle1
+    100078: pasted__nurbsCircle1
+    100080: pasted__nurbsCircle1 1
+    100082: pasted__nurbsCircle3
+    100084: pasted__nurbsCircle4
+    100086: pasted__pasted__nurbsCircle1
+    100088: pasted__pasted__nurbsCircle1 1
+    100090: pasted__pasted__nurbsCircle2
+    100092: pasted__pasted__pasted__nurbsCircle1
+    100094: //RootNode
+    100096: polySurface14
+    100098: root
+    100100: sakotu
+    100102: top
+    400000: asi1_L1
+    400002: asi1_R
+    400004: FOOT_L
+    400006: FOOT_R
+    400008: group1
+    400010: hiji_L
+    400012: hiji_R
+    400014: hiza_L
+    400016: hiza_R
+    400018: jet
+    400020: joint10
+    400022: joint11
+    400024: joint12
+    400026: joint13
+    400028: joint14
+    400030: joint16
+    400032: joint17
+    400034: joint19
+    400036: joint20
+    400038: joint21
+    400040: joint24
+    400042: joint25
+    400044: joint26
+    400046: joint27
+    400048: joint28
+    400050: joint30
+    400052: joint31
+    400054: joint33
+    400056: joint34
+    400058: joint35
+    400060: kata_L
+    400062: kata_R
+    400064: koshi
+    400066: kubi1
+    400068: kubi2
+    400070: locator_L
+    400072: locator_R
+    400074: mune
+    400076: nurbsCircle1
+    400078: pasted__nurbsCircle1
+    400080: pasted__nurbsCircle1 1
+    400082: pasted__nurbsCircle3
+    400084: pasted__nurbsCircle4
+    400086: pasted__pasted__nurbsCircle1
+    400088: pasted__pasted__nurbsCircle1 1
+    400090: pasted__pasted__nurbsCircle2
+    400092: pasted__pasted__pasted__nurbsCircle1
+    400094: //RootNode
+    400096: polySurface14
+    400098: root
+    400100: sakotu
+    400102: top
+    4300000: polySurface14
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: polySurface14
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/FOOT_L
+        weight: 1
+      - path: group1/FOOT_R
+        weight: 1
+      - path: group1/locator_L
+        weight: 1
+      - path: group1/locator_R
+        weight: 1
+      - path: group1/pasted__nurbsCircle1
+        weight: 1
+      - path: group1/pasted__nurbsCircle3
+        weight: 1
+      - path: group1/pasted__nurbsCircle4
+        weight: 1
+      - path: group1/pasted__nurbsCircle4/pasted__pasted__nurbsCircle2
+        weight: 1
+      - path: group1/pasted__nurbsCircle4/pasted__pasted__nurbsCircle2/pasted__nurbsCircle1
+          1
+        weight: 1
+      - path: group1/pasted__pasted__nurbsCircle1
+        weight: 1
+      - path: group1/pasted__pasted__nurbsCircle1/pasted__pasted__pasted__nurbsCircle1
+        weight: 1
+      - path: group1/pasted__pasted__nurbsCircle1/pasted__pasted__pasted__nurbsCircle1/pasted__pasted__nurbsCircle1
+          1
+        weight: 1
+      - path: group1/root
+        weight: 1
+      - path: group1/root/asi1_L1
+        weight: 1
+      - path: group1/root/asi1_L1/hiza_L
+        weight: 1
+      - path: group1/root/asi1_L1/hiza_L/joint24
+        weight: 1
+      - path: group1/root/asi1_L1/hiza_L/joint24/joint25
+        weight: 1
+      - path: group1/root/asi1_L1/hiza_L/joint24/joint25/joint26
+        weight: 1
+      - path: group1/root/asi1_L1/hiza_L/joint24/joint25/joint26/joint27
+        weight: 1
+      - path: group1/root/asi1_L1/hiza_L/joint24/joint25/joint26/joint27/joint28
+        weight: 1
+      - path: group1/root/asi1_R
+        weight: 1
+      - path: group1/root/asi1_R/hiza_R
+        weight: 1
+      - path: group1/root/asi1_R/hiza_R/joint10
+        weight: 1
+      - path: group1/root/asi1_R/hiza_R/joint10/joint11
+        weight: 1
+      - path: group1/root/asi1_R/hiza_R/joint10/joint11/joint12
+        weight: 1
+      - path: group1/root/asi1_R/hiza_R/joint10/joint11/joint12/joint13
+        weight: 1
+      - path: group1/root/asi1_R/hiza_R/joint10/joint11/joint12/joint13/joint14
+        weight: 1
+      - path: group1/root/koshi
+        weight: 1
+      - path: group1/root/koshi/jet
+        weight: 1
+      - path: group1/root/koshi/mune
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_L
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_L/joint16
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_L/joint16/joint17
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_L/joint16/joint17/hiji_L
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_L/joint16/joint17/hiji_L/joint19
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_L/joint16/joint17/hiji_L/joint19/joint20
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_L/joint16/joint17/hiji_L/joint19/joint20/joint21
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_R
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_R/joint30
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_R/joint30/joint31
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_R/joint30/joint31/hiji_R
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_R/joint30/joint31/hiji_R/joint33
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_R/joint30/joint31/hiji_R/joint33/joint34
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kata_R/joint30/joint31/hiji_R/joint33/joint34/joint35
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kubi2
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kubi2/kubi1
+        weight: 1
+      - path: group1/root/koshi/mune/sakotu/kubi2/kubi1/top
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: polySurface14
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

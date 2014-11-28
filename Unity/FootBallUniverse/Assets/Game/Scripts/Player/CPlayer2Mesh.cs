@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class CPlayer2Mesh : CPlayerMesh {
 
     //----------------------------------------------------------------------
@@ -31,6 +32,40 @@ public class CPlayer2Mesh : CPlayerMesh {
 	}
 
     //----------------------------------------------------------------------
+    // マテリアルの変更
+    //----------------------------------------------------------------------
+    // @Param	TeamData.TEAM_NATIONALITY   選択されたチーム		
+    // @Return	none
+    // @Date	2014/11/28  @Update 2014/11/28  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void ChangeMaerial(TeamData.TEAM_NATIONALITY _world)
+    {
+        // モデルのマテリアルを変更
+        switch (_world)
+        {
+            // 日本
+            case TeamData.TEAM_NATIONALITY.JAPAN:
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_japan"));
+                break;
+
+            // ブラジル
+            case TeamData.TEAM_NATIONALITY.BRASIL:
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_brasil"));
+                break;
+
+            // イングランド
+            case TeamData.TEAM_NATIONALITY.ENGLAND:
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_england"));
+                break;
+
+            // スペイン
+            case TeamData.TEAM_NATIONALITY.ESPANA:
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_spain"));
+                break;
+        }
+    }
+
+    //----------------------------------------------------------------------
     // カメラの中に潜入したら
     //----------------------------------------------------------------------
     // @Param	none		
@@ -43,7 +78,7 @@ public class CPlayer2Mesh : CPlayerMesh {
 
         // 自分のカメラなら無効
         if ("Player2Camera" == Camera.current.name ||
-            "SceneCamera" == Camera.current.name)
+            "DeliveryCamera" == Camera.current.name)
             return;
 
         GameObject camera = GameObject.Find(Camera.current.name);

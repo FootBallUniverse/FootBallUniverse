@@ -16,7 +16,8 @@ public class CPlayer2 : CPlayer
     // @Param	none		
     // @Return	none
     // @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita
-    // @Update  2014/11/26  プレイヤー１のスクリプトの追加部分  
+    // @Update  2014/11/26  プレイヤー１のスクリプトの追加部分 
+    // @Update  2014/11/28  マテリアルの変更
     //----------------------------------------------------------------------
     void Start()
     {
@@ -28,10 +29,9 @@ public class CPlayer2 : CPlayer
 
         m_pos = this.transform.localPosition;
 
-        // 国の情報をセット
+        // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
-
-        // モデルのテクスチャを更新
+        this.transform.FindChild("polySurface14").GetComponent<CPlayer2Mesh>().ChangeMaerial(TeamData.teamNationality[0]);
 
         // プレイヤーの情報をマップにセット
         Color color = Color.red;

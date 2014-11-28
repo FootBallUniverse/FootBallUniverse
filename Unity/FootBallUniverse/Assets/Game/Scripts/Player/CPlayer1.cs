@@ -20,12 +20,10 @@ public class CPlayer1 : CPlayer {
 
         m_pos = this.transform.localPosition;
 
-        // 国の情報をセット
+        // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
-
-        // モデルのテクスチャを更新
-
-
+    
+      
         // プレイヤーの情報をマップにセット
         Color color = Color.red;
         CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
@@ -274,7 +272,8 @@ public class CPlayer1 : CPlayer {
             angle.y = _angle.x * m_human.m_cameraMoveSpeed;
             angle.x = _angle.y * m_human.m_cameraMoveSpeed;
         }
-        else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE)
+        else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE ||
+                 m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
         {
             angle.y = _angle.x * m_human.m_cameraMoveSpeedCharging;
             angle.x = _angle.y * m_human.m_cameraMoveSpeedCharging;
