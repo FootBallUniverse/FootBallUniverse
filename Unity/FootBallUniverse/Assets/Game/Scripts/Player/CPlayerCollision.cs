@@ -14,9 +14,18 @@ public class CPlayerCollision : MonoBehaviour {
 	
 	}
 
+    //----------------------------------------------------------------------
+    // 当たり判定
+    //----------------------------------------------------------------------
+    // @Param   Collider    ぶつかったもののGameObject		
+    // @Return	none
+    // @Other   CallBack
+    // @Date	2014/11/28  @Update 2014/11/28  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.tag=="SoccerBall")
+        // ボールとぶつかった時の判定
+		if(other.gameObject.tag == "SoccerBall" )
 		{
 			if(other.transform.parent == GameObject.Find("BallGameObject").transform)
 			{
@@ -30,6 +39,12 @@ public class CPlayerCollision : MonoBehaviour {
 
 			}
 		}
+
+        // タックルの当たり判定
+        if( this.GetComponent<CPlayer>().m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE )
+        {
+            
+        }
 
 	}
 

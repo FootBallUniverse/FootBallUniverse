@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bf5c1df8ddc8f34488f83dde28f1e3eb
+guid: a4f6835d8501ef84baf74a9d39206dfc
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -12,62 +12,49 @@ ModelImporter:
     100012: hiji_R
     100014: hiza_L
     100016: hiza_R
-    100018: ikHandle1
-    100020: ikHandle2
-    100022: jet
-    100024: joint10
-    100026: joint11
-    100028: joint12
-    100030: joint13
-    100032: joint14
-    100034: joint16
-    100036: joint17
-    100038: joint19
-    100040: joint20
-    100042: joint21
-    100044: joint24
-    100046: joint25
-    100048: joint26
-    100050: joint27
-    100052: joint28
-    100054: joint30
-    100056: joint31
-    100058: joint33
-    100060: joint34
-    100062: joint35
-    100064: joint36
-    100066: joint37
-    100068: joint38
-    100070: joint39
-    100072: joint40
-    100074: kata_L
-    100076: kata_R
-    100078: koshi
-    100080: kubi1
-    100082: kubi2
-    100084: locator_L
-    100086: locator_R
-    100088: mune
-    100090: nurbsCircle1
-    100092: pasted__joint36
-    100094: pasted__joint37
-    100096: pasted__joint38
-    100098: pasted__joint39
-    100100: pasted__joint40
-    100102: pasted__nurbsCircle1
-    100104: pasted__nurbsCircle1 1
-    100106: pasted__nurbsCircle2
-    100108: pasted__nurbsCircle3
-    100110: pasted__nurbsCircle4
-    100112: pasted__pasted__nurbsCircle1
-    100114: pasted__pasted__nurbsCircle1 1
-    100116: pasted__pasted__nurbsCircle2
-    100118: pasted__pasted__pasted__nurbsCircle1
-    100120: //RootNode
-    100122: polySurface14
-    100124: root
-    100126: sakotu
-    100128: top
+    100018: jet
+    100020: joint10
+    100022: joint11
+    100024: joint12
+    100026: joint13
+    100028: joint14
+    100030: joint16
+    100032: joint17
+    100034: joint19
+    100036: joint20
+    100038: joint21
+    100040: joint24
+    100042: joint25
+    100044: joint26
+    100046: joint27
+    100048: joint28
+    100050: joint30
+    100052: joint31
+    100054: joint33
+    100056: joint34
+    100058: joint35
+    100060: kata_L
+    100062: kata_R
+    100064: koshi
+    100066: kubi1
+    100068: kubi2
+    100070: locator_L
+    100072: locator_R
+    100074: mune
+    100076: nurbsCircle1
+    100078: pasted__nurbsCircle1
+    100080: pasted__nurbsCircle1 1
+    100082: pasted__nurbsCircle3
+    100084: pasted__nurbsCircle4
+    100086: pasted__pasted__nurbsCircle1
+    100088: pasted__pasted__nurbsCircle1 1
+    100090: pasted__pasted__nurbsCircle2
+    100092: pasted__pasted__pasted__nurbsCircle1
+    100094: //RootNode
+    100096: polySurface14
+    100098: root
+    100100: sakotu
+    100102: top
     400000: asi1_L1
     400002: asi1_R
     400004: FOOT_L
@@ -77,62 +64,49 @@ ModelImporter:
     400012: hiji_R
     400014: hiza_L
     400016: hiza_R
-    400018: ikHandle1
-    400020: ikHandle2
-    400022: jet
-    400024: joint10
-    400026: joint11
-    400028: joint12
-    400030: joint13
-    400032: joint14
-    400034: joint16
-    400036: joint17
-    400038: joint19
-    400040: joint20
-    400042: joint21
-    400044: joint24
-    400046: joint25
-    400048: joint26
-    400050: joint27
-    400052: joint28
-    400054: joint30
-    400056: joint31
-    400058: joint33
-    400060: joint34
-    400062: joint35
-    400064: joint36
-    400066: joint37
-    400068: joint38
-    400070: joint39
-    400072: joint40
-    400074: kata_L
-    400076: kata_R
-    400078: koshi
-    400080: kubi1
-    400082: kubi2
-    400084: locator_L
-    400086: locator_R
-    400088: mune
-    400090: nurbsCircle1
-    400092: pasted__joint36
-    400094: pasted__joint37
-    400096: pasted__joint38
-    400098: pasted__joint39
-    400100: pasted__joint40
-    400102: pasted__nurbsCircle1
-    400104: pasted__nurbsCircle1 1
-    400106: pasted__nurbsCircle2
-    400108: pasted__nurbsCircle3
-    400110: pasted__nurbsCircle4
-    400112: pasted__pasted__nurbsCircle1
-    400114: pasted__pasted__nurbsCircle1 1
-    400116: pasted__pasted__nurbsCircle2
-    400118: pasted__pasted__pasted__nurbsCircle1
-    400120: //RootNode
-    400122: polySurface14
-    400124: root
-    400126: sakotu
-    400128: top
+    400018: jet
+    400020: joint10
+    400022: joint11
+    400024: joint12
+    400026: joint13
+    400028: joint14
+    400030: joint16
+    400032: joint17
+    400034: joint19
+    400036: joint20
+    400038: joint21
+    400040: joint24
+    400042: joint25
+    400044: joint26
+    400046: joint27
+    400048: joint28
+    400050: joint30
+    400052: joint31
+    400054: joint33
+    400056: joint34
+    400058: joint35
+    400060: kata_L
+    400062: kata_R
+    400064: koshi
+    400066: kubi1
+    400068: kubi2
+    400070: locator_L
+    400072: locator_R
+    400074: mune
+    400076: nurbsCircle1
+    400078: pasted__nurbsCircle1
+    400080: pasted__nurbsCircle1 1
+    400082: pasted__nurbsCircle3
+    400084: pasted__nurbsCircle4
+    400086: pasted__pasted__nurbsCircle1
+    400088: pasted__pasted__nurbsCircle1 1
+    400090: pasted__pasted__nurbsCircle2
+    400092: pasted__pasted__pasted__nurbsCircle1
+    400094: //RootNode
+    400096: polySurface14
+    400098: root
+    400100: sakotu
+    400102: top
     4300000: polySurface14
     7400000: Take 001
     9500000: //RootNode
@@ -183,31 +157,7 @@ ModelImporter:
         weight: 1
       - path: group1/FOOT_L
         weight: 1
-      - path: group1/FOOT_L/joint36
-        weight: 1
-      - path: group1/FOOT_L/joint36/joint37
-        weight: 1
-      - path: group1/FOOT_L/joint36/joint37/joint38
-        weight: 1
-      - path: group1/FOOT_L/joint36/joint37/joint38/joint39
-        weight: 1
-      - path: group1/FOOT_L/joint36/joint37/joint38/joint39/joint40
-        weight: 1
       - path: group1/FOOT_R
-        weight: 1
-      - path: group1/FOOT_R/pasted__joint36
-        weight: 1
-      - path: group1/FOOT_R/pasted__joint36/pasted__joint37
-        weight: 1
-      - path: group1/FOOT_R/pasted__joint36/pasted__joint37/pasted__joint38
-        weight: 1
-      - path: group1/FOOT_R/pasted__joint36/pasted__joint37/pasted__joint38/pasted__joint39
-        weight: 1
-      - path: group1/FOOT_R/pasted__joint36/pasted__joint37/pasted__joint38/pasted__joint39/pasted__joint40
-        weight: 1
-      - path: group1/ikHandle1
-        weight: 1
-      - path: group1/ikHandle2
         weight: 1
       - path: group1/locator_L
         weight: 1
@@ -216,8 +166,6 @@ ModelImporter:
       - path: group1/pasted__nurbsCircle1
         weight: 1
       - path: group1/pasted__nurbsCircle3
-        weight: 1
-      - path: group1/pasted__nurbsCircle3/pasted__nurbsCircle2
         weight: 1
       - path: group1/pasted__nurbsCircle4
         weight: 1
