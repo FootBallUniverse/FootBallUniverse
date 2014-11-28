@@ -5,6 +5,7 @@ public class Result : MonoBehaviour {
 	// リザルト内のみの画面遷移管理用
 	enum RESULT_STATE
 	{
+		ALPHA_IN,
 		STAY_FIRST,
 		ALPHA_TEAM_SUPPORTER,
 		STAY_TEAM_SUPPORTER,
@@ -12,10 +13,11 @@ public class Result : MonoBehaviour {
 		ALPHA_WORLD_SUPPORTER,
 		ADDING_WORLD_SUPPORTER,
 		STAY_LAST,
+		ALPHA_OUT,
 		STATE_MAX
 	};
 
-	private RESULT_STATE state     = RESULT_STATE.STAY_FIRST;
+	private RESULT_STATE state     = RESULT_STATE.ALPHA_IN;
 	private GameObject[] SubPanels = new GameObject[4];
 	private int[] works            = new int[2];
 	public  int AddSuppoterTime;
@@ -72,6 +74,8 @@ public class Result : MonoBehaviour {
 		panels[2]    = GameObject.Find("SubPanel1") as GameObject;
 		SubPanels[0] = GameObject.Find("SubPanel00") as GameObject;
 		SubPanels[1] = GameObject.Find("SubPanel01") as GameObject;
+		SubPanels[2] = GameObject.Find("SubPanel10") as GameObject;
+		SubPanels[3] = GameObject.Find("SubPanel11") as GameObject;
 
 
 		for (int j = 0; j < 3; j++)
@@ -140,13 +144,23 @@ public class Result : MonoBehaviour {
 		this.SubPanels[0].transform.FindChild("NUM_Supporter_World").GetComponent<DrawNumber>().number = TeamData.suppoterByWorld;
 		this.SubPanels[1].transform.FindChild("NUM_Supporter_Team0").GetComponent<DrawNumber>().number = TeamData.suppoterByTeam[0];
 		this.SubPanels[1].transform.FindChild("NUM_Supporter_Team1").GetComponent<DrawNumber>().number = TeamData.suppoterByTeam[1];
+		this.SubPanels[2].transform.FindChild("NUM_Supporter_World").GetComponent<DrawNumber>().number = TeamData.suppoterByWorld;
+		this.SubPanels[3].transform.FindChild("NUM_Supporter_Team0").GetComponent<DrawNumber>().number = TeamData.suppoterByTeam[0];
+		this.SubPanels[3].transform.FindChild("NUM_Supporter_Team1").GetComponent<DrawNumber>().number = TeamData.suppoterByTeam[1];
 
 		switch (this.state)
 		{
+			case RESULT_STATE.ALPHA_IN:
+				if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
+				{
+					this.state = RESULT_STATE.STAY_FIRST;
+				}
+				break;
 			case RESULT_STATE.STAY_FIRST:
 				if (Input.GetKeyDown(KeyCode.Space))
 				{
 					this.SubPanels[1].GetComponent<TweenAlpha>().enabled = true;
+					this.SubPanels[3].GetComponent<TweenAlpha>().enabled = true;
 					this.state = RESULT_STATE.ALPHA_TEAM_SUPPORTER;
 				}
 				break;
@@ -162,6 +176,7 @@ public class Result : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.Space))
 				{
 					this.SubPanels[1].GetComponent<TweenPosition>().enabled = true;
+					this.SubPanels[3].GetComponent<TweenPosition>().enabled = true;
 					this.state = RESULT_STATE.MOVING_TEAM_SUPPORTER;
 				}
 				break;
@@ -170,6 +185,7 @@ public class Result : MonoBehaviour {
 				if (this.SubPanels[1].GetComponent<TweenPosition>().enabled == false)
 				{
 					this.SubPanels[0].GetComponent<TweenAlpha>().enabled = true;
+					this.SubPanels[2].GetComponent<TweenAlpha>().enabled = true;
 					this.state = RESULT_STATE.ALPHA_WORLD_SUPPORTER;
 				}
 				break;
@@ -178,6 +194,8 @@ public class Result : MonoBehaviour {
 				if (this.SubPanels[0].GetComponent<TweenAlpha>().enabled == false)
 				{
 					this.state = RESULT_STATE.ADDING_WORLD_SUPPORTER;
+					this.SubPanels[0].GetComponent<TweenScale>().Play(true);
+					this.SubPanels[2].GetComponent<TweenScale>().Play(true);
 					works[0] = TeamData.suppoterByTeam[0] / this.AddSuppoterTime;
 					works[1] = TeamData.suppoterByTeam[1] / this.AddSuppoterTime;
 				}
@@ -187,6 +205,8 @@ public class Result : MonoBehaviour {
 				if (TeamData.suppoterByTeam[0] == 0 && TeamData.suppoterByTeam[1] == 0)
 				{
 					this.state = RESULT_STATE.STAY_LAST;
+					this.SubPanels[0].GetComponent<TweenScale>().enabled = false;
+					this.SubPanels[2].GetComponent<TweenScale>().enabled = false;
 				}
 				else
 				{
@@ -207,6 +227,19 @@ public class Result : MonoBehaviour {
 				break;
 
 			case RESULT_STATE.STAY_LAST:
+				if (Input.GetKeyDown(KeyCode.Space))
+				{
+					GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().Play(false);
+					this.state = RESULT_STATE.ALPHA_OUT;
+				}
+				break;
+
+			case RESULT_STATE.ALPHA_OUT:
+				if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
+				{
+					Application.LoadLevel("Title");
+					Debug.Log("Title画面に遷移");
+				}
 				break;
 		}
 
