@@ -2,6 +2,24 @@
 using System.Collections;
 
 public class Result : MonoBehaviour {
+	// リザルト内のみの画面遷移管理用
+	enum RESULT_STATE
+	{
+		STAY_FIRST,
+		ALPHA_TEAM_SUPPORTER,
+		STAY_TEAM_SUPPORTER,
+		MOVING_TEAM_SUPPORTER,
+		ALPHA_WORLD_SUPPORTER,
+		ADDING_WORLD_SUPPORTER,
+		STAY_LAST,
+		STATE_MAX
+	};
+
+	private RESULT_STATE state     = RESULT_STATE.STAY_FIRST;
+	private GameObject[] SubPanels = new GameObject[4];
+	private int[] works            = new int[2];
+	public  int AddSuppoterTime;
+
 	//----------------------------------------------------------------------
 	// コンストラクタ
 	//----------------------------------------------------------------------
@@ -21,7 +39,7 @@ public class Result : MonoBehaviour {
 	//----------------------------------------------------------------------
 	void Init()
 	{
-		GameObject[] panels = new GameObject[5];
+		GameObject[] panels = new GameObject[3];
 
 		// ドライバ
 		TeamData.teamNationality[0] = TeamData.TEAM_NATIONALITY.JAPAN;
@@ -49,15 +67,12 @@ public class Result : MonoBehaviour {
 		// ドライバ＿END
 
 		// パネルデータ読込
-		panels[0] = GameObject.Find("MainPanel") as GameObject;
-		panels[1] = GameObject.Find("SubPanel0") as GameObject;
-		panels[2] = GameObject.Find("SubPanel1") as GameObject;
-		panels[3] = GameObject.Find("SubPanel2") as GameObject;
+		panels[0]    = GameObject.Find("MainPanel") as GameObject;
+		panels[1]    = GameObject.Find("SubPanel0") as GameObject;
+		panels[2]    = GameObject.Find("SubPanel1") as GameObject;
+		SubPanels[0] = GameObject.Find("SubPanel00") as GameObject;
+		SubPanels[1] = GameObject.Find("SubPanel01") as GameObject;
 
-		// サポーター数読み込み
-		panels[3].transform.FindChild("Suppoter_World").transform.FindChild("NUM_Supporter_World").GetComponent<DrawNumber>().number = (int)TeamData.suppoterByWorld;
-		panels[3].transform.FindChild("Suppoter_Team").transform.FindChild("NUM_Supporter_Team0").GetComponent<DrawNumber>().number = (int)TeamData.suppoterByTeam[0];
-		panels[3].transform.FindChild("Suppoter_Team").transform.FindChild("NUM_Supporter_Team1").GetComponent<DrawNumber>().number = (int)TeamData.suppoterByTeam[1];
 
 		for (int j = 0; j < 3; j++)
 		{
@@ -104,98 +119,6 @@ public class Result : MonoBehaviour {
 					break;
 			}
 		}
-		/*
-		GameObject logPrefab = Resources.Load("Prefab/Result/logPrefab") as GameObject;
-		GameObject[] panels  = new GameObject[3];
-		int[] logNo = new int[2] { 0, 0 };
-
-		// TEST_DATA
-		TeamData.AddLog(0, 1, 0, true);
-		TeamData.AddLog(1, 2, 0, true);
-		TeamData.AddLog(2, 3, 1, true);
-		TeamData.AddLog(3, 4, 1, true);
-		TeamData.AddLog(4, 4, 1, false);
-
-
-		// パネルデータ読込
-		panels[0] = GameObject.Find("MainPanel") as GameObject;
-		panels[1] = GameObject.Find("SubPanel0") as GameObject;
-		panels[2] = GameObject.Find("SubPanel1") as GameObject;
-
-		for (int i = 0; i < 2; i++)
-		{
-			// チーム得点・国旗設置
-			panels[0].transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.teamScore[i];
-			panels[1].transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.teamScore[i];
-			panels[2].transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.teamScore[i];
-
-			switch (TeamData.teamNationality[i])
-			{
-				case TeamData.TEAM_NATIONALITY.BRASIL:
-					panels[0].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "BRA";
-					panels[1].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "BRA";
-					panels[2].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "BRA";
-					break;
-				case TeamData.TEAM_NATIONALITY.ENGLAND:
-					panels[0].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ENG";
-					panels[1].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ENG";
-					panels[2].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ENG";
-					break;
-				case TeamData.TEAM_NATIONALITY.ESPANA:
-					panels[0].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ESP";
-					panels[1].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ESP";
-					panels[2].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "ESP";
-					break;
-				case TeamData.TEAM_NATIONALITY.JAPAN:
-					panels[0].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "JPN";
-					panels[1].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "JPN";
-					panels[2].transform.FindChild("Flag" + i).GetComponent<UISprite>().spriteName = "JPN";
-					break;
-			}
-
-			for (int j = 0; j < 2; j++)
-			{
-				// プレイヤーごとの得点数表示
-				//GameObject.Find("Player" + i + "Score").GetComponent<DrawNumber>().number = TeamData.playerScore[i, j];
-			}
-		}
-
-		// ログ表示
-		for (int i = 0; i < TeamData.GetCountLog(); i++)
-		{
-			GameObject[] logObject = new GameObject[2];
-			Vector3 workVec;
-
-			// シュートに成功していなかった場合（飛ばす）
-			if (TeamData.GetLogData(i).isGole != true) continue;
-
-			// シュートに成功した場合
-			// ログ作成（情報セット）
-			logObject[0] = Instantiate(logPrefab) as GameObject;
-			logObject[1] = Instantiate(logPrefab) as GameObject;
-			// 親オブジェクト指定
-			logObject[0].transform.parent = panels[1].transform.FindChild("Logs").transform;
-			logObject[1].transform.parent = panels[2].transform.FindChild("Logs").transform;
-			//座標
-			workVec = new Vector3(-240, -25, 0);
-			if (TeamData.GetLogData(i).teamNo == 1) workVec.x *= -1;
-			workVec.y -= 30 * logNo[TeamData.GetLogData(i).teamNo];
-
-			logObject[0].transform.localPosition = workVec;
-			logObject[1].transform.localPosition = workVec;
-			// スケール
-			logObject[0].transform.localScale    = new Vector3(26, 26, 26);
-			logObject[1].transform.localScale    = new Vector3(26, 26, 26);
-			// ログ名変更
-			logObject[0].name = "T" + TeamData.GetLogData(i).teamNo + "_No" + logNo[TeamData.GetLogData(i).teamNo];
-			logObject[1].name = "T" + TeamData.GetLogData(i).teamNo + "_No" + logNo[TeamData.GetLogData(i).teamNo];
-			// テキスト変更
-			logObject[0].GetComponent<UILabel>().text = "Player" + TeamData.GetLogData(i).playerNo + "     " + TeamData.GetLogData(i).time + ":" + 0;
-			logObject[1].GetComponent<UILabel>().text = "Player" + TeamData.GetLogData(i).playerNo + "     " + TeamData.GetLogData(i).time + ":" + 0;
-			// ログNo加算
-			logNo[TeamData.GetLogData(i).teamNo]++;
-		}
-		 */
 
 		// シュートログをクリア
 		TeamData.ClearLog();
@@ -209,10 +132,85 @@ public class Result : MonoBehaviour {
 	// @Return  none
 	// @Date    2014/10/29  @Update 2014/10/29  @Author T.Kawashita
 	//          2014/11/15  @Update 2014/11/15  @Author T.Takeuchi
+	//          2014/11/28  @Update 2014/11/28  @Author T.Takeuichi
 	//----------------------------------------------------------------------
 	void Update()
 	{
+		// 表示
+		this.SubPanels[0].transform.FindChild("NUM_Supporter_World").GetComponent<DrawNumber>().number = TeamData.suppoterByWorld;
+		this.SubPanels[1].transform.FindChild("NUM_Supporter_Team0").GetComponent<DrawNumber>().number = TeamData.suppoterByTeam[0];
+		this.SubPanels[1].transform.FindChild("NUM_Supporter_Team1").GetComponent<DrawNumber>().number = TeamData.suppoterByTeam[1];
 
+		switch (this.state)
+		{
+			case RESULT_STATE.STAY_FIRST:
+				if (Input.GetKeyDown(KeyCode.Space))
+				{
+					this.SubPanels[1].GetComponent<TweenAlpha>().enabled = true;
+					this.state = RESULT_STATE.ALPHA_TEAM_SUPPORTER;
+				}
+				break;
+
+			case RESULT_STATE.ALPHA_TEAM_SUPPORTER:
+				if (this.SubPanels[1].GetComponent<TweenAlpha>().enabled == false)
+				{
+					this.state = RESULT_STATE.STAY_TEAM_SUPPORTER;
+				}
+				break;
+
+			case RESULT_STATE.STAY_TEAM_SUPPORTER:
+				if (Input.GetKeyDown(KeyCode.Space))
+				{
+					this.SubPanels[1].GetComponent<TweenPosition>().enabled = true;
+					this.state = RESULT_STATE.MOVING_TEAM_SUPPORTER;
+				}
+				break;
+
+			case RESULT_STATE.MOVING_TEAM_SUPPORTER:
+				if (this.SubPanels[1].GetComponent<TweenPosition>().enabled == false)
+				{
+					this.SubPanels[0].GetComponent<TweenAlpha>().enabled = true;
+					this.state = RESULT_STATE.ALPHA_WORLD_SUPPORTER;
+				}
+				break;
+
+			case RESULT_STATE.ALPHA_WORLD_SUPPORTER:
+				if (this.SubPanels[0].GetComponent<TweenAlpha>().enabled == false)
+				{
+					this.state = RESULT_STATE.ADDING_WORLD_SUPPORTER;
+					works[0] = TeamData.suppoterByTeam[0] / this.AddSuppoterTime;
+					works[1] = TeamData.suppoterByTeam[1] / this.AddSuppoterTime;
+				}
+				break;
+
+			case RESULT_STATE.ADDING_WORLD_SUPPORTER:
+				if (TeamData.suppoterByTeam[0] == 0 && TeamData.suppoterByTeam[1] == 0)
+				{
+					this.state = RESULT_STATE.STAY_LAST;
+				}
+				else
+				{
+					for (int i = 0; i < 2; i++)
+					{
+						if (TeamData.suppoterByTeam[i] >= works[i])
+						{
+							TeamData.suppoterByTeam[i] -= works[i];
+							TeamData.suppoterByWorld   += works[i];
+						}
+						else if (TeamData.suppoterByTeam[i] != 0)
+						{
+							TeamData.suppoterByTeam[i] --;
+							TeamData.suppoterByWorld   ++;
+						}
+					}
+				}
+				break;
+
+			case RESULT_STATE.STAY_LAST:
+				break;
+		}
+
+#if false
 		// デバッグ用スペースキーが押されたら強制的にタイトル画面へ
 		if (Input.GetKeyDown(KeyCode.Space) ||
 			InputXBOX360.IsGetAllStartButton() )
@@ -222,6 +220,7 @@ public class Result : MonoBehaviour {
 			Application.LoadLevel("Title");
 			Debug.Log("Title画面に遷移");
 		}
+#endif
 	}
 }
 
