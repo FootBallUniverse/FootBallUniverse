@@ -15,6 +15,7 @@ public class Player_1_Script : MonoBehaviour {
         public float centerz;                   // 
         public int m_Flag;                      // モデルの位置を表す数値
         public PlayerAnimator m_PlayerAnimator; // プレイヤーのアニメーター
+        public Vector3 m_Scale;                 // すけーる
     };
     
     // 速度
@@ -66,12 +67,13 @@ public class Player_1_Script : MonoBehaviour {
        {
            m_Country[i].m_TeamColor = 0;
            m_Country[i].degree = 90.0f * i;
-           m_Country[i].r = 0.31f;
-           m_Country[i].centerx = 0.0f;
+           m_Country[i].r = 0.21f;
+           m_Country[i].centerx = -0.21f;
            m_Country[i].centerz = 0.0f;
            m_Country[i].radian = 0.0f;
            m_Country[i].m_Flag = i;
            m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();
+           m_Country[i].m_Scale = new Vector3(1, 1, 1);
        }
     }
     // Update is called once per frame
@@ -111,6 +113,66 @@ public class Player_1_Script : MonoBehaviour {
             m_Fade_flag_1.m_FadeFlag = 3;
         }
 
+         if (m_Left_RotateFlag == true)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (m_Country[i].m_Flag == 2)
+                {
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                    if (m_Country[i].m_Scale.x <= 1.5f)
+                    {
+                        m_Country[i].m_Scale.x += 0.05f;
+                    }
+                    if (m_Country[i].m_Scale.y <= 1.5f)
+                    {
+                        m_Country[i].m_Scale.y += 0.05f;
+                    }
+                }
+                else
+                {
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                    if (m_Country[i].m_Scale.x >= 1.0f)
+                    {
+                        m_Country[i].m_Scale.x -= 0.05f;
+                    }
+                    if (m_Country[i].m_Scale.y >= 1.0f)
+                    {
+                        m_Country[i].m_Scale.y -= 0.05f;
+                    }
+                }
+            }
+        }
+        if (m_Right_RotateFlag == true)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (m_Country[i].m_Flag == 0)
+                {
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                    if (m_Country[i].m_Scale.x <= 1.5f)
+                    {
+                        m_Country[i].m_Scale.x += 0.05f;
+                    }
+                    if (m_Country[i].m_Scale.y <= 1.5f)
+                    {
+                        m_Country[i].m_Scale.y += 0.05f;
+                    }
+                }
+                else
+                {
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                    if (m_Country[i].m_Scale.x >= 1.0f)
+                    {
+                        m_Country[i].m_Scale.x -= 0.05f;
+                    }
+                    if (m_Country[i].m_Scale.y >= 1.0f)
+                    {
+                        m_Country[i].m_Scale.y -= 0.05f;
+                    }
+                }
+            }
+        }
         if (m_Fade_flag_1.m_FadeFlag == 0)
         {
             // 右回転処理
@@ -130,11 +192,11 @@ public class Player_1_Script : MonoBehaviour {
     //=========================================================================================//
     // みぎ回転処理                                                                              //
     //=========================================================================================//
-    void Right_Rotate()
+    void Left_Rotate()
     {
         
         // 右回転フラグがTRUEの時、90°右回転してフラグをFALSEにする
-        if (m_Right_RotateFlag == true)
+        if (m_Left_RotateFlag == true)
         {
 
             for (int i = 0; i < 4; i++)
@@ -166,34 +228,34 @@ public class Player_1_Script : MonoBehaviour {
                     {
                         m_Country[i].m_Flag = 0;
                     }
-
-                    if (Position[i].x <= -0.25)
+                    
+                    if (Position[i].x <= -0.38)
                     {
-                        Position[i].x = -0.31f;
+                        Position[i].x = -0.42f;
                     }
-                    else if (Position[i].x >= 0.25)
-                    {
-                        Position[i].x = 0.31f;
-                    }
-                    else
+                    else if (Position[i].x >= -0.03)
                     {
                         Position[i].x = 0.0f;
                     }
-
-                    if (Position[i].z >= 0.25)
+                    else
                     {
-                        Position[i].z = 0.31f;
+                        Position[i].x = -0.21f;
                     }
-                    else if (Position[i].z <= -0.25)
+
+                    if (Position[i].z >= 0.18)
                     {
-                        Position[i].z = -0.31f;
+                        Position[i].z = 0.21f;
+                    }
+                    else if (Position[i].z <= -0.18)
+                    {
+                        Position[i].z = -0.21f;
                     }
                     else
                     {
                         Position[i].z = 0.0f;
                     }
 
-                    if (Position[i].x == 0.0f && Position[i].z == -0.31f)
+                    if (Position[i].x == 0.0f && Position[i].z == -0.21f)
                     {
                         // m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
                         m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isDashCharge);
@@ -207,7 +269,7 @@ public class Player_1_Script : MonoBehaviour {
                 }
                 
                 m_Count = 0;
-                m_Right_RotateFlag = false;
+                m_Left_RotateFlag = false;
                 
             }
 
@@ -217,10 +279,10 @@ public class Player_1_Script : MonoBehaviour {
     //=========================================================================================//
     // ひだり回転処理                                                                              //
     //=========================================================================================//
-    void Left_Rotate()
+    void Right_Rotate()
     {
 
-        if (m_Left_RotateFlag == true)
+        if (m_Right_RotateFlag == true)
         {
 
             for (int i = 0; i < 4; i++)
@@ -252,38 +314,37 @@ public class Player_1_Script : MonoBehaviour {
                         m_Country[i].m_Flag = 3;
                     }
 
-                    if (Position[i].x <= -0.25)
+                    if (Position[i].x <= -0.38)
                     {
-                        Position[i].x = -0.31f;
+                        Position[i].x = -0.42f;
                     }
-                    else if (Position[i].x >= 0.25)
-                    {
-                        Position[i].x = 0.31f;
-                    }
-                    else
+                    else if (Position[i].x >= -0.03)
                     {
                         Position[i].x = 0.0f;
                     }
-
-                    if (Position[i].z >= 0.25)
+                    else
                     {
-                        Position[i].z = 0.31f;
+                        Position[i].x = -0.21f;
                     }
-                    else if (Position[i].z <= -0.25)
+
+                    if (Position[i].z >= 0.18)
                     {
-                        Position[i].z = -0.31f;
+                        Position[i].z = 0.21f;
+                    }
+                    else if (Position[i].z <= -0.18)
+                    {
+                        Position[i].z = -0.21f;
                     }
                     else
                     {
                         Position[i].z = 0.0f;
                     }
 
-                    if (Position[i].x == 0.0f && Position[i].z == -0.31f)
+                    if (Position[i].x == 0.0f && Position[i].z == -0.21f)
                     {
                         // m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
                         m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isDashCharge);
                         Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
-
                     }
                     else
                     {
@@ -299,7 +360,7 @@ public class Player_1_Script : MonoBehaviour {
                  //  Debug.Log(m_Country[i].m_Country.transform.FindChild("flag_" + i).gameObject.GetComponent<UISprite>().depth);
                 }
                 m_Count = 0;
-                m_Left_RotateFlag = false;
+                m_Right_RotateFlag = false;
             }
         }
     }
