@@ -21,12 +21,7 @@ public class Result : MonoBehaviour {
 	//----------------------------------------------------------------------
 	void Init()
 	{
-		GameObject[] panels = new GameObject[3];
-
-		// パネルデータ読込
-		panels[0] = GameObject.Find("MainPanel") as GameObject;
-		panels[1] = GameObject.Find("SubPanel0") as GameObject;
-		panels[2] = GameObject.Find("SubPanel1") as GameObject;
+		GameObject[] panels = new GameObject[5];
 
 		// ドライバ
 		TeamData.teamNationality[0] = TeamData.TEAM_NATIONALITY.JAPAN;
@@ -44,10 +39,25 @@ public class Result : MonoBehaviour {
 		TeamData.AddLog(1, 2, 0, true);
 		TeamData.AddLog(1, 2, 0, true);
 		TeamData.AddLog(1, 2, 0, true);
-		//TeamData.AddLog(2, 3, 1, true);
+		TeamData.AddLog(2, 3, 1, true);
 		TeamData.AddLog(3, 4, 1, true);
 		TeamData.AddLog(4, 4, 1, false);
+
+		TeamData.suppoterByTeam[0] = 1234;
+		TeamData.suppoterByTeam[1] = 5233;
+		TeamData.suppoterByWorld = 100000000;
 		// ドライバ＿END
+
+		// パネルデータ読込
+		panels[0] = GameObject.Find("MainPanel") as GameObject;
+		panels[1] = GameObject.Find("SubPanel0") as GameObject;
+		panels[2] = GameObject.Find("SubPanel1") as GameObject;
+		panels[3] = GameObject.Find("SubPanel2") as GameObject;
+
+		// サポーター数読み込み
+		panels[3].transform.FindChild("Suppoter_World").transform.FindChild("NUM_Supporter_World").GetComponent<DrawNumber>().number = (int)TeamData.suppoterByWorld;
+		panels[3].transform.FindChild("Suppoter_Team").transform.FindChild("NUM_Supporter_Team0").GetComponent<DrawNumber>().number = (int)TeamData.suppoterByTeam[0];
+		panels[3].transform.FindChild("Suppoter_Team").transform.FindChild("NUM_Supporter_Team1").GetComponent<DrawNumber>().number = (int)TeamData.suppoterByTeam[1];
 
 		for (int j = 0; j < 3; j++)
 		{
