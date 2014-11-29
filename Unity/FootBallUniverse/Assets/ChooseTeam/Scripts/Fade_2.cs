@@ -43,7 +43,7 @@ public class Fade_2 : MonoBehaviour
         {
             if (m_tweenAlpha.enabled == false)
             {
-                TweenAlpha.Begin(this.gameObject, 1, 1);
+               // TweenAlpha.Begin(this.gameObject, 1, 1);
             }
         }
 

@@ -18,38 +18,63 @@ public class Player_1_Script : MonoBehaviour {
         public Vector3 m_Scale;                 // すけーる
     };
     
+    // 構造体
+    public TEAM_NO[] m_Country = new TEAM_NO[4];
+
+    // スクリプトの読み込み用
+    public Player_3_Script m_Player3;
+    public Fade_1 m_Fade_flag_1;
+    public Fade_2 m_Fade_flag_2;
+
+    // オブジェクト読込み用
+    public GameObject m_Fade_2;
+
+    // ラベル読込み用
+    public UILabel m_Label;
+
+    // 座標取得用
+    public Vector3[] Position = new Vector3[4];
+
     // 速度
     private Vector2 SPEED = new Vector2(0.05f, 0.01f);
-    public TEAM_NO[] m_Country = new TEAM_NO[4];
-    public Vector3[] Position = new Vector3[4];
+
+    // 変数
     public bool m_Right_RotateFlag;
     public bool m_Left_RotateFlag;
     public bool m_SceneFlag;
-    int m_Count = 0;
+    private int m_Count = 0;
 
-    public Fade_1 m_Fade_flag_1;
-    //Fade_2 m_Fade_flag_2;
-
+    //================================================================================================
+    //      初期処理
+    //================================================================================================
     // Use this for initialization
     void Start()
     {
         // 必要データの読込み
         GameObject m_TeamData = GameObject.Find("TeamData");
         
-        // モデルの呼び出し
+        // モデルの読込み
         GameObject m_Fade_1 = transform.FindChild("Fade_In_Out_1").gameObject;
-        m_Country[0].m_Country = transform.Find("Spain_1").gameObject;
-        m_Country[1].m_Country = transform.Find("England_1").gameObject;
-        m_Country[2].m_Country = transform.Find("Brazil_1").gameObject;
-        m_Country[3].m_Country = transform.Find("Japan_1").gameObject;
-       // GameObject m_Fade_2 = transform.Find("Fade_In_Out_2").gameObject;
-
+        GameObject m_Object3 = GameObject.Find("Team_Select/Team3_4");
+        m_Country[0].m_Country = transform.FindChild("Spain_1").gameObject;
+        m_Country[1].m_Country = transform.FindChild("England_1").gameObject;
+        m_Country[2].m_Country = transform.FindChild("Brazil_1").gameObject;
+        m_Country[3].m_Country = transform.FindChild("Japan_1").gameObject;
+        m_Fade_2 = m_Object3.transform.FindChild("Fade_In_Out_2").gameObject;
+        
+        // モデルの上にある国旗のテクスチャ読込み
         m_Country[0].m_Sprit = m_Country[0].m_Country.transform.FindChild("flag_0").GetComponent<UISprite>();
         m_Country[1].m_Sprit = m_Country[1].m_Country.transform.FindChild("flag_1").GetComponent<UISprite>();
         m_Country[2].m_Sprit = m_Country[2].m_Country.transform.FindChild("flag_2").GetComponent<UISprite>();
         m_Country[3].m_Sprit = m_Country[3].m_Country.transform.FindChild("flag_3").GetComponent<UISprite>();
-       // m_Fade_flag_2 = m_Fade_2.GetComponent<Fade_2>();
+
+        // チーム決定後に表示されるラベルの読み込み
+        m_Label = GameObject.Find("Label(Wait2)").GetComponent<UILabel>();
+
+        //フェードアウト処理スクリプトの読み込み
         m_Fade_flag_1 = m_Fade_1.GetComponent<Fade_1>();
+        m_Fade_flag_2 = m_Fade_2.GetComponent<Fade_2>();
+       // m_Player3 = m_Player3.GetComponent<Player_3_Script>();
 
        // 位置計算用の変数に代入
        Position[0] = m_Country[0].m_Country.transform.position;
@@ -65,114 +90,75 @@ public class Player_1_Script : MonoBehaviour {
        // 初期値の設定
        for (int i = 0; i < 4; i++)
        {
-           m_Country[i].m_TeamColor = 0;
-           m_Country[i].degree = 90.0f * i;
-           m_Country[i].r = 0.21f;
-           m_Country[i].centerx = -0.21f;
-           m_Country[i].centerz = 0.0f;
-           m_Country[i].radian = 0.0f;
-           m_Country[i].m_Flag = i;
-           m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();
-           m_Country[i].m_Scale = new Vector3(1, 1, 1);
+           m_Country[i].m_TeamColor = 0;        // チームの色の変更用フラグ(現在未実装の為不要)
+           m_Country[i].degree = 90.0f * i;     // 回転角度
+           m_Country[i].r = 0.21f;              // 回転の半径
+           m_Country[i].centerx = -0.21f;       // 中心軸のＸ座標
+           m_Country[i].centerz = 0.0f;         // 中心軸のＺ座標
+           m_Country[i].radian = 0.0f;          // ラジアン
+           m_Country[i].m_Flag = i;             // どのモデルがセンターにいるかの確認用フラグ
+           m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();   // モデルのモーション用
+
+           // センターのモデルの大きさを1.5倍にする
+           if (m_Country[i].m_Flag == 3)
+               m_Country[i].m_Scale = new Vector3(1.5f, 1.5f, 1.0f);
+           else
+               m_Country[i].m_Scale = new Vector3(1f, 1f, 1f);
+           // 変更したスケールの値を代入
+           m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
        }
     }
+
+    //================================================================================================
+    //      モデル回転・拡縮、アニメーション変更、フェードイン処理
+    //================================================================================================
     // Update is called once per frame
     void Update()
-    { 
+    {
+        //================================================================================================
+        //      回転フラグ、フェードインフラグ処理
+        //================================================================================================
+        // Dを押したとき
         if (Input.GetKeyDown(KeyCode.D))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
-            {
-                m_Right_RotateFlag = true;
-            }
+                    m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
         }
+        // Aを押したとき
         else if (Input.GetKeyDown(KeyCode.A))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
-            {
-                m_Left_RotateFlag = true;
-            }
+                    m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
         }
+
         // Shiftが押されたら遷移
         if (Input.GetKeyDown(KeyCode.LeftShift)     // シフトが押されたか
             && m_Fade_flag_1.m_FadeFlag == 0        // フェードアウトしているか
             && m_Right_RotateFlag == false         // 右回転しているか
             && m_Left_RotateFlag == false)         // 左回転しているか
         {
+            // フェードインのフラグを1に変更
             m_Fade_flag_1.m_FadeFlag = 1;
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift) && m_Fade_flag_1.m_FadeFlag == 1)
         {
+            // シーン変更フラグをtrueにしてフェードインのフラグを2に変更
             m_SceneFlag = true;
             m_Fade_flag_1.m_FadeFlag = 2;
+            
         }
         else if (Input.GetKeyDown(KeyCode.LeftControl) && m_Fade_flag_1.m_FadeFlag == 1)
         {
+            // フェードインのフラグを3に変更
             m_Fade_flag_1.m_FadeFlag = 3;
         }
 
-         if (m_Left_RotateFlag == true)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (m_Country[i].m_Flag == 2)
-                {
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                    if (m_Country[i].m_Scale.x <= 1.5f)
-                    {
-                        m_Country[i].m_Scale.x += 0.05f;
-                    }
-                    if (m_Country[i].m_Scale.y <= 1.5f)
-                    {
-                        m_Country[i].m_Scale.y += 0.05f;
-                    }
-                }
-                else
-                {
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                    if (m_Country[i].m_Scale.x >= 1.0f)
-                    {
-                        m_Country[i].m_Scale.x -= 0.05f;
-                    }
-                    if (m_Country[i].m_Scale.y >= 1.0f)
-                    {
-                        m_Country[i].m_Scale.y -= 0.05f;
-                    }
-                }
-            }
-        }
-        if (m_Right_RotateFlag == true)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (m_Country[i].m_Flag == 0)
-                {
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                    if (m_Country[i].m_Scale.x <= 1.5f)
-                    {
-                        m_Country[i].m_Scale.x += 0.05f;
-                    }
-                    if (m_Country[i].m_Scale.y <= 1.5f)
-                    {
-                        m_Country[i].m_Scale.y += 0.05f;
-                    }
-                }
-                else
-                {
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                    if (m_Country[i].m_Scale.x >= 1.0f)
-                    {
-                        m_Country[i].m_Scale.x -= 0.05f;
-                    }
-                    if (m_Country[i].m_Scale.y >= 1.0f)
-                    {
-                        m_Country[i].m_Scale.y -= 0.05f;
-                    }
-                }
-            }
-        }
+        //================================================================================================
+        //      回転処理
+        //================================================================================================
+        //フェードインフラグが1の時(チーム再確認中)ではない時回転し、再確認中は回転フラグを常にfalseにする
         if (m_Fade_flag_1.m_FadeFlag == 0)
         {
             // 右回転処理
@@ -186,7 +172,15 @@ public class Player_1_Script : MonoBehaviour {
             m_Left_RotateFlag = false;
         }
 
-       
+        //================================================================================================
+        //      チーム決定後のラベル変更処理
+        //================================================================================================
+        // 自チームと相手チームのフェードインフラグが2の時
+        if (m_Fade_flag_2.m_FadeFlag == 2 && m_Fade_flag_1.m_FadeFlag == 2)
+                m_Label.text = "ゲームを開始します!";
+        else
+                m_Label.text = "相手チームの決定を待っています";
+
     }
 
     //=========================================================================================//
@@ -194,18 +188,20 @@ public class Player_1_Script : MonoBehaviour {
     //=========================================================================================//
     void Left_Rotate()
     {
-        
-        // 右回転フラグがTRUEの時、90°右回転してフラグをFALSEにする
+
+        // 左回転フラグがTRUEの時、90°右回転してフラグをFALSEにする
         if (m_Left_RotateFlag == true)
         {
 
             for (int i = 0; i < 4; i++)
             {
+                // 左回転の計算
                 m_Country[i].radian = Mathf.PI / 180.0f * m_Country[i].degree;
                 Position[i].x = m_Country[i].centerx + m_Country[i].r * Mathf.Cos(m_Country[i].radian);
                 Position[i].z = m_Country[i].centerz + m_Country[i].r * Mathf.Sin(m_Country[i].radian);
                 m_Country[i].degree += 5.0f;
 
+                // 計算した座標を代入
                 m_Country[i].m_Country.transform.position = Position[i];
 
                 // 前に来た国のスプライトのデプスのみ変更
@@ -214,13 +210,40 @@ public class Player_1_Script : MonoBehaviour {
                 else
                     m_Country[i].m_Sprit.depth = 2;
 
+                // 回転中は全てのモデルを待機モーションにする
+                m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
+
+                // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
+                if (m_Country[i].m_Flag == 2)
+                {
+                    if (m_Country[i].m_Scale.x <= 1.5f)
+                            m_Country[i].m_Scale.x += 0.05f;
+                    if (m_Country[i].m_Scale.y <= 1.5f)
+                            m_Country[i].m_Scale.y += 0.05f;
+
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                }
+                // センターから左側に移動するモデルのスケールを1倍になるまで少しずつ小さくする
+                else
+                {
+                    if (m_Country[i].m_Scale.x >= 1.0f)
+                            m_Country[i].m_Scale.x -= 0.05f;
+                    if (m_Country[i].m_Scale.y >= 1.0f)
+                            m_Country[i].m_Scale.y -= 0.05f;
+
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                }
+
             }
+            //回転回数をカウント
             m_Count++;
             
+            // 回転数が18回になった時
             if (m_Count >= 18)
             {
                 for (int i = 0; i < 4; i++)
                 {
+                    // 国のフラグを加算する
                     m_Country[i].m_Flag++;
 
                     // フラグが4以上になった場合0にする
@@ -229,6 +252,7 @@ public class Player_1_Script : MonoBehaviour {
                         m_Country[i].m_Flag = 0;
                     }
                     
+                    // 回転後少しずれた位置を修正する
                     if (Position[i].x <= -0.38)
                     {
                         Position[i].x = -0.42f;
@@ -255,19 +279,15 @@ public class Player_1_Script : MonoBehaviour {
                         Position[i].z = 0.0f;
                     }
 
-                    if (Position[i].x == 0.0f && Position[i].z == -0.21f)
-                    {
-                        // m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
-                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isDashCharge);
-                        Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
-                    }
-                    else
-                    {
-                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
-                    }
+                    // センターのモデルのモーションを変更する
+                    if (Position[i].x == -0.21f && Position[i].z == -0.21f)
+                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
+
+                    // 修正した座標を代入する
                     m_Country[i].m_Country.transform.position = Position[i];
                 }
-                
+
+                // 回転数のカウントを0に戻し、左回転フラグをfalseにする
                 m_Count = 0;
                 m_Left_RotateFlag = false;
                 
@@ -281,17 +301,18 @@ public class Player_1_Script : MonoBehaviour {
     //=========================================================================================//
     void Right_Rotate()
     {
-
+        // 右回転フラグがtrueの時
         if (m_Right_RotateFlag == true)
         {
 
             for (int i = 0; i < 4; i++)
             {
+                // 右回転の計算
                 m_Country[i].radian = Mathf.PI / 180.0f * m_Country[i].degree;
                 Position[i].x = m_Country[i].centerx + m_Country[i].r * Mathf.Cos(m_Country[i].radian);
                 Position[i].z = m_Country[i].centerz + m_Country[i].r * Mathf.Sin(m_Country[i].radian);
                 m_Country[i].degree -= 5.0f;
-
+                //計算した座標を代入
                 m_Country[i].m_Country.transform.position = Position[i];
 
                 // 前に来た国のスプライトのデプスのみ変更
@@ -299,13 +320,38 @@ public class Player_1_Script : MonoBehaviour {
                     m_Country[i].m_Sprit.depth = 6;
                 else
                     m_Country[i].m_Sprit.depth = 2;
+                //回転中は全てのモデルを待機モーションにする
+                m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
 
+                // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
+                if (m_Country[i].m_Flag == 0)
+                {
+                    if (m_Country[i].m_Scale.x <= 1.5f)
+                            m_Country[i].m_Scale.x += 0.05f;
+                    if (m_Country[i].m_Scale.y <= 1.5f)
+                            m_Country[i].m_Scale.y += 0.05f;
+
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                }
+                // センターから右側に移動するモデルのスケールを1倍になるまで少しずつ小さくする
+                else
+                {
+                    if (m_Country[i].m_Scale.x >= 1.0f)
+                            m_Country[i].m_Scale.x -= 0.05f;
+                    if (m_Country[i].m_Scale.y >= 1.0f)
+                            m_Country[i].m_Scale.y -= 0.05f;
+
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                }
             }
+            // 回転数をカウント
             m_Count++;
+            // 回転数が18回になったとき
             if (m_Count >= 18)
             {
                 for (int i = 0; i < 4; i++)
                 {
+                    // 回転フラグを減算する
                     m_Country[i].m_Flag--;
 
                     // フラグが-1以下になった場合0にする
@@ -314,6 +360,7 @@ public class Player_1_Script : MonoBehaviour {
                         m_Country[i].m_Flag = 3;
                     }
 
+                    // 回転処理でずれた座標を修正
                     if (Position[i].x <= -0.38)
                     {
                         Position[i].x = -0.42f;
@@ -340,25 +387,16 @@ public class Player_1_Script : MonoBehaviour {
                         Position[i].z = 0.0f;
                     }
 
-                    if (Position[i].x == 0.0f && Position[i].z == -0.21f)
+                    // センターのモデルのモーションを変更する
+                    if (Position[i].x == -0.21f && Position[i].z == -0.21f)
                     {
-                        // m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
-                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isDashCharge);
+                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
                         Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
                     }
-                    else
-                    {
-                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
-                    }
-                    
+                    // 修正した位置を代入する
                     m_Country[i].m_Country.transform.position = Position[i];
-                   // 前に来た国のスプライトのデプスのみ変更
-                   /* if (m_Country[i].m_Flag == 0)
-                    {
-                        m_Country[i].m_Country.transform.FindChild("flag_" + i).gameObject.GetComponent<UISprite>().depth = 2;
-                    }*/
-                 //  Debug.Log(m_Country[i].m_Country.transform.FindChild("flag_" + i).gameObject.GetComponent<UISprite>().depth);
                 }
+                // 回転数のカウントを0にして右回転フラグをfalseにする
                 m_Count = 0;
                 m_Right_RotateFlag = false;
             }

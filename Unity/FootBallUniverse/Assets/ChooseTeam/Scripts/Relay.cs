@@ -61,7 +61,7 @@ public class Relay : MonoBehaviour {
         {
             if (m_Team1.m_Country[i].m_Flag == 3)
             {
-                m_Vec1[i].y = 0.2f;
+                m_Vec1[i].y = 0.08f;
             }
             else
             {
@@ -70,7 +70,7 @@ public class Relay : MonoBehaviour {
             
             if (m_Team3.m_Country[i].m_Flag == 3)
             {
-                m_Vec2[i].y = 0.2f;
+                m_Vec2[i].y = 0.08f;
             }
             else
             {
@@ -86,7 +86,7 @@ public class Relay : MonoBehaviour {
             {
                // m_Relay[0].y = 2.0f;
             }
-            if (m_Team3.m_Fade_flag_2.m_FadeFlag == 2)
+            if (m_Team3.m_Fade_flag_1.m_FadeFlag == 2)
             {
                // m_Relay[1].y = 0.18f;
             }
@@ -95,7 +95,7 @@ public class Relay : MonoBehaviour {
                // m_Relay[1].y = 2.0f;
             }
             if (m_Team1.m_Fade_flag_1.m_FadeFlag == 2
-                && m_Team3.m_Fade_flag_2.m_FadeFlag == 2)
+                && m_Team3.m_Fade_flag_1.m_FadeFlag == 2)
             {
                 m_Label.text = "ゲームを開始します。";
             }
