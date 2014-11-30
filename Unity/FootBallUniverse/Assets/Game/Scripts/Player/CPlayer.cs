@@ -8,7 +8,7 @@ using System.Collections;
 public class CPlayer : MonoBehaviour {
 
     public CPlayerManager.ePLAYER_STATUS m_status;
-    public CPlayerManager.eCAMERA_STATUS m_cameraStatus;
+    public CPlayerManager.eVIEW_POINT_STATUS m_viewPointStatus;
     
     public Vector3 m_pos;        // 位置座標
     public Vector3 m_speed;      // 移動量
@@ -37,7 +37,7 @@ public class CPlayer : MonoBehaviour {
         m_speed = new Vector3();
         m_angle = new Vector3();
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-        m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
+        m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
 
         m_human = new CHuman();
         m_playerData = new CPlayerData();
@@ -62,7 +62,7 @@ public class CPlayer : MonoBehaviour {
         m_speed = new Vector3(0.0f,0.0f,0.0f);
         m_angle = new Vector3(0.0f,0.0f,0.0f);
         m_status = CPlayerManager.ePLAYER_STATUS.eWAIT;
-        m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
+        m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
 
         m_human = new CHuman();
         m_playerData = new CPlayerData();
@@ -92,6 +92,7 @@ public class CPlayer : MonoBehaviour {
 
         // 状態を変更
         this.m_status = CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN;
+        this.m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
 
         // アニメーションを元に戻す
         this.m_speed = new Vector3(0.0f, 0.0f, 0.0f);
@@ -166,6 +167,17 @@ public class CPlayer : MonoBehaviour {
     {
         // 位置をセット
         this.transform.localPosition = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
+    }
+
+    //----------------------------------------------------------------------
+    // 視点を変更
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/30  @Update 2014/11/30  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public virtual void ChangeViewPoint()
+    {
     }
 
 }

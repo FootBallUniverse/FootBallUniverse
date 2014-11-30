@@ -9,6 +9,7 @@ public class CPlayerData{
     public float m_xPos;            // X座標
     public float m_yPos;            // Y座標
     public float m_zPos;            // Z座標
+    public string m_button;         // ボタン
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -25,6 +26,7 @@ public class CPlayerData{
         m_xPos = 0.0f;
         m_yPos = 0.0f;
         m_zPos = 0.0f;
+        m_button = "";
     }
 
     //----------------------------------------------------------------------
@@ -42,6 +44,7 @@ public class CPlayerData{
         m_xPos = float.Parse(_value[3]);
         m_yPos = float.Parse(_value[4]);
         m_zPos = float.Parse(_value[5]);
+        m_button = _value[6].ToString();
     }
 
 }
