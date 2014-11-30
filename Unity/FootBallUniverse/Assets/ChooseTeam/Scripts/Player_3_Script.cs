@@ -94,7 +94,7 @@ public class Player_3_Script : MonoBehaviour
             m_Country[i].m_TeamColor = 0;        // チームの色の変更用フラグ(現在未実装の為不要)
             m_Country[i].degree = 90.0f * i;     // 回転角度
             m_Country[i].r = 0.21f;              // 回転の半径
-            m_Country[i].centerx = 3.79f;       // 中心軸のＸ座標
+            m_Country[i].centerx = 3.79f;        // 中心軸のＸ座標
             m_Country[i].centerz = 0.0f;         // 中心軸のＺ座標
             m_Country[i].radian = 0.0f;          // ラジアン
             m_Country[i].m_Flag = i;             // どのモデルがセンターにいるかの確認用フラグ
@@ -157,65 +157,6 @@ public class Player_3_Script : MonoBehaviour
         }
 
         //================================================================================================
-        //      センターモデルのスケール変更処理
-        //================================================================================================
-
-        // 左回転のフラグがtrueの時
-        if (m_Left_RotateFlag == true)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
-                if (m_Country[i].m_Flag == 2)
-                {
-                    if (m_Country[i].m_Scale.x <= 1.5f)
-                        m_Country[i].m_Scale.x += 0.05f;
-                    if (m_Country[i].m_Scale.y <= 1.5f)
-                        m_Country[i].m_Scale.y += 0.05f;
-
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                }
-                // センターから右側に移動するモデルのスケールを1倍になるまで少しずつ小さくする
-                else
-                {
-                    if (m_Country[i].m_Scale.x >= 1.0f)
-                        m_Country[i].m_Scale.x -= 0.05f;
-                    if (m_Country[i].m_Scale.y >= 1.0f)
-                        m_Country[i].m_Scale.y -= 0.05f;
-
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                }
-            }
-        }
-        // 右回転フラグがtrueの時
-        if (m_Right_RotateFlag == true)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
-                if (m_Country[i].m_Flag == 0)
-                {
-                    if (m_Country[i].m_Scale.x <= 1.5f)
-                        m_Country[i].m_Scale.x += 0.05f;
-                    if (m_Country[i].m_Scale.y <= 1.5f)
-                        m_Country[i].m_Scale.y += 0.05f;
-
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                }
-                // センターから左側に移動するモデルのスケールを1倍になるまで少しずつ小さくする
-                else
-                {
-                    if (m_Country[i].m_Scale.x >= 1.0f)
-                        m_Country[i].m_Scale.x -= 0.05f;
-                    if (m_Country[i].m_Scale.y >= 1.0f)
-                        m_Country[i].m_Scale.y -= 0.05f;
-
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                }
-            }
-        }
-
-        //================================================================================================
         //      回転処理
         //================================================================================================
         //フェードインフラグが1の時(チーム再確認中)ではない時回転し、再確認中は回転フラグを常にfalseにする
@@ -268,6 +209,27 @@ public class Player_3_Script : MonoBehaviour
                 else
                     m_Country[i].m_Sprit.depth = 2;
 
+                // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
+                if (m_Country[i].m_Flag == 2)
+                {
+                    if (m_Country[i].m_Scale.x <= 1.5f)
+                        m_Country[i].m_Scale.x += 0.05f;
+                    if (m_Country[i].m_Scale.y <= 1.5f)
+                        m_Country[i].m_Scale.y += 0.05f;
+
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                }
+                // センターから右側に移動するモデルのスケールを1倍になるまで少しずつ小さくする
+                else
+                {
+                    if (m_Country[i].m_Scale.x >= 1.0f)
+                        m_Country[i].m_Scale.x -= 0.05f;
+                    if (m_Country[i].m_Scale.y >= 1.0f)
+                        m_Country[i].m_Scale.y -= 0.05f;
+
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                }
+
                 // 回転中は全てのモデルを待機モーションにする
                 m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
             }
@@ -317,7 +279,7 @@ public class Player_3_Script : MonoBehaviour
 
                     // センターのモデルのモーションを変更する
                     if (Position[i].x == 3.79f && Position[i].z == -0.21f)
-                        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
+                            m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
 
                     // 修正した座標を代入する
                     m_Country[i].m_Country.transform.position = Position[i];
@@ -356,6 +318,28 @@ public class Player_3_Script : MonoBehaviour
                     m_Country[i].m_Sprit.depth = 6;
                 else
                     m_Country[i].m_Sprit.depth = 2;
+
+                // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
+                if (m_Country[i].m_Flag == 0)
+                {
+                    if (m_Country[i].m_Scale.x <= 1.5f)
+                        m_Country[i].m_Scale.x += 0.05f;
+                    if (m_Country[i].m_Scale.y <= 1.5f)
+                        m_Country[i].m_Scale.y += 0.05f;
+
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                }
+                // センターから左側に移動するモデルのスケールを1倍になるまで少しずつ小さくする
+                else
+                {
+                    if (m_Country[i].m_Scale.x >= 1.0f)
+                        m_Country[i].m_Scale.x -= 0.05f;
+                    if (m_Country[i].m_Scale.y >= 1.0f)
+                        m_Country[i].m_Scale.y -= 0.05f;
+
+                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
+                }
+
                 //回転中は全てのモデルを待機モーションにする
                 m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
             }

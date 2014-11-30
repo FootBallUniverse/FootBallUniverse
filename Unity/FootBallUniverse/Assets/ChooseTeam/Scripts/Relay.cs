@@ -95,7 +95,7 @@ public class Relay : MonoBehaviour {
                // m_Relay[1].y = 2.0f;
             }
             if (m_Team1.m_Fade_flag_1.m_FadeFlag == 2
-                && m_Team3.m_Fade_flag_1.m_FadeFlag == 2)
+                && m_Team3.m_Fade_flag_2.m_FadeFlag == 2)
             {
                 m_Label.text = "ゲームを開始します。";
             }
