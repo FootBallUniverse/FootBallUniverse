@@ -15,12 +15,12 @@ public class Fade_1 : MonoBehaviour
         m_FadeFlag = 0;
 
         m_tweenAlpha = this.gameObject.GetComponent<TweenAlpha>();
-        m_tweenAlpha.from = 1;
+        m_tweenAlpha.from = 0;
         m_tweenAlpha.to = 0;
 
         //        m_tweenAlpha.Play(true);
-
-        TweenAlpha.Begin(this.gameObject, 1, 0);
+        //  this.transform.GetComponent<UISprite>().alpha = 0.0f;
+         TweenAlpha.Begin(this.gameObject, 1, 0);
 
     }
 
@@ -43,6 +43,7 @@ public class Fade_1 : MonoBehaviour
         {
             if (m_tweenAlpha.enabled == false)
             {
+                this.transform.GetComponent<UISprite>().alpha = 0.75f;
                // TweenAlpha.Begin(this.gameObject, 1, 1);
             }
         }
