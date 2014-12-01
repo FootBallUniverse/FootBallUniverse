@@ -10,7 +10,7 @@ public class C1P2PKeeper : CCpu {
 		GK_STATE_MAX
 	};
 
-	GK_State gkState = GK_State.STAY;
+	GK_State gkState = GK_State.ON_ALERT;
 
 	//----------------------------------------------------------------------
 	// コンストラクタ
@@ -30,6 +30,7 @@ public class C1P2PKeeper : CCpu {
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
 	//----------------------------------------------------------------------
 	void Update () {
+
 		switch (this.gkState)
 		{
 			case GK_State.STAY:
@@ -64,27 +65,25 @@ public class C1P2PKeeper : CCpu {
 		// 遷移
 		// 条件： 敵がボールを持ってる
 		//        ボールが範囲内にきた
-		if(GameObject.Find("Player" + CSoccerBallManager.m_nowPlayer))
-		{
-			this.gkState = GK_State.ON_ALERT;
-		}
 	}
 
-
-
-
-
-
-
-
-
+	void ReturnHome()
+	{
+	}
 
 	void OnAlert()
 	{
+		this.Move(new Vector3(0.1f, 0.1f, 0.1f));
+	}
 
+	void CatchBall()
+	{
 	}
 
 	void Pass()
 	{
+		// 評価システム
+		// パス相手選定
+		// パスを行う
 	}
 }
