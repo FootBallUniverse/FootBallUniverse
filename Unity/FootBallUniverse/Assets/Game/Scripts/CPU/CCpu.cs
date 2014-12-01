@@ -88,14 +88,14 @@ public class CCpu : CPlayer {
 		}
 		else
 		{
-			m_speed.x += _speed.x * m_human.m_playerMoveSpeed;
-			m_speed.z += _speed.z * m_human.m_playerMoveSpeed;
+//			m_speed.x += _speed.x * m_human.m_playerMoveSpeed;
+//			m_speed.z += _speed.z * m_human.m_playerMoveSpeed;
 		}
 
 		m_pos = this.transform.localPosition;
 
 		// 移動アクション
-		m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right);
+//		m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right);
 	}
 
 	//----------------------------------------------------------------------

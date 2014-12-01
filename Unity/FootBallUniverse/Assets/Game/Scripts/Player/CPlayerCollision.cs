@@ -46,6 +46,9 @@ public class CPlayerCollision : MonoBehaviour {
 				
 				// プレイヤーのボールに設定
 				CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(this.transform,pos);
+                CSoccerBallManager.m_shootPlayerNo = this.GetComponent<CPlayer>().m_playerData.m_playerNo;
+                CSoccerBallManager.m_shootTeamNo = this.GetComponent<CPlayer>().m_playerData.m_teamNo;
+
 
 				this.gameObject.GetComponent<CPlayer>().m_isBall = true;
 
@@ -67,6 +70,7 @@ public class CPlayerCollision : MonoBehaviour {
             // アクション変更
             playerScript.m_action.InitTackleSuccess(playerScript.m_human.m_tackleHitMotionLength);
 
+            // 味方の場合
             if (playerScript.m_playerData.m_teamNo == obj.GetComponent<CPlayer>().m_playerData.m_teamNo)
             {
                 CPlayer colPlayerScript = obj.GetComponent<CPlayer>();
@@ -91,7 +95,12 @@ public class CPlayerCollision : MonoBehaviour {
                 colPlayerScript.m_action.InitTackleDamage(colPlayerScript.m_human.m_tackleDamageMotionLength,
                                                           colPlayerScript.m_human.m_tackleDamageInitSpeed,
                                                           colPlayerScript.m_human.m_tackleDamageDecFrame);
-                
+                // ボールを持っている場合は飛ばす
+                if (colPlayerScript.m_isBall == true)
+                {
+                    colPlayerScript.m_isBall = false;
+                }
+            
             }
         }
 

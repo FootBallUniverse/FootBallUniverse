@@ -10,7 +10,6 @@ public class CSoccerBallManager : MonoBehaviour {
     // サッカーボールの情報
     public static int m_shootPlayerNo;         // シュート（パス）したプレイヤーの番号
     public static int m_shootTeamNo;           // シュートしたチームの番号
-    public static int m_nowPlayer;             // 現在誰がボールを持っているかどうか
 
     // 低数値
     public const int eTEAM_1 = 0;
@@ -39,7 +38,6 @@ public class CSoccerBallManager : MonoBehaviour {
         // サッカーボールの情報を初期化
         m_shootPlayerNo = eNONE;
         m_shootTeamNo = eTEAM_NONE;
-        m_nowPlayer = eNONE;
 
         // サッカーボールをセット
         m_soccerBall = this.gameObject.transform.FindChild("SoccerBall").gameObject;
