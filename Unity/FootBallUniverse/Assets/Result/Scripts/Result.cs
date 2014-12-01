@@ -44,6 +44,7 @@ public class Result : MonoBehaviour {
 		GameObject[] panels = new GameObject[3];
 
 		// ドライバ
+#if false
 		TeamData.teamNationality[0] = TeamData.TEAM_NATIONALITY.JAPAN;
 		TeamData.teamNationality[1] = TeamData.TEAM_NATIONALITY.ESPANA;
 
@@ -66,6 +67,7 @@ public class Result : MonoBehaviour {
 		TeamData.suppoterByTeam[0] = 1234;
 		TeamData.suppoterByTeam[1] = 5233;
 		TeamData.suppoterByWorld = 100000000;
+#endif
 		// ドライバ＿END
 
 		// パネルデータ読込
