@@ -207,7 +207,5 @@ public class CPlayerControler : MonoBehaviour {
             CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(m_player.transform,pos);
             m_playerScript.m_isBall = true;
         }
-    }
-
-    }
+    }   
 }
