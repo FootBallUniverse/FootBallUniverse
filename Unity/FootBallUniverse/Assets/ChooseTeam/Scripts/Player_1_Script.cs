@@ -119,22 +119,34 @@ public class Player_1_Script : MonoBehaviour {
         //      回転フラグ、フェードインフラグ処理
         //================================================================================================
         // Dを押したとき
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) ||
+            Input.GetKeyDown(InputXBOX360.P1_XBOX_A))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
                     m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
         }
         // Aを押したとき
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.A)||
+            Input.GetKeyDown(InputXBOX360.P1_XBOX_B))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
                     m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
         }
+        // Shiftが押されたら遷移
+        if (Input.GetKeyDown(KeyCode.Space)
+            && m_Fade_flag_1.m_FadeFlag <= 1        // フェードアウトしているか
+            && m_Right_RotateFlag == false         // 右回転しているか
+            && m_Left_RotateFlag == false)         // 左回転しているか
+        {
+            // フェードインのフラグを1に変更
+            m_Fade_flag_1.m_FadeFlag = 2;
+        }
 
         // Shiftが押されたら遷移
-        if (Input.GetKeyDown(KeyCode.LeftShift)     // シフトが押されたか
+        if (Input.GetKeyDown(KeyCode.LeftShift)||     // シフトが押されたか
+            Input.GetKeyDown(InputXBOX360.P1_XBOX_A)
             && m_Fade_flag_1.m_FadeFlag == 0        // フェードアウトしているか
             && m_Right_RotateFlag == false         // 右回転しているか
             && m_Left_RotateFlag == false)         // 左回転しているか
@@ -142,14 +154,16 @@ public class Player_1_Script : MonoBehaviour {
             // フェードインのフラグを1に変更
             m_Fade_flag_1.m_FadeFlag = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.LeftShift) && m_Fade_flag_1.m_FadeFlag == 1)
+        else if ((Input.GetKeyDown(KeyCode.LeftShift) ||     // シフトが押されたか
+                    Input.GetKeyDown(InputXBOX360.P1_XBOX_A)) && m_Fade_flag_1.m_FadeFlag == 1)
         {
             // シーン変更フラグをtrueにしてフェードインのフラグを2に変更
             m_SceneFlag = true;
             m_Fade_flag_1.m_FadeFlag = 2;
             
         }
-        else if (Input.GetKeyDown(KeyCode.LeftControl) && m_Fade_flag_1.m_FadeFlag == 1)
+        else if (Input.GetKeyDown(KeyCode.LeftControl) ||     // シフトが押されたか
+            Input.GetKeyDown(KeyCode.Space) && m_Fade_flag_1.m_FadeFlag == 1)
         {
             // フェードインのフラグを3に変更
             m_Fade_flag_1.m_FadeFlag = 3;

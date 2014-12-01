@@ -3,11 +3,10 @@ using System.Collections;
 
 public class Fade_1 : MonoBehaviour
 {
-
     public int m_FadeFlag;
 
     // TweenAlpha用スクリプト
-    private TweenAlpha m_tweenAlpha;
+    public TweenAlpha m_tweenAlpha;
 
     // Use this for initialization
     void Start()
@@ -18,8 +17,6 @@ public class Fade_1 : MonoBehaviour
         m_tweenAlpha.from = 0;
         m_tweenAlpha.to = 0;
 
-        //        m_tweenAlpha.Play(true);
-        //  this.transform.GetComponent<UISprite>().alpha = 0.0f;
          TweenAlpha.Begin(this.gameObject, 1, 0);
 
     }
@@ -32,19 +29,16 @@ public class Fade_1 : MonoBehaviour
             // 何もしない
             // 絶対ニダ
         }
-        //if( Input.GetKeyDown(KeyCode.J) )
         if (m_FadeFlag == 1)
         {
             this.transform.GetComponent<UISprite>().alpha = 0.75f;
         }
 
-        //if( Input.GetKeyDown(KeyCode.J) )
         if (m_FadeFlag == 2)
         {
             if (m_tweenAlpha.enabled == false)
             {
                 this.transform.GetComponent<UISprite>().alpha = 0.75f;
-               // TweenAlpha.Begin(this.gameObject, 1, 1);
             }
         }
 
@@ -56,6 +50,5 @@ public class Fade_1 : MonoBehaviour
                 m_FadeFlag = 0;
             }
         }
-
     }
 }

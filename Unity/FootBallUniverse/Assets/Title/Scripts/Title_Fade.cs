@@ -6,7 +6,7 @@ public class Title_Fade : MonoBehaviour {
     public bool m_FadeFlag;
 
     // TweenAlpha用スクリプト
-    private TweenAlpha m_tweenAlpha;
+    public TweenAlpha m_tweenAlpha;
 
 	// Use this for initialization
 	void Start () {
@@ -23,21 +23,8 @@ public class Title_Fade : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (m_FadeFlag == false)
-        {
-            if (m_tweenAlpha.enabled == false)
-            {
-                m_tweenAlpha = this.gameObject.GetComponent<TweenAlpha>();
-                m_tweenAlpha.from = 1;
-                m_tweenAlpha.to = 0;
-
-                //        m_tweenAlpha.Play(true);
-
-                TweenAlpha.Begin(this.gameObject, 1, 0);
-            }
-        }
-        //if( Input.GetKeyDown(KeyCode.J) )
+	void Update () 
+    {
         if(m_FadeFlag == true)
         {
             if (m_tweenAlpha.enabled == false)
