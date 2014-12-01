@@ -3,7 +3,7 @@ using System.Collections;
 
 public class title : MonoBehaviour {
 
-    public int m_StartCount;
+    public float m_StartCount;
 
     private Entry_1     m_entry1;
     private Entry_2     m_entry2;
@@ -35,34 +35,45 @@ public class title : MonoBehaviour {
         if (m_entry1.m_inFlag == true &&
             m_entry2.m_inFlag == true &&
             m_entry3.m_inFlag == true &&
-            m_entry4.m_inFlag == true)
+            m_entry4.m_inFlag == true &&
+            m_Fade.m_FadeFlag == false )
         {
             m_SceneFlag = true;
         }
-        else
+        /*else
         {
             m_SceneFlag = false;
             m_StartCount = 0;
         }
-        if (m_SceneFlag == true)
+        Debug.Log("フェードインしている？" + m_Fade.m_tweenAlpha.enabled);
+        Debug.Log("経過時間を表示するよ" + m_StartCount);*/
+
+        if (m_StartCount >= 0.1f)
         {
-            if (m_StartCount >= 200)
+            if (m_Fade.m_tweenAlpha.enabled == false)
             {
+                Debug.Log("遷移するよ" + m_Fade.m_tweenAlpha.enabled);
                 Application.LoadLevel("ChooseTeam");
             }
-            else if (m_StartCount >= 100)
+            else
             {
-                m_Fade.m_FadeFlag = true;
-                
+                Debug.Log("遷移しないんだよ" + m_Fade.m_tweenAlpha.enabled);
             }
-            m_StartCount++;
         }
-       
+        
+        if (m_SceneFlag == true)
+        {
+            Debug.Log("FlagをONにするよ" + m_Fade.m_tweenAlpha.enabled);
+            m_Fade.m_FadeFlag = true;
+            m_StartCount += Time.deltaTime;
+        }
+
         // スペースキーで強制的に次のシーンに飛ばす
 		if(Input.GetKeyDown(KeyCode.Space) ||
            InputXBOX360.IsGetAllStartButton() == true)
 		{
-			Application.LoadLevel("ChooseTeam");
+            m_SceneFlag = true;
+			//Application.LoadLevel("ChooseTeam");
 		}
 	}
 

@@ -20,7 +20,11 @@ public class Team_Select : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.LoadLevel("Title");
+        }
         if(m_Fade_flag_1.m_SceneFlag == true &&
             m_Fade_flag_2.m_SceneFlag == true )
         {
