@@ -15,7 +15,7 @@ public class CPlayerKeyBoard : CPlayer {
         m_pos = this.transform.localPosition;
         m_angle = new Vector3(0.0f, 0.0f);
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-        m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eNORMAL;
+        m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
 
         m_action = new CActionPlayerKeyBoard();
 	}
@@ -24,10 +24,10 @@ public class CPlayerKeyBoard : CPlayer {
 	void Update () {
 		this.rigidbody.velocity = Vector3.zero;
 		this.rigidbody.angularVelocity = Vector3.zero;
-		switch (m_cameraStatus) 
+		switch (m_viewPointStatus   ) 
         { 
             // 通常移動モード
-            case CPlayerManager.eCAMERA_STATUS.eNORMAL:
+            case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
                 switch (m_status)
                 {
                     // 何もしてない状態
@@ -44,7 +44,7 @@ public class CPlayerKeyBoard : CPlayer {
                         // カメラモード変更
                         if (Input.GetKeyDown(InputXBOX360.P1_XBOX_RIGHT_ANALOG_PRESS))
                         {
-                            m_cameraStatus = CPlayerManager.eCAMERA_STATUS.eROCKON;
+                            m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.eENEMY;
                         }
 
                         break;
@@ -62,7 +62,7 @@ public class CPlayerKeyBoard : CPlayer {
                 break;
 
             // ロックオン移動モード
-            case  CPlayerManager.eCAMERA_STATUS.eROCKON:
+            case  CPlayerManager.eVIEW_POINT_STATUS.eENEMY:
                 switch (m_status)
                 {
                     case CPlayerManager.ePLAYER_STATUS.eNONE:

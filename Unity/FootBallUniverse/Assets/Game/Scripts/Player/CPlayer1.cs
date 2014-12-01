@@ -23,7 +23,6 @@ public class CPlayer1 : CPlayer {
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
     
-      
         // プレイヤーの情報をマップにセット
         Color color = Color.red;
         CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
@@ -71,7 +70,9 @@ public class CPlayer1 : CPlayer {
 
         m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
         this.rigidbody.MovePosition(m_pos);
-        // this.transform.localPosition = m_pos;       // 保存用位置座標を更新
+
+        // 最後に位置をマネージャークラスにセットしておく
+        CPlayerManager.m_playerManager.m_player1Transform = this.transform;
 
         // ゲームが終了しているかどうか判定
         this.CheckGamePlay();
@@ -96,6 +97,8 @@ public class CPlayer1 : CPlayer {
     
         this.LTDashTackle();        // ダッシュかタックルの判定
         this.RTShootPass();         // パスかシュートの判定
+
+        this.ChangeViewPoint();     // 視点変更
     }
 
     //----------------------------------------------------------------------
@@ -521,4 +524,88 @@ public class CPlayer1 : CPlayer {
 
         }
     }
+
+    //----------------------------------------------------------------------
+    // 視点変更
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/30  @Update 2014/11/30  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public override void ChangeViewPoint()
+    {
+        switch (m_viewPointStatus)
+        {
+            case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
+
+                // LTボタンが押されたら敵の視点に変更
+                if (Input.GetKeyDown(InputXBOX360.P1_XBOX_L))
+                {
+                    m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.eENEMY;
+                    return;
+                }
+
+                // 2Pの方向に向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
+                {
+                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player2Transform);
+                    return;
+                }
+
+                // 味方のＡＩの方向に向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_B))
+                {
+                    this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2);
+                    return;
+                }
+
+                // キーパーの方向に向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_A))
+                {
+                    this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2Keeper);
+                    return;
+                }
+                break;
+
+            case CPlayerManager.eVIEW_POINT_STATUS.eENEMY:
+                // RTボタンが押されたら味方の視点に変更
+                if (Input.GetKeyDown(InputXBOX360.P1_XBOX_R))
+                {
+                    m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
+                    return;
+                }
+
+                // 3Pの方向に向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_X))
+                {
+                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player3Transform);
+                    return;
+                }
+
+                // 4Pの方向に向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
+                {
+                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player4Transform);
+                    return;
+                }
+
+                // 敵AIの方に向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_B))
+                {
+                    this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4);
+                    return;
+                }
+
+                // 敵キーパーの方に向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_A))
+                {
+                    this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4Keeper);
+                    return;
+                }
+
+                break;
+        }
+
+    }
+
 }

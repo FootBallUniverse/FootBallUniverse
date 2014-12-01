@@ -77,7 +77,8 @@ public class InputXBOX360
     public static string P3_XBOX_LEFT_ANALOG_Y = "P3_LEFT_ANALOG_Y";                // Player3 左アナログスティックのY方向
     public static string P3_XBOX_DPAD_X = "P3_DPAD_X";                              // Player3 DPADのX方向  
     public static string P3_XBOX_DPAD_Y = "P3_DPAD_Y";                              // Player3 DPADのY方向
-    public static string P3_XBOX_RTLT = "P3_RTLT";                                  // Player3 RTLTボタン
+    public static string P3_XBOX_RT = "P3_RT";                                      // Player3 RTボタン
+    public static string P3_XBOX_LT = "P3_LT";                                      // Player3 LTボタン
 
     public static string P4_XBOX_RIGHT_ANALOG_X = "P4_RIGHT_ANALOG_X";              // Player4 右アナログスティックのX方向
     public static string P4_XBOX_RIGHT_ANALOG_Y = "P4_RIGHT_ANALOG_Y";              // Player4 右アナログスティックのY方向
@@ -85,7 +86,8 @@ public class InputXBOX360
     public static string P4_XBOX_LEFT_ANALOG_Y = "P4_LEFT_ANALOG_Y";                // Player4 左アナログスティックのY方向
     public static string P4_XBOX_DPAD_X = "P4_DPAD_X";                              // Player4 DPADのX方向  
     public static string P4_XBOX_DPAD_Y = "P4_DPAD_Y";                              // Player4 DPADのY方向
-    public static string P4_XBOX_RT = "P4_RTLT";                                    // Player4 RTLTボタン
+    public static string P4_XBOX_RT = "P4_RT";                                      // Player4 RTボタン
+    public static string P4_XBOX_LT = "P4_LT";                                      // Player4 LTボタン
 
     public static float m_rtPress = 0;
     public static float m_ltPress = 0;

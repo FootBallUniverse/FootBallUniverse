@@ -5,7 +5,7 @@ public class Team_Select : MonoBehaviour {
 
     Player_1_Script m_Fade_flag_1;
     Player_3_Script m_Fade_flag_2;
-    private int m_Count;
+    private float m_Count;
 	// Use this for initialization
 	void Start () {
         m_Count = 0;
@@ -24,8 +24,9 @@ public class Team_Select : MonoBehaviour {
         if(m_Fade_flag_1.m_SceneFlag == true &&
             m_Fade_flag_2.m_SceneFlag == true )
         {
-            m_Count++;
-            if (m_Count >= 120)
+            m_Count+= Time.deltaTime;
+            Debug.Log(m_Count);
+            if (m_Count >= 3.0f)
             {
                 if (m_Fade_flag_1.m_Country[0].m_Flag == 3)
                 {

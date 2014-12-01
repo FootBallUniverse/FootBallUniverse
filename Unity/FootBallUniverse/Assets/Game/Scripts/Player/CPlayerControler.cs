@@ -92,6 +92,12 @@ public class CPlayerControler : MonoBehaviour {
         // 3P
         if (Input.GetKeyDown(KeyCode.Alpha3) && m_playerStatus != ePLAYER_STATUS.ePLAYER3)
         { 
+            // 3Pの情報を取得して3Pに切り替える
+            m_player = GameObject.Find("P3&P4").transform.FindChild("Player3").transform.FindChild("player").gameObject;
+            this.ChangeControler(m_player.transform);
+
+            m_playerScript = m_player.GetComponent<CPlayer3>();
+            m_playerStatus = ePLAYER_STATUS.ePLAYER3;
         }
 
         // 4P
@@ -201,5 +207,5 @@ public class CPlayerControler : MonoBehaviour {
             CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(m_player.transform,pos);
             m_playerScript.m_isBall = true;
         }
-    }
+    }   
 }

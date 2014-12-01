@@ -4,7 +4,7 @@ using System.Collections;
 public class CPlayerManager {
 
     public const int m_playerNum = 8;
-    public const int m_dataNum = 6;
+    public const int m_dataNum = 7;
 
     // マネージャーのインスタンス
     public static CPlayerManager m_playerManager = new CPlayerManager();
@@ -15,12 +15,17 @@ public class CPlayerManager {
     // ボールの管理クラス
     public CSoccerBallManager m_soccerBallManager;
 
-    // カメラのモード
-    public enum eCAMERA_STATUS
+    // 視点のモード
+    public enum eVIEW_POINT_STATUS
     {
-        eNORMAL,
-        eROCKON
+        ePLAYER,
+        eENEMY
     }
+
+    public Transform m_player1Transform;
+    public Transform m_player2Transform;
+    public Transform m_player3Transform;
+    public Transform m_player4Transform;
 
     // プレイヤーのステータス
     public enum ePLAYER_STATUS

@@ -81,6 +81,9 @@ public class CPlayer2 : CPlayer
         m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
         this.transform.localPosition = m_pos;       // 保存用位置座標を更新
 
+        // 最後に位置をマネージャークラスにセットしておく
+        CPlayerManager.m_playerManager.m_player2Transform = this.transform;
+
         // ゲームが終了しているかどうか判定
         this.CheckGamePlay();
     }
