@@ -82,7 +82,7 @@ public class CPlayer2Mesh : CPlayerMesh {
             return;
 
         GameObject camera = GameObject.Find(Camera.current.name);
-        camera = camera.transform.parent.gameObject;
+//        camera = camera.transform.parent.gameObject;
 
         // プレイヤー1のカメラにプレイヤー2が入ったら
         if ("Player1Camera" == Camera.current.name)

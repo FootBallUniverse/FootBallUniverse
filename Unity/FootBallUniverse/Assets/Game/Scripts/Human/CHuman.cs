@@ -30,7 +30,7 @@ public class CHuman {
     public int m_tackleMotionLength;         // タックルのモーションの長さ
     public int m_tackleChangeLength;         // タックルの溜め時間
     public int m_tackleDecFrame;             // タックルが減速し始める時間
-    public int m_tackleDamegeLength;         // タックルのダメージの長さ
+    public int m_tackleDamageMotionLength;   // タックルのダメージの長さ
     public int m_shootChargeLength;          // シュートのチャージ時間
     public int m_passChargeLength;           // パスのチャージ時間
     public int m_dashChargeLength;           // ダッシュのチャージ時間
@@ -38,6 +38,9 @@ public class CHuman {
     public int m_shootChargeLengthMax;       // シュートのチャージの最大時間
     public int m_dashChargeLengthMax;        // ダッシュのチャージの最大時間
     public float m_tackleHitRadius;          // タックルの当たる範囲
+    public int m_tackleHitMotionLength;      // タックルを当てた方のモーションの長さ
+    public float m_tackleDamageInitSpeed;    // タックルをくらったほうの初期スピード
+    public int m_tackleDamageDecFrame;       // タックルをくらった方のスピードの減速フレーム
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -96,7 +99,7 @@ public class CHuman {
         m_tackleMotionLength = int.Parse( _value[23] );
         m_tackleChangeLength = int.Parse(_value[24]);
         m_tackleDecFrame = int.Parse( _value[25] );
-        m_tackleDamegeLength = int.Parse( _value[26] );
+        m_tackleDamageMotionLength = int.Parse( _value[26] );
         m_shootChargeLength = int.Parse(_value[27]);
         m_passChargeLength = int.Parse(_value[28]);
         m_dashChargeLength = int.Parse(_value[29]);
@@ -104,7 +107,9 @@ public class CHuman {
         m_shootChargeLengthMax = int.Parse(_value[31]);
         m_dashChargeLengthMax = int.Parse(_value[32]);
         m_tackleHitRadius = float.Parse(_value[33]);
-
+        m_tackleHitMotionLength = int.Parse(_value[34]);
+        m_tackleDamageInitSpeed = float.Parse(_value[35]);
+        m_tackleDamageDecFrame = int.Parse(_value[36]);
     }
 
 

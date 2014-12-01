@@ -89,9 +89,6 @@ public class InputXBOX360
     public static string P4_XBOX_RT = "P4_RT";                                      // Player4 RTボタン
     public static string P4_XBOX_LT = "P4_LT";                                      // Player4 LTボタン
 
-    public static float m_rtPress = 0;
-    public static float m_ltPress = 0;
-
 //***************************************************************************************************
 //                                          メソッド
 //                              @Author T.Kawashita @Date 2014/10/29
@@ -140,20 +137,20 @@ public class InputXBOX360
     // RTボタンが押され続けているかどうかを判定
     //----------------------------------------------------------------------
     // @Param	string  コントローラーの番号低数値		
+    // @Param   int     フレーム数
     // @Return	int     どれぐらいの時間押されているか(frame)
-    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+    // @Date	2014/11/13  @Update 2014/12/1  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public static int RTButtonPress(string _rtKeyName)
+    public static int RTButtonPress(string _rtKeyName, ref int _frame)
     {
         if (IsGetRTButton(_rtKeyName) == true)
         {
-            m_rtPress += Time.deltaTime * 60;
-            int frame = (int)m_rtPress;
-            return frame;
+            _frame += (int)(Time.deltaTime * 90);
+            return _frame;
         }
         else
         {
-            m_rtPress = 0.0f;
+            _frame = 0;
             return 0;
         }
     }
@@ -162,35 +159,22 @@ public class InputXBOX360
     // LTボタンが押され続けているかどうかを判定
     //----------------------------------------------------------------------
     // @Param	string  コントローラーの番号低数値		
+    // @Param   int     フレーム数
     // @Return	int     どれぐらいの時間押されているか(frame)
-    // @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+    // @Date	2014/11/13  @Update 2014/12/1  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public static int LTButtonPress(string _ltKeyName)
+    public static int LTButtonPress(string _ltKeyName, ref int _frame)
     {
         if (IsGetRTButton(_ltKeyName) == true)
         {
-            m_ltPress += Time.deltaTime * 60;
-            int frame = (int)m_ltPress;
-            return frame;
+            _frame += (int)(Time.deltaTime * 90);
+            return _frame;
         }
         else
         {
-            m_ltPress = 0.0f;
+            _frame = 0;
             return 0;
         } 
-    }
-
-    //----------------------------------------------------------------------
-    // RTとLTボタンの初期化
-    //----------------------------------------------------------------------
-    // @Param	none		
-    // @Return	none
-    // @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
-    //----------------------------------------------------------------------
-    public static void InitRTLT()
-    {
-        m_rtPress = 0;
-        m_ltPress = 0;
     }
 
     //----------------------------------------------------------------------

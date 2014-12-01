@@ -67,6 +67,12 @@ public class CSoccerBallManager : MonoBehaviour {
             m_soccerBall.GetComponent<CSoccerBall>().Init(new Vector3(0.0f, 0.0f, 0.0f));
             m_isStartGame = false;
         }
+
+        // ゲーム終了
+        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eEND)
+        {
+            m_soccerBall.GetComponent<CSoccerBall>().Init(this.transform.localPosition);
+        }
 	}
 
     //----------------------------------------------------------------------

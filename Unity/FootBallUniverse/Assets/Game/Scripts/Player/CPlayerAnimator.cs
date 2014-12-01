@@ -20,6 +20,7 @@ public class CPlayerAnimator : MonoBehaviour{
     public int m_isDash;
     public int m_isTackle;
     public int m_isTackleSuccess;
+    public int m_isTackleDamage;
     public int m_isDashCharge;
 
     //----------------------------------------------------------------------
@@ -45,6 +46,7 @@ public class CPlayerAnimator : MonoBehaviour{
         m_isTackle = Animator.StringToHash("isTackle");
         m_isTackleSuccess = Animator.StringToHash("isTackleSuccess");
         m_isDashCharge = Animator.StringToHash("isDashCharge");
+        m_isTackleDamage = Animator.StringToHash("isTackleDamage");
 
         m_oldAnimation = m_isWait;
 
@@ -60,6 +62,7 @@ public class CPlayerAnimator : MonoBehaviour{
         m_animator.SetBool(m_isTackle, false);
         m_animator.SetBool(m_isTackleSuccess, false);
         m_animator.SetBool(m_isDashCharge, false);
+        m_animator.SetBool(m_isTackleDamage, false);
 	}
 
     //----------------------------------------------------------------------
@@ -217,4 +220,41 @@ public class CPlayerAnimator : MonoBehaviour{
     {
         this.ChangeAnimation(m_isPass);
     }
+
+    //----------------------------------------------------------------------
+    // タックル成功モーション
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void TackleSuccess()
+    {
+        this.ChangeAnimation(m_isTackleSuccess);
+    }
+
+    //----------------------------------------------------------------------
+    // タックルやられモーション
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void TackleDamage()
+    {
+        this.ChangeAnimation(m_isTackleDamage);
+    }
+
+    //----------------------------------------------------------------------
+    // 待機アニメーション
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void Wait()
+    {
+        this.ChangeAnimation(m_isWait);
+    }
+
 }
