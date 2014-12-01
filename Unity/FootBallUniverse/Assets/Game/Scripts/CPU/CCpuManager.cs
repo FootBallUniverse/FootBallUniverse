@@ -20,5 +20,9 @@ public class CCpuManager{
     public CCpuManager()
     { 
     }
-	
+
+	// 評価システム(Section)
+
+	// 評価システム(Player)
+
 }
