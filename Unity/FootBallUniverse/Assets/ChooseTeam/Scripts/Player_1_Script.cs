@@ -107,14 +107,14 @@ public class Player_1_Script : MonoBehaviour
         //      回転フラグ、フェードインフラグ処理
         //================================================================================================
         // Dを押したとき
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
         }
         // Aを押したとき
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.D))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
