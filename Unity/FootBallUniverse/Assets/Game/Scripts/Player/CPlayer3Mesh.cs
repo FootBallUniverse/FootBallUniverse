@@ -1,42 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-public class CPlayer2Mesh : CPlayerMesh {
+public class CPlayer3Mesh : MonoBehaviour {
 
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/11/12  @Update 2014/11/12  @Author T.Kawashita      
+    // @Date	2014/12/3  @Update 2014/12/3  @Author T.Kawashita      
     //----------------------------------------------------------------------
-	void Start () {
-        GameObject obj = this.transform.parent.transform.FindChild("Player2Camera").gameObject;
-        obj = obj.transform.FindChild("Player2NGUI").gameObject;
-        m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
-        m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;
-        m_p32DPanel = obj.transform.FindChild("Player3Panel").gameObject;
-        m_p42DPanel = obj.transform.FindChild("Player4Panel").gameObject;
-	}
+    void Start()
+    {
+
+    }
 
     //----------------------------------------------------------------------
     // 更新
     //----------------------------------------------------------------------
-    // @Param   none		
+    // @Param   none			
     // @Return	none
-    // @Date	2014/11/2  @Update 2014/11/12  @Author T.Kawashita      
+    // @Date	2014/12/3  @Update 2014/12/3  @Author T.Kawashita      
     //----------------------------------------------------------------------
-	void Update () {
-	
-	}
+    void Update()
+    {
+
+    }
 
     //----------------------------------------------------------------------
     // マテリアルの変更
     //----------------------------------------------------------------------
     // @Param	TeamData.TEAM_NATIONALITY   選択されたチーム		
     // @Return	none
-    // @Date	2014/11/28  @Update 2014/11/28  @Author T.Kawashita      
+    // @Date	2014/12/3  @Update 2014/12/3  @Author T.Kawashita      
     //----------------------------------------------------------------------
     public void ChangeMaterial(TeamData.TEAM_NATIONALITY _world)
     {
@@ -45,22 +41,22 @@ public class CPlayer2Mesh : CPlayerMesh {
         {
             // 日本
             case TeamData.TEAM_NATIONALITY.JAPAN:
-                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_japan"));
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_japan2"));
                 break;
 
             // ブラジル
             case TeamData.TEAM_NATIONALITY.BRASIL:
-                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_brasil"));
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_brasil2"));
                 break;
 
             // イングランド
             case TeamData.TEAM_NATIONALITY.ENGLAND:
-                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_england"));
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_england2"));
                 break;
 
             // スペイン
             case TeamData.TEAM_NATIONALITY.ESPANA:
-                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_spain"));
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_spain2"));
                 break;
         }
     }
@@ -70,22 +66,9 @@ public class CPlayer2Mesh : CPlayerMesh {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Othre   CallBack
-    // @Date	2014/10/30 @Update 2014/10/31  @Author T.Kawashita      
+    // @Date	2014/12/3  @Update 2014/12/3  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void OnWillRenderObject()
     {
-
-        // 自分のカメラなら無効
-        if ("Player2Camera" == Camera.current.name ||
-            "DeliveryCamera" == Camera.current.name)
-            return;
-
-        GameObject camera = GameObject.Find(Camera.current.name);
-//        camera = camera.transform.parent.gameObject;
-
-        // プレイヤー1のカメラにプレイヤー2が入ったら
-        if ("Player1Camera" == Camera.current.name)
-            m_p12DPanel.transform.localRotation = camera.transform.localRotation;
     }
 }

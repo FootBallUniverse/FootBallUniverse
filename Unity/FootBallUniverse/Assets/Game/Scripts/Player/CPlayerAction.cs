@@ -203,13 +203,10 @@ public class CPlayerAction {
         if (m_tackleDamageFrame >= (float)m_tackleDamageDecFrame / 60)
         {
             m_tackleDamageInitSpeed -= m_tackleDamageDecSpeed;
-            Debug.Log("減速");
         }
 
         // 反対方向に移動させる
         _pos += m_tackleDamageInitSpeed * _back;
-
-        Debug.Log(_pos);
 
         // タックルダメージ終了
         if (m_tackleDamageFrame >= (float)m_tackleDamageMotionLength / 60)

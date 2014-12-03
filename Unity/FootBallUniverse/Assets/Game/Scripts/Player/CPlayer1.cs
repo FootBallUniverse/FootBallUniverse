@@ -22,7 +22,7 @@ public class CPlayer1 : CPlayer {
 
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
-    
+        this.transform.FindChild("polySurface14").GetComponent<CPlayer1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
 
         // プレイヤーの情報をマップにセット
         Color color = Color.red;
@@ -594,7 +594,7 @@ public class CPlayer1 : CPlayer {
                 if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
                 {
                     this.transform.LookAt(CPlayerManager.m_playerManager.m_player2Transform);
-                    return;
+                     return;
                 }
 
                 // 味方のＡＩの方向に向ける
@@ -640,7 +640,7 @@ public class CPlayer1 : CPlayer {
                     this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4);
                     return;
                 }
-
+                    
                 // 敵キーパーの方に向ける
                 if (Input.GetKey(InputXBOX360.P1_XBOX_A))
                 {
@@ -650,7 +650,6 @@ public class CPlayer1 : CPlayer {
 
                 break;
         }
-
     }
 
 }

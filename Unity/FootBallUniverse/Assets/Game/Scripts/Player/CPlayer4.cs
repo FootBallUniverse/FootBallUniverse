@@ -11,9 +11,13 @@ public class CPlayer4 : CPlayer {
     // @Date	2014/10/31  @Update 2014/10/31  @Author T.Kawashita       
     //----------------------------------------------------------------------
 	void Start () {
+
         this.Init();
         m_pos = this.transform.localPosition;
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[1]);
+
+        this.transform.FindChild("polySurface14").GetComponent<CPlayer4Mesh>().ChangeMaterial(TeamData.teamNationality[1]);
+
 
         // プレイヤーの情報をマップにセット
         Color color = Color.blue;

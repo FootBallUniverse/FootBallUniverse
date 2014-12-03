@@ -84,5 +84,27 @@ public class CSoccerBall : MonoBehaviour {
         this.transform.localPosition = m_pos;
     }
 
+    //----------------------------------------------------------------------
+    // ボールの吹っ飛び
+    //----------------------------------------------------------------------
+    // @Param   Transform   タックルしたプレイヤー     
+    // @Return	none
+    // @Date	2014/12/3  @Update 2014/12/3  @Author T.Kawashita     
+    //----------------------------------------------------------------------
+    public void BlownOff(Transform _player)
+    { 
+        // プレイヤーの方向に向ける
+        this.transform.LookAt(_player);
+
+        float speedX = Random.Range(-2.0f, 2.0f);
+        float speedY = Random.Range(-2.0f, 2.0f);
+        float speedZ = Random.Range(0.0f, 0.0f);
+
+        Vector3 speed = new Vector3();
+        speed = speedX * this.transform.right + speedY * this.transform.up + speedZ * this.transform.forward;
+
+        // 飛ばす
+        this.rigidbody.velocity = speed;
+    }
 
 }

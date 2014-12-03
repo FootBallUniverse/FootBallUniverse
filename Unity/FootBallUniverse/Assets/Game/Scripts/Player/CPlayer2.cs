@@ -22,7 +22,7 @@ public class CPlayer2 : CPlayer
 
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
-//        this.transform.FindChild("polySurface14").GetComponent<CPlayer2Mesh>().ChangeMaerial(TeamData.teamNationality[0]);
+        this.transform.FindChild("polySurface14").GetComponent<CPlayer2Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
 
         // プレイヤーの情報をマップにセット
         Color color = Color.red;
