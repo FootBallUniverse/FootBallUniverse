@@ -20,6 +20,10 @@ public class C1P2PKeeper : CCpu {
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita       
 	//----------------------------------------------------------------------
 	void Start () {
+
+
+		this.Init();
+		m_pos = this.transform.localPosition;
 	}
 
 	//----------------------------------------------------------------------
@@ -30,6 +34,8 @@ public class C1P2PKeeper : CCpu {
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
 	//----------------------------------------------------------------------
 	void Update () {
+
+		m_pos = this.transform.localPosition;  
 
 		switch (this.gkState)
 		{
@@ -53,6 +59,10 @@ public class C1P2PKeeper : CCpu {
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
 	//----------------------------------------------------------------------
 	void LateUpdate(){
+
+		m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
+		this.rigidbody.MovePosition(m_pos);
+		
 		CCpuManager.m_cpuManager.m_cpuP1P2Keeper = this.transform;
 	}
 
@@ -73,7 +83,8 @@ public class C1P2PKeeper : CCpu {
 
 	void OnAlert()
 	{
-		this.Move(new Vector3(0.1f, 0.1f, 0.1f));
+		//
+		this.Move(new Vector3(0.01f, 0.01f, 0.01f));
 	}
 
 	void CatchBall()
