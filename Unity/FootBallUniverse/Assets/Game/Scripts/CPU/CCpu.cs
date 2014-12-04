@@ -25,7 +25,7 @@ public class CCpu : CPlayer {
 
 		// 国の情報をセット / 国によってマテリアルを変更
 		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
-
+		Debug.Log(m_human);
 
 		// プレイヤーの情報をマップにセット
 		Color color = Color.red;

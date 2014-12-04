@@ -11,6 +11,8 @@ public class C1P2PKeeper : CCpu {
 	};
 
 	GK_State gkState = GK_State.ON_ALERT;
+	
+	Vector3 HOME_POSITION = new Vector3(0.0f, 0.0f, 25.0f);
 
 	//----------------------------------------------------------------------
 	// コンストラクタ
@@ -20,10 +22,20 @@ public class C1P2PKeeper : CCpu {
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita       
 	//----------------------------------------------------------------------
 	void Start () {
-
-
 		this.Init();
+
+		// プレイヤーのデータをセット
+		CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_2);
+		this.SetData();
+
 		m_pos = this.transform.localPosition;
+
+		// 国の情報をセット / 国によってマテリアルを変更
+		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
+
+		// プレイヤーのアニメーターをセット
+		m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
+
 	}
 
 	//----------------------------------------------------------------------
@@ -35,8 +47,12 @@ public class C1P2PKeeper : CCpu {
 	//----------------------------------------------------------------------
 	void Update () {
 
-		m_pos = this.transform.localPosition;  
+		if (m_isBall == true)
+			this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, 0.05f, 0.1f));
 
+		m_pos = this.transform.localPosition;
+
+		//this.Move(new Vector3(0.0f, 0.1f, 0.0f));
 		switch (this.gkState)
 		{
 			case GK_State.STAY:
@@ -83,8 +99,6 @@ public class C1P2PKeeper : CCpu {
 
 	void OnAlert()
 	{
-		//
-		this.Move(new Vector3(0.01f, 0.01f, 0.01f));
 	}
 
 	void CatchBall()
