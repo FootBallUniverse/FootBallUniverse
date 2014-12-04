@@ -71,7 +71,6 @@ public class CPlayerManager {
     //----------------------------------------------------------------------
     public CPlayerManager()
     {
-        m_mapObject = GameObject.Find("Map").gameObject;
         m_soccerBallManager = GameObject.Find("BallGameObject").GetComponent<CSoccerBallManager>();
         this.SetData();
     }

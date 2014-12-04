@@ -84,8 +84,14 @@ public class CPlayer2Mesh : CDefaultMesh {
 
         // プレイヤー1のカメラにプレイヤー2が入ったら
         if ("Player1Camera" == Camera.current.name)
-        {
             m_p12DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
-        }
+
+        // プレイヤー3のカメラにプレイヤー2が入ったら
+        if ("Player3Camera" == Camera.current.name)
+            m_p32DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+
+        // プレイヤー4のカメラにプレイヤー2が入ったら
+        if ("Player4Camera" == Camera.current.name)
+            m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;  
     }
 }

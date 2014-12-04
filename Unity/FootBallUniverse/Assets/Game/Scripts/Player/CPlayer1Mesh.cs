@@ -78,5 +78,16 @@ public class CPlayer1Mesh : CDefaultMesh {
         if ("Player1Camera" == Camera.current.name ||
            "DeliveryCamera" == Camera.current.name)
             return;
+
+        GameObject camera = GameObject.Find(Camera.current.name );
+
+        if ("Player2Camera" == Camera.current.name)
+            m_p22DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+
+        if ("Player3Camera" == Camera.current.name)
+            m_p32DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+
+        if ("Player4Camera" == Camera.current.name)
+            m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
     }
 }
