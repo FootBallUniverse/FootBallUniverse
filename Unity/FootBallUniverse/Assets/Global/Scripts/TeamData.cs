@@ -21,7 +21,7 @@ public class TeamData
 		public int time;     // ゴールした時間
 		public int playerNo; // プレイヤーNo
 		public int teamNo;   // プレイヤーのチームNo
-		public int goleNo;   // シュートしたゴールのNo
+		public int goleNo;   // シュートが入ったゴールのNo
 		public bool isGole;  // ゴールに成功したか
 	};
 
@@ -95,7 +95,7 @@ public class TeamData
 		for (int i = 0; i < logs.Count; i++)
 		{
 			logData = (SHOOT_LOG)logs[i];
-			if (logData.goleNo == teamNo &&
+			if (logData.goleNo != teamNo &&
 				logData.isGole == true)
 			{
 				score++;
