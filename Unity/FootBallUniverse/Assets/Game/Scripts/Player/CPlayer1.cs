@@ -62,6 +62,8 @@ public class CPlayer1 : CPlayer {
             case CPlayerManager.ePLAYER_STATUS.eEND:                                        break;    // 終了
             case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal();                   break;    // ゴールした時は何もさせない
         }
+
+
     }
 
     //----------------------------------------------------------------------

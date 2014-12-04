@@ -72,7 +72,7 @@ public class CPlayer1Mesh : CDefaultMesh {
     // @Other   CallBack
     // @Date	2014/11/28  @Update 2014/11/28  @Author T.Kawashia      
     //----------------------------------------------------------------------
-    void OnWillRenderObject()
+    void OnWillRenderObject()   
     {
         // 自分のカメラなら無効
         if ("Player1Camera" == Camera.current.name ||
