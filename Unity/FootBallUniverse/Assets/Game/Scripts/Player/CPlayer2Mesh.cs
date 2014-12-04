@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class CPlayer2Mesh : CPlayerMesh {
+public class CPlayer2Mesh : CDefaultMesh {
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -75,17 +75,17 @@ public class CPlayer2Mesh : CPlayerMesh {
     //----------------------------------------------------------------------
     void OnWillRenderObject()
     {
-
         // 自分のカメラなら無効
         if ("Player2Camera" == Camera.current.name ||
             "DeliveryCamera" == Camera.current.name)
             return;
 
         GameObject camera = GameObject.Find(Camera.current.name);
-//        camera = camera.transform.parent.gameObject;
 
         // プレイヤー1のカメラにプレイヤー2が入ったら
         if ("Player1Camera" == Camera.current.name)
-            m_p12DPanel.transform.localRotation = camera.transform.localRotation;
+        {
+            m_p12DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+        }
     }
 }

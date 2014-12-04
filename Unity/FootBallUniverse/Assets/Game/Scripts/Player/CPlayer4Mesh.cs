@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CPlayer4Mesh : CPlayerMesh {
+public class CPlayer4Mesh : CDefaultMesh {
 
     //----------------------------------------------------------------------
     // コンストラクタ

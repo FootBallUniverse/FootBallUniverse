@@ -326,7 +326,6 @@ public class CPlayer1 : CPlayer {
             angle.y = _angle.x * m_human.m_cameraMoveSpeedCharging;
             angle.x = _angle.y * m_human.m_cameraMoveSpeedCharging;
         }
-
         this.transform.Rotate(angle);
     }
 
