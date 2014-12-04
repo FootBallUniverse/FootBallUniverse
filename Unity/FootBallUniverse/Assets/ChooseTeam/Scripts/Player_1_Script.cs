@@ -85,15 +85,15 @@ public class Player_1_Script : MonoBehaviour
         // 初期値の設定
         for (int i = 0; i < 4; i++)
         {
+            m_Country[i].m_TeamColor = 0;        // チームの色の変更用フラグ(現在未実装の為不要)
+            m_Country[i].degree = 90.0f * i;     // 回転角度
+            m_Country[i].r = 0.21f;              // 回転の半径
+            m_Country[i].centerx = 3.79f;        // 中心軸のＸ座標
+            m_Country[i].centerz = 0.0f;         // 中心軸のＺ座標
+            m_Country[i].radian = 0.0f;          // ラジアン
             m_Country[i].m_Flag = i;             // どのモデルがセンターにいるかの確認用フラグ
-            m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();
-            if(m_Country[i].m_Flag == 3)
-                Position[i] = new Vector3(-0.1f, -0.1f, 0.0f);
-            else
-                Position[i] = new Vector3(-0.1f, 2.0f, 0.0f);
+            m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();   // モデルのモーション用
 
-            // 修正した座標を代入する
-            m_Country[i].m_Country.transform.position = Position[i];
         }
     }
 
@@ -227,6 +227,7 @@ public class Player_1_Script : MonoBehaviour
 
     }
 
+
     //=========================================================================================//
     // みぎ回転処理                                                                              //
     //=========================================================================================//
@@ -238,28 +239,53 @@ public class Player_1_Script : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                // 国のフラグを加算する
-                m_Country[i].m_Flag--;
-
-                // フラグが4以上になった場合0にする
-                if (m_Country[i].m_Flag <= -1)
+                switch (m_Country[i].m_Flag)
                 {
-                    m_Country[i].m_Flag = 3;
+                    case 0:
+                        Position[i].x = -2.0f;
+                        break;
+                    case 1:
+                        Position[i].x = -2.0f;
+                        break;
+                    case 2:
+                        if (Position[i].x < -0.2f)
+                            Position[i].x += 0.1f;
+                        break;
+                    case 3:
+                        if (Position[i].x < 1.6f)
+                            Position[i].x += 0.1f;
+                        break;
                 }
-
-                // センターのモデルのモーションを変更する
-                if (m_Country[i].m_Flag == 3)
-                {
-                    Position[i].y = -0.1f;
-                }
-                else
-                {
-                    Position[i].y = 5.0f;
-                }
-                // 修正した座標を代入する
+                // 計算した座標を代入
                 m_Country[i].m_Country.transform.position = Position[i];
+
+                // 回転中は全てのモデルを待機モーションにする
+                m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
             }
-            m_Left_RotateFlag = false;
+
+            //回転回数をカウント
+            m_Count++;
+
+            // 回転数が18回になった時
+            if (m_Count >= 18)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    // 国のフラグを加算する
+                    m_Country[i].m_Flag++;
+
+                    // フラグが4以上になった場合0にする
+                    if (m_Country[i].m_Flag >= 4)
+                    {
+                        m_Country[i].m_Flag = 0;
+                    }
+                }
+
+                // 回転数のカウントを0に戻し、左回転フラグをfalseにする
+                m_Count = 0;
+                m_Left_RotateFlag = false;
+
+            }
         }
     }
 
@@ -274,28 +300,50 @@ public class Player_1_Script : MonoBehaviour
 
             for (int i = 0; i < 4; i++)
             {
-                // 国のフラグを加算する
-                m_Country[i].m_Flag++;
-
-                // フラグが4以上になった場合0にする
-                if (m_Country[i].m_Flag >= 4)
+                switch (m_Country[i].m_Flag)
                 {
-                    m_Country[i].m_Flag = 0;
+                    case 0:
+                        if (Position[i].x > -0.27f)
+                            Position[i].x -= 0.1f;
+                        break;
+                    case 1:
+                        Position[i].x = 1.6f;
+                        break;
+                    case 2:
+                        Position[i].x = 1.6f;
+                        break;
+                    case 3:
+                        if (Position[i].x > -2.0f)
+                            Position[i].x -= 0.1f;
+                        break;
                 }
-
-                // センターのモデルのモーションを変更する
-                if (m_Country[i].m_Flag == 3)
-                {
-                    Position[i].y = -0.1f;
-                }
-                else
-                {
-                    Position[i].y = 5.0f;
-                }
-                // 修正した座標を代入する
+                //計算した座標を代入
                 m_Country[i].m_Country.transform.position = Position[i];
+
+                //回転中は全てのモデルを待機モーションにする
+                m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
             }
-            m_Right_RotateFlag = false;
+            // 回転数をカウント
+            m_Count++;
+            // 回転数が18回になったとき
+            if (m_Count >= 18)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    // 回転フラグを減算する
+                    m_Country[i].m_Flag--;
+
+                    // フラグが-1以下になった場合0にする
+                    if (m_Country[i].m_Flag <= -1)
+                    {
+                        m_Country[i].m_Flag = 3;
+                    }
+                }
+                // 回転数のカウントを0にして右回転フラグをfalseにする
+                m_Count = 0;
+                m_Right_RotateFlag = false;
+            }
         }
     }
 }
+

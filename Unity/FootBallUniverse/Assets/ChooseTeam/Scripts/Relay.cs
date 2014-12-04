@@ -77,23 +77,7 @@ public class Relay : MonoBehaviour {
                 m_Vec2[i].y = 2.0f;
             }
 
-            // 
-            if (m_Team1.m_Fade_flag_1.m_FadeFlag == 2)
-            {
-                //m_Relay[0].y = 0.18f;
-            }
-            else
-            {
-               // m_Relay[0].y = 2.0f;
-            }
-            if (m_Team3.m_Fade_flag_1.m_FadeFlag == 2)
-            {
-               // m_Relay[1].y = 0.18f;
-            }
-            else
-            {
-               // m_Relay[1].y = 2.0f;
-            }
+          
             if (m_Team1.m_Fade_flag_1.m_FadeFlag == 2
                 && m_Team3.m_Fade_flag_2.m_FadeFlag == 2)
             {
