@@ -21,7 +21,8 @@ public class TeamData
 		public int time;     // ゴールした時間
 		public int playerNo; // プレイヤーNo
 		public int teamNo;   // プレイヤーのチームNo
-		public bool isGole;   // ゴールに成功したか
+		public int goleNo;   // シュートしたゴールのNo
+		public bool isGole;  // ゴールに成功したか
 	};
 
 	// シングルトン用
@@ -44,16 +45,14 @@ public class TeamData
 	// @Return  none
 	// @Date    2014/11/21  @Update 2014/11/21  @Author T.Takeuchi
 	//----------------------------------------------------------------------
-	public static void AddLog(int time, int playerNo, int teamNo, bool isGole)
+	public static void AddLog(int time, int playerNo, int teamNo, int goalNo, bool isGole)
 	{
-		// 入力ログが規定値かチェック
-		// 未実装
-
 		// ログデータを作成しリストに挿入
 		SHOOT_LOG newData = new SHOOT_LOG();
 		newData.time      = time;
 		newData.playerNo  = playerNo;
 		newData.teamNo    = teamNo;
+		newData.goleNo    = goalNo;
 		newData.isGole    = isGole;
 		logs.Add(newData);
 	}
@@ -96,7 +95,7 @@ public class TeamData
 		for (int i = 0; i < logs.Count; i++)
 		{
 			logData = (SHOOT_LOG)logs[i];
-			if (logData.teamNo == teamNo &&
+			if (logData.goleNo == teamNo &&
 				logData.isGole == true)
 			{
 				score++;
