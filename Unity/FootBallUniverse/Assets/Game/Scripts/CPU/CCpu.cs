@@ -295,16 +295,18 @@ public class CCpu : CPlayer {
 		if (m_isBall == true)
 		{
 			m_speed.x += _speed.x * m_human.m_playerMoveSpeedHold;
+			m_speed.y += _speed.y * m_human.m_playerMoveSpeedHold;
 			m_speed.z += _speed.z * m_human.m_playerMoveSpeedHold;
 		}
 		else
 		{
 			m_speed.x += _speed.x * m_human.m_playerMoveSpeed;
+			m_speed.y += _speed.y * m_human.m_playerMoveSpeed;
 			m_speed.z += _speed.z * m_human.m_playerMoveSpeed;
 		}
 
 		// 移動アクション
-		m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right);
+		m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right, this.transform.up);
 	}
 
 	//----------------------------------------------------------------------
@@ -317,18 +319,9 @@ public class CCpu : CPlayer {
 	public override void Rotation(Vector2 _angle)
 	{
 		Vector3 angle = new Vector3(0.0f, 0.0f, 0.0f);
-		if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
-			m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN)
-		{
-			angle.y = _angle.x * m_human.m_cameraMoveSpeed;
-			angle.x = _angle.y * m_human.m_cameraMoveSpeed;
-		}
-		else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE ||
-				 m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
-		{
-			angle.y = _angle.x * m_human.m_cameraMoveSpeedCharging;
-			angle.x = _angle.y * m_human.m_cameraMoveSpeedCharging;
-		}
+
+		angle.y = _angle.x * m_human.m_cameraMoveSpeed;
+		angle.x = _angle.y * m_human.m_cameraMoveSpeed;
 
 		this.transform.Rotate(angle);
 	}

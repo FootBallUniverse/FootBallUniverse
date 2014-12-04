@@ -17,9 +17,9 @@ public class C1P2PKeeper : CCpu {
 	//----------------------------------------------------------------------
 	// コンストラクタ
 	//----------------------------------------------------------------------
-	// @Param   none			
-	// @Return	none
-	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita       
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Kawashita       
 	//----------------------------------------------------------------------
 	void Start () {
 		this.Init();
@@ -27,11 +27,11 @@ public class C1P2PKeeper : CCpu {
 		// プレイヤーのデータをセット
 		CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_2);
 		this.SetData();
-
 		m_pos = this.transform.localPosition;
 
 		// 国の情報をセット / 国によってマテリアルを変更
 		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
+		this.transform.FindChild("polySurface14").GetComponent<CGoalKeeper1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
 
 		// プレイヤーのアニメーターをセット
 		m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
@@ -52,7 +52,6 @@ public class C1P2PKeeper : CCpu {
 
 		m_pos = this.transform.localPosition;
 
-		//this.Move(new Vector3(0.0f, 0.1f, 0.0f));
 		switch (this.gkState)
 		{
 			case GK_State.STAY:
@@ -86,11 +85,6 @@ public class C1P2PKeeper : CCpu {
 
 	void Stay()
 	{
-		// 中心地へ移動（待機）
-
-		// 遷移
-		// 条件： 敵がボールを持ってる
-		//        ボールが範囲内にきた
 	}
 
 	void ReturnHome()

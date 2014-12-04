@@ -95,6 +95,22 @@ public class CPlayerAction {
         return _outPos;
     }
 
+	//----------------------------------------------------------------------
+	// プレイヤーの移動（Yも対応したCPU用）
+	//----------------------------------------------------------------------
+	// @Param	_outPos 移動した結果 _speed 移動量	
+	// @Param   _forward 前方向ベクトル    _right 横方向ベクトル
+	// @Param   _up      上方向ベクトル
+	// @Return	Vector3 移動した結果
+	// @Date	2014/12/4  @Update 2014/12/4  @Author T.Takeuchi      
+	//----------------------------------------------------------------------
+	public Vector3 Move(ref Vector3 _outPos, Vector3 _speed, Vector3 _forward, Vector3 _right, Vector3 _up)
+	{
+		_outPos += _speed.z * _forward + _speed.x * _right + _speed.y * _up;
+
+		return _outPos;
+	}
+
     //----------------------------------------------------------------------
     // プレイヤーの回転
     //----------------------------------------------------------------------
