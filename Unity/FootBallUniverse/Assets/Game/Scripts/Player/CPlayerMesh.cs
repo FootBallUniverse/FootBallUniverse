@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CPlayerMesh : MonoBehaviour {
+public class CDefaultMesh : MonoBehaviour {
 
     protected GameObject m_p12DPanel;   // 2Dのプレイヤー1用パネル
     protected GameObject m_p22DPanel;   // 2Dのプレイヤー2用パネル

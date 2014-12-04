@@ -125,6 +125,7 @@ public class Player_1_Script : MonoBehaviour
             && m_Fade_flag_1.m_FadeFlag <= 2)        // フェードアウトしているか
         {
             // フェードインのフラグを1に変更
+            m_Fade_flag_1.m_FadeFlag = 1;
             m_Fade_flag_1.m_FadeFlag = 2;
         }
 

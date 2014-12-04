@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CPlayer3Mesh : MonoBehaviour {
+public class CPlayer3Mesh : CDefaultMesh {
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -12,7 +12,12 @@ public class CPlayer3Mesh : MonoBehaviour {
     //----------------------------------------------------------------------
     void Start()
     {
-
+        GameObject obj = this.transform.parent.transform.FindChild("Player3Camera").gameObject;
+        obj = obj.transform.FindChild("Player3NGUI").gameObject;
+        m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
+        m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;
+        m_p32DPanel = obj.transform.FindChild("Player3Panel").gameObject;
+        m_p42DPanel = obj.transform.FindChild("Player4Panel").gameObject;
     }
 
     //----------------------------------------------------------------------
@@ -70,5 +75,23 @@ public class CPlayer3Mesh : MonoBehaviour {
     //----------------------------------------------------------------------
     void OnWillRenderObject()
     {
+        // 自分のカメラなら無効
+        if ("Player3Camera2" == Camera.current.name ||
+           "DeliveryCamera" == Camera.current.name)
+            return;
+
+        GameObject camera = GameObject.Find(Camera.current.name);
+
+        // プレイヤー１のカメラにプレイヤー３が映ったら
+        if ("Player1Camera" == Camera.current.name)
+            m_p12DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+        
+        // プレイヤー２のカメラにプレイヤー３が映ったら
+        if ("Player2Camera" == Camera.current.name)
+            m_p22DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+    
+        // プレイヤー４のカメラにプレイヤー３が映ったら
+        if ("Player4Camera" == Camera.current.name)
+            m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
     }
 }

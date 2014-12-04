@@ -27,8 +27,8 @@ public class CPlayer3 : CPlayer
         this.transform.FindChild("polySurface14").GetComponent<CPlayer3Mesh>().ChangeMaterial(TeamData.teamNationality[1]);
 
         // プレイヤーの情報をマップにセット
-        Color color = Color.blue;
-        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
+ //       Color color = Color.blue;
+ //       CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 
         // プレイヤーのアニメーターをセット
         m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();

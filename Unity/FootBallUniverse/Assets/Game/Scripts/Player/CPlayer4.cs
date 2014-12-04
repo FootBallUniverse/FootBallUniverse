@@ -20,8 +20,8 @@ public class CPlayer4 : CPlayer {
 
 
         // プレイヤーの情報をマップにセット
-        Color color = Color.blue;
-        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
+//        Color color = Color.blue;
+//        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 	}
 
     //----------------------------------------------------------------------
