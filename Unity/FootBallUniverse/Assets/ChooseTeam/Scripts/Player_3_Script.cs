@@ -100,13 +100,6 @@ public class Player_3_Script : MonoBehaviour
             m_Country[i].m_Flag = i;             // どのモデルがセンターにいるかの確認用フラグ
             m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();   // モデルのモーション用
 
-            // センターのモデルの大きさを1.5倍にする
-            if (m_Country[i].m_Flag == 3)
-                m_Country[i].m_Scale = new Vector3(1.5f, 1.5f, 1.0f);
-            else
-                m_Country[i].m_Scale = new Vector3(1f, 1f, 1f);
-            // 変更したスケールの値を代入
-            m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
         }
     }
 
@@ -194,45 +187,35 @@ public class Player_3_Script : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                // 左回転の計算
-                m_Country[i].radian = Mathf.PI / 180.0f * m_Country[i].degree;
-                Position[i].x = m_Country[i].centerx + m_Country[i].r * Mathf.Cos(m_Country[i].radian);
-                Position[i].z = m_Country[i].centerz + m_Country[i].r * Mathf.Sin(m_Country[i].radian);
-                m_Country[i].degree += 5.0f;
-
+                switch(m_Country[i].m_Flag){
+                    case 0:
+                        Position[i].x = 2.0f;
+                        break;
+                    case 1:
+                        Position[i].x = 2.0f;
+                        break;
+                    case 2:
+                        if(Position[i].x < 3.8f)
+                            Position[i].x += 0.1f;
+                        break;
+                    case 3:
+                        if(Position[i].x < 5.6f)
+                            Position[i].x += 0.1f;
+                        break;
+                }
                 // 計算した座標を代入
                 m_Country[i].m_Country.transform.position = Position[i];
-
+             
                 // 前に来た国のスプライトのデプスのみ変更
                 if (m_Country[i].m_Flag == 2)
                     m_Country[i].m_Sprit.depth = 6;
                 else
                     m_Country[i].m_Sprit.depth = 2;
 
-                // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
-                if (m_Country[i].m_Flag == 2)
-                {
-                    if (m_Country[i].m_Scale.x <= 1.5f)
-                        m_Country[i].m_Scale.x += 0.05f;
-                    if (m_Country[i].m_Scale.y <= 1.5f)
-                        m_Country[i].m_Scale.y += 0.05f;
-
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                }
-                // センターから右側に移動するモデルのスケールを1倍になるまで少しずつ小さくする
-                else
-                {
-                    if (m_Country[i].m_Scale.x >= 1.0f)
-                        m_Country[i].m_Scale.x -= 0.05f;
-                    if (m_Country[i].m_Scale.y >= 1.0f)
-                        m_Country[i].m_Scale.y -= 0.05f;
-
-                    m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                }
-
                 // 回転中は全てのモデルを待機モーションにする
                 m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
             }
+
             //回転回数をカウント
             m_Count++;
 
@@ -243,46 +226,18 @@ public class Player_3_Script : MonoBehaviour
                 {
                     // 国のフラグを加算する
                     m_Country[i].m_Flag++;
-
+                    
                     // フラグが4以上になった場合0にする
                     if (m_Country[i].m_Flag >= 4)
                     {
                         m_Country[i].m_Flag = 0;
                     }
 
-                    // 回転後少しずれた位置を修正する
-                    if (Position[i].x <= 3.62)
-                    {
-                        Position[i].x = 3.58f;
-                    }
-                    else if (Position[i].x >= 3.97)
-                    {
-                        Position[i].x = 4.0f;
-                    }
-                    else
-                    {
-                        Position[i].x = 3.79f;
-                    }
-
-                    if (Position[i].z >= 0.18)
-                    {
-                        Position[i].z = 0.21f;
-                    }
-                    else if (Position[i].z <= -0.18)
-                    {
-                        Position[i].z = -0.21f;
-                    }
-                    else
-                    {
-                        Position[i].z = 0.0f;
-                    }
-
+                    Debug.Log("センターモデルの座標は" + Position[i].x + "  " + Position[i].z);
                     // センターのモデルのモーションを変更する
-                    if (Position[i].x == 3.79f && Position[i].z == -0.21f)
-                            m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
+                    // if (Position[i].x == 3.8f && Position[i].z == 0.0f)
+                    //        m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
 
-                    // 修正した座標を代入する
-                    m_Country[i].m_Country.transform.position = Position[i];
                 }
 
                 // 回転数のカウントを0に戻し、左回転フラグをfalseにする
@@ -305,11 +260,22 @@ public class Player_3_Script : MonoBehaviour
 
             for (int i = 0; i < 4; i++)
             {
-                // 右回転の計算
-                m_Country[i].radian = Mathf.PI / 180.0f * m_Country[i].degree;
-                Position[i].x = m_Country[i].centerx + m_Country[i].r * Mathf.Cos(m_Country[i].radian);
-                Position[i].z = m_Country[i].centerz + m_Country[i].r * Mathf.Sin(m_Country[i].radian);
-                m_Country[i].degree -= 5.0f;
+                switch(m_Country[i].m_Flag){
+                    case 0: 
+                        if (Position[i].x > 3.8f)
+                            Position[i].x -= 0.1f;
+                        break;
+                    case 1:
+                        Position[i].x = 5.6f;
+                        break;
+                    case 2:
+                        Position[i].x = 5.6f;
+                        break;
+                    case 3:
+                        if(Position[i].x > 2.0f)
+                            Position[i].x -= 0.1f;
+                        break;
+                }
                 //計算した座標を代入
                 m_Country[i].m_Country.transform.position = Position[i];
 
@@ -319,7 +285,7 @@ public class Player_3_Script : MonoBehaviour
                 else
                     m_Country[i].m_Sprit.depth = 2;
 
-                // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
+               /* // 回転後センターにくるモデルのスケールを1.5倍になるまで少しずつ大きくする
                 if (m_Country[i].m_Flag == 0)
                 {
                     if (m_Country[i].m_Scale.x <= 1.5f)
@@ -338,7 +304,7 @@ public class Player_3_Script : MonoBehaviour
                         m_Country[i].m_Scale.y -= 0.05f;
 
                     m_Country[i].m_Country.transform.localScale = m_Country[i].m_Scale;
-                }
+                }*/
 
                 //回転中は全てのモデルを待機モーションにする
                 m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
@@ -359,41 +325,12 @@ public class Player_3_Script : MonoBehaviour
                         m_Country[i].m_Flag = 3;
                     }
 
-                    // 回転処理でずれた座標を修正
-                    if (Position[i].x <= 3.62)
-                    {
-                        Position[i].x = 3.58f;
-                    }
-                    else if (Position[i].x >= 3.97)
-                    {
-                        Position[i].x = 4.0f;
-                    }
-                    else
-                    {
-                        Position[i].x = 3.79f;
-                    }
-
-                    if (Position[i].z >= 0.18)
-                    {
-                        Position[i].z = 0.21f;
-                    }
-                    else if (Position[i].z <= -0.18)
-                    {
-                        Position[i].z = -0.21f;
-                    }
-                    else
-                    {
-                        Position[i].z = 0.0f;
-                    }
-
                     // センターのモデルのモーションを変更する
-                    if (Position[i].x == 3.79f && Position[i].z == -0.21f)
+                   /* if (Position[i].x == 3.8f && Position[i].z == 0.0f)
                     {
                         m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isKickCharge);
                         Debug.Log("センターのモデルのフラグは" + m_Country[i].m_Flag);
-                    }
-                    // 修正した位置を代入する
-                    m_Country[i].m_Country.transform.position = Position[i];
+                    }*/
                 }
                 // 回転数のカウントを0にして右回転フラグをfalseにする
                 m_Count = 0;
