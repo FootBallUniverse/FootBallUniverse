@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+// @Update  1Pと同じスクリプトに変更 2014/12/4
 public class CPlayer2 : CPlayer
 {
     //----------------------------------------------------------------------
@@ -8,10 +10,11 @@ public class CPlayer2 : CPlayer
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita
+    // @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void Start()
     {
+
         this.Init();
 
         // プレイヤーのデータをセット
@@ -25,8 +28,8 @@ public class CPlayer2 : CPlayer
         this.transform.FindChild("polySurface14").GetComponent<CPlayer2Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
 
         // プレイヤーの情報をマップにセット
-//        Color color = Color.red;
-//        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
+        //       Color color = Color.red;
+        //        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 
         // プレイヤーのアニメーターをセット
         m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
@@ -41,26 +44,26 @@ public class CPlayer2 : CPlayer
     //----------------------------------------------------------------------
     void Update()
     {
-        if(m_isBall == true )
+        if (m_isBall == true)
             this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, 0.05f, 0.1f));
-        
-        m_pos = this.transform.localPosition;   
+
+        m_pos = this.transform.localPosition;
 
         switch (m_status)
         {
-            case CPlayerManager.ePLAYER_STATUS.eWAIT: PlayerStatusWait();           break;      // 始めの待機状態
-            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN: PlayerStatusCountDown(); break;      // カウントダウンの状態
-            case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone();           break;      // 何もしてない状態
-            case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash();           break;      // ダッシュ中
-            case CPlayerManager.ePLAYER_STATUS.eTACKLE: PlayerStatusTackle();       break;      // タックル中
+            case CPlayerManager.ePLAYER_STATUS.eWAIT: PlayerStatusWait(); break;    // 始めの待機状態
+            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN: PlayerStatusGameStartWait(); break;    // カウントダウンの状態
+            case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone(); break;    // 何もしてない状態
+            case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash(); break;    // ダッシュ中
+            case CPlayerManager.ePLAYER_STATUS.eTACKLE: PlayerStatusTackle(); break;    // タックル中
             case CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE: PlayerStatusTackleDamage(); break;    // タックルのダメージ受け中
             case CPlayerManager.ePLAYER_STATUS.eTACKLESUCCESS: PlayerStatusTackleSuccess(); break;    // タックル成功中
-            case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot();         break;      // シュート中
-            case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass();           break;      // パス中
-            case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                    // チャージ中
-            case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge();   break;      // チャージ中
-            case CPlayerManager.ePLAYER_STATUS.eEND:                                break;      // 終了
-            case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal();           break;      // ゴールした時は何もさせない
+            case CPlayerManager.ePLAYER_STATUS.eSHOOT: PlayerStatusShoot(); break;    // シュート中
+            case CPlayerManager.ePLAYER_STATUS.ePASS: PlayerStatusPass(); break;    // パス中
+            case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                          // チャージ中
+            case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge(); break;    // チャージ中
+            case CPlayerManager.ePLAYER_STATUS.eEND: break;    // 終了
+            case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal(); break;    // ゴールした時は何もさせない
         }
     }
 
@@ -132,7 +135,7 @@ public class CPlayer2 : CPlayer
     // @Return	none
     // @Date	2014/11/18  @Update 2014/11/18  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    private void PlayerStatusCountDown()
+    private void PlayerStatusGameStartWait()
     {
         // 回転
         Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P2_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P2_XBOX_RIGHT_ANALOG_Y));
@@ -150,7 +153,7 @@ public class CPlayer2 : CPlayer
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/11/26  @Update 2014/11/26  @Author T.Kawashita      
+    // @Date	2014/11/25  @Update 2014/11/25  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private void PlayerStatusGoal()
     {
@@ -320,12 +323,12 @@ public class CPlayer2 : CPlayer
             angle.y = _angle.x * m_human.m_cameraMoveSpeed;
             angle.x = _angle.y * m_human.m_cameraMoveSpeed;
         }
-        else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE)
+        else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE ||
+                 m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
         {
             angle.y = _angle.x * m_human.m_cameraMoveSpeedCharging;
             angle.x = _angle.y * m_human.m_cameraMoveSpeedCharging;
         }
-
         this.transform.Rotate(angle);
     }
 
@@ -359,7 +362,7 @@ public class CPlayer2 : CPlayer
     }
 
     //----------------------------------------------------------------------
-    // プレイヤーのシュート関連処理
+    // プレイヤーのシュート
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	bool    シュート状態が終わったかどうか
@@ -375,7 +378,7 @@ public class CPlayer2 : CPlayer
     }
 
     //----------------------------------------------------------------------
-    // プレイヤーのパス関連処理
+    // プレイヤーのパス
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	bool    パス状態が終わったかどうか
@@ -411,6 +414,7 @@ public class CPlayer2 : CPlayer
             return;
         }
 
+        // 離されたら押しっぱなしフラグOFF
         else if (InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT) == false)
         {
             m_isRtPress = false;
@@ -426,8 +430,9 @@ public class CPlayer2 : CPlayer
     //----------------------------------------------------------------------
     private void ShootHold()
     {
+        // 押されている間はチャージのフレーム取得
         if (InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT))
-            m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P2_XBOX_RT,ref m_chargeFrame);
+            m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P2_XBOX_RT, ref m_chargeFrame);
 
         // チャージ時間が一定量以上ならシュートホールド状態終了
         if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE &&
@@ -458,7 +463,7 @@ public class CPlayer2 : CPlayer
             }
 
             // 初期化
-            m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P2_XBOX_RT,ref m_chargeFrame);
+            m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P2_XBOX_RT, ref m_chargeFrame);
         }
     }
 
@@ -500,7 +505,7 @@ public class CPlayer2 : CPlayer
     {
         if (InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_LT))
             // チャージフレーム取得
-            m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P2_XBOX_LT,ref m_chargeFrame);
+            m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P2_XBOX_LT, ref m_chargeFrame);
 
         // チャージ時間が一定量以上になったらチャージ状態終了
         if (m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
@@ -531,7 +536,7 @@ public class CPlayer2 : CPlayer
             }
 
             // 初期化
-            m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P2_XBOX_LT,ref m_chargeFrame);
+            m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P2_XBOX_LT, ref m_chargeFrame);
         }
     }
 
@@ -540,7 +545,8 @@ public class CPlayer2 : CPlayer
     //----------------------------------------------------------------------
     // @Param	none
     // @Return	none
-    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
+    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita
+    // @Update  2014/11/26  タックルモーション追加  
     //----------------------------------------------------------------------
     private void Animation()
     {
@@ -553,7 +559,7 @@ public class CPlayer2 : CPlayer
             case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:
                 m_animator.ShootCharge(); break;
             case CPlayerManager.ePLAYER_STATUS.ePASS:
-                m_animator.Pass();  break;
+                m_animator.Pass(); break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOT:
                 m_animator.Shoot(); break;
             case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE:
@@ -646,6 +652,6 @@ public class CPlayer2 : CPlayer
 
                 break;
         }
-
     }
+
 }

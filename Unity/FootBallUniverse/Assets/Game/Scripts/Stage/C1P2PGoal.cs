@@ -44,7 +44,7 @@ public class C1P2PGoal : MonoBehaviour {
 		if (collision.gameObject == GameObject.Find ("SoccerBall")) 
         {
             // グローバルのゴールのデータに追加
-            TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, true);
+            TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, 0, true);
             Debug.Log(CSoccerBallManager.m_shootTeamNo + " ←team : player→ " + CSoccerBallManager.m_shootPlayerNo);
 
             // ボールの初期化

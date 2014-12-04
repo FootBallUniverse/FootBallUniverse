@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CGoalKeeper1Mesh : CDefaultMesh {
+public class CCpu1Mesh : CDefaultMesh {
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -12,7 +12,7 @@ public class CGoalKeeper1Mesh : CDefaultMesh {
     //----------------------------------------------------------------------
     void Start()
     {
-        GameObject obj = this.transform.parent.transform.FindChild("GoalKeeper1NGUI").gameObject;
+        GameObject obj = this.transform.parent.transform.FindChild("CPU1NGUI").gameObject;
         m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
         m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;
         m_p32DPanel = obj.transform.FindChild("Player3Panel").gameObject;
@@ -82,14 +82,19 @@ public class CGoalKeeper1Mesh : CDefaultMesh {
 
         // プレイヤー１のカメラにCPUが映ったら
         if ("Player1Camera" == Camera.current.name)
-        {
             m_p12DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
-        }
 
         // プレイヤー２のカメラにCPUが映ったら
         if ("Player2Camera" == Camera.current.name)
-        {
             m_p22DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
-        }
+   
+        // プレイヤー３のカメラにCPUが映ったら
+        if ("Player3Camera" == Camera.current.name)
+            m_p32DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+
+        // プレイヤー４のカメラにCPUが映ったら
+        if ("Player4Camera" == Camera.current.name)
+            m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+    
     }
 }

@@ -37,7 +37,7 @@ public class C3P4PGoal : MonoBehaviour {
 		if (collision.gameObject == GameObject.Find ("SoccerBall"))
         {
             // グローバルのゴールのデータに追加
-            TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, true);
+            TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo,CSoccerBallManager.m_shootTeamNo, 1, true);
             Debug.Log(CSoccerBallManager.m_shootTeamNo + " ←team : player→ " + CSoccerBallManager.m_shootPlayerNo);
 
             collision.gameObject.GetComponent<CSoccerBall>().Init(new Vector3(collision.gameObject.transform.localPosition.x,
