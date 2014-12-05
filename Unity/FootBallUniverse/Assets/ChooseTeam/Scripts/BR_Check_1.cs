@@ -26,7 +26,7 @@ public class BR_Check_1 : MonoBehaviour
     {
         if (m_Fade_BR_1.m_FadeFlag == 1 && m_TeamBR_1.m_Country[2].m_Flag == 3)
         {
-            m_Check_BR1.y = 0.2f;
+            m_Check_BR1.y = 0.3f;
         }
         else
         {

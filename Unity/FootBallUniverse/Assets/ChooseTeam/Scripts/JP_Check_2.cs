@@ -26,7 +26,7 @@ public class JP_Check_2 : MonoBehaviour
     {
         if (m_Fade_JP_2.m_FadeFlag == 1 && m_TeamJP_2.m_Country[3].m_Flag == 3)
         {
-            m_Check_JP2.y = 0.2f;
+            m_Check_JP2.y = 0.3f;
         }
         else
         {

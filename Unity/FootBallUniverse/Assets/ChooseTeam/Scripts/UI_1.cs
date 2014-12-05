@@ -30,24 +30,31 @@ public class UI_1 : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            if (m_team1.m_Right_RotateFlag == true || m_team1.m_Left_RotateFlag == true)
+            if (m_team1.m_Fade_flag_1.m_FadeFlag == 0)
             {
-                m_UIPos[i].y = -2.0f;
-            }
-            else
-            {
-                
-                if (m_team1.m_Country[i].m_Flag == 3)
+                if (m_team1.m_Right_RotateFlag == true || m_team1.m_Left_RotateFlag == true)
                 {
-                    m_UIPos[i].y = 0.2f;
-                    Debug.Log(m_team1.m_Country[i].m_Flag);
-                    Debug.Log(i);
-                    Debug.Log(m_UIPos[i].y);
+                    m_UIPos[i].y = -2.0f;
                 }
                 else
                 {
-                    m_UIPos[i].y = 2.0f;
+
+                    if (m_team1.m_Country[i].m_Flag == 3)
+                    {
+                        m_UIPos[i].y = 0.2f;
+                        Debug.Log(m_team1.m_Country[i].m_Flag);
+                        Debug.Log(i);
+                        Debug.Log(m_UIPos[i].y);
+                    }
+                    else
+                    {
+                        m_UIPos[i].y = 2.0f;
+                    }
                 }
+            }
+            else
+            {
+                m_UIPos[i].y = 2.0f;
             }
             m_JP1.transform.position = m_UIPos[3];
             m_SP1.transform.position = m_UIPos[0];

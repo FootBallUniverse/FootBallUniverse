@@ -77,6 +77,10 @@ public class Player_3_Script : MonoBehaviour
         Position[2] = m_Country[2].m_Country.transform.position;
         Position[3] = m_Country[3].m_Country.transform.position;
 
+        Position[0].x = 6.25f;
+        Position[1].x = 6.25f;
+        Position[2].x = 2.25f;
+        Position[3].x = 4.25f;
         // カウント、回転フラグの初期化
         m_Count = 0;
         m_Right_RotateFlag = false;
@@ -93,7 +97,7 @@ public class Player_3_Script : MonoBehaviour
             m_Country[i].radian = 0.0f;          // ラジアン
             m_Country[i].m_Flag = i;             // どのモデルがセンターにいるかの確認用フラグ
             m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();   // モデルのモーション用
-
+            m_Country[i].m_Country.transform.position = Position[i];
         }
     }
 
@@ -107,20 +111,26 @@ public class Player_3_Script : MonoBehaviour
         //      回転フラグ、フェードインフラグ処理
         //================================================================================================
         // Dを押したとき
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
         }
         // Aを押したとき
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
         }
 
+        if (Input.GetKeyDown(KeyCode.Space)
+            && m_Fade_flag_1.m_FadeFlag < 2)        // フェードアウトしているか
+        {
+            m_SceneFlag = true;
+            m_Fade_flag_2.m_FadeFlag = 2;
+        }
         // Shiftが押されたら遷移
         if (Input.GetKeyDown(KeyCode.RightShift)     // シフトが押されたか
             && m_Fade_flag_2.m_FadeFlag == 0        // フェードアウトしているか
@@ -142,7 +152,52 @@ public class Player_3_Script : MonoBehaviour
             // フェードインのフラグを3に変更
             m_Fade_flag_2.m_FadeFlag = 3;
         }
+        //================================================================================================
+        //      回転フラグ、フェードインフラグ処理
+        //================================================================================================
+        // Dを押したとき
+        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_R))
+        {
+            // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
+            if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
+                m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
+        }
+        // Aを押したとき
+        else if (Input.GetKeyDown(InputXBOX360.P4_XBOX_L))
+        {
+            // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
+            if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+                m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
+        }
+        // Shiftが押されたら遷移
+        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_START))       // フェードアウトしているか
+        {
+            // フェードインのフラグを1に変更
+            m_SceneFlag = true;
+            m_Fade_flag_2.m_FadeFlag = 2;
+        }
 
+        // Shiftが押されたら遷移
+        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_A)
+            && m_Fade_flag_2.m_FadeFlag == 0        // フェードアウトしているか
+            && m_Right_RotateFlag == false         // 右回転しているか
+            && m_Left_RotateFlag == false)         // 左回転しているか
+        {
+            // フェードインのフラグを1に変更
+            m_Fade_flag_2.m_FadeFlag = 1;
+        }
+        else if (Input.GetKeyDown(InputXBOX360.P3_XBOX_A) && m_Fade_flag_2.m_FadeFlag == 1)
+        {
+            // シーン変更フラグをtrueにしてフェードインのフラグを2に変更
+            m_SceneFlag = true;
+            m_Fade_flag_2.m_FadeFlag = 2;
+
+        }
+        else if (Input.GetKeyDown(InputXBOX360.P3_XBOX_B) && m_Fade_flag_2.m_FadeFlag == 1)
+        {
+            // フェードインのフラグを3に変更
+            m_Fade_flag_2.m_FadeFlag = 3;
+        }
         //================================================================================================
         //      回転処理
         //================================================================================================
@@ -184,17 +239,17 @@ public class Player_3_Script : MonoBehaviour
                 switch (m_Country[i].m_Flag)
                 {
                     case 0:
-                        Position[i].x = 2.0f;
+                        Position[i].x = 2.25f;
                         break;
                     case 1:
-                        Position[i].x = 2.0f;
+                        Position[i].x = 2.25f;
                         break;
                     case 2:
-                        if (Position[i].x < 3.8f)
+                        if (Position[i].x < 4.24f)
                             Position[i].x += 0.1f;
                         break;
                     case 3:
-                        if (Position[i].x < 5.6f)
+                        if (Position[i].x < 6.24f)
                             Position[i].x += 0.1f;
                         break;
                 }
@@ -205,11 +260,8 @@ public class Player_3_Script : MonoBehaviour
                 m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
             }
 
-            //回転回数をカウント
-            m_Count++;
-
             // 回転数が18回になった時
-            if (m_Count >= 18)
+            if (m_Count >= 20)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -228,6 +280,8 @@ public class Player_3_Script : MonoBehaviour
                 m_Left_RotateFlag = false;
 
             }
+            //回転回数をカウント
+            m_Count++;
         }
     }
 
@@ -245,17 +299,17 @@ public class Player_3_Script : MonoBehaviour
                 switch (m_Country[i].m_Flag)
                 {
                     case 0:
-                        if (Position[i].x > 3.8f)
+                        if (Position[i].x > 4.26f)
                             Position[i].x -= 0.1f;
                         break;
                     case 1:
-                        Position[i].x = 5.6f;
+                        Position[i].x = 6.25f;
                         break;
                     case 2:
-                        Position[i].x = 5.6f;
+                        Position[i].x = 6.25f;
                         break;
                     case 3:
-                        if (Position[i].x > 2.0f)
+                        if (Position[i].x > 2.26f)
                             Position[i].x -= 0.1f;
                         break;
                 }
@@ -265,10 +319,8 @@ public class Player_3_Script : MonoBehaviour
                 //回転中は全てのモデルを待機モーションにする
                 m_Country[i].m_PlayerAnimator.ChangeAnimation(m_Country[i].m_PlayerAnimator.m_isWait);
             }
-            // 回転数をカウント
-            m_Count++;
             // 回転数が18回になったとき
-            if (m_Count >= 18)
+            if (m_Count >= 20)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -285,6 +337,8 @@ public class Player_3_Script : MonoBehaviour
                 m_Count = 0;
                 m_Right_RotateFlag = false;
             }
+            // 回転数をカウント
+            m_Count++;
         }
     }
 }

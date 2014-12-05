@@ -26,7 +26,7 @@ public class SP_Check_1 : MonoBehaviour
     {
         if (m_Fade_SP_1.m_FadeFlag == 1 && m_TeamSP1.m_Country[0].m_Flag == 3)
         {
-            m_Check_SP1.y = 0.2f;
+            m_Check_SP1.y = 0.3f;
         }
         else
         {

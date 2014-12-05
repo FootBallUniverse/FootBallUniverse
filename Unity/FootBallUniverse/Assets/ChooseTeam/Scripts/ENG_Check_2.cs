@@ -26,7 +26,7 @@ public class ENG_Check_2 : MonoBehaviour
     {
         if (m_Fade_ENG_2.m_FadeFlag == 1 && m_TeamENG_2.m_Country[1].m_Flag == 3)
         {
-            m_Check_ENG2.y = 0.2f;
+            m_Check_ENG2.y = 0.3f;
         }
         else
         {
