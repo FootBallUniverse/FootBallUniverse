@@ -25,7 +25,7 @@ public class Load_Font1 : MonoBehaviour
     {
         if (m_Fadeout1.m_FadeFlag == 2)
         {
-            m_Loading1.y = 0.2f;
+            m_Loading1.y = 0.3f;
         }
         else
         {

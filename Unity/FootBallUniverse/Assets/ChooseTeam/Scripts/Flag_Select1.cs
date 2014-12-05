@@ -4,33 +4,28 @@ using System.Collections;
 public class Flag_Select1 : MonoBehaviour
 {
     public Player_1_Script m_team1;
-    public Vector3[] m_FlagPos = new Vector3[4];
-    public GameObject m_JPFlag;
-    public GameObject m_SPFlag;
-    public GameObject m_ENGFlag;
-    public GameObject m_BRFlag;
+    public GameObject[] m_Country = new GameObject[4];
     public GameObject m_Cursor;
+    public Vector3[] m_FlagPos = new Vector3[4];
+    public Vector3[] m_MinScale = new Vector3[4];
+    public Vector3[] m_MaxScale = new Vector3[4];
+    public Vector3 m_PlusScale;
     int[] m_Flag = new int[4];
-
     // Use this for initialization
     void Start()
     {
         GameObject m_Team_UI = this.gameObject.transform.parent.gameObject;
-        m_SPFlag = this.gameObject.transform.FindChild("flag_SPA1").gameObject;
-        m_ENGFlag = this.gameObject.transform.FindChild("flag_ENG1").gameObject;
-        m_BRFlag = this.gameObject.transform.FindChild("flag_BRA1").gameObject;
-        m_JPFlag = this.gameObject.transform.FindChild("flag_JAP1").gameObject;
+        m_Country[0] = this.gameObject.transform.FindChild("flag_SPA1").gameObject;
+        m_Country[1] = this.gameObject.transform.FindChild("flag_ENG1").gameObject;
+        m_Country[2] = this.gameObject.transform.FindChild("flag_BRA1").gameObject;
+        m_Country[3] = this.gameObject.transform.FindChild("flag_JAP1").gameObject;
 
         m_team1 = m_Team_UI.GetComponent<Player_1_Script>();
 
-        m_FlagPos[0] = m_SPFlag.transform.position;
-        m_FlagPos[1] = m_ENGFlag.transform.position;
-        m_FlagPos[2] = m_BRFlag.transform.position;
-        m_FlagPos[3] = m_JPFlag.transform.position;
-
+        m_PlusScale = new Vector3(0.03f,0.03f,0f);
         for (int i = 0; i < 4; i++)
         {
-
+            m_FlagPos[i] = m_Country[i].transform.position;
             m_Flag[i] = m_team1.m_Country[i].m_Flag;
         }
     }
@@ -77,10 +72,7 @@ public class Flag_Select1 : MonoBehaviour
                     m_FlagPos[i].x = -0.2f;
                 }
             }
+            m_Country[i].transform.position = m_FlagPos[i];
         }
-        m_SPFlag.transform.position = m_FlagPos[0];
-        m_ENGFlag.transform.position = m_FlagPos[1];
-        m_BRFlag.transform.position = m_FlagPos[2];
-        m_JPFlag.transform.position = m_FlagPos[3];
     }
 }
