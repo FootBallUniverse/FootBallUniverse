@@ -3,7 +3,23 @@ using System.Collections;
 
 public class CCpu : CPlayer {
 	protected GameObject soccerBallManager;
+	protected GameObject soccerBallObject;
 
+	public enum MESSAGE_TYPE
+	{
+		PASS,
+		SHOTE,
+		TAKK
+	};
+
+	struct Message
+	{
+		int playerNo;
+		MESSAGE_TYPE messageType;
+	};
+
+	private static ArrayList messageLog = new ArrayList(); // ログデータ格納（カプセル化）
+	private Vector3 targetPosition = new Vector3();
 
 	//----------------------------------------------------------------------
 	// コンストラクタ
@@ -14,7 +30,6 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	void Start()
 	{
-
 		this.Init();
 
 		// プレイヤーのデータをセット
@@ -646,6 +661,11 @@ public class CCpu : CPlayer {
 
 				break;
 		}
+
+	}
+
+	void OutMove()
+	{
 
 	}
 }
