@@ -63,8 +63,6 @@ public class C1P2PKeeper : CCpu {
 
 		m_pos = this.transform.localPosition;
 
-
-		//Debug.Log(this.gkState);
 		switch (this.gkState)
 		{
 			case GK_State.STAY:      Stay();     break;
@@ -132,9 +130,9 @@ public class C1P2PKeeper : CCpu {
 		// ボールをキャッチ（→パス）
 		if (this.m_isBall)
 		{
+			this.gkState = GK_State.PASS;
 			this.transform.LookAt(GameObject.Find("Player1").transform.FindChild("player").transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
-			this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall);
 		}
 	}
 
@@ -144,9 +142,9 @@ public class C1P2PKeeper : CCpu {
 
 	void Pass()
 	{
-		this.gkState = GK_State.PASS;
-
 		// パス後しばらくボールをとらない
+		this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall);
+
 		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) >= TAKE_BALL_SPACE)
 		{
 			this.gkState = GK_State.STAY;
