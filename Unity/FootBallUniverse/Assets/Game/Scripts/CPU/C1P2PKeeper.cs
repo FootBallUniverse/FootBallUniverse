@@ -132,13 +132,15 @@ public class C1P2PKeeper : CCpu {
 		
 #else
 		targetPosition = GetFuterBall();
-		this.transform.position = targetPosition;
-
+		targetPosition = targetPosition - this.transform.position;
+		Vector3.Normalize(targetPosition);
+		Move(targetPosition);
+		//this.transform.position = targetPosition;
 #endif
 		// ボールをキャッチ（→パス）
 		if (this.m_isBall)
 		{
-			this.gkState = GK_State.PASS;
+			this.gkState = GK_State.CAT;
 			this.transform.LookAt(GameObject.Find("Player1").transform.FindChild("player").transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
@@ -146,6 +148,10 @@ public class C1P2PKeeper : CCpu {
 
 	void Cach()
 	{
+		if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
+		{
+			this.gkState = GK_State.PASS;
+		}
 	}
 
 	void Pass()
@@ -162,20 +168,10 @@ public class C1P2PKeeper : CCpu {
 
 	void BackHome()
 	{
-		/*
 		if (this.transform.position != HOME_POSITION)
 		{
-			if (Vector3.Distance(this.transform.position, HOME_POSITION) < 1.0)
-			{
-				this.Move(new Vector3(0.0f, 0.0f, 1.0f));
-				this.transform.LookAt(HOME_POSITION);
-			}
-			else
-			{
-				this.transform.position = HOME_POSITION;
-			}
+			//
 		}
-		 */
 	}
 
 	Vector3 GetFuterBall()
