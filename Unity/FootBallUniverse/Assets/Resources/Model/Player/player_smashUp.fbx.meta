@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f9a28ff89b1d5f945b9fe46d3dcf7996
+guid: 3f8f25df274ca094f8369c626e503cfb
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -38,24 +38,23 @@ ModelImporter:
     100064: koshi
     100066: kubi1
     100068: kubi2
-    100070: mune
-    100072: nurbsCircle1
-    100074: pasted__nurbsCircle1
-    100076: pasted__nurbsCircle1 1
-    100078: pasted__nurbsCircle3
-    100080: pasted__nurbsCircle4
-    100082: pasted__pasted__nurbsCircle1
-    100084: pasted__pasted__nurbsCircle2
-    100086: pasted__pasted__pasted__nurbsCircle1
-    100088: //RootNode
-    100090: polySurface14
-    100092: root
-    100094: sakotu
-    100096: top
-    100098: locator_L
-    100100: locator_R
-    100102: pasted__pasted__nurbsCircle1 1
-    100104: pasted__nurbsCircle2
+    100070: locator_L
+    100072: locator_R
+    100074: mune
+    100076: nurbsCircle1
+    100078: pasted__nurbsCircle1
+    100080: pasted__nurbsCircle1 1
+    100082: pasted__nurbsCircle3
+    100084: pasted__nurbsCircle4
+    100086: pasted__pasted__nurbsCircle1
+    100088: pasted__pasted__nurbsCircle1 1
+    100090: pasted__pasted__nurbsCircle2
+    100092: pasted__pasted__pasted__nurbsCircle1
+    100094: //RootNode
+    100096: polySurface14
+    100098: root
+    100100: sakotu
+    100102: top
     400000: asi1_L1
     400002: asi1_R
     400004: FOOT_L
@@ -91,24 +90,23 @@ ModelImporter:
     400064: koshi
     400066: kubi1
     400068: kubi2
-    400070: mune
-    400072: nurbsCircle1
-    400074: pasted__nurbsCircle1
-    400076: pasted__nurbsCircle1 1
-    400078: pasted__nurbsCircle3
-    400080: pasted__nurbsCircle4
-    400082: pasted__pasted__nurbsCircle1
-    400084: pasted__pasted__nurbsCircle2
-    400086: pasted__pasted__pasted__nurbsCircle1
-    400088: //RootNode
-    400090: polySurface14
-    400092: root
-    400094: sakotu
-    400096: top
-    400098: locator_L
-    400100: locator_R
-    400102: pasted__pasted__nurbsCircle1 1
-    400104: pasted__nurbsCircle2
+    400070: locator_L
+    400072: locator_R
+    400074: mune
+    400076: nurbsCircle1
+    400078: pasted__nurbsCircle1
+    400080: pasted__nurbsCircle1 1
+    400082: pasted__nurbsCircle3
+    400084: pasted__nurbsCircle4
+    400086: pasted__pasted__nurbsCircle1
+    400088: pasted__pasted__nurbsCircle1 1
+    400090: pasted__pasted__nurbsCircle2
+    400092: pasted__pasted__pasted__nurbsCircle1
+    400094: //RootNode
+    400096: polySurface14
+    400098: root
+    400100: sakotu
+    400102: top
     4300000: polySurface14
     7400000: Take 001
     9500000: //RootNode
