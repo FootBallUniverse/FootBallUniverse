@@ -36,6 +36,7 @@ ModelImporter:
     2300012: pCylinder1
     2300014: pPipe1
     2300016: stage
+    2300018: //RootNode
     3300000: goal1
     3300002: goal2
     3300004: p1
@@ -45,6 +46,7 @@ ModelImporter:
     3300012: pCylinder1
     3300014: pPipe1
     3300016: stage
+    3300018: //RootNode
     4300000: pasted__pPipe1
     4300002: pasted__pCylinder1
     4300004: pPipe1
