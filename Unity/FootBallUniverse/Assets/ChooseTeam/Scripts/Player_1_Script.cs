@@ -9,11 +9,6 @@ public class Player_1_Script : MonoBehaviour
         public GameObject m_Country;            // チームの国名
         public UISprite m_Sprit;                // 
         public int m_TeamColor;                 // チーム色
-        public float degree;                    // 回転角度
-        public float radian;                    // 
-        public float r;                         // 中心からの
-        public float centerx;                   // 
-        public float centerz;                   // 
         public int m_Flag;                      // モデルの位置を表す数値
         public PlayerAnimator m_PlayerAnimator; // プレイヤーのアニメーター
         public Vector3 m_Scale;                 // すけーる
@@ -86,11 +81,6 @@ public class Player_1_Script : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             m_Country[i].m_TeamColor = 0;        // チームの色の変更用フラグ(現在未実装の為不要)
-            m_Country[i].degree = 90.0f * i;     // 回転角度
-            m_Country[i].r = 0.21f;              // 回転の半径
-            m_Country[i].centerx = 3.79f;        // 中心軸のＸ座標
-            m_Country[i].centerz = 0.0f;         // 中心軸のＺ座標
-            m_Country[i].radian = 0.0f;          // ラジアン
             m_Country[i].m_Flag = i;             // どのモデルがセンターにいるかの確認用フラグ
             m_Country[i].m_PlayerAnimator = m_Country[i].m_Country.GetComponent<PlayerAnimator>();   // モデルのモーション用
 
