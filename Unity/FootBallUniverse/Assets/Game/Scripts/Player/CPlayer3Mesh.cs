@@ -12,7 +12,7 @@ public class CPlayer3Mesh : CDefaultMesh {
     //----------------------------------------------------------------------
     void Start()
     {
-        GameObject obj = this.transform.parent.transform.FindChild("Player3Camera").gameObject;
+        GameObject obj = this.transform.parent.transform.FindChild("PlayerCamera").gameObject;
         obj = obj.transform.FindChild("Player3NGUI").gameObject;
         m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
         m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;

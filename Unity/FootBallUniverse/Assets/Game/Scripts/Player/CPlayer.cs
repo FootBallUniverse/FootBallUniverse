@@ -26,6 +26,10 @@ public class CPlayer : MonoBehaviour {
     public bool m_isLtPress;                // LTボタンが押され続けているか
     public bool m_isBall;                   // ボールを持っているかどうか
 
+    // カメラのコンポーネント
+    public PlayerCamera m_camera;
+    public Transform m_trans;
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------

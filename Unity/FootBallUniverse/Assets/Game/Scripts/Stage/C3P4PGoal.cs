@@ -39,9 +39,12 @@ public class C3P4PGoal : MonoBehaviour {
             // グローバルのゴールのデータに追加
             TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo,CSoccerBallManager.m_shootTeamNo, 1, true);
 
-            collision.transform.parent.gameObject.GetComponent<CPlayer>().m_isBall = false;
-            collision.gameObject.GetComponent<CSoccerBall>().Restart(new Vector3(0.0f, 0.0f, 0.0f));
+            if (collision.gameObject.transform.parent.name != "BallGameObject")
+            {
+                collision.transform.parent.gameObject.GetComponent<CPlayer>().m_isBall = false;
+            }
 
+            collision.gameObject.GetComponent<CSoccerBall>().Restart(new Vector3(0.0f, 0.0f, 0.0f));
             CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
         }
 	}

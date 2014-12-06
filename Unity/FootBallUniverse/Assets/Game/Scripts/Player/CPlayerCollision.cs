@@ -44,6 +44,7 @@ public class CPlayerCollision : MonoBehaviour
             {
                 // ボールの位置をセット
                 Vector3 pos = new Vector3(0.0f, -0.13f, 0.14f);
+                obj.gameObject.GetComponent<TrailRenderer>().enabled = false;
             
                 // プレイヤーのボールに設定
                 CPlayerManager.m_soccerBallManager.ChangeOwner(this.transform, pos);

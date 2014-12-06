@@ -12,7 +12,7 @@ public class CPlayer2Mesh : CDefaultMesh {
     // @Date	2014/11/12  @Update 2014/11/12  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Start () {
-        GameObject obj = this.transform.parent.transform.FindChild("Player2Camera").gameObject;
+        GameObject obj = this.transform.parent.transform.FindChild("PlayerCamera").gameObject;
         obj = obj.transform.FindChild("Player2NGUI").gameObject;
         m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
         m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;

@@ -33,6 +33,10 @@ public class CPlayer2 : CPlayer
 
         // プレイヤーのアニメーターをセット
         m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
+
+        // カメラをセット
+        m_camera = this.gameObject.transform.parent.FindChild("Player2Camera").GetComponent<PlayerCamera>();
+        m_trans = this.transform.Find("LookTrans").transform;
     }
 
     //----------------------------------------------------------------------
@@ -67,6 +71,10 @@ public class CPlayer2 : CPlayer
         }
     }
 
+    void FixedUpdate()
+    {
+        this.rigidbody.MovePosition(m_pos);
+    }
     //----------------------------------------------------------------------
     // フレームの最後の更新
     //----------------------------------------------------------------------
@@ -80,7 +88,9 @@ public class CPlayer2 : CPlayer
         this.Animation();
 
         m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
-        this.rigidbody.MovePosition(m_pos);
+
+        // プレイヤーのカメラを更新する
+        this.transform.parent.FindChild("Player2Camera").GetComponent<PlayerCamera>().CameraUpdate();
 
         // 最後に位置をマネージャークラスにセットしておく
         CPlayerManager.m_player2Transform = this.transform;
@@ -411,6 +421,7 @@ public class CPlayer2 : CPlayer
              InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT) == true &&
              m_isRtPress == false)
         {
+            this.transform.FindChild("SoccerBall").particleSystem.Play();
             m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
             m_chargeFrame = 0;
             m_isRtPress = true;
@@ -442,6 +453,8 @@ public class CPlayer2 : CPlayer
             m_isBall == true &&
             m_chargeFrame >= m_human.m_shootChargeLengthMax)
         {
+            this.transform.FindChild("SoccerBall").particleSystem.Stop();
+            this.transform.FindChild("SoccerBall").particleSystem.Clear();
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
             m_animator.ChangeAnimation(m_animator.m_isWait);
             return;
@@ -452,6 +465,9 @@ public class CPlayer2 : CPlayer
             m_isBall == true &&
             InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT) == false)
         {
+            this.transform.FindChild("SoccerBall").particleSystem.Stop();
+            this.transform.FindChild("SoccerBall").particleSystem.Clear();
+            this.transform.FindChild("SoccerBall").GetComponent<TrailRenderer>().enabled = true;
             // チャージ時間が一定量以上ならシュート
             if (m_chargeFrame >= m_human.m_shootChargeLength)
             {
@@ -525,6 +541,7 @@ public class CPlayer2 : CPlayer
             m_isBall == false &&
             InputXBOX360.IsGetLTButton(InputXBOX360.P2_XBOX_LT) == false)
         {
+            m_camera.ChangeMspeedlock();
             // チャージ時間が一定量以上ならタックル
             if (m_chargeFrame >= m_human.m_tackleChangeLength)
             {
@@ -595,30 +612,40 @@ public class CPlayer2 : CPlayer
                     return;
                 }
 
+                if (Input.GetKeyDown(InputXBOX360.P2_XBOX_X) || Input.GetKeyDown(InputXBOX360.P2_XBOX_Y) || Input.GetKeyDown(InputXBOX360.P2_XBOX_B) || Input.GetKeyDown(InputXBOX360.P2_XBOX_A))
+                {
+                    m_camera.ChangeRspeedlock();
+                }
+
                 // 1Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_X))
                 {
-                    this.transform.LookAt(CPlayerManager.m_player1Transform);
+                    m_trans.LookAt(CPlayerManager.m_player1Transform);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
 
                 // サッカーボールに向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_Y) && m_isBall == false)
                 {
-                    this.transform.LookAt(CSoccerBallManager.m_soccerBallTransform);
+                    m_trans.LookAt(CSoccerBallManager.m_soccerBallTransform);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+                    return;
                 }
 
                 // 味方のＡＩの方向に向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_B))
                 {
-                    this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2);
+                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
 
                 // キーパーの方向に向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_A))
                 {
-                    this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2Keeper);
+                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2Keeper);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
                 break;
@@ -631,31 +658,40 @@ public class CPlayer2 : CPlayer
                     return;
                 }
 
+                if (Input.GetKeyDown(InputXBOX360.P2_XBOX_X) || Input.GetKeyDown(InputXBOX360.P2_XBOX_Y) || Input.GetKeyDown(InputXBOX360.P2_XBOX_B) || Input.GetKeyDown(InputXBOX360.P2_XBOX_A))
+                {
+                    m_camera.ChangeRspeedlock();
+                }
+
                 // 3Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_X))
                 {
-                    this.transform.LookAt(CPlayerManager.m_player3Transform);
+                    m_trans.LookAt(CPlayerManager.m_player3Transform);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
 
                 // 4Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_Y))
                 {
-                    this.transform.LookAt(CPlayerManager.m_player4Transform);
+                    m_trans.LookAt(CPlayerManager.m_player4Transform);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
 
                 // 敵AIの方に向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_B))
                 {
-                    this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4);
+                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
 
                 // 敵キーパーの方に向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_A))
                 {
-                    this.transform.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4Keeper);
+                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4Keeper);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
 
