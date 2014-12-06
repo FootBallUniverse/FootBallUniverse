@@ -61,7 +61,7 @@ public class Relay : MonoBehaviour {
         {
             if (m_Team1.m_Country[i].m_Flag == 3)
             {
-                m_Vec1[i].y = 0.08f;
+                m_Vec1[i].y = 0.35f;
             }
             else
             {
@@ -70,7 +70,7 @@ public class Relay : MonoBehaviour {
             
             if (m_Team3.m_Country[i].m_Flag == 3)
             {
-                m_Vec2[i].y = 0.08f;
+                m_Vec2[i].y = 0.35f;
             }
             else
             {
