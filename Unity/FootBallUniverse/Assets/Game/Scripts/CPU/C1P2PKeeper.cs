@@ -63,6 +63,7 @@ public class C1P2PKeeper : CCpu {
 
 		m_pos = this.transform.localPosition;
 
+		//Debug.Log(this.gkState);
 		switch (this.gkState)
 		{
 			case GK_State.STAY:      Stay();     break;
@@ -132,10 +133,10 @@ public class C1P2PKeeper : CCpu {
 		
 #else
 		targetPosition = GetFuterBall();
+		Debug.Log(targetPosition);
 		targetPosition = targetPosition - this.transform.position;
 		Vector3.Normalize(targetPosition);
 		Move(targetPosition);
-		//this.transform.position = targetPosition;
 #endif
 		// ボールをキャッチ（→パス）
 		if (this.m_isBall)
@@ -157,7 +158,7 @@ public class C1P2PKeeper : CCpu {
 	void Pass()
 	{
 		// パス後しばらくボールをとらない
-		this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall);
+		//this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall);
 		BackHome();
 
 		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) >= TAKE_BALL_SPACE)
@@ -180,8 +181,15 @@ public class C1P2PKeeper : CCpu {
 		refData = this.soccerBallObject.transform.position;
 		float work;
 
+		// rigidbodyがZ軸で移動していない（＝ボールがこないので無効）
+		if (this.soccerBallObject.rigidbody.velocity.z == 0)
+		{
+			return new Vector3(0.0f, 0.0f, 0.0f);
+		}
+
 		work = HOME_POSITION.z - this.soccerBallObject.transform.position.z;
 		work /= this.soccerBallObject.rigidbody.velocity.z;
+
 		// ゴール指定地点まで到着するまで移動
 		refData.x += this.soccerBallObject.rigidbody.velocity.x * work;
 		refData.y += this.soccerBallObject.rigidbody.velocity.y * work;
