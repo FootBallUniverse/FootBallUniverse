@@ -29,7 +29,7 @@ public class CPlayer1 : CPlayer {
 //        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 
         // プレイヤーのアニメーターをセット
-        m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
+       m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
     }
 
     //----------------------------------------------------------------------
