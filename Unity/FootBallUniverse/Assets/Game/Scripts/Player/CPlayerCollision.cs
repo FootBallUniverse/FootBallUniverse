@@ -65,13 +65,26 @@ public class CPlayerCollision : MonoBehaviour
             (obj.gameObject.tag == "Player") || (obj.gameObject.tag == "cpu") || (obj.gameObject.tag == "GoalKeeper"))
         {
             CPlayer playerScript = this.GetComponent<CPlayer>();
+
             // アニメーション変更
-            this.transform.parent.GetComponent<CPlayerAnimator>().TackleSuccess();
-            playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLESUCCESS;
+            // 相手がタックル中だったらどっちもくらいモーションに変更
+            if (obj.GetComponent<CPlayer>().m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE)
+            {
+                this.transform.parent.GetComponent<CPlayerAnimator>().TackleDamage();
+                playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
+                playerScript.m_action.InitTackleDamage(playerScript.m_human.m_tackleDamageMotionLength,
+                                                       playerScript.m_human.m_tackleDamageInitSpeed,
+                                                       playerScript.m_human.m_tackleDamageDecFrame);
+            }
+            // それ以外の場合はどちらも成功モーションに変更
+            else
+            {
+                this.transform.parent.GetComponent<CPlayerAnimator>().TackleSuccess();
+                playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLESUCCESS;
+                playerScript.m_action.InitTackleSuccess(playerScript.m_human.m_tackleHitMotionLength);
+            }
 
-            // アクション変更
-            playerScript.m_action.InitTackleSuccess(playerScript.m_human.m_tackleHitMotionLength);
-
+            // 相手をやられモーションに変更
             CPlayer colPlayerScript = obj.GetComponent<CPlayer>();
             obj.transform.LookAt(this.transform);
             obj.transform.parent.GetComponent<CPlayerAnimator>().TackleDamage();
