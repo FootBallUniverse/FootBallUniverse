@@ -30,7 +30,7 @@ public class CGameManager : MonoBehaviour {
    
     public static bool m_isGamePlay;    // ゲームのが進行中かどうか
 
-    private CSoundPlayer m_soundPlayer; // サウンドプレイヤー
+    public static CSoundPlayer m_soundPlayer; // サウンドプレイヤー
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -49,8 +49,11 @@ public class CGameManager : MonoBehaviour {
         CGameData.GetInstance().Init();
         this.LoadData();
 
+        m_soundPlayer = new CSoundPlayer();
+        m_soundPlayer.PlayBGMFadeIn("game/bgm_01", 0.05f);
+
 		// シーン移動しても消滅しない
-		//DontDestroyOnLoad(this);
+		//DontDestroyOnLoad(this);  
 	}
 
     //----------------------------------------------------------------------
@@ -201,6 +204,7 @@ public class CGameManager : MonoBehaviour {
             {
                 // ゲーム終了待機が終わったらフェードアウトさせる
                 m_nowStatus = eSTATUS.eFADEOUT;
+                m_soundPlayer.PlayBGMFadeOut(0.02f);
             } 
         }
     }

@@ -1,19 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CPlayerManager {
+public class CPlayerManager : MonoBehaviour{
 
     public const int m_playerNum = 8;
     public const int m_dataNum = 7;
 
-    // マネージャーのインスタンス
-    public static CPlayerManager m_playerManager = new CPlayerManager();
-
     // マップのオブジェクト
-    public GameObject m_mapObject;
+    public static GameObject m_mapObject;
 
     // ボールの管理クラス
-    public CSoccerBallManager m_soccerBallManager;
+    public static CSoccerBallManager m_soccerBallManager;
 
     // 視点のモード
     public enum eVIEW_POINT_STATUS
@@ -22,10 +19,10 @@ public class CPlayerManager {
         eENEMY
     }
 
-    public Transform m_player1Transform;
-    public Transform m_player2Transform;
-    public Transform m_player3Transform;
-    public Transform m_player4Transform;
+    public static Transform m_player1Transform;
+    public static Transform m_player2Transform;
+    public static Transform m_player3Transform;
+    public static Transform m_player4Transform;
 
     // プレイヤーのステータス
     public enum ePLAYER_STATUS
@@ -60,7 +57,7 @@ public class CPlayerManager {
     public const int AI_4 = 7;
     
     // プレイヤーのCSVデータ
-    public string[,] m_csvData;
+    public static string[,] m_csvData;
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -69,10 +66,10 @@ public class CPlayerManager {
     // @Return	none
     // @Date	2014/10/31  @Update 2014/10/31  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public CPlayerManager()
+    void Awake()
     {
         m_soccerBallManager = GameObject.Find("BallGameObject").GetComponent<CSoccerBallManager>();
-        this.SetData();
+        CPlayerManager.SetData();
     }
 
     //----------------------------------------------------------------------
@@ -83,7 +80,7 @@ public class CPlayerManager {
     // @Return	bool        成功か失敗
     // @Date	2014/10/31  @Update 2014/10/31  @Author T.Kawasita      
     //----------------------------------------------------------------------
-    public bool SetMap(GameObject _object, Color _color)
+    public static bool SetMap(GameObject _object, Color _color)
     {
         m_mapObject.GetComponent<Map>().CreateMaker(_object, _color);
 
@@ -97,7 +94,7 @@ public class CPlayerManager {
     // @Return	none
     // @Date	2014/11/20  @Update 2014/11/20  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public void SetData()
+    public static void SetData()
     {
         // CSVファイルをロード
         string path = Application.dataPath + "/Resources/CSV/PlayerData.csv";
@@ -112,11 +109,12 @@ public class CPlayerManager {
     // @Return	none
     // @Date	2014/11/20  @Update 2014/11/20  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public void SetPlayerData(CPlayerData _playerData,int _playerNo)
+    public static void SetPlayerData(CPlayerData _playerData,int _playerNo)
     {
         string[] work = new string[m_dataNum];
 
         _playerData.Set(CUtility.ChangeArray(ref work, m_csvData, _playerNo));
+
     }
 
 }

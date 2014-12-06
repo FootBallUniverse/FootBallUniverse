@@ -17,8 +17,9 @@ public class CPlayer : MonoBehaviour {
     public CPlayerData m_playerData;        // プレイヤーのデータ
 
     public CPlayerAction m_action;          // プレイヤーのアクション
-    public CPlayerAnimator m_animator;       // プレイヤーのアニメーション
+    public CPlayerAnimator m_animator;      // プレイヤーのアニメーション
     public CHuman m_human;                  // プレイヤーの国のインスタンス
+    public CPlayerSE m_playerSE;            // プレイヤーのSE
 
     public int m_chargeFrame;               // チャージ時のフレーム数
     public bool m_isRtPress;                // RTボタンが押され続けているか
@@ -72,6 +73,8 @@ public class CPlayer : MonoBehaviour {
         m_isRtPress = false;
         m_isLtPress = false;
         m_isBall = false;
+
+        m_playerSE = this.transform.GetComponent<CPlayerSE>();
 
         return true;
     }

@@ -17,7 +17,7 @@ public class CPlayer3 : CPlayer
         this.Init();
 
         // プレイヤーのデータをセット
-        CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_3);
+        CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_3);
         this.SetData();
 
         m_pos = this.transform.localPosition;
@@ -81,7 +81,7 @@ public class CPlayer3 : CPlayer
         this.rigidbody.MovePosition(m_pos);
 
         // 最後に位置をマネージャークラスにセットしておく
-        CPlayerManager.m_playerManager.m_player3Transform = this.transform;
+        CPlayerManager.m_player3Transform = this.transform;
 
         // ゲームが終了しているかどうか判定
         this.CheckGamePlay();
@@ -504,7 +504,7 @@ public class CPlayer3 : CPlayer
     //----------------------------------------------------------------------
     private void DashHold()
     {
-        if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_LT))
+        if (InputXBOX360.IsGetRTButton(InputXBOX360.P3_XBOX_LT))
             // チャージフレーム取得
             m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P3_XBOX_LT, ref m_chargeFrame);
 
@@ -593,10 +593,17 @@ public class CPlayer3 : CPlayer
                     return;
                 }
 
+                // ボールの方向に向ける
+                if (Input.GetKey(InputXBOX360.P3_XBOX_X) && m_isBall == false)
+                {
+                    this.transform.LookAt(CSoccerBallManager.m_soccerBallTransform);
+                    return;
+                }
+
                 // 4Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P3_XBOX_Y))
                 {
-                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player4Transform);
+                    this.transform.LookAt(CPlayerManager.m_player4Transform);
                     return;
                 }
 
@@ -627,14 +634,14 @@ public class CPlayer3 : CPlayer
                 // 1Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P3_XBOX_X))
                 {
-                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player1Transform);
+                    this.transform.LookAt(CPlayerManager.m_player1Transform);
                     return;
                 }
 
                 // 2Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P3_XBOX_Y))
                 {
-                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player2Transform);
+                    this.transform.LookAt(CPlayerManager.m_player2Transform);
                     return;
                 }
 

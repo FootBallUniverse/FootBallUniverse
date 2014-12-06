@@ -49,6 +49,29 @@ public class CSoccerBall : MonoBehaviour {
     }
 
     //----------------------------------------------------------------------
+    // ゴール後のリスタート
+    //----------------------------------------------------------------------
+    // @Param	_pos    設定したい初期位置		
+    // @Return	bool    成功か失敗
+    // @Date	2014/12/6  @Update 2014/12/6  @Author 2014/12/6      
+    //----------------------------------------------------------------------
+    public bool Restart(Vector3 _pos)
+    {
+        m_pos = _pos;
+
+        this.transform.parent = GameObject.Find("BallGameObject").transform;       
+        this.transform.localPosition = m_pos;
+        this.transform.localRotation = Quaternion.identity;
+
+        // 速度ベクトル，角速度ベクトルの初期化
+        this.rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        this.rigidbody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+
+        return true;
+    }
+
+
+    //----------------------------------------------------------------------
     // ゲーム開始時のボールの動き
     //----------------------------------------------------------------------
     // @Param	none		

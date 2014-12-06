@@ -33,7 +33,7 @@ public class CCpu : CPlayer {
 		this.Init();
 
 		// プレイヤーのデータをセット
-		CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_1);
+		CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_1);
 		this.SetData();
 
 		m_pos = this.transform.localPosition;
@@ -98,7 +98,7 @@ public class CCpu : CPlayer {
 		this.rigidbody.MovePosition(m_pos);
 
 		// 最後に位置をマネージャークラスにセットしておく
-		CPlayerManager.m_playerManager.m_player1Transform = this.transform;
+		CPlayerManager.m_player1Transform = this.transform;
 
 		// ゲームが終了しているかどうか判定
 		this.CheckGamePlay();
@@ -604,7 +604,7 @@ public class CCpu : CPlayer {
 				// 2Pの方向に向ける
 				if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
 				{
-					this.transform.LookAt(CPlayerManager.m_playerManager.m_player2Transform);
+					this.transform.LookAt(CPlayerManager.m_player2Transform);
 					return;
 				}
 
@@ -634,14 +634,14 @@ public class CCpu : CPlayer {
 				// 3Pの方向に向ける
 				if (Input.GetKey(InputXBOX360.P1_XBOX_X))
 				{
-					this.transform.LookAt(CPlayerManager.m_playerManager.m_player3Transform);
+					this.transform.LookAt(CPlayerManager.m_player3Transform);
 					return;
 				}
 
 				// 4Pの方向に向ける
 				if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
 				{
-					this.transform.LookAt(CPlayerManager.m_playerManager.m_player4Transform);
+					this.transform.LookAt(CPlayerManager.m_player4Transform);
 					return;
 				}
 

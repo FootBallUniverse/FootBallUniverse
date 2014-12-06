@@ -50,7 +50,6 @@ public class CHumanManager : MonoBehaviour {
     {
         // CSVファイルをロード
         string path = Application.dataPath + "/Resources/CSV/HumanData.csv";
-        Debug.Log(path);
         string[,] csvData = new string[m_worldNum,m_humanStatusNum];
         CCSVLoader.GetInstance().Loader(ref csvData, path,m_worldNum );
 
@@ -59,6 +58,7 @@ public class CHumanManager : MonoBehaviour {
 
         // データをセットしていく
         m_japanHuman.Set(CUtility.ChangeArray(ref work, csvData, 0));
+
         m_spainHuman.Set(CUtility.ChangeArray(ref work, csvData, 1));
         m_englandHuman.Set(CUtility.ChangeArray(ref work, csvData, 2));
         m_brasilHuman.Set(CUtility.ChangeArray(ref work, csvData, 3));

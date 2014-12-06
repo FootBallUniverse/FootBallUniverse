@@ -31,7 +31,7 @@ public class C1P2PKeeper : CCpu {
 		this.Init();
 
 		// プレイヤーのデータをセット
-		CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_2);
+		CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_2);
 		this.SetData();
 		m_pos = this.transform.localPosition;
 

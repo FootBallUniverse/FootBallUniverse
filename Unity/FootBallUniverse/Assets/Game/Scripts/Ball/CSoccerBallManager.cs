@@ -8,8 +8,9 @@ public class CSoccerBallManager : MonoBehaviour {
     public bool m_isStartGame;
 
     // サッカーボールの情報
-    public static int m_shootPlayerNo;         // シュート（パス）したプレイヤーの番号
-    public static int m_shootTeamNo;           // シュートしたチームの番号
+    public static int m_shootPlayerNo;                  // シュート（パス）したプレイヤーの番号
+    public static int m_shootTeamNo;                    // シュートしたチームの番号
+    public static Transform m_soccerBallTransform;      // サッカーボールの位置
 
     // 低数値
     public const int eTEAM_1 = 0;
@@ -62,16 +63,22 @@ public class CSoccerBallManager : MonoBehaviour {
         // ブラックアウトしてリスタートする場合
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART && m_isStartGame == true)
         {
-            m_soccerBall.GetComponent<CSoccerBall>().Init(new Vector3(0.0f, 0.0f, 0.0f));
             m_isStartGame = false;
         }
+
 
         // ゲーム終了
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eEND)
         {
             m_soccerBall.GetComponent<CSoccerBall>().Init(this.transform.localPosition);
         }
+
+        m_soccerBallTransform = m_soccerBall.transform;
 	}
+
+    void LateUpdate()
+    {
+    }
 
     //----------------------------------------------------------------------
     // サッカーボールの持ち主を変更

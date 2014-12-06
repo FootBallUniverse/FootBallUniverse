@@ -15,6 +15,7 @@ public class CUtility {
     public static string[] ChangeArray(ref string[] _outArray, string[,] _inArray, int _no)
     {
         // ２次元を１次元に変換
+
         for (int i = 0; i < _outArray.Length; ++i)
         {
             _outArray[i] = _inArray[_no, i];

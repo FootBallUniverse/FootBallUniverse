@@ -14,7 +14,7 @@ public class C1P2PCpu : CCpu {
         this.Init();
 
         // プレイヤーのデータをセット
-        CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_1);
+        CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_1);
         this.SetData();
         m_pos = this.transform.localPosition;
 

@@ -46,7 +46,7 @@ public class CPlayerCollision : MonoBehaviour
                 Vector3 pos = new Vector3(0.0f, -0.13f, 0.14f);
             
                 // プレイヤーのボールに設定
-                CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(this.transform, pos);
+                CPlayerManager.m_soccerBallManager.ChangeOwner(this.transform, pos);
                 CSoccerBallManager.m_shootPlayerNo = this.GetComponent<CPlayer>().m_playerData.m_playerNo;
                 CSoccerBallManager.m_shootTeamNo = this.GetComponent<CPlayer>().m_playerData.m_teamNo;
 

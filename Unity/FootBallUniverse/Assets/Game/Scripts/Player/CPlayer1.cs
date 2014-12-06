@@ -15,7 +15,7 @@ public class CPlayer1 : CPlayer {
         this.Init();
 
         // プレイヤーのデータをセット
-        CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_1);
+        CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_1);
         this.SetData();
 
         m_pos = this.transform.localPosition;
@@ -82,7 +82,7 @@ public class CPlayer1 : CPlayer {
         this.rigidbody.MovePosition(m_pos);
 
         // 最後に位置をマネージャークラスにセットしておく
-        CPlayerManager.m_playerManager.m_player1Transform = this.transform;
+        CPlayerManager.m_player1Transform = this.transform;
 
         // ゲームが終了しているかどうか判定
         this.CheckGamePlay();
@@ -159,7 +159,7 @@ public class CPlayer1 : CPlayer {
         // フェードインする状態になったら位置を初期化
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART)
         {
-            this.Restart(); 
+            this.Restart();
         }
     }
 
@@ -414,6 +414,7 @@ public class CPlayer1 : CPlayer {
             m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
             m_chargeFrame = 0;
             m_isRtPress = true;
+            m_playerSE.PlaySE("game/charging");
             return;
         }
 
@@ -444,6 +445,7 @@ public class CPlayer1 : CPlayer {
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
             m_animator.ChangeAnimation(m_animator.m_isWait);
+            m_playerSE.StopSE();
             return;
         }
         
@@ -457,12 +459,16 @@ public class CPlayer1 : CPlayer {
             {
                 m_action.InitShoot(m_human.m_shootInitSpeed, m_human.m_shootMotionLength, m_human.m_shootTakeOfFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.eSHOOT;
+                m_playerSE.StopSE();
+                m_playerSE.PlaySE("game/kick_shoot");
             }
             // シュートじゃなくてチャージ時間が一定量以上ならパス
             else if (m_chargeFrame >= m_human.m_passChargeLength)
             {
                 m_action.InitPass(m_human.m_passInitSpeed, m_human.m_passMotionLength, m_human.m_passTakeOfFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
+                m_playerSE.StopSE();
+                m_playerSE.PlaySE("game/kick_pass");
             }
 
             // 初期化
@@ -595,10 +601,16 @@ public class CPlayer1 : CPlayer {
                     return;
                 }
 
+                // ボールの方向に向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_X) && m_isBall == false)
+                {
+                    this.transform.LookAt(CSoccerBallManager.m_soccerBallTransform);
+                }
+
                 // 2Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
                 {
-                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player2Transform);
+                    this.transform.LookAt(CPlayerManager.m_player2Transform);
                      return;
                 }
 
@@ -628,14 +640,14 @@ public class CPlayer1 : CPlayer {
                 // 3Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P1_XBOX_X))
                 {
-                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player3Transform);
+                    this.transform.LookAt(CPlayerManager.m_player3Transform);
                     return;
                 }
 
                 // 4Pの方向に向ける
                 if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
                 {
-                    this.transform.LookAt(CPlayerManager.m_playerManager.m_player4Transform);
+                    this.transform.LookAt(CPlayerManager.m_player4Transform);
                     return;
                 }
 

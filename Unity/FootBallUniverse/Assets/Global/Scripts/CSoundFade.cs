@@ -65,13 +65,13 @@ public class CSoundFade : MonoBehaviour {
             {
                 // フェードイン中
                 case eSOUND_STATUS.eFADEIN:
-                    if (m_audioSource.volume <= 1.0f)
+                    if (m_audioSource.volume <= 0.15f)
                     {
                         m_audioSource.volume = m_audioSource.volume + m_fadeSpeed;
-                        if (m_audioSource.volume >= 1.0f)
+                        if (m_audioSource.volume >= 0.15f)
                         {
                             // フェードイン終了
-                            m_audioSource.volume = 1.0f;
+                            m_audioSource.volume = 0.15f;
                             m_isFade = false;
                             m_status = eSOUND_STATUS.eNONE;
                         }

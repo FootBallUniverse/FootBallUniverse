@@ -45,12 +45,10 @@ public class C1P2PGoal : MonoBehaviour {
         {
             // グローバルのゴールのデータに追加
             TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, 0, true);
-            Debug.Log(CSoccerBallManager.m_shootTeamNo + " ←team : player→ " + CSoccerBallManager.m_shootPlayerNo);
 
-            // ボールの初期化
-            collision.gameObject.GetComponent<CSoccerBall>().Init(new Vector3(collision.gameObject.transform.localPosition.x,
-                                                                              collision.gameObject.transform.localPosition.y,
-                                                                              collision.gameObject.transform.localPosition.z));
+            collision.transform.parent.gameObject.GetComponent<CPlayer>().m_isBall = false;
+            collision.gameObject.GetComponent<CSoccerBall>().Restart(new Vector3(0.0f, 0.0f, 0.0f));
+
             CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
         }
 	}

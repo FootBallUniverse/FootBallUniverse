@@ -203,7 +203,7 @@ public class CPlayerControler : MonoBehaviour {
             CSoccerBallManager.m_shootTeamNo = m_playerScript.m_playerData.m_teamNo;
 
             // プレイヤーのボールに設定
-            CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(m_player.transform,pos);
+            CPlayerManager.m_soccerBallManager.ChangeOwner(m_player.transform,pos);
             m_playerScript.m_isBall = true;
         }
     }   

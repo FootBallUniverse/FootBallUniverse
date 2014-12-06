@@ -15,7 +15,7 @@ public class C3P4PCpu : CCpu {
         this.Init();
 
         // プレイヤーのデータをセット
-        CPlayerManager.m_playerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_3);
+        CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_3);
         this.SetData();
         m_pos = this.transform.localPosition;
 
