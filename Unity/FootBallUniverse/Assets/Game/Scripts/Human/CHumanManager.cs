@@ -50,6 +50,7 @@ public class CHumanManager : MonoBehaviour {
     {
         // CSVファイルをロード
         string path = Application.dataPath + "/Resources/CSV/HumanData.csv";
+        Debug.Log(path);
         string[,] csvData = new string[m_worldNum,m_humanStatusNum];
         CCSVLoader.GetInstance().Loader(ref csvData, path,m_worldNum );
 

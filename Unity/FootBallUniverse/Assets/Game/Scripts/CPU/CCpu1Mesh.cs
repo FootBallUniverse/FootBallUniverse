@@ -45,22 +45,22 @@ public class CCpu1Mesh : CDefaultMesh {
         {
             // 日本
             case TeamData.TEAM_NATIONALITY.JAPAN:
-                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_japan2"));
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_japan"));
                 break;
 
             // ブラジル
             case TeamData.TEAM_NATIONALITY.BRASIL:
-                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_brasil2"));
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_brasil"));
                 break;
 
             // イングランド
             case TeamData.TEAM_NATIONALITY.ENGLAND:
-                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_england2"));
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_england"));
                 break;
 
             // スペイン
             case TeamData.TEAM_NATIONALITY.ESPANA:
-                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_spain2"));
+                this.renderer.material = (Material)Instantiate(Resources.Load("Model/Player/Materials/lambert_spain"));
                 break;
         }
     }

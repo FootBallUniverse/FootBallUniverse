@@ -44,8 +44,7 @@ public class CPlayer4 : CPlayer
     void Update()
     {
         if (m_isBall == true)
-            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, 0.05f, 0.1f));
-
+            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, -0.13f, 0.14f));
         m_pos = this.transform.localPosition;
 
         switch (m_status)
@@ -82,7 +81,7 @@ public class CPlayer4 : CPlayer
         this.rigidbody.MovePosition(m_pos);
 
         // 最後に位置をマネージャークラスにセットしておく
-        CPlayerManager.m_playerManager.m_player1Transform = this.transform;
+        CPlayerManager.m_playerManager.m_player4Transform = this.transform;
 
         // ゲームが終了しているかどうか判定
         this.CheckGamePlay();
@@ -174,7 +173,10 @@ public class CPlayer4 : CPlayer
     {
         // ダッシュ状態が終わったらプレイヤーのステータス変更
         if (this.Dash() == true)
+        {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_animator.Wait();
+        }
     }
 
     //----------------------------------------------------------------------

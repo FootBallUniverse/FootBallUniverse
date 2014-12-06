@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CPlayerCollision : MonoBehaviour
+public class CCpuCollicion : MonoBehaviour
 {
 
     //----------------------------------------------------------------------
@@ -9,7 +9,7 @@ public class CPlayerCollision : MonoBehaviour
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+    // @Date	2014/12/1  @Update 2014/12/6  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void Start()
     {
@@ -21,7 +21,7 @@ public class CPlayerCollision : MonoBehaviour
     //----------------------------------------------------------------------
     // @Param   none			
     // @Return	none
-    // @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+    // @Date	2014/12/1  @Update 2014/12/6  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void Update()
     {
@@ -33,7 +33,7 @@ public class CPlayerCollision : MonoBehaviour
     // @Param   Collider    ぶつかったもののGameObject		
     // @Return	none
     // @Other   CallBack
-    // @Date	2014/11/28  @Update 2014/11/28  @Author T.Kawashita      
+    // @Date	2014/12/6  @Update 2014/12/6  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void OnTriggerEnter(Collider obj)
     {
@@ -43,8 +43,8 @@ public class CPlayerCollision : MonoBehaviour
             if (obj.transform.parent == GameObject.Find("BallGameObject").transform)
             {
                 // ボールの位置をセット
-                Vector3 pos = new Vector3(0.0f, -0.13f, 0.14f);
-            
+                Vector3 pos = new Vector3(0.0f, 0.05f, 0.1f);
+
                 // プレイヤーのボールに設定
                 CPlayerManager.m_playerManager.m_soccerBallManager.ChangeOwner(this.transform, pos);
                 CSoccerBallManager.m_shootPlayerNo = this.GetComponent<CPlayer>().m_playerData.m_playerNo;
@@ -61,7 +61,7 @@ public class CPlayerCollision : MonoBehaviour
 
         // タックルの当たり判定
         if (this.GetComponent<CPlayer>().m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE &&
-            (obj.gameObject.tag == "Player") || (obj.gameObject.tag == "cpu") || (obj.gameObject.tag == "GoalKeeper"))
+            obj.gameObject.tag == "Player")
         {
             CPlayer playerScript = this.GetComponent<CPlayer>();
             // アニメーション変更

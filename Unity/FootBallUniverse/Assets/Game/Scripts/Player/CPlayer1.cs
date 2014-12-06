@@ -42,7 +42,7 @@ public class CPlayer1 : CPlayer {
     void Update () 
     {
         if (m_isBall == true)
-            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, 0.05f, 0.1f));
+            this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, -0.13f, 0.14f));
 
         m_pos = this.transform.localPosition;   
 
@@ -174,7 +174,11 @@ public class CPlayer1 : CPlayer {
     {
         // ダッシュ状態が終わったらプレイヤーのステータス変更
         if (this.Dash() == true)
+        {
+            m_animator.Wait();
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        }
+        
     }
 
     //----------------------------------------------------------------------

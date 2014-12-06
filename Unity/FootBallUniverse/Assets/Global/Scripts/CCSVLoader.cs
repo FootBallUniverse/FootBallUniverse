@@ -42,7 +42,7 @@ public class CCSVLoader {
     public void Loader(ref string[,] _data, string _path,int _line)
     {
         FileInfo fi = new FileInfo(_path);
-        using (StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.GetEncoding("Shift_JIS")))
+        using (StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.GetEncoding("UTF-8")))
         {
             string data = "";
 
