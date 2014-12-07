@@ -130,7 +130,7 @@ public class Result : MonoBehaviour {
 					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Blue Team\n Victory";
 					break;
 				case 2:
-					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Lose...";
+					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Draw";
 					break;
 			}
 		}
@@ -250,7 +250,6 @@ public class Result : MonoBehaviour {
 				if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
 				{
 					Application.LoadLevel("Title");
-					Debug.Log("Title画面に遷移");
 				}
 				break;
 		}
