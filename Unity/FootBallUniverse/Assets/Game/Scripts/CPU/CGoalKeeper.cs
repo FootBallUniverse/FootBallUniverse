@@ -193,7 +193,7 @@ public class CGoalKeeper : CCpu {
 		if (this.m_isBall)
 		{
 			this.gkState = GK_State.CAT;
-			this.transform.LookAt(GameObject.Find("Player1").transform.FindChild("player").transform.position);
+			this.transform.LookAt(this.frendryData[0].transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
 	}
