@@ -1,24 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class C1P2PKeeper : CCpu {
-	enum GK_State
-	{
-		STAY,
-		ON_ALERT,
-		TAKE_BALL,
-		CAT,
-		PASS,
-		BACK_HOME,
-		GK_STATE_MAX
-	};
-
-	GK_State gkState = GK_State.STAY;
+public class C1P2PKeeper : CGoalKeeper {
 	
-	Vector3 HOME_POSITION = new Vector3(0.0f, 0.0f, 25.0f);
-
-	const float ARAT_SPACE      = 10.0f;
-	const float TAKE_BALL_SPACE =  8.0f;
 
 	//----------------------------------------------------------------------
 	// コンストラクタ
@@ -27,27 +11,7 @@ public class C1P2PKeeper : CCpu {
 	// @Return  none
 	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Kawashita       
 	//----------------------------------------------------------------------
-	void Start () {
-		this.Init();
-
-		// プレイヤーのデータをセット
-		CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_2);
-		this.SetData();
-		m_pos = this.transform.localPosition;
-
-		// 国の情報をセット / 国によってマテリアルを変更
-		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
-		this.transform.FindChild("polySurface14").GetComponent<CGoalKeeper1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
-
-		Debug.Log(this.m_human.m_passInitSpeed);
-
-		// サッカーボールの情報を取得
-		this.soccerBallObject = GameObject.Find("SoccerBall");
-
-		// プレイヤーのアニメーターをセット
-		m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
-
-	}
+	void Start () {this.CGoalKeeperInit();}
 
 	//----------------------------------------------------------------------
 	// 更新
@@ -57,13 +21,12 @@ public class C1P2PKeeper : CCpu {
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
 	//----------------------------------------------------------------------
 	void Update () {
-
+		this.CGoalKeeperUpdate();
 		if (m_isBall == true)
 			this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, 0.05f, 0.1f));
 
 		m_pos = this.transform.localPosition;
 
-		//Debug.Log(this.gkState);
 		switch (this.gkState)
 		{
 			case GK_State.STAY:      Stay();     break;
@@ -115,7 +78,7 @@ public class C1P2PKeeper : CCpu {
 		if (Vector3.Distance(this.transform.position, GameObject.Find("Player3").transform.FindChild("player").transform.position)  >= ARAT_SPACE &&
 			Vector3.Distance(this.transform.position, GameObject.Find("Player4").transform.FindChild("player").transform.position)  >= ARAT_SPACE &&
 			Vector3.Distance(this.transform.position, GameObject.Find("CPU2").transform.FindChild("cpu").transform.position)        >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, GameObject.Find("GoalKeeper1").transform.FindChild("cpu").transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.transform.position, GameObject.Find("GoalKeeper2").transform.FindChild("cpu").transform.position) >= ARAT_SPACE &&
 			Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position)                                     <= TAKE_BALL_SPACE)
 		{
 			this.gkState = GK_State.TAKE_BALL;
@@ -126,17 +89,21 @@ public class C1P2PKeeper : CCpu {
 	{
 		Vector3 targetPosition = new Vector3();
 #if false
+		// 本来のパス
 		// ボールを取りに行く
 		this.transform.LookAt(this.soccerBallObject.transform.position);
 		Move(new Vector3(0.0f,0.0f,1.0f));
-
-		
 #else
-		targetPosition = GetFuterBall();
-		Debug.Log(targetPosition);
+		// ボールカット（仮用）
+		targetPosition = GetFuterBallPosition();
+		this.transform.LookAt(targetPosition);
+		Move(new Vector3(0.0f, 0.0f, 1.0f));
+		this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
+		/*
 		targetPosition = targetPosition - this.transform.position;
-		Vector3.Normalize(targetPosition);
+		targetPosition.Normalize();
 		Move(targetPosition);
+		 */
 #endif
 		// ボールをキャッチ（→パス）
 		if (this.m_isBall)
@@ -171,11 +138,13 @@ public class C1P2PKeeper : CCpu {
 	{
 		if (this.transform.position != HOME_POSITION)
 		{
-			//
+			this.transform.LookAt(HOME_POSITION);
+			Move(new Vector3(0.0f, 0.0f, 0.1f));
+			this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
 		}
 	}
 
-	Vector3 GetFuterBall()
+	Vector3 GetFuterBallPosition()
 	{
 		Vector3 refData = new Vector3();
 		refData = this.soccerBallObject.transform.position;
