@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class C1P2PKeeper : CGoalKeeper {
-	
-
 	//----------------------------------------------------------------------
 	// コンストラクタ
 	//----------------------------------------------------------------------
@@ -20,22 +18,7 @@ public class C1P2PKeeper : CGoalKeeper {
 	// @Return	none
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
 	//----------------------------------------------------------------------
-	void Update () {
-		this.CGoalKeeperUpdate();
-		if (m_isBall == true)
-			this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, 0.05f, 0.1f));
-
-		m_pos = this.transform.localPosition;
-
-		switch (this.gkState)
-		{
-			case GK_State.STAY:      Stay();     break;
-			case GK_State.ON_ALERT:  OnAlert();  break;
-			case GK_State.TAKE_BALL: TakeBall(); break;
-			case GK_State.CAT:       Cach();      break;
-			case GK_State.PASS:      Pass();     break;
-			case GK_State.BACK_HOME: BackHome(); break;
-		}
+	void Update () {this.CGoalKeeperUpdate();
 	}
 
 	//----------------------------------------------------------------------
@@ -45,126 +28,5 @@ public class C1P2PKeeper : CGoalKeeper {
 	// @Return	none
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
 	//----------------------------------------------------------------------
-	void LateUpdate(){
-
-		// アニメーション
-		m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
-		this.rigidbody.MovePosition(m_pos);
-		
-		CCpuManager.m_cpuManager.m_cpuP1P2Keeper = this.transform;
-	}
-
-
-	void Stay()
-	{
-		BackHome();
-
-		// ボールの監視
-		if(Vector3.Distance(this.transform.position,this.soccerBallObject.transform.position) <= ARAT_SPACE)
-		{
-			this.gkState = GK_State.ON_ALERT;
-		}
-	}
-
-	void OnAlert()
-	{
-		// ボールが範囲外に出たら待機へ戻る
-		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) >= ARAT_SPACE)
-		{
-			this.gkState = GK_State.STAY ;
-		}
-
-		// ボールがフリーだと判断（→取りに行く）
-		if (Vector3.Distance(this.transform.position, GameObject.Find("Player3").transform.FindChild("player").transform.position)  >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, GameObject.Find("Player4").transform.FindChild("player").transform.position)  >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, GameObject.Find("CPU2").transform.FindChild("cpu").transform.position)        >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, GameObject.Find("GoalKeeper2").transform.FindChild("cpu").transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position)                                     <= TAKE_BALL_SPACE)
-		{
-			this.gkState = GK_State.TAKE_BALL;
-		}
-	}
-
-	void TakeBall()
-	{
-		Vector3 targetPosition = new Vector3();
-#if false
-		// 本来のパス
-		// ボールを取りに行く
-		this.transform.LookAt(this.soccerBallObject.transform.position);
-		Move(new Vector3(0.0f,0.0f,1.0f));
-#else
-		// ボールカット（仮用）
-		targetPosition = GetFuterBallPosition();
-		this.transform.LookAt(targetPosition);
-		Move(new Vector3(0.0f, 0.0f, 1.0f));
-		this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
-		/*
-		targetPosition = targetPosition - this.transform.position;
-		targetPosition.Normalize();
-		Move(targetPosition);
-		 */
-#endif
-		// ボールをキャッチ（→パス）
-		if (this.m_isBall)
-		{
-			this.gkState = GK_State.CAT;
-			this.transform.LookAt(GameObject.Find("Player1").transform.FindChild("player").transform.position);
-			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
-		}
-	}
-
-	void Cach()
-	{
-		if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
-		{
-			this.gkState = GK_State.PASS;
-		}
-	}
-
-	void Pass()
-	{
-		// パス後しばらくボールをとらない
-		//this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall);
-		BackHome();
-
-		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) >= TAKE_BALL_SPACE)
-		{
-			this.gkState = GK_State.STAY;
-		}
-	}
-
-	void BackHome()
-	{
-		if (this.transform.position != HOME_POSITION)
-		{
-			this.transform.LookAt(HOME_POSITION);
-			Move(new Vector3(0.0f, 0.0f, 0.1f));
-			this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
-		}
-	}
-
-	Vector3 GetFuterBallPosition()
-	{
-		Vector3 refData = new Vector3();
-		refData = this.soccerBallObject.transform.position;
-		float work;
-
-		// rigidbodyがZ軸で移動していない（＝ボールがこないので無効）
-		if (this.soccerBallObject.rigidbody.velocity.z == 0)
-		{
-			return new Vector3(0.0f, 0.0f, 0.0f);
-		}
-
-		work = HOME_POSITION.z - this.soccerBallObject.transform.position.z;
-		work /= this.soccerBallObject.rigidbody.velocity.z;
-
-		// ゴール指定地点まで到着するまで移動
-		refData.x += this.soccerBallObject.rigidbody.velocity.x * work;
-		refData.y += this.soccerBallObject.rigidbody.velocity.y * work;
-		refData.z += this.soccerBallObject.rigidbody.velocity.z * work;
-
-		// ボールの未来予想座標を返す
-		return refData;
-	}
+	void LateUpdate(){CGoalKeeperLateUpdate();}
 }
