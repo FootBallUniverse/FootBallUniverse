@@ -15,14 +15,14 @@ public class C1P2PCpu : CCpu {
 
         // プレイヤーのデータをセット
         CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_1);
-        this.SetData();
         m_pos = this.transform.localPosition;
 
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
         this.transform.FindChild("polySurface14").GetComponent<CCpu1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
 
-        Debug.Log(this.m_human.m_passInitSpeed);
+        // CPU用の値をセット
+        this.SetData();
 
         // サッカーボールの情報を取得
         this.soccerBallObject = GameObject.Find("SoccerBall");

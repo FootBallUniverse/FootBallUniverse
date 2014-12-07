@@ -22,6 +22,8 @@ public class Result : MonoBehaviour {
 	private int[] works            = new int[2];
 	public  int AddSuppoterTime;
 
+    public CSoundPlayer m_soundPlayer;
+
 	//----------------------------------------------------------------------
 	// コンストラクタ
 	//----------------------------------------------------------------------
@@ -29,8 +31,15 @@ public class Result : MonoBehaviour {
 	// @Return  none
 	// @Date    2014/10/29  @Update 2014/10/29  @Author T.Kawashita
 	//          2014/11/15  @Update 2014/11/15  @Author T.Takeuchi
+    //          2014/12/7   @Update 2014/12/7   @Author T.Kawashita
 	//----------------------------------------------------------------------
-	void Start() { Init(); }
+	void Start() 
+    { 
+        Init();
+        m_soundPlayer = new CSoundPlayer();
+
+        m_soundPlayer.PlayBGMFadeIn("result/bgm_01", 0.002f);
+    }
 
 	//----------------------------------------------------------------------
 	// 初期化（試合結果を反映）
@@ -232,6 +241,7 @@ public class Result : MonoBehaviour {
 				if (Input.GetKeyDown(KeyCode.Space))
 				{
 					GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().Play(false);
+                    m_soundPlayer.PlayBGMFadeOut(0.004f);
 					this.state = RESULT_STATE.ALPHA_OUT;
 				}
 				break;
