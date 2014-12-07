@@ -96,6 +96,8 @@ public class CSoccerBallManager : MonoBehaviour {
         // サッカーボールの位置変更
         m_soccerBall.GetComponent<CSoccerBall>().Init(_pos);
 
+        m_soccerBall.GetComponent<CSoccerBall>().m_isPlayer = true;
+
         return true;
     }
 

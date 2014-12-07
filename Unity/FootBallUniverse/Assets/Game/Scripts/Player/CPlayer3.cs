@@ -18,13 +18,15 @@ public class CPlayer3 : CPlayer
 
         // プレイヤーのデータをセット
         CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_3);
-        this.SetData();
 
         m_pos = this.transform.localPosition;
 
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[1]);
         this.transform.FindChild("polySurface14").GetComponent<CPlayer3Mesh>().ChangeMaterial(TeamData.teamNationality[1]);
+        
+        // プレイヤーごとの値をセット
+        this.SetData();
 
         // プレイヤーの情報をマップにセット
         //       Color color = Color.red;
@@ -69,10 +71,18 @@ public class CPlayer3 : CPlayer
         }
     }
 
+    //----------------------------------------------------------------------
+    // 物理挙動の更新
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/7  @Update 2014/12/7  @Author T.Kaneko      
+    //----------------------------------------------------------------------
     void FixedUpdate()
     {
         this.rigidbody.MovePosition(m_pos);
     }
+
     //----------------------------------------------------------------------
     // フレームの最後の更新
     //----------------------------------------------------------------------

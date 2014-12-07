@@ -5,12 +5,15 @@ public class title : MonoBehaviour {
 
     public float m_StartCount;
 
-    private Entry_1     m_entry1;
-    private Entry_2     m_entry2;
-    private Entry_3     m_entry3;
-    private Entry_4     m_entry4;
-    private Title_Fade  m_Fade;
+    public Entry_1     m_entry1;
+    public Entry_2     m_entry2;
+    public Entry_3     m_entry3;
+    public Entry_4     m_entry4;
+    public Title_Fade  m_Fade;
     public  bool        m_SceneFlag;
+
+    public CSoundPlayer m_soundPlayer;
+
 	// Use this for initialization
     void Start()
     {
@@ -26,6 +29,9 @@ public class title : MonoBehaviour {
         m_entry4 = entry4.GetComponent<Entry_4>();
         m_Fade   = Fade.GetComponent<Title_Fade>();
        
+        // 音楽用ゲームオブジェクト作成
+        m_soundPlayer = new CSoundPlayer();
+        m_soundPlayer.PlayBGMFadeIn("title/bgm_01", 0.02f);
 
     }
 
@@ -39,31 +45,19 @@ public class title : MonoBehaviour {
             m_Fade.m_FadeFlag == false )
         {
             m_SceneFlag = true;
+            m_soundPlayer.PlayBGMFadeOut(0.003f);    
         }
-        /*else
-        {
-            m_SceneFlag = false;
-            m_StartCount = 0;
-        }
-        Debug.Log("フェードインしている？" + m_Fade.m_tweenAlpha.enabled);
-        Debug.Log("経過時間を表示するよ" + m_StartCount);*/
 
         if (m_StartCount >= 0.1f)
         {
             if (m_Fade.m_tweenAlpha.enabled == false)
             {
-                Debug.Log("遷移するよ" + m_Fade.m_tweenAlpha.enabled);
                 Application.LoadLevel("ChooseTeam");
-            }
-            else
-            {
-                Debug.Log("遷移しないんだよ" + m_Fade.m_tweenAlpha.enabled);
             }
         }
         
         if (m_SceneFlag == true)
         {
-            Debug.Log("FlagをONにするよ" + m_Fade.m_tweenAlpha.enabled);
             m_Fade.m_FadeFlag = true;
             m_StartCount += Time.deltaTime;
         }
@@ -73,7 +67,6 @@ public class title : MonoBehaviour {
            InputXBOX360.IsGetAllStartButton() == true)
 		{
             m_SceneFlag = true;
-			//Application.LoadLevel("ChooseTeam");
 		}
 	}
 

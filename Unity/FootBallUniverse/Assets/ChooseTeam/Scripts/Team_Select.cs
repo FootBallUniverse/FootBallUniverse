@@ -6,6 +6,10 @@ public class Team_Select : MonoBehaviour {
     Player_1_Script m_Fade_flag_1;
     Player_3_Script m_Fade_flag_2;
     private float m_Count;
+
+    private bool m_isFade;
+    public CSoundPlayer m_soundPlayer;
+
 	// Use this for initialization
 	void Start () {
         m_Count = 0;
@@ -16,6 +20,13 @@ public class Team_Select : MonoBehaviour {
         GameObject m_TeamSelect_2 = transform.FindChild("Team3_4").gameObject;
         m_Fade_flag_1 = m_TeamSelect_1.GetComponent<Player_1_Script>();
         m_Fade_flag_2 = m_TeamSelect_2.GetComponent<Player_3_Script>();
+
+        m_isFade = false;
+
+        // 音楽再生用ゲームオブジェクト作成
+        m_soundPlayer = new CSoundPlayer();
+        m_soundPlayer.PlayBGMFadeIn("select/bgm_01", 0.05f);
+
 	}
 	
 	// Update is called once per frame
@@ -26,10 +37,15 @@ public class Team_Select : MonoBehaviour {
             Application.LoadLevel("Title");
         }
         if(m_Fade_flag_1.m_SceneFlag == true &&
-            m_Fade_flag_2.m_SceneFlag == true )
+           m_Fade_flag_2.m_SceneFlag == true )
         {
+            if (m_isFade == false)
+            {
+                m_soundPlayer.PlayBGMFadeOut(0.003f);
+                m_isFade = true;
+            }
+
             m_Count+= Time.deltaTime;
-            Debug.Log(m_Count);
             if (m_Count >= 3.0f)
             {
                 if (m_Fade_flag_1.m_Country[0].m_Flag == 3)
@@ -65,7 +81,7 @@ public class Team_Select : MonoBehaviour {
                 {
                     TeamData.teamNationality[1] = TeamData.TEAM_NATIONALITY.JAPAN;
                 }
-                Application.LoadLevel("Tutorial");
+                Application.LoadLevel("MainGame");
             }
         }
 	

@@ -10,6 +10,7 @@ using System.Collections;
 public class CSoccerBall : MonoBehaviour {
 
     public Vector3 m_pos;           // 位置座標
+    public bool m_isPlayer;         // プレイヤーに持たれているかどうか
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -24,6 +25,8 @@ public class CSoccerBall : MonoBehaviour {
         m_pos = this.transform.localPosition;
         this.rigidbody.drag = CGameData.m_ballDecRec;           // 空気抵抗をセット
         this.rigidbody.angularDrag = CGameData.m_ballDecRec;    // 反射係数をセット
+
+        m_isPlayer = false;
 
         this.rigidbody.angularVelocity = new Vector3(Random.value * 10.0f, 0.0f, Random.value * 10.0f);
     }
@@ -40,6 +43,8 @@ public class CSoccerBall : MonoBehaviour {
         m_pos = _pos;
         this.transform.localPosition = m_pos;
         this.transform.localRotation = Quaternion.identity;
+
+        m_isPlayer = false;
 
         // 速度ベクトル，角速度ベクトルの初期化
         this.rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
@@ -63,13 +68,14 @@ public class CSoccerBall : MonoBehaviour {
         this.transform.localPosition = m_pos;
         this.transform.localRotation = Quaternion.identity;
 
+        m_isPlayer = false;
+
         // 速度ベクトル，角速度ベクトルの初期化
         this.rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         this.rigidbody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
 
         return true;
     }
-
 
     //----------------------------------------------------------------------
     // ゲーム開始時のボールの動き
@@ -123,11 +129,47 @@ public class CSoccerBall : MonoBehaviour {
         float speedY = Random.Range(-2.0f, 2.0f);
         float speedZ = Random.Range(0.0f, 0.0f);
 
+        m_isPlayer = false;
+
         Vector3 speed = new Vector3();
         speed = speedX * this.transform.right + speedY * this.transform.up + speedZ * this.transform.forward;
 
         // 飛ばす
         this.rigidbody.velocity = speed;
+    }
+
+    //----------------------------------------------------------------------
+    // ボールの当たり判定
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/7  @Update 2014/12/7  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    void OnTriggerEnter(Collider obj)
+    {
+        GameObject player = obj.gameObject;
+        CPlayer playerScript = obj.GetComponent<CPlayer>();
+        CapsuleCollider capsuleCollider = obj as CapsuleCollider;
+
+        // プレイヤーとの当たり判定
+        if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true)
+        {
+            // 現在持っているプレイヤーのステータス変更
+            CPlayer ballPlayer = this.transform.parent.GetComponent<CPlayer>();
+            this.transform.parent.transform.parent.GetComponent<CPlayerAnimator>().TackleDamage();
+            ballPlayer.m_isBall = false;
+            ballPlayer.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
+            ballPlayer.m_action.InitTackleDamage(ballPlayer.m_human.m_stealDamageLength, 0.0f, ballPlayer.m_human.m_stealDamageLength);
+            
+            // 当たった方のプレイヤーに持ち主を変更
+            // プレイヤーのボールに設定
+            Vector3 pos = new Vector3(0.0f,-0.13f,0.14f);
+            CPlayerManager.m_soccerBallManager.ChangeOwner(player.transform, pos);
+            CSoccerBallManager.m_shootPlayerNo = playerScript.m_playerData.m_playerNo;
+            CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
+            playerScript.m_isBall = true;
+
+        }
     }
 
 }

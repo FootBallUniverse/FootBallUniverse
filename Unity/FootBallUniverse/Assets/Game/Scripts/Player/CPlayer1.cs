@@ -16,13 +16,16 @@ public class CPlayer1 : CPlayer {
 
         // プレイヤーのデータをセット
         CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_1);
-        this.SetData();
 
         m_pos = this.transform.localPosition;
 
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
         this.transform.FindChild("polySurface14").GetComponent<CPlayer1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
+        
+        // プレイヤーごとの値をセット
+        this.SetData();
+
 
         // プレイヤーの情報をマップにセット
  //       Color color = Color.red;
@@ -32,8 +35,8 @@ public class CPlayer1 : CPlayer {
        m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
 
         // カメラをセット
-       m_camera = this.gameObject.transform.parent.FindChild("Player1Camera").GetComponent<PlayerCamera>();
-       m_trans = this.transform.Find("LookTrans").transform; 
+        m_camera = this.gameObject.transform.parent.FindChild("Player1Camera").GetComponent<PlayerCamera>();
+        m_trans = this.transform.Find("LookTrans").transform; 
     }
 
     //----------------------------------------------------------------------
