@@ -174,6 +174,9 @@ public class CPlayer : MonoBehaviour {
     {
         // 位置をセット
         this.transform.localPosition = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
+
+        // ボールの取れる範囲をセット
+        this.GetComponent<SphereCollider>().radius = m_human.m_holdRangeRadius;
     }
 
     //----------------------------------------------------------------------

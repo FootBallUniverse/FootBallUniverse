@@ -38,8 +38,10 @@ public class CPlayerCollision : MonoBehaviour
     void OnTriggerEnter(Collider obj)
     {
         // ボールとぶつかった時の判定
-        if (obj.gameObject.tag == "SoccerBall")
+        if (obj.gameObject.tag == "SoccerBall" && this.GetComponent<CPlayer>().m_isBall == false && 
+            this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE)
         {
+            // 浮いているボールの場合は自分のボールになる
             if (obj.transform.parent == GameObject.Find("BallGameObject").transform)
             {
                 // ボールの位置をセット
@@ -58,7 +60,9 @@ public class CPlayerCollision : MonoBehaviour
                 obj.GetComponent<SphereCollider>().isTrigger = true;
 
             }
-        }
+
+                     
+       }
 
         // タックルの当たり判定
         if (this.GetComponent<CPlayer>().m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE &&
@@ -67,7 +71,7 @@ public class CPlayerCollision : MonoBehaviour
             CPlayer playerScript = this.GetComponent<CPlayer>();
 
             // アニメーション変更
-            // 相手がタックル中だったらどっちもくらいモーションに変更
+            // 相手がタックル中だったらくらいモーションに変更
             if (obj.GetComponent<CPlayer>().m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE)
             {
                 this.transform.parent.GetComponent<CPlayerAnimator>().TackleDamage();
@@ -76,7 +80,8 @@ public class CPlayerCollision : MonoBehaviour
                                                        playerScript.m_human.m_tackleDamageInitSpeed,
                                                        playerScript.m_human.m_tackleDamageDecFrame);
             }
-            // それ以外の場合はどちらも成功モーションに変更
+
+            // それ以外の場合は成功モーションに変更
             else
             {
                 this.transform.parent.GetComponent<CPlayerAnimator>().TackleSuccess();

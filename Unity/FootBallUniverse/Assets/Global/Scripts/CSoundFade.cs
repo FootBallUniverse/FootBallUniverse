@@ -126,7 +126,6 @@ public class CSoundFade : MonoBehaviour {
     public void FadeOut(float _fadeSpeed = FADE_SPEED)
     {
         m_status = eSOUND_STATUS.eFADEOUT;
-        m_audioSource.volume = 1.0f;        // VolumeをMaxにする
         m_fadeSpeed = _fadeSpeed;
         m_isFade = true;
     }

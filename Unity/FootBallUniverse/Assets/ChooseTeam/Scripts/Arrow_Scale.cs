@@ -27,13 +27,11 @@ public class Arrow_Scale : MonoBehaviour
 
         if (m_NowScale.x <= 0.021f && m_ScaleFlag == false)
         {
-            Debug.Log(m_ScaleFlag);
             TweenScale.Begin(this.gameObject, 0.0f, m_MaxScale);
             m_ScaleFlag = true;
         }
         else if (m_NowScale.x >= 0.039f && m_ScaleFlag == true)
         {
-            Debug.Log(m_ScaleFlag);
             TweenScale.Begin(this.gameObject, 0.8f, m_MinScale);
             m_ScaleFlag = false;
         }

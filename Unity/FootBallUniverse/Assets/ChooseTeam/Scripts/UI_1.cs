@@ -42,9 +42,6 @@ public class UI_1 : MonoBehaviour
                     if (m_team1.m_Country[i].m_Flag == 3)
                     {
                         m_UIPos[i].y = 0.2f;
-                        Debug.Log(m_team1.m_Country[i].m_Flag);
-                        Debug.Log(i);
-                        Debug.Log(m_UIPos[i].y);
                     }
                     else
                     {
