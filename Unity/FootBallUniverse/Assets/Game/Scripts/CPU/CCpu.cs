@@ -2,8 +2,14 @@
 using System.Collections;
 
 public class CCpu : CPlayer {
+	// ボール情報
 	protected GameObject soccerBallManager;
 	protected GameObject soccerBallObject;
+	// 敵ボール
+	protected GameObject[] enemyData   = new GameObject[4];
+	protected GameObject[] frendryData = new GameObject[3];
+
+
 
 	public enum MESSAGE_TYPE
 	{
@@ -17,9 +23,8 @@ public class CCpu : CPlayer {
 		int playerNo;
 		MESSAGE_TYPE messageType;
 	};
-
 	private static ArrayList messageLog = new ArrayList(); // ログデータ格納（カプセル化）
-	private Vector3 targetPosition = new Vector3();
+	private Vector3 targetPosition      = new Vector3();
 
 	//----------------------------------------------------------------------
 	// コンストラクタ

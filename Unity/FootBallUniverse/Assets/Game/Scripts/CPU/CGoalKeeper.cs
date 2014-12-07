@@ -13,27 +13,33 @@ public class CGoalKeeper : CCpu {
 		GK_STATE_MAX
 	};
 
-	protected GK_State gkState = GK_State.STAY;
-
-	protected Vector3 HOME_POSITION = new Vector3(0.0f, 0.0f, 25.0f);
-
+	protected GK_State gkState            = GK_State.STAY;
+	protected Vector3 HOME_POSITION       = new Vector3(0.0f, 0.0f, 0.0f);
 	protected const float ARAT_SPACE      = 8.0f;
 	protected const float TAKE_BALL_SPACE = 5.0f;
 
-	protected void CGoalKeeperInit()
+	//----------------------------------------------------------------------
+	// コンストラクタ
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
+	protected void CGoalKeeperInit(int teamNo)
 	{
 		this.Init();
 
 		// プレイヤーのデータをセット
-		CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_2);
+		if(teamNo == 0) CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_2);
+		else            CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.AI_4);
 		m_pos = this.transform.localPosition;
 
 		// 国の情報をセット / 国によってマテリアルを変更
-		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
-		this.transform.FindChild("polySurface14").GetComponent<CGoalKeeper1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
-
-        // CPU用の値をセット
-        this.SetData();
+		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[teamNo]);
+		if (teamNo == 0) this.transform.FindChild("polySurface14").GetComponent<CGoalKeeper1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
+		else             this.transform.FindChild("polySurface14").GetComponent<CGoalKeeper2Mesh>().ChangeMaterial(TeamData.teamNationality[1]);
+		// CPU用の値をセット
+		this.SetData();
 
 		// サッカーボールの情報を取得
 		this.soccerBallObject = GameObject.Find("SoccerBall");
@@ -43,10 +49,19 @@ public class CGoalKeeper : CCpu {
 
 		// 向きをセット
 		this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
+
+		// ホームポジションをセット
+		this.HOME_POSITION = new Vector3(this.m_playerData.m_xPos, this.m_playerData.m_yPos, this.m_playerData.m_zPos);
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// 更新
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	protected void CGoalKeeperUpdate()
 	{
 		if (m_isBall == true)
@@ -66,7 +81,13 @@ public class CGoalKeeper : CCpu {
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// フレーム最後の更新
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	protected void CGoalKeeperLateUpdate()
 	{
 		// アニメーション
@@ -77,41 +98,56 @@ public class CGoalKeeper : CCpu {
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// AI:待機中の判断
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void Stay()
 	{
 		BackHome();
 
 		// ボールの監視
 		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) <= ARAT_SPACE)
-		{
 			this.gkState = GK_State.ON_ALERT;
-		}
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// AI:警戒態勢中の判断
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void OnAlert()
 	{
 		// ボールが範囲外に出たら待機へ戻る
 		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) >= ARAT_SPACE)
-		{
 			this.gkState = GK_State.STAY;
-		}
 
 		// ボールがフリーだと判断（→取りに行く）
-		if (Vector3.Distance(this.transform.position, GameObject.Find("Player3").transform.FindChild("player").transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, GameObject.Find("Player4").transform.FindChild("player").transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, GameObject.Find("CPU2").transform.FindChild("cpu").transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, GameObject.Find("GoalKeeper2").transform.FindChild("cpu").transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) <= TAKE_BALL_SPACE)
+		if (Vector3.Distance(this.transform.position, this.enemyData[0].transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.transform.position, this.enemyData[1].transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.transform.position, this.enemyData[2].transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.transform.position, this.enemyData[3].transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) <= TAKE_BALL_SPACE &&
+			this.soccerBallObject.GetComponent<CSoccerBall>().m_isPlayer == false)
 		{
 			this.gkState = GK_State.TAKE_BALL;
 		}
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// AI:フリーのボールが流れてきたときに取る
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void TakeBall()
 	{
 		Vector3 targetPosition = new Vector3();
@@ -128,7 +164,6 @@ public class CGoalKeeper : CCpu {
 		Move(new Vector3(0.0f, 0.0f, 1.0f));
 		this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
 #endif
-		Debug.Log(this.m_isBall);
 		// ボールをキャッチ（→パス）
 		if (this.m_isBall)
 		{
@@ -139,29 +174,41 @@ public class CGoalKeeper : CCpu {
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// AI:シュートされてたと判断したときの判断
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void Cach()
 	{
 		if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
-		{
 			this.gkState = GK_State.PASS;
-		}
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// AI:パス中の判断
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void Pass()
 	{
-		//BackHome();
-
 		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) >= TAKE_BALL_SPACE)
-		{
 			this.gkState = GK_State.STAY;
-		}
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// AI:ホームポジションに戻る
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void BackHome()
 	{
 		if (this.transform.position != HOME_POSITION)
@@ -173,7 +220,13 @@ public class CGoalKeeper : CCpu {
 	}
 
 
-
+	//----------------------------------------------------------------------
+	// 飛んできたボールの未来予測座標を出力する
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  Vector3  ボールの未来予測座標
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	Vector3 GetFuterBallPosition()
 	{
 		Vector3 refData = new Vector3();
@@ -182,9 +235,7 @@ public class CGoalKeeper : CCpu {
 
 		// rigidbodyがZ軸で移動していない（＝ボールがこないので無効）
 		if (this.soccerBallObject.rigidbody.velocity.z == 0)
-		{
 			return new Vector3(0.0f, 0.0f, 0.0f);
-		}
 
 		work = HOME_POSITION.z - this.soccerBallObject.transform.position.z;
 		work /= this.soccerBallObject.rigidbody.velocity.z;
