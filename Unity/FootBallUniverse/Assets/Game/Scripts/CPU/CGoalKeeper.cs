@@ -56,6 +56,23 @@ public class CGoalKeeper : CCpu {
 
 
 	//----------------------------------------------------------------------
+	// 初期位置へ戻る
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
+	void KeeperRestart()
+	{
+		this.Restart();
+
+		this.gkState = GK_State.STAY;
+		this.transform.position = HOME_POSITION;
+		this.transform.LookAt(new Vector3(0.0f,0.0f,0.0f));
+	}
+
+
+	//----------------------------------------------------------------------
 	// 更新
 	//----------------------------------------------------------------------
 	// @Param   none
@@ -68,6 +85,14 @@ public class CGoalKeeper : CCpu {
 			this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, 0.05f, 0.1f));
 
 		m_pos = this.transform.localPosition;
+
+		this.CheckGamePlay();
+
+		if (this.m_status == CPlayerManager.ePLAYER_STATUS.eGOAL ||
+			this.m_status == CPlayerManager.ePLAYER_STATUS.eEND)
+		{
+			KeeperRestart();
+		}
 
 		switch (this.gkState)
 		{
