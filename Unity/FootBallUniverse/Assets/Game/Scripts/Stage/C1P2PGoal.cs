@@ -57,11 +57,17 @@ public class C1P2PGoal : MonoBehaviour {
         }
 	}
 
+    //----------------------------------------------------------------------
+    // ゴールのメッシュに当たったらその時点でゴール
+    //----------------------------------------------------------------------
+    // @Param	collider    当たったオブジェクトの当たり判定		
+    // @Return	none
+    // @Date	2014/12/9  @Update 2014/12/9  @Author T.Kawashita      
+    //----------------------------------------------------------------------
     void OnTriggerEnter(Collider collider)
     {
         if (collider.transform.tag == "Player")
         {
-            Debug.Log("player ");
             this.GetComponent<BoxCollider>().isTrigger = false;
         }
 

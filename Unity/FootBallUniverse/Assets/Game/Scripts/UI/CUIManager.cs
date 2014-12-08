@@ -33,8 +33,12 @@ public class CUIManager : MonoBehaviour {
 
     public GameObject m_gameObjectP1P2;        // P1P2UI用GameObject
     public GameObject m_gameObjectP3P4;        // P3P4UI用GameObject
+
+    public GameObject m_blackoutMain;          // Mainブラックアウト用パネル
     public GameObject m_blackoutP1P2;          // P1P2ブラックアウト用パネル
     public GameObject m_blackoutP3P4;          // P3P4ブラックアウト用パネル
+    
+    public GameObject m_uiPanelMain;           // MainUI用パネル
     public GameObject m_uiPanelP1P2;           // P1P2UI用パネル
     public GameObject m_uiPanelP3P4;           // P3P4UI用パネル
 
@@ -63,13 +67,14 @@ public class CUIManager : MonoBehaviour {
 	void Start () {
         
         // パネルを取得
+        m_uiPanelMain = GameObject.Find("MainUI").transform.FindChild("Camera").FindChild("Anchor").FindChild("Panel").gameObject;
         m_uiPanelP1P2 = GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").gameObject;
         m_uiPanelP3P4 = GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").gameObject;
 
         // フェードイン・フェードアウト用ゲームオブジェクト作成
+        m_blackoutMain = m_uiPanelMain.transform.FindChild("BlackOut").gameObject;
         m_blackoutP1P2 = m_uiPanelP1P2.transform.FindChild("BlackOut").gameObject;
         m_blackoutP3P4 = m_uiPanelP3P4.transform.FindChild("BlackOut").gameObject;
-
 
         m_TimeMinP1P2 = m_uiPanelP1P2.transform.FindChild("time_min").gameObject.GetComponent<UISprite>();
         m_TimeTenSecP1P2 = m_uiPanelP1P2.transform.FindChild("time_tensec").gameObject.GetComponent<UISprite>();
@@ -112,15 +117,18 @@ public class CUIManager : MonoBehaviour {
                 switch (m_uiStatus)
                 {
                     case eUISTATUS.eWAIT:
+                        m_blackoutMain.AddComponent<CFadeIn>();
                         m_blackoutP1P2.AddComponent<CFadeIn>(); // フェードイン用スクリプト追加
                         m_blackoutP3P4.AddComponent<CFadeIn>();
                         m_uiStatus = eUISTATUS.eFADEIN;
                         break;
 
                     case eUISTATUS.eFADEIN:
-                        if (m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false && 
+                        if (m_blackoutMain.GetComponent<TweenAlpha>().enabled == false &&
+                            m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false && 
                             m_blackoutP3P4.GetComponent<TweenAlpha>().enabled == false)
                         {
+                            // カウントダウンのマネージャー用GameObjectを生成
                             m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
                             m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
                             m_gameObjectP1P2.transform.parent = m_uiPanelP1P2.transform;
@@ -163,6 +171,7 @@ public class CUIManager : MonoBehaviour {
                 {
                     case eUISTATUS.eGAME:
                         // ゲーム中の状態から遷移した場合はフェードアウトの準備をする
+                        m_blackoutMain.AddComponent<CFadeOut>();
                         m_blackoutP1P2.AddComponent<CFadeOut>();
                         m_blackoutP3P4.AddComponent<CFadeOut>();
                         m_uiStatus = eUISTATUS.eFADEOUT;
@@ -170,7 +179,8 @@ public class CUIManager : MonoBehaviour {
 
                     case eUISTATUS.eFADEOUT:
                         // フェードアウトが終了したらゲームを終了させる
-                        if (m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false &&
+                        if (m_blackoutMain.GetComponent<TweenAlpha>().enabled == false &&
+                            m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false &&
                             m_blackoutP3P4.GetComponent<TweenAlpha>().enabled == false)
                         {
                             CGameManager.m_nowStatus = CGameManager.eSTATUS.eEND;
@@ -188,6 +198,7 @@ public class CUIManager : MonoBehaviour {
                 switch (m_uiStatus)
                 {
                     case eUISTATUS.eGOAL:
+                        m_blackoutMain.AddComponent<CFadeOut>();
                         m_blackoutP1P2.AddComponent<CFadeOut>();
                         m_blackoutP3P4.AddComponent<CFadeOut>();
                         m_uiStatus = eUISTATUS.eGOALFADEOUT;
@@ -195,11 +206,13 @@ public class CUIManager : MonoBehaviour {
 
                     case eUISTATUS.eGOALFADEOUT:
                         // フェードアウトが終了したらフェードインスタート
-                        if (m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false &&
+                        if (m_blackoutMain.GetComponent<TweenAlpha>().enabled == false &&
+                            m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false &&
                             m_blackoutP3P4.GetComponent<TweenAlpha>().enabled == false)
                         {
                             this.Goal();
                             m_uiStatus = eUISTATUS.eGOALFADEIN;
+                            m_blackoutMain.AddComponent<CFadeIn>();
                             m_blackoutP1P2.AddComponent<CFadeIn>();
                             m_blackoutP3P4.AddComponent<CFadeIn>();
                             CGameManager.m_nowStatus = CGameManager.eSTATUS.eRESTART;   // リスタート状態に変更
@@ -211,7 +224,8 @@ public class CUIManager : MonoBehaviour {
             // リスタート
             case CGameManager.eSTATUS.eRESTART:
                 // フェードインが終了したらゲームの待機状態を変更
-                if (m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false &&
+                if (m_blackoutMain.GetComponent<TweenAlpha>().enabled == false &&
+                    m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false &&
                     m_blackoutP3P4.GetComponent<TweenAlpha>().enabled == false)
                 {
                     m_uiStatus = eUISTATUS.eGAME;
