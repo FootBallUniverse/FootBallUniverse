@@ -52,8 +52,6 @@ public class CGameManager : MonoBehaviour {
         m_soundPlayer = new CSoundPlayer();
         m_soundPlayer.PlayBGMFadeIn("game/bgm_01", 0.05f);
 
-		// シーン移動しても消滅しない
-		//DontDestroyOnLoad(this);  
 	}
 
     //----------------------------------------------------------------------
