@@ -40,5 +40,11 @@ public class C1P2PKeeper : CGoalKeeper {
 	// @Return	none
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
 	//----------------------------------------------------------------------
-	void LateUpdate(){CGoalKeeperLateUpdate();}
+	void LateUpdate()
+    {
+        CGoalKeeperLateUpdate();
+
+        CCpuManager.m_cpuManager.m_cpuP3P4Keeper = this.transform;
+
+    }
 }

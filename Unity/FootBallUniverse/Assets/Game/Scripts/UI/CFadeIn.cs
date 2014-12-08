@@ -12,7 +12,7 @@ public class CFadeIn : MonoBehaviour {
 	    
         // フェードイン用の状態をセット
         m_tweenAlpha.delay = 0;
-        m_tweenAlpha.duration = 1.5f;
+        m_tweenAlpha.duration = 3.0f;
         m_tweenAlpha.from = 1;
         m_tweenAlpha.to = 0;
 

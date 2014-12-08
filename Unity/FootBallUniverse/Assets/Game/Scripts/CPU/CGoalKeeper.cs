@@ -119,7 +119,6 @@ public class CGoalKeeper : CCpu {
 		m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
 		this.rigidbody.MovePosition(m_pos);
 
-		CCpuManager.m_cpuManager.m_cpuP1P2Keeper = this.transform;
 	}
 
 
