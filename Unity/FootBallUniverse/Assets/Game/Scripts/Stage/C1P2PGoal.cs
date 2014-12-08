@@ -29,7 +29,7 @@ public class C1P2PGoal : MonoBehaviour {
     // @Date	2014/10/30  @Update 2014/10/30  @Author T.Kaneko      
     //----------------------------------------------------------------------
     void Update () {
-	
+
 	}
 
     //----------------------------------------------------------------------
@@ -43,6 +43,7 @@ public class C1P2PGoal : MonoBehaviour {
 	{
 		if (collision.gameObject == GameObject.Find ("SoccerBall")) 
         {
+
             // グローバルのゴールのデータに追加
             TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, 0, true);
             CGameManager.m_bluePoint++;
@@ -51,8 +52,18 @@ public class C1P2PGoal : MonoBehaviour {
             {
                 collision.transform.parent.gameObject.GetComponent<CPlayer>().m_isBall = false;
             }
-            collision.gameObject.GetComponent<CSoccerBall>().Restart(new Vector3(0.0f, 0.0f, 0.0f));
+//            collision.gameObject.GetComponent<CSoccerBall>().Restart();
             CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
         }
 	}
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.transform.tag == "Player")
+        {
+            Debug.Log("player ");
+            this.GetComponent<BoxCollider>().isTrigger = false;
+        }
+
+    }
 }
