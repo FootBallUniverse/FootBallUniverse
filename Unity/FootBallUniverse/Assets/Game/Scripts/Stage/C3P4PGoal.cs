@@ -38,6 +38,7 @@ public class C3P4PGoal : MonoBehaviour {
         {
             // グローバルのゴールのデータに追加
             TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo,CSoccerBallManager.m_shootTeamNo, 1, true);
+            CGameManager.m_redPoint++;
 
             if (collision.gameObject.transform.parent.name != "BallGameObject")
             {

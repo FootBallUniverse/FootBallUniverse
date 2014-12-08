@@ -30,6 +30,9 @@ public class CGameManager : MonoBehaviour {
    
     public static bool m_isGamePlay;    // ゲームのが進行中かどうか
 
+    public static int m_redPoint;              // 1P2Pのポイント
+    public static int m_bluePoint;             // 3P4Pのポイント
+
     public static CSoundPlayer m_soundPlayer; // サウンドプレイヤー
 
     //----------------------------------------------------------------------
@@ -48,6 +51,9 @@ public class CGameManager : MonoBehaviour {
 
         CGameData.GetInstance().Init();
         this.LoadData();
+
+        m_redPoint = 0;
+        m_bluePoint = 0;
 
         m_soundPlayer = new CSoundPlayer();
         m_soundPlayer.PlayBGMFadeIn("game/bgm_01", 0.05f);
@@ -128,7 +134,7 @@ public class CGameManager : MonoBehaviour {
     // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private void Goal()
-    { 
+    {
         // プレイヤーのアニメーションを再生
 
         // ステータス変更
@@ -145,7 +151,7 @@ public class CGameManager : MonoBehaviour {
     // @Date	2014/11/21  @Update 2014/11/21  @Author T.Kawashita      
     //----------------------------------------------------------------------
     private void GoalPerfomance()
-    { 
+    {
         m_frame += Time.deltaTime;
         // アニメーション終わって少し時間がたったらフェードアウト
         if (m_frame >= 4.0f)
@@ -197,7 +203,6 @@ public class CGameManager : MonoBehaviour {
             CGameData.m_gameEndTime--;
 
             // ここで何か終わりの表示
-            Debug.Log("Resultまで残り:" + CGameData.m_gameEndTime);
             if (CGameData.m_gameEndTime <= 0)
             {
                 // ゲーム終了待機が終わったらフェードアウトさせる

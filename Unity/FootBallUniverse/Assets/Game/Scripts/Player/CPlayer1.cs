@@ -625,35 +625,37 @@ public class CPlayer1 : CPlayer {
         {
             case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
 
+                /*
                 // LTボタンが押されたら敵の視点に変更
                 if (Input.GetKeyDown(InputXBOX360.P1_XBOX_L))
                 {
                     m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.eENEMY;
                     return;
                 }
-
+                 * */
+                
                 if (Input.GetKeyDown(InputXBOX360.P1_XBOX_X) || Input.GetKeyDown(InputXBOX360.P1_XBOX_Y) || Input.GetKeyDown(InputXBOX360.P1_XBOX_B) || Input.GetKeyDown(InputXBOX360.P1_XBOX_A))
                 {
                     m_camera.ChangeRspeedlock();
                 }
 
                 // ボールの方向に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_X) && m_isBall == false)
+                if (Input.GetKey(InputXBOX360.P1_XBOX_B) && m_isBall == false)
                 {
                     m_trans.LookAt(CSoccerBallManager.m_soccerBallTransform);
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                 }
 
                 // 2Pの方向に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
+                if (Input.GetKey(InputXBOX360.P1_XBOX_X))
                 {
                     m_trans.transform.LookAt(CPlayerManager.m_player2Transform);
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
 
-                // 味方のＡＩの方向に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_B))
+                // 敵ゴールへ向ける
+                if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
                 {
                     m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2);
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);

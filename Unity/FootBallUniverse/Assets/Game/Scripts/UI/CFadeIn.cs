@@ -25,7 +25,7 @@ public class CFadeIn : MonoBehaviour {
         // フェードインがおわったら自分自身を削除
         if (m_tweenAlpha.enabled == false)
         {
-            GameObject.Destroy(this.gameObject);
+            GameObject.Destroy(this.GetComponent<CFadeIn>());
         }
 
 	}

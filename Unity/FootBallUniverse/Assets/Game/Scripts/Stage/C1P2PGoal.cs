@@ -45,6 +45,7 @@ public class C1P2PGoal : MonoBehaviour {
         {
             // グローバルのゴールのデータに追加
             TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, 0, true);
+            CGameManager.m_bluePoint++;
 
             if (collision.gameObject.transform.parent.name != "BallGameObject")
             {
