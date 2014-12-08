@@ -22,26 +22,48 @@ public class CUIManager : MonoBehaviour {
         eGOALFADEOUT,
         eGOALFADEIN,
     }
-    public eUISTATUS m_uiStatus;           // UIの状態
+    public eUISTATUS m_uiStatus;               // UIの状態
 
-    public GameObject m_gameObject;        // UI用GameObject
-    public GameObject m_uiPanel;           // UI用パネル
+    public GameObject m_gameObjectP1P2;        // P1P2UI用GameObject
+    public GameObject m_gameObjectP3P4;        // P3P4UI用GameObject
+    public GameObject m_uiPanelP1P2;           // P1P2UI用パネル
+    public GameObject m_uiPanelP3P4;           // P3P4UI用パネル
 
-	// Use this for initialization
+    //----------------------------------------------------------------------
+    // コンストラクタ
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita   
+    //----------------------------------------------------------------------
 	void Start () {
         
         // フェードイン・フェードアウト用ゲームオブジェクト作成
-        m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
-        
+        m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+        m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOUt"));
+
         // パネルを取得
-        m_uiPanel = this.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").gameObject;
-        m_gameObject.transform.parent = m_uiPanel.transform;
+        m_uiPanelP1P2 = GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").gameObject;
+        m_uiPanelP3P4 = GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").gameObject;
+
+ 
+        m_gameObjectP1P2.transform.parent = m_uiPanelP1P2.transform;
+        m_gameObjectP3P4.transform.parent = m_uiPanelP3P4.transform;
+
+        m_gameObjectP1P2.transform.localScale = new Vector3(1600.0f, 900.0f, 0.0f);
+        m_gameObjectP3P4.transform.localScale = new Vector3(1600.0f, 900.0f, 0.0f);
 
         m_uiStatus = eUISTATUS.eWAIT;
 
 	}
-	
-	// Update is called once per frame
+
+    //----------------------------------------------------------------------
+    // 更新
+    //----------------------------------------------------------------------
+    // @Param   none			
+    // @Return	none
+    // @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Update () {
 
         // 今のゲームの状態によってUIを切り替える
@@ -52,15 +74,18 @@ public class CUIManager : MonoBehaviour {
                 switch (m_uiStatus)
                 {
                     case eUISTATUS.eWAIT:
-                        m_gameObject.AddComponent<CFadeIn>(); // フェードイン用スクリプト追加
+                        m_gameObjectP1P2.AddComponent<CFadeIn>(); // フェードイン用スクリプト追加
+                        m_gameObjectP3P4.AddComponent<CFadeIn>();
                         m_uiStatus = eUISTATUS.eFADEIN;
                         break;
 
                     case eUISTATUS.eFADEIN:
-                        if (m_gameObject == false)
+                        if (m_gameObjectP1P2 == false && m_gameObjectP3P4 == false)
                         {
-                            m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
-                            m_gameObject.transform.parent = m_uiPanel.transform;
+                            m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
+                            m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
+                            m_gameObjectP1P2.transform.parent = m_uiPanelP1P2.transform;
+                            m_gameObjectP3P4.transform.parent = m_uiPanelP3P4.transform;
                             m_uiStatus = eUISTATUS.eCOUNTDOWN;
                             CGameManager.m_nowStatus = CGameManager.eSTATUS.eCOUNTDOWN;
                         }
@@ -70,7 +95,7 @@ public class CUIManager : MonoBehaviour {
 
             // カウントダウン中
             case CGameManager.eSTATUS.eCOUNTDOWN:
-                if (m_gameObject == false)
+                if (m_gameObjectP1P2 == false && m_gameObjectP3P4 == false)
                 {
                     m_uiStatus = eUISTATUS.eGAME;
                     CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;
@@ -92,15 +117,18 @@ public class CUIManager : MonoBehaviour {
                 {
                     case eUISTATUS.eGAME:
                         // ゲーム中の状態から遷移した場合はフェードアウトの準備をする
-                        m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
-                        m_gameObject.AddComponent<CFadeOut>();
-                        m_gameObject.transform.parent = m_uiPanel.transform;
+                        m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                        m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                        m_gameObjectP1P2.AddComponent<CFadeOut>();
+                        m_gameObjectP3P4.AddComponent<CFadeOut>();
+                        m_gameObjectP1P2.transform.parent = m_uiPanelP1P2.transform;
+                        m_gameObjectP3P4.transform.parent = m_uiPanelP3P4.transform;
                         m_uiStatus = eUISTATUS.eFADEOUT;
                         break;
 
                     case eUISTATUS.eFADEOUT:
                         // フェードアウトが終了したらゲームを終了させる
-                        if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
+                        if (m_gameObjectP1P2.GetComponent<TweenAlpha>().enabled == false)
                         {
                             CGameManager.m_nowStatus = CGameManager.eSTATUS.eEND;
                         }
@@ -117,21 +145,28 @@ public class CUIManager : MonoBehaviour {
                 switch (m_uiStatus)
                 {
                     case eUISTATUS.eGOAL:
-                        m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
-                        m_gameObject.AddComponent<CFadeOut>();
-                        m_gameObject.transform.parent = m_uiPanel.transform;
+                        m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                        m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                        m_gameObjectP1P2.AddComponent<CFadeOut>();
+                        m_gameObjectP3P4.AddComponent<CFadeOut>();
+                        m_gameObjectP1P2.transform.parent = m_uiPanelP1P2.transform;
+                        m_gameObjectP3P4.transform.parent = m_uiPanelP3P4.transform;
                         m_uiStatus = eUISTATUS.eGOALFADEOUT;
                         break;
 
                     case eUISTATUS.eGOALFADEOUT:
                         // フェードアウトが終了したらフェードインスタート
-                        if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
+                        if (m_gameObjectP1P2.GetComponent<TweenAlpha>().enabled == false)
                         {
                             m_uiStatus = eUISTATUS.eGOALFADEIN;
-                            GameObject.Destroy(m_gameObject);
-                            m_gameObject = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
-                            m_gameObject.AddComponent<CFadeIn>();
-                            m_gameObject.transform.parent = m_uiPanel.transform;
+                            GameObject.Destroy(m_gameObjectP1P2);
+                            GameObject.Destroy(m_gameObjectP3P4);
+                            m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                            m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
+                            m_gameObjectP1P2.AddComponent<CFadeIn>();
+                            m_gameObjectP3P4.AddComponent<CFadeIn>();
+                            m_gameObjectP1P2.transform.parent = m_uiPanelP1P2.transform;
+                            m_gameObjectP3P4.transform.parent = m_uiPanelP3P4.transform;
                             CGameManager.m_nowStatus = CGameManager.eSTATUS.eRESTART;   // リスタート状態に変更
                         }
                         break;
@@ -141,7 +176,7 @@ public class CUIManager : MonoBehaviour {
             // リスタート
             case CGameManager.eSTATUS.eRESTART:
                 // フェードインが終了したらゲームの待機状態を変更
-                if (m_gameObject.GetComponent<TweenAlpha>().enabled == false)
+                if (m_gameObjectP1P2.GetComponent<TweenAlpha>().enabled == false)
                 {
                     m_uiStatus = eUISTATUS.eGAME;
                     CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;

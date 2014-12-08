@@ -45,5 +45,7 @@ public class C3P4PKeeper2 : CGoalKeeper {
 	void LateUpdate()
 	{
 		CGoalKeeperLateUpdate();
+
+        CCpuManager.m_cpuManager.m_cpuP3P4Keeper = this.transform;
 	}
 }
