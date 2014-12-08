@@ -16,16 +16,20 @@ public class Result : MonoBehaviour {
 		ALPHA_THANK_YOU,
 		STAY_LAST,
 		ALPHA_OUT,
+		WAIT,
 		STATE_MAX
 	};
 
 	private RESULT_STATE[] state      = new RESULT_STATE[2];
 	private GameObject[,] SubPanels   = new GameObject[3,3];
+	private GameObject[,] button      = new GameObject[2, 2];
 	private int[] works               = new int[2];
 	private bool[,] buttonCheck       = new bool[2,2];
 	private int[,] suppoterBffByTeam  = new int[2, 2];
 	private int[] suppoterBffByWorld  = new int[2];
 	public  int AddSuppoterTime;
+	private int count;
+	const int countMax = 120;
 
     public CSoundPlayer m_soundPlayer;
 
@@ -183,24 +187,66 @@ public class Result : MonoBehaviour {
 		if(Input.GetKeyDown(InputXBOX360.P2_XBOX_A)) this.buttonCheck[0,1] = true;
 		if(Input.GetKeyDown(InputXBOX360.P3_XBOX_A)) this.buttonCheck[1,0] = true;
 		if(Input.GetKeyDown(InputXBOX360.P4_XBOX_A)) this.buttonCheck[1,1] = true;
-		if(Input.GetKeyDown(KeyCode.LeftShift)) this.buttonCheck[0,0]  = this.buttonCheck[0,1] = true;
-		if(Input.GetKeyDown(KeyCode.RightShift)) this.buttonCheck[1,0] = this.buttonCheck[1,1] = true;
+		if(Input.GetKeyDown(KeyCode.LeftShift))      this.buttonCheck[0,0] = this.buttonCheck[0,1] = true;
+		if(Input.GetKeyDown(KeyCode.RightShift))     this.buttonCheck[1,0] = this.buttonCheck[1,1] = true;
 
-		// 遷移
+		// 遷移（左右画面共有）
+		switch (this.state[0])
+		{
+			// 最初のフェードイン
+			case RESULT_STATE.ALPHA_IN:
+				ReSetButtonCheck(0);
+				ReSetButtonCheck(1);
+				if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
+				{
+					this.state[0] = RESULT_STATE.STAY_FIRST;
+					this.state[1] = RESULT_STATE.STAY_FIRST;
+				}
+				break;
+
+			// 最終待機
+			case RESULT_STATE.STAY_LAST:
+				ReSetButtonCheck(0);
+				ReSetButtonCheck(1);
+				if (this.state[0] == this.state[1])
+				{
+					this.state[0] = RESULT_STATE.WAIT;
+					this.state[1] = RESULT_STATE.WAIT;
+					this.count    = 0;
+				}
+				break;
+
+			// 
+			case RESULT_STATE.WAIT:
+				ReSetButtonCheck(0);
+				ReSetButtonCheck(1);
+				this.count++;
+
+				if (this.count > Result.countMax)
+				{
+					this.state[0] = RESULT_STATE.ALPHA_OUT;
+					this.state[1] = RESULT_STATE.ALPHA_OUT;
+					GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().Play(false);
+					m_soundPlayer.PlayBGMFadeOut(0.004f);
+				}
+				break;
+
+			// フェードアウト
+			case RESULT_STATE.ALPHA_OUT:
+				ReSetButtonCheck(0);
+				ReSetButtonCheck(1);
+				if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
+					Application.LoadLevel("Title");
+				break;
+		}
+
+		// 遷移（左右画面別々）
 		for (int i = 0; i < 2; i++)
 		{
 			switch (this.state[i])
 			{
-				// 最初のフェードイン
-				case RESULT_STATE.ALPHA_IN:
-					ReSetButtonCheck(i);
-					if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
-						this.state[i] = RESULT_STATE.STAY_FIRST;
-					break;
-
 				// 待機その１
 				case RESULT_STATE.STAY_FIRST:
-					
 					if (this.buttonCheck[i,0] == true && this.buttonCheck[i,1] == true)
 					{
 						this.SubPanels[i,1].GetComponent<TweenAlpha>().enabled = true;
@@ -255,18 +301,14 @@ public class Result : MonoBehaviour {
 					{
 						this.state[i] = RESULT_STATE.STAY_TWO;
 						this.SubPanels[i,0].GetComponent<TweenScale>().enabled = false;
-					}
-					else
-					{
+					}else{
 						for (int j = 0; j < 2; j++)
 						{
 							if (this.suppoterBffByTeam[i,j] >= works[j])
 							{
 								this.suppoterBffByTeam[i,j] -= works[j];
 								this.suppoterBffByWorld[i] += works[j];
-							}
-							else if (this.suppoterBffByTeam[i,j] != 0)
-							{
+							}else if (this.suppoterBffByTeam[i,j] != 0){
 								this.suppoterBffByTeam[i,j]--;
 								this.suppoterBffByWorld[i]++;
 							}
@@ -288,25 +330,6 @@ public class Result : MonoBehaviour {
 					ReSetButtonCheck(i);
 					if (this.SubPanels[i,2].GetComponent<TweenAlpha>().enabled == false)
 						this.state[i] = RESULT_STATE.STAY_LAST;
-					break;
-
-				// 最終待機
-				case RESULT_STATE.STAY_LAST:
-					ReSetButtonCheck(i);
-					if (this.state[0] == this.state[1])
-					{
-						GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().Play(false);
-						m_soundPlayer.PlayBGMFadeOut(0.004f);
-						this.state[i] = RESULT_STATE.ALPHA_OUT;
-					}
-					break;
-
-				// フェードアウト
-				case RESULT_STATE.ALPHA_OUT:
-					ReSetButtonCheck(i);
-					if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
-						Application.LoadLevel("Title");
-
 					break;
 			}
 		}
