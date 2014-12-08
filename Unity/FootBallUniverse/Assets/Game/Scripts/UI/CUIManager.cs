@@ -29,6 +29,15 @@ public class CUIManager : MonoBehaviour {
     public GameObject m_uiPanelP1P2;           // P1P2UI用パネル
     public GameObject m_uiPanelP3P4;           // P3P4UI用パネル
 
+    // UIの時間用
+    public UISprite m_TimeMinP1P2;
+    public UISprite m_TimeTenSecP1P2;
+    public UISprite m_TimeSecP1P2;
+
+    public UISprite m_TimeMinP3P4;
+    public UISprite m_TimeTenSecP3P4;
+    public UISprite m_TimeSecP3P4;
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -38,20 +47,25 @@ public class CUIManager : MonoBehaviour {
     //----------------------------------------------------------------------
 	void Start () {
         
-        // フェードイン・フェードアウト用ゲームオブジェクト作成
-        m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOut"));
-        m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/BlackOUt"));
-
         // パネルを取得
         m_uiPanelP1P2 = GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").gameObject;
         m_uiPanelP3P4 = GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").gameObject;
 
- 
-        m_gameObjectP1P2.transform.parent = m_uiPanelP1P2.transform;
-        m_gameObjectP3P4.transform.parent = m_uiPanelP3P4.transform;
+        // フェードイン・フェードアウト用ゲームオブジェクト作成
+        m_gameObjectP1P2 = m_uiPanelP1P2.transform.FindChild("BlackOut").gameObject;
+        m_gameObjectP3P4 = m_uiPanelP3P4.transform.FindChild("BlackOut").gameObject;
 
-        m_gameObjectP1P2.transform.localScale = new Vector3(1600.0f, 900.0f, 0.0f);
-        m_gameObjectP3P4.transform.localScale = new Vector3(1600.0f, 900.0f, 0.0f);
+
+        m_TimeMinP1P2 = m_uiPanelP1P2.transform.FindChild("time_min").gameObject.GetComponent<UISprite>();
+        m_TimeTenSecP1P2 = m_uiPanelP1P2.transform.FindChild("time_tensec").gameObject.GetComponent<UISprite>();
+        m_TimeSecP1P2 = m_uiPanelP1P2.transform.FindChild("time_sec").gameObject.GetComponent<UISprite>();
+
+        m_TimeMinP3P4 = m_uiPanelP3P4.transform.FindChild("time_min").gameObject.GetComponent<UISprite>();
+        m_TimeTenSecP3P4 = m_uiPanelP3P4.transform.FindChild("time_tensec").gameObject.GetComponent<UISprite>();
+        m_TimeSecP3P4 = m_uiPanelP3P4.transform.FindChild("time_sec").gameObject.GetComponent<UISprite>();
+
+        // 最初の時間設定
+        CalcTime();
 
         m_uiStatus = eUISTATUS.eWAIT;
 
@@ -104,6 +118,7 @@ public class CUIManager : MonoBehaviour {
 
             // ゲーム中
             case CGameManager.eSTATUS.eGAME:
+                CalcTime();
                 break;
 
             // ゴールした後のUI
@@ -184,4 +199,35 @@ public class CUIManager : MonoBehaviour {
                 break;
         }
 	}
+
+    //----------------------------------------------------------------------
+    // 時間を計算して表示
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void CalcTime()
+    {
+        int minTime = 0;
+        int tenSecTime = 0;
+        int secTime = 0;
+
+        if (CGameManager.m_nowTime >= 600)
+        {
+        }
+
+        minTime = (int)(CGameData.m_gamePlayTime / 60);
+        tenSecTime = (int)((CGameData.m_gamePlayTime - (minTime * 60)) / 10);
+        secTime = (int)((CGameData.m_gamePlayTime - (minTime * 60)) % 10);
+
+        m_TimeMinP1P2.spriteName = "num_" + minTime.ToString();
+        m_TimeTenSecP1P2.spriteName = "num_" + tenSecTime.ToString();
+        m_TimeSecP1P2.spriteName = "num_" + secTime.ToString();
+
+        m_TimeMinP3P4.spriteName = "num_" + minTime.ToString();
+        m_TimeTenSecP3P4.spriteName = "num_" + tenSecTime.ToString();
+        m_TimeSecP3P4.spriteName = "num_" + secTime.ToString();
+
+    }
 }
