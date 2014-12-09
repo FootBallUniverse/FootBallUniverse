@@ -22,7 +22,7 @@ public class CUIManager : MonoBehaviour {
         eGOALFADEOUT,
         eGOALFADEIN,
     }
-    public eUISTATUS m_uiStatus;               // UIの状態
+    public static eUISTATUS m_uiStatus;               // UIの状態
 
     // どっちのゴールに入れたか
     public enum ePOINTSTATUS
@@ -211,6 +211,7 @@ public class CUIManager : MonoBehaviour {
                             m_blackoutP3P4.GetComponent<TweenAlpha>().enabled == false)
                         {
                             this.Goal();
+							CGameManager.RestartGame();
                             m_uiStatus = eUISTATUS.eGOALFADEIN;
                             m_blackoutMain.AddComponent<CFadeIn>();
                             m_blackoutP1P2.AddComponent<CFadeIn>();

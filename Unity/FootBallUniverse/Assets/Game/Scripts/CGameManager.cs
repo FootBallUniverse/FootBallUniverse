@@ -20,6 +20,7 @@ public class CGameManager : MonoBehaviour {
         eGOAL,              // ゴール状態
         eGOALWAIT,          // ゴール終わった後の待機状態
         eGOALPERFOMANCE,    // ゴールのパフォーマンス中
+		eGOALFADEOUT,		// ゴール後のフェードアウト
         eRESTART,           // ゴール後のリスタート
         eEND,               // ゲーム終了状態
     }
@@ -77,7 +78,7 @@ public class CGameManager : MonoBehaviour {
             case eSTATUS.eGAME: GamePlay();        break;           // ゲームプレイ状態
             case eSTATUS.eGOAL: Goal();            break;           // ゴールした後の状態
             case eSTATUS.eGOALPERFOMANCE: GoalPerfomance(); break;  // ゴール後のパフォーマンス状態
-            case eSTATUS.eGOALWAIT: GoalWait();    break;           // ゴール後の待機状態
+			case eSTATUS.eGOALWAIT:	GoalWait();break;           // ゴール後の待機状態
             case eSTATUS.eENDWAIT: GameEndWait();  break;           // ゲーム終了待機状態
             case eSTATUS.eEND:                 
                 // リザルト画面に遷移させる
@@ -87,6 +88,17 @@ public class CGameManager : MonoBehaviour {
             default:                               break;
         }
     }
+
+	//----------------------------------------------------------------------
+	// フレーム最後の更新
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/9 @Update 2014/12/9 @Author T.Kawashita  
+	//----------------------------------------------------------------------
+	void LateUpdate()
+	{
+	}
 
     //----------------------------------------------------------------------
     // ゲーム待機状態
@@ -211,6 +223,18 @@ public class CGameManager : MonoBehaviour {
             } 
         }
     }
+
+	//----------------------------------------------------------------------
+	// ゲームのリスタート
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/9  @Update 2014/12/9  @Author T.Kawashita      
+	//----------------------------------------------------------------------
+	public static void RestartGame()
+	{
+		CSoccerBallManager.Restart ();
+	}
 
     //----------------------------------------------------------------------
     // ゲームタイマー

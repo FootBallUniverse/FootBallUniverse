@@ -94,6 +94,7 @@ public class CPlayer : MonoBehaviour {
     {
         // 位置と回転をセットしなおす
         m_pos = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
+		this.transform.localPosition = m_pos;
         m_angle = new Vector3(0.0f, 0.0f, 0.0f);
         this.transform.localRotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -174,6 +175,7 @@ public class CPlayer : MonoBehaviour {
     {
         // 位置をセット
         this.transform.localPosition = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
+		m_pos = this.transform.localPosition;
 
         // ボールの取れる範囲をセット
         this.GetComponent<SphereCollider>().radius = m_human.m_holdRangeRadius;
@@ -188,6 +190,7 @@ public class CPlayer : MonoBehaviour {
     //----------------------------------------------------------------------
     public virtual void ChangeViewPoint()
     {
+
     }
 
 }

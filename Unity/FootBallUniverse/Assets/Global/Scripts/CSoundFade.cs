@@ -108,7 +108,7 @@ public class CSoundFade : MonoBehaviour {
     // @Return	none
     // @Date	2014/10/15  @Update 2014/10/15  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public void FadeIn(float _fadeSpeed = FADE_SPEED)
+    public void FadeIn(float _fadeSpeed)
     {
         m_status = eSOUND_STATUS.eFADEIN;
         m_audioSource.volume = 0.0f;        // Volumeをいったん0にする
@@ -123,7 +123,7 @@ public class CSoundFade : MonoBehaviour {
     // @Return	none
     // @Date	2014/10/15  @Update 2014/10/15  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    public void FadeOut(float _fadeSpeed = FADE_SPEED)
+    public void FadeOut(float _fadeSpeed)
     {
         m_status = eSOUND_STATUS.eFADEOUT;
         m_fadeSpeed = _fadeSpeed;

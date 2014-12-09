@@ -66,9 +66,13 @@ public class C1P2PGoal : MonoBehaviour {
     //----------------------------------------------------------------------
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.transform.tag == "Player")
+        if (collider.transform.tag == "SoccerBall")
         {
-            this.GetComponent<BoxCollider>().isTrigger = false;
+			// グローバルのゴールのデータに追加
+			TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, 0, true);
+			CGameManager.m_bluePoint++;
+			
+			CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
         }
 
     }

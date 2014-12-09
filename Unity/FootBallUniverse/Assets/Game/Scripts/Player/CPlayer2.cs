@@ -615,14 +615,14 @@ public class CPlayer2 : CPlayer
         switch (m_viewPointStatus)
         {
             case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
-
+			/*
                 // LTボタンが押されたら敵の視点に変更
                 if (Input.GetKeyDown(InputXBOX360.P2_XBOX_L))
                 {
                     m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.eENEMY;
                     return;
                 }
-
+*/
                 if (Input.GetKeyDown(InputXBOX360.P2_XBOX_X) || Input.GetKeyDown(InputXBOX360.P2_XBOX_Y) || Input.GetKeyDown(InputXBOX360.P2_XBOX_B) || Input.GetKeyDown(InputXBOX360.P2_XBOX_A))
                 {
                     m_camera.ChangeRspeedlock();
@@ -636,18 +636,18 @@ public class CPlayer2 : CPlayer
                     return;
                 }
 
-                // サッカーボールに向ける
-                if (Input.GetKey(InputXBOX360.P2_XBOX_Y) && m_isBall == false)
+                // 敵ゴールに向ける
+                if (Input.GetKey(InputXBOX360.P2_XBOX_Y))
                 {
-                    m_trans.LookAt(CSoccerBallManager.m_soccerBallTransform);
+                    m_trans.LookAt(CStageManager.m_3p4pGoalTransform);
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
 
-                // 味方のＡＩの方向に向ける
-                if (Input.GetKey(InputXBOX360.P2_XBOX_B))
+                // ボールの方向に向ける
+                if (Input.GetKey(InputXBOX360.P2_XBOX_B) && m_isBall == false)
                 {
-                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2);
+                    m_trans.LookAt(CSoccerBallManager.m_soccerBallTransform);
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
@@ -655,12 +655,12 @@ public class CPlayer2 : CPlayer
                 // キーパーの方向に向ける
                 if (Input.GetKey(InputXBOX360.P2_XBOX_A))
                 {
-                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2Keeper);
+                    m_trans.LookAt(CStageManager.m_1p2pGoalTransform);
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }
                 break;
-
+			/*
             case CPlayerManager.eVIEW_POINT_STATUS.eENEMY:
                 // RTボタンが押されたら味方の視点に変更
                 if (Input.GetKeyDown(InputXBOX360.P2_XBOX_R))
@@ -707,6 +707,7 @@ public class CPlayer2 : CPlayer
                 }
 
                 break;
+                */
         }
     }
 
