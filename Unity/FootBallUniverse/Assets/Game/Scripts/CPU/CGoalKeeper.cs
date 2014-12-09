@@ -4,6 +4,7 @@ using System.Collections;
 public class CGoalKeeper : CCpu {
 	protected enum GK_State
 	{
+		WAIT,
 		STAY,
 		ON_ALERT,
 		TAKE_BALL,
@@ -15,8 +16,8 @@ public class CGoalKeeper : CCpu {
 
 	protected GK_State gkState            = GK_State.STAY;
 	protected Vector3 HOME_POSITION       = new Vector3(0.0f, 0.0f, 0.0f);
-	protected const float ARAT_SPACE      = 8.0f;
-	protected const float TAKE_BALL_SPACE = 5.0f;
+	protected const float ARAT_SPACE      = 15.0f;
+	protected const float TAKE_BALL_SPACE = 10.0f;
 
 	//----------------------------------------------------------------------
 	// コンストラクタ
@@ -96,6 +97,7 @@ public class CGoalKeeper : CCpu {
 
 		switch (this.gkState)
 		{
+			case GK_State.WAIT: Wait(); break;
 			case GK_State.STAY: Stay(); break;
 			case GK_State.ON_ALERT: OnAlert(); break;
 			case GK_State.TAKE_BALL: TakeBall(); break;
@@ -119,6 +121,24 @@ public class CGoalKeeper : CCpu {
 		m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
 		this.rigidbody.MovePosition(m_pos);
 
+		switch (this.gkState)
+		{
+			case GK_State.CAT:
+			case GK_State.TAKE_BALL:
+				if (this.soccerBallObject.GetComponent<CSoccerBall>().m_isPlayer)
+				{
+					this.gkState = GK_State.ON_ALERT;
+				}
+				break;
+		}
+
+	}
+
+	void Wait()
+	{
+		BackHome();
+		if (this.soccerBallObject.GetComponent<CSoccerBall>().m_isPlayer == true)
+			this.gkState = GK_State.STAY;
 	}
 
 
@@ -134,7 +154,7 @@ public class CGoalKeeper : CCpu {
 		BackHome();
 
 		// ボールの監視
-		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) <= ARAT_SPACE)
+		if (Vector3.Distance(this.HOME_POSITION, this.soccerBallObject.transform.position) <= ARAT_SPACE)
 			this.gkState = GK_State.ON_ALERT;
 	}
 
@@ -149,18 +169,35 @@ public class CGoalKeeper : CCpu {
 	void OnAlert()
 	{
 		// ボールが範囲外に出たら待機へ戻る
-		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) >= ARAT_SPACE)
+		if (Vector3.Distance(this.HOME_POSITION, this.soccerBallObject.transform.position) >= ARAT_SPACE)
 			this.gkState = GK_State.STAY;
 
-		// ボールがフリーだと判断（→取りに行く）
-		if (Vector3.Distance(this.transform.position, this.enemyData[0].transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, this.enemyData[1].transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, this.enemyData[2].transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, this.enemyData[3].transform.position) >= ARAT_SPACE &&
-			Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) <= TAKE_BALL_SPACE &&
+		// フリーボールが範囲内＋敵が近くにいる
+		if ((Vector3.Distance(this.HOME_POSITION, this.enemyData[0].transform.position) <= ARAT_SPACE ||
+			 Vector3.Distance(this.HOME_POSITION, this.enemyData[1].transform.position) <= ARAT_SPACE ||
+			 Vector3.Distance(this.HOME_POSITION, this.enemyData[2].transform.position) <= ARAT_SPACE ||
+			 Vector3.Distance(this.HOME_POSITION, this.enemyData[3].transform.position) <= ARAT_SPACE) &&
 			this.soccerBallObject.GetComponent<CSoccerBall>().m_isPlayer == false)
 		{
-			this.gkState = GK_State.TAKE_BALL;
+			this.gkState = GK_State.CAT;
+		}
+
+		// フリーボールが範囲内＋敵が近くにいない
+		if (Vector3.Distance(this.HOME_POSITION, this.enemyData[0].transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.HOME_POSITION, this.enemyData[1].transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.HOME_POSITION, this.enemyData[2].transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.HOME_POSITION, this.enemyData[3].transform.position) >= ARAT_SPACE &&
+			Vector3.Distance(this.HOME_POSITION, this.soccerBallObject.transform.position) <= ARAT_SPACE &&
+			this.soccerBallObject.GetComponent<CSoccerBall>().m_isPlayer == false)
+		{
+			if (Vector3.Distance(this.HOME_POSITION, this.soccerBallObject.transform.position) <= TAKE_BALL_SPACE)
+			{
+				// かなりの近距離の場合（普通のカットと同じ動作）
+				this.gkState = GK_State.CAT;
+			}else{
+				// そこそこの距離の場合（普通にとりにいく）
+				this.gkState = GK_State.TAKE_BALL;
+			}
 		}
 	}
 
@@ -174,24 +211,14 @@ public class CGoalKeeper : CCpu {
 	//----------------------------------------------------------------------
 	void TakeBall()
 	{
-		Vector3 targetPosition = new Vector3();
-
-#if false
-		// 本来のパス
 		// ボールを取りに行く
 		this.transform.LookAt(this.soccerBallObject.transform.position);
 		Move(new Vector3(0.0f,0.0f,1.0f));
-#else
-		// ボールカット（仮用）
-		targetPosition = GetFuterBallPosition();
-		this.transform.LookAt(targetPosition);
-		Move(new Vector3(0.0f, 0.0f, 1.0f));
-		this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
-#endif
+
 		// ボールをキャッチ（→パス）
 		if (this.m_isBall)
 		{
-			this.gkState = GK_State.CAT;
+			this.gkState = GK_State.PASS;
 			this.transform.LookAt(this.frendryData[0].transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
@@ -207,8 +234,20 @@ public class CGoalKeeper : CCpu {
 	//----------------------------------------------------------------------
 	void Cach()
 	{
-		if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
+		Vector3 targetPosition = new Vector3();
+
+		targetPosition = GetFuterBallPosition();
+		this.transform.LookAt(targetPosition);
+		Move(new Vector3(0.0f, 0.0f, 1.0f));
+		this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
+
+		// ボールをキャッチ（→パス）
+		if (this.m_isBall)
+		{
 			this.gkState = GK_State.PASS;
+			this.transform.LookAt(this.frendryData[0].transform.position);
+			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
+		}
 	}
 
 
@@ -221,8 +260,8 @@ public class CGoalKeeper : CCpu {
 	//----------------------------------------------------------------------
 	void Pass()
 	{
-		if (Vector3.Distance(this.transform.position, this.soccerBallObject.transform.position) >= TAKE_BALL_SPACE)
-			this.gkState = GK_State.STAY;
+		if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
+			this.gkState = GK_State.WAIT;
 	}
 
 
