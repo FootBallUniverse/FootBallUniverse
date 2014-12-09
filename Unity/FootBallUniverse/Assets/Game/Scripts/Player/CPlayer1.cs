@@ -210,9 +210,12 @@ public class CPlayer1 : CPlayer {
     private void PlayerStatusTackle()
     {
         // タックル状態が終わったらプレイヤーのステータス変更
-        if (this.Tackle() == true)
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-    }
+        if (this.Tackle () == true)
+		{
+			m_animator.Wait();	
+			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		}
+	}
 
     //----------------------------------------------------------------------
     // プレイヤーがタックル成功中の状態
@@ -380,6 +383,7 @@ public class CPlayer1 : CPlayer {
     {
         if (m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE)
             return m_action.Tackle(ref m_pos, this.transform.forward);
+
         return false;
     }
 
@@ -522,6 +526,7 @@ public class CPlayer1 : CPlayer {
             m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
             m_chargeFrame = 0;
             m_isLtPress = true;
+			m_playerSE.PlaySE("game/charging");
             return;
         }
 
@@ -551,6 +556,7 @@ public class CPlayer1 : CPlayer {
         {
             m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
             m_animator.ChangeAnimation(m_animator.m_isWait);
+			m_playerSE.StopSE();
             return;
         }
 
@@ -565,13 +571,17 @@ public class CPlayer1 : CPlayer {
             {
                 m_action.InitTackle(m_human.m_tackleInitSpeed, m_human.m_tackleMotionLength, m_human.m_tackleDecFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.eTACKLE;
+				m_playerSE.StopSE();
+				m_playerSE.PlaySE("game/tackle_go");
             }
             // タックルじゃなくてチャージ時間が一定量以上ならダッシュ
             else if (m_chargeFrame >= m_human.m_dashChargeLength)
             {
                 m_action.InitDash(m_human.m_dashInitSpeed, m_human.m_dashMotionLength, m_human.m_dashDecFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.eDASH;
-            }
+				m_playerSE.StopSE();
+				m_playerSE.PlaySE("game/dash");
+			}
 
             // 初期化
             m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P1_XBOX_LT, ref m_chargeFrame);
