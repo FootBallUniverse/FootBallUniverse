@@ -5,6 +5,7 @@ public class Entry_1 : MonoBehaviour
 {
     // 親情報の取得用
     title m_Title;
+    SEPlay m_SE;
     // 速度
     public Vector2 SPEED = new Vector2(0.05f, 0.01f);
     // エントリーしたかどうかの確認用フラグ
@@ -21,6 +22,7 @@ public class Entry_1 : MonoBehaviour
 
         GameObject Entry_time = this.transform.parent.gameObject;
         m_Title = Entry_time.GetComponent<title>();
+        m_SE = Entry_time.GetComponent<SEPlay>();
     }
 
     // Update is called once per frame
@@ -42,7 +44,8 @@ public class Entry_1 : MonoBehaviour
                 Input.GetKeyDown(InputXBOX360.P1_XBOX_A) ||
                 InputXBOX360.IsGetAllStartButton() == true)
             {
-                Debug.Log("Player1 Entry");
+                m_SE.VolumeSE(0.2f);
+                m_SE.PlaySE("title/entry_on");
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
                 transform.position = new Vector3(transform.position.x, 2048.0f, transform.position.z);
@@ -56,7 +59,8 @@ public class Entry_1 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q) ||
                 Input.GetKeyDown(InputXBOX360.P1_XBOX_B))
             {
-                Debug.Log("Player1 FAILED");
+                m_SE.VolumeSE(0.1f);
+                m_SE.PlaySE("title/entry_cancel");
                 m_inFlag = false;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
                 transform.position = Position;

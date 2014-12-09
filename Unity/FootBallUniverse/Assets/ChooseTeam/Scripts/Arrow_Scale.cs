@@ -25,7 +25,7 @@ public class Arrow_Scale : MonoBehaviour
     {
         m_NowScale = this.gameObject.transform.localScale;
 
-        if (m_NowScale.x <= 0.021f && m_ScaleFlag == false)
+        if (m_NowScale.x <= 0.025f && m_ScaleFlag == false)
         {
             TweenScale.Begin(this.gameObject, 0.0f, m_MaxScale);
             m_ScaleFlag = true;
