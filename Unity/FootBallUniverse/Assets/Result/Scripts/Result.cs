@@ -29,7 +29,7 @@ public class Result : MonoBehaviour {
 	private int[] suppoterBffByWorld  = new int[2];
 	public  int AddSuppoterTime;
 	private int count;
-	const int countMax = 120;
+	public int  countMax = 120;
 
     public CSoundPlayer m_soundPlayer;
 
@@ -45,20 +45,6 @@ public class Result : MonoBehaviour {
 	void Start() 
     {
 		Init();
-
-		// 数値初期化
-		for (int i = 0; i < 2; i++)
-		{
-			this.state[i] = RESULT_STATE.ALPHA_IN;
-			this.suppoterBffByWorld[i] = TeamData.suppoterByWorld;
-			for (int j = 0; j < 2; j++)
-				this.suppoterBffByTeam[i,j] = TeamData.suppoterByTeam[j];
-			ReSetButtonCheck(i);
-		}
-
-		// TeamDataを統合、初期化
-		TeamData.suppoterByWorld += (TeamData.suppoterByTeam[0] + TeamData.suppoterByTeam[1]);
-		TeamData.suppoterByTeam[0] = TeamData.suppoterByTeam[1] = 0;
 
 		// music
 		m_soundPlayer = new CSoundPlayer();
@@ -102,15 +88,21 @@ public class Result : MonoBehaviour {
 #endif // ドライバ＿END
 
 		// パネルデータ読込
-		panels[0]      = GameObject.Find("MainPanel")  as GameObject;
-		panels[1]      = GameObject.Find("SubPanel0")  as GameObject;
-		panels[2]      = GameObject.Find("SubPanel1")  as GameObject;
-		SubPanels[0,0] = GameObject.Find("SubPanel00") as GameObject;
-		SubPanels[0,1] = GameObject.Find("SubPanel01") as GameObject;
-		SubPanels[0,2] = GameObject.Find("SubPanel02") as GameObject;
-		SubPanels[1,0] = GameObject.Find("SubPanel10") as GameObject;
-		SubPanels[1,1] = GameObject.Find("SubPanel11") as GameObject;
-		SubPanels[1,2] = GameObject.Find("SubPanel12") as GameObject;
+		panels[0]           = GameObject.Find("MainPanel")  as GameObject;
+		panels[1]           = GameObject.Find("SubPanel0")  as GameObject;
+		panels[2]           = GameObject.Find("SubPanel1")  as GameObject;
+		this.SubPanels[0,0] = GameObject.Find("SubPanel00") as GameObject;
+		this.SubPanels[0,1] = GameObject.Find("SubPanel01") as GameObject;
+		this.SubPanels[0,2] = GameObject.Find("SubPanel02") as GameObject;
+		this.SubPanels[1,0] = GameObject.Find("SubPanel10") as GameObject;
+		this.SubPanels[1,1] = GameObject.Find("SubPanel11") as GameObject;
+		this.SubPanels[1,2] = GameObject.Find("SubPanel12") as GameObject;
+
+		// ボタンデータ読み込み
+		this.button[0, 0] = panels[1].transform.FindChild("Next_0").gameObject;
+		this.button[0, 1] = panels[1].transform.FindChild("Next_1").gameObject;
+		this.button[1, 0] = panels[2].transform.FindChild("Next_0").gameObject;
+		this.button[1, 1] = panels[2].transform.FindChild("Next_1").gameObject;
 
 		for (int j = 0; j < 3; j++)
 		{
@@ -158,6 +150,18 @@ public class Result : MonoBehaviour {
 			}
 		}
 
+		// 数値初期化
+		for (int i = 0; i < 2; i++)
+		{
+			this.state[i] = RESULT_STATE.ALPHA_IN;
+			this.suppoterBffByWorld[i] = TeamData.suppoterByWorld;
+			for (int j = 0; j < 2; j++)
+				this.suppoterBffByTeam[i, j] = TeamData.suppoterByTeam[j];
+			ReSetButtonCheck(i,true);
+		}
+		// TeamDataを統合、クリア
+		TeamData.suppoterByWorld += (TeamData.suppoterByTeam[0] + TeamData.suppoterByTeam[1]);
+		TeamData.suppoterByTeam[0] = TeamData.suppoterByTeam[1] = 0;
 		// シュートログをクリア
 		TeamData.ClearLog();
 	}
@@ -190,24 +194,29 @@ public class Result : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.LeftShift))      this.buttonCheck[0,0] = this.buttonCheck[0,1] = true;
 		if(Input.GetKeyDown(KeyCode.RightShift))     this.buttonCheck[1,0] = this.buttonCheck[1,1] = true;
 
+		// ボタン表示
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 2; j++)
+			{
+				if (this.buttonCheck[i, j]) this.button[i, j].SetActive(false);
+				else                        this.button[i, j].SetActive(true);
+			}
 		// 遷移（左右画面共有）
 		switch (this.state[0])
 		{
 			// 最初のフェードイン
 			case RESULT_STATE.ALPHA_IN:
-				ReSetButtonCheck(0);
-				ReSetButtonCheck(1);
 				if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
 				{
 					this.state[0] = RESULT_STATE.STAY_FIRST;
 					this.state[1] = RESULT_STATE.STAY_FIRST;
+					ReSetButtonCheck(0, false);
+					ReSetButtonCheck(1, false);
 				}
 				break;
 
 			// 最終待機
 			case RESULT_STATE.STAY_LAST:
-				ReSetButtonCheck(0);
-				ReSetButtonCheck(1);
 				if (this.state[0] == this.state[1])
 				{
 					this.state[0] = RESULT_STATE.WAIT;
@@ -218,11 +227,9 @@ public class Result : MonoBehaviour {
 
 			// 
 			case RESULT_STATE.WAIT:
-				ReSetButtonCheck(0);
-				ReSetButtonCheck(1);
 				this.count++;
 
-				if (this.count > Result.countMax)
+				if (this.count > this.countMax)
 				{
 					this.state[0] = RESULT_STATE.ALPHA_OUT;
 					this.state[1] = RESULT_STATE.ALPHA_OUT;
@@ -233,8 +240,6 @@ public class Result : MonoBehaviour {
 
 			// フェードアウト
 			case RESULT_STATE.ALPHA_OUT:
-				ReSetButtonCheck(0);
-				ReSetButtonCheck(1);
 				if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
 					Application.LoadLevel("Title");
 				break;
@@ -256,10 +261,10 @@ public class Result : MonoBehaviour {
 
 				// チームサポーターがフェードイン
 				case RESULT_STATE.ALPHA_TEAM_SUPPORTER:
-					ReSetButtonCheck(i);
 					if (this.SubPanels[i,1].GetComponent<TweenAlpha>().enabled == false)
 					{
 						this.state[i] = RESULT_STATE.STAY_TEAM_SUPPORTER;
+						ReSetButtonCheck(i, false);
 					}
 					break;
 
@@ -274,7 +279,6 @@ public class Result : MonoBehaviour {
 
 				// チームサポーターが上へ移動
 				case RESULT_STATE.MOVING_TEAM_SUPPORTER:
-					ReSetButtonCheck(i);
 					if (this.SubPanels[i,1].GetComponent<TweenPosition>().enabled == false)
 					{
 						this.SubPanels[i,0].GetComponent<TweenAlpha>().enabled = true;
@@ -284,7 +288,6 @@ public class Result : MonoBehaviour {
 
 				// 全サポーターがフェードイン
 				case RESULT_STATE.ALPHA_WORLD_SUPPORTER:
-					ReSetButtonCheck(i);
 					if (this.SubPanels[0,0].GetComponent<TweenAlpha>().enabled == false)
 					{
 						this.state[i] = RESULT_STATE.ADDING_WORLD_SUPPORTER;
@@ -296,10 +299,10 @@ public class Result : MonoBehaviour {
 
 				// 全サポーターに加算
 				case RESULT_STATE.ADDING_WORLD_SUPPORTER:
-					ReSetButtonCheck(i);
 					if (this.suppoterBffByTeam[i,0] == 0 && this.suppoterBffByTeam[i,1] == 0)
 					{
 						this.state[i] = RESULT_STATE.STAY_TWO;
+						ReSetButtonCheck(i, false);
 						this.SubPanels[i,0].GetComponent<TweenScale>().enabled = false;
 					}else{
 						for (int j = 0; j < 2; j++)
@@ -327,7 +330,6 @@ public class Result : MonoBehaviour {
 
 				// Thank you for Playing!! がフェードイン
 				case RESULT_STATE.ALPHA_THANK_YOU:
-					ReSetButtonCheck(i);
 					if (this.SubPanels[i,2].GetComponent<TweenAlpha>().enabled == false)
 						this.state[i] = RESULT_STATE.STAY_LAST;
 					break;
@@ -350,13 +352,14 @@ public class Result : MonoBehaviour {
 	//----------------------------------------------------------------------
 	// ボタンチェックを初期化
 	//----------------------------------------------------------------------
-	// @Param   no 0:左画面/1:右画面
+	// @Param   no     0:左画面/1:右画面
+	// @Param   check  true:ボタンがおされた/false:ボタンがおされていない
 	// @Return  none
 	// @Date    2014/12/08  @Update 2014/12/08  @Author T.Takeuichi
 	//----------------------------------------------------------------------
-	void ReSetButtonCheck(int no)
+	void ReSetButtonCheck(int no,bool check)
 	{
-		for(int i = 0; i < 2; i++) this.buttonCheck[no,i] = false;
+		for(int i = 0; i < 2; i++) this.buttonCheck[no,i] = check;
 	}
 }
 
