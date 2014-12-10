@@ -167,7 +167,7 @@ public class CPlayerControler : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha4) && m_playerStatus != ePLAYER_STATUS.ePLAYER4)
         { 
 			// 4Pの情報を取得して4Pに切り替える
-			m_player = GameObject.Find("P3%P4").transform.FindChild("Player4").transform.FindChild("player").gameObject;
+			m_player = GameObject.Find("P3&P4").transform.FindChild("Player4").transform.FindChild("player").gameObject;
 			this.ChangeControler(m_player.transform);
 
 			m_playerScript = m_player.GetComponent<CPlayer4>();
