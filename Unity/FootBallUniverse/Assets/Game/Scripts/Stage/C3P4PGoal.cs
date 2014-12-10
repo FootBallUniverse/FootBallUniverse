@@ -34,19 +34,25 @@ public class C3P4PGoal : MonoBehaviour {
     //----------------------------------------------------------------------
 	private void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject == GameObject.Find ("SoccerBall"))
-        {
-            // グローバルのゴールのデータに追加
-            TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo,CSoccerBallManager.m_shootTeamNo, 1, true);
-            CGameManager.m_redPoint++;
 
-            if (collision.gameObject.transform.parent.name != "BallGameObject")
-            {
-                collision.transform.parent.gameObject.GetComponent<CPlayer>().m_isBall = false;
-            }
+	}
 
-            collision.gameObject.GetComponent<CSoccerBall>().Restart(new Vector3(0.0f, 0.0f, 0.0f));
-            CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
-        }
+	//----------------------------------------------------------------------
+	// ゴールのメッシュに当たったらその時点でゴール
+	//----------------------------------------------------------------------
+	// @Param	collider    当たったオブジェクトの当たり判定		
+	// @Return	none
+	// @Date	2014/12/9  @Update 2014/12/9  @Author T.Kawashita      
+	//----------------------------------------------------------------------
+	void OnTriggerEnter(Collider collider)
+	{
+		if (collider.gameObject == GameObject.Find ("SoccerBall"))
+		{
+			// グローバルのゴールのデータに追加
+			TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo,CSoccerBallManager.m_shootTeamNo, 1, true);
+			CGameManager.m_redPoint++;
+			
+			CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
+		}
 	}
 }

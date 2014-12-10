@@ -55,6 +55,12 @@ public class CPlayerManager : MonoBehaviour{
     public const int PLAYER_4 = 5;
     public const int AI_3 = 6;
     public const int AI_4 = 7;
+
+	// プレイヤーのオブジェクト
+	public static CPlayer1 m_player1Script;
+	public static CPlayer2 m_player2Script;
+	public static CPlayer3 m_player3Script;
+	public static CPlayer4 m_player4Script;
     
     // プレイヤーのCSVデータ
     public static string[,] m_csvData;
@@ -70,6 +76,11 @@ public class CPlayerManager : MonoBehaviour{
     {
         m_soccerBallManager = GameObject.Find("BallGameObject").GetComponent<CSoccerBallManager>();
         CPlayerManager.SetData();
+
+		m_player1Script = GameObject.Find ("P1&P2").transform.FindChild ("Player1").transform.FindChild ("player").GetComponent<CPlayer1> ();
+		m_player2Script = GameObject.Find ("P1&P2").transform.FindChild ("Player2").transform.FindChild ("player").GetComponent<CPlayer2> ();
+		m_player3Script = GameObject.Find ("P3&P4").transform.FindChild ("Player3").transform.FindChild ("player").GetComponent<CPlayer3> ();
+		m_player4Script = GameObject.Find ("P3&P4").transform.FindChild ("Player4").transform.FindChild ("player").GetComponent<CPlayer4> ();
     }
 
     //----------------------------------------------------------------------
@@ -116,5 +127,17 @@ public class CPlayerManager : MonoBehaviour{
         _playerData.Set(CUtility.ChangeArray(ref work, m_csvData, _playerNo));
 
     }
+
+	//----------------------------------------------------------------------
+	// プレイヤーのリスタート
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/9  @Update 2014/12/9  @Author T.Kawashita      
+	//----------------------------------------------------------------------
+	public static void Restart()
+	{
+
+	}
 
 }

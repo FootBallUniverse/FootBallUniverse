@@ -4,7 +4,7 @@ using System.Collections;
 public class CSoccerBallManager : MonoBehaviour {
 
     // サッカーボールのインスタンス
-    public GameObject m_soccerBall;
+    public static GameObject m_soccerBall;
     public bool m_isStartGame;
 
     // サッカーボールの情報
@@ -53,19 +53,16 @@ public class CSoccerBallManager : MonoBehaviour {
     //----------------------------------------------------------------------
 	void Update () {
         
-        // ゲームスタートしたら
-        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME && m_isStartGame == false)
-        {
-            m_soccerBall.GetComponent<CSoccerBall>().StartGame();
-            m_isStartGame = true;
-        }
+		// ゲームスタートしたら
+		if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME && m_isStartGame == false) {
+				m_soccerBall.GetComponent<CSoccerBall> ().StartGame ();
+				m_isStartGame = true;
+		}
 
-        // ブラックアウトしてリスタートする場合
-        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART && m_isStartGame == true)
-        {
-            m_isStartGame = false;
-        }
-
+		// ブラックアウトしてリスタートする場合
+		if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART && m_isStartGame == true) {
+				m_isStartGame = false;
+		}
 
         // ゲーム終了
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eEND)
@@ -73,12 +70,20 @@ public class CSoccerBallManager : MonoBehaviour {
             m_soccerBall.GetComponent<CSoccerBall>().Init(this.transform.localPosition);
         }
 
-        m_soccerBallTransform = m_soccerBall.transform;
 	}
 
-    void LateUpdate()
-    {
-    }
+	
+	//----------------------------------------------------------------------
+	// 最後の更新
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return	none
+	// @Date	2014/12/9  @Update 2014/12/9  @Author T.Kawashita       
+	//----------------------------------------------------------------------
+	void LateUpdate()
+	{
+		m_soccerBallTransform = m_soccerBall.transform;
+	}
 
     //----------------------------------------------------------------------
     // サッカーボールの持ち主を変更
@@ -100,5 +105,17 @@ public class CSoccerBallManager : MonoBehaviour {
 
         return true;
     }
+
+	//----------------------------------------------------------------------
+	// サッカーボールのリスタート
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/9  @Update 2014/12/9  @Author T.Kawashita      
+	//----------------------------------------------------------------------
+	public static void Restart()
+	{
+		m_soccerBall.GetComponent<CSoccerBall> ().Restart (new Vector3 (0.0f, 0.0f, 0.0f));
+	}
 
 }

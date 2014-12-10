@@ -13,6 +13,7 @@ public class title : MonoBehaviour {
     public  bool        m_SceneFlag;
 
     public CSoundPlayer m_soundPlayer;
+    public SEPlay m_SE;
 
 	// Use this for initialization
     void Start()
@@ -31,8 +32,9 @@ public class title : MonoBehaviour {
        
         // 音楽用ゲームオブジェクト作成
         m_soundPlayer = new CSoundPlayer();
+        m_SE = this.gameObject.GetComponent<SEPlay>();
         m_soundPlayer.PlayBGMFadeIn("title/bgm_01", 0.02f);
-
+        m_SE.VolumeSE(0.2f);
     }
 
 	// Update is called once per frame
@@ -50,6 +52,11 @@ public class title : MonoBehaviour {
 
         if (m_StartCount >= 0.1f)
         {
+            if (m_StartCount < 0.12f)
+            {
+                m_SE.VolumeSE(0.1f);
+                m_SE.PlaySE("title/goTeamSelect");
+            }
             if (m_Fade.m_tweenAlpha.enabled == false)
             {
                 Application.LoadLevel("ChooseTeam");

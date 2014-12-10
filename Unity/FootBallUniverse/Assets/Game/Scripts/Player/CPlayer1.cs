@@ -16,16 +16,13 @@ public class CPlayer1 : CPlayer {
 
         // プレイヤーのデータをセット
         CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_1);
-
-        m_pos = this.transform.localPosition;
-
+	
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
         this.transform.FindChild("polySurface14").GetComponent<CPlayer1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
         
         // プレイヤーごとの値をセット
         this.SetData();
-
 
         // プレイヤーの情報をマップにセット
  //       Color color = Color.red;
@@ -47,7 +44,8 @@ public class CPlayer1 : CPlayer {
     // @Date	2014/10/15  @Update 2014/11/11  @Author T.Kawashita      
     //----------------------------------------------------------------------
     void Update () 
-    {
+	{
+
         if (m_isBall == true)
             this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, -0.13f, 0.14f));
 
@@ -94,9 +92,9 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     void LateUpdate()
     {
-        // アニメーション
+		// アニメーション
         this.Animation();
-
+	
         m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
 
         // プレイヤーのカメラを更新する
@@ -212,9 +210,12 @@ public class CPlayer1 : CPlayer {
     private void PlayerStatusTackle()
     {
         // タックル状態が終わったらプレイヤーのステータス変更
-        if (this.Tackle() == true)
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-    }
+        if (this.Tackle () == true)
+		{
+			m_animator.Wait();	
+			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		}
+	}
 
     //----------------------------------------------------------------------
     // プレイヤーがタックル成功中の状態
@@ -382,6 +383,7 @@ public class CPlayer1 : CPlayer {
     {
         if (m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE)
             return m_action.Tackle(ref m_pos, this.transform.forward);
+
         return false;
     }
 
@@ -524,6 +526,7 @@ public class CPlayer1 : CPlayer {
             m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
             m_chargeFrame = 0;
             m_isLtPress = true;
+			m_playerSE.PlaySE("game/charging");
             return;
         }
 
@@ -553,6 +556,7 @@ public class CPlayer1 : CPlayer {
         {
             m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
             m_animator.ChangeAnimation(m_animator.m_isWait);
+			m_playerSE.StopSE();
             return;
         }
 
@@ -567,13 +571,17 @@ public class CPlayer1 : CPlayer {
             {
                 m_action.InitTackle(m_human.m_tackleInitSpeed, m_human.m_tackleMotionLength, m_human.m_tackleDecFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.eTACKLE;
+				m_playerSE.StopSE();
+				m_playerSE.PlaySE("game/tackle_go");
             }
             // タックルじゃなくてチャージ時間が一定量以上ならダッシュ
             else if (m_chargeFrame >= m_human.m_dashChargeLength)
             {
                 m_action.InitDash(m_human.m_dashInitSpeed, m_human.m_dashMotionLength, m_human.m_dashDecFrame);
                 m_status = CPlayerManager.ePLAYER_STATUS.eDASH;
-            }
+				m_playerSE.StopSE();
+				m_playerSE.PlaySE("game/dash");
+			}
 
             // 初期化
             m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P1_XBOX_LT, ref m_chargeFrame);
@@ -621,9 +629,8 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     public override void ChangeViewPoint()
     {
-        switch (m_viewPointStatus)
-        {
-            case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
+        switch (m_viewPointStatus) {
+				case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
 
                 /*
                 // LTボタンが押されたら敵の視点に変更
@@ -634,43 +641,39 @@ public class CPlayer1 : CPlayer {
                 }
                  * */
                 
-                if (Input.GetKeyDown(InputXBOX360.P1_XBOX_X) || Input.GetKeyDown(InputXBOX360.P1_XBOX_Y) || Input.GetKeyDown(InputXBOX360.P1_XBOX_B) || Input.GetKeyDown(InputXBOX360.P1_XBOX_A))
-                {
-                    m_camera.ChangeRspeedlock();
-                }
+				if (Input.GetKeyDown (InputXBOX360.P1_XBOX_X) || Input.GetKeyDown (InputXBOX360.P1_XBOX_Y) || Input.GetKeyDown (InputXBOX360.P1_XBOX_B) || Input.GetKeyDown (InputXBOX360.P1_XBOX_A)) {
+						m_camera.ChangeRspeedlock ();
+				}
 
                 // ボールの方向に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_B) && m_isBall == false)
-                {
-                    m_trans.LookAt(CSoccerBallManager.m_soccerBallTransform);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                }
+				if (Input.GetKey (InputXBOX360.P1_XBOX_B) && m_isBall == false) 
+				{
+					m_trans.LookAt (CSoccerBallManager.m_soccerBallTransform);
+					this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+				}
 
                 // 2Pの方向に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_X))
-                {
-                    m_trans.transform.LookAt(CPlayerManager.m_player2Transform);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
+				if (Input.GetKey (InputXBOX360.P1_XBOX_X)) {
+						m_trans.transform.LookAt (CPlayerManager.m_player2Transform);
+						this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+						return;
+				}
 
                 // 敵ゴールへ向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
-                {
-                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
+				if (Input.GetKey (InputXBOX360.P1_XBOX_Y)) {
+						m_trans.LookAt (CStageManager.m_3p4pGoalTransform);
+						this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+						return;
+				}
 
-                // キーパーの方向に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_A))
-                {
-                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP1P2Keeper);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
-                break;
-
+                // 自分のゴールへ向ける
+				if (Input.GetKey (InputXBOX360.P1_XBOX_A)) {
+						m_trans.LookAt (CStageManager.m_1p2pGoalTransform);
+						this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+						return;
+				}
+				break;
+	/*			
             case CPlayerManager.eVIEW_POINT_STATUS.eENEMY:
                 // RTボタンが押されたら味方の視点に変更
                 if (Input.GetKeyDown(InputXBOX360.P1_XBOX_R))
@@ -718,6 +721,7 @@ public class CPlayer1 : CPlayer {
                 }
 
                 break;
+                */
         }
     }
 

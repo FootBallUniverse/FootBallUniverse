@@ -41,20 +41,6 @@ public class C1P2PGoal : MonoBehaviour {
     //----------------------------------------------------------------------
 	private void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject == GameObject.Find ("SoccerBall")) 
-        {
-
-            // グローバルのゴールのデータに追加
-            TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, 0, true);
-            CGameManager.m_bluePoint++;
-
-            if (collision.gameObject.transform.parent.name != "BallGameObject")
-            {
-                collision.transform.parent.gameObject.GetComponent<CPlayer>().m_isBall = false;
-            }
-//            collision.gameObject.GetComponent<CSoccerBall>().Restart();
-            CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
-        }
 	}
 
     //----------------------------------------------------------------------
@@ -66,9 +52,13 @@ public class C1P2PGoal : MonoBehaviour {
     //----------------------------------------------------------------------
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.transform.tag == "Player")
+        if (collider.transform.tag == "SoccerBall")
         {
-            this.GetComponent<BoxCollider>().isTrigger = false;
+			// グローバルのゴールのデータに追加
+			TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, 0, true);
+			CGameManager.m_bluePoint++;
+			
+			CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
         }
 
     }

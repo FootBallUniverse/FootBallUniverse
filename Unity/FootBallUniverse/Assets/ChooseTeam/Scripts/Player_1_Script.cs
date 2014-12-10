@@ -38,7 +38,10 @@ public class Player_1_Script : MonoBehaviour
     public bool m_Right_RotateFlag;
     public bool m_Left_RotateFlag;
     public bool m_SceneFlag;
+    private bool m_Control = false;
     private int m_Count = 0;
+    SEPlayer m_SE;
+    
 
     //================================================================================================
     //      初期処理
@@ -59,12 +62,12 @@ public class Player_1_Script : MonoBehaviour
         m_Fade_2 = m_Object3.transform.FindChild("Fade_In_Out_2").gameObject;
 
         // チーム決定後に表示されるラベルの読み込み
-        m_Label = GameObject.Find("Label(Wait2)").GetComponent<UILabel>();
+        m_Label = GameObject.Find("Label(Wait1)").GetComponent<UILabel>();
 
         //フェードアウト処理スクリプトの読み込み
         m_Fade_flag_1 = m_Fade_1.GetComponent<Fade_1>();
         m_Fade_flag_2 = m_Fade_2.GetComponent<Fade_2>();
-        // m_Player3 = m_Player3.GetComponent<Player_3_Script>();
+        m_SE = this.gameObject.GetComponent<SEPlayer>();
 
         // 位置計算用の変数に代入
         Position[0] = m_Country[0].m_Country.transform.position;
@@ -94,21 +97,29 @@ public class Player_1_Script : MonoBehaviour
     void Update()
     {
         //================================================================================================
-        //      回転フラグ、フェードインフラグ処理
+        //      キーボード処理
         //================================================================================================
-        // Dを押したとき
+        // Aを押したとき
         if (Input.GetKeyDown(KeyCode.A))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
+            {
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
+                m_SE.VolumeSE(0.8f);
+                m_SE.PlaySE("select/selector_swap");
+            }
         }
-        // Aを押したとき
+        // Dを押したとき
         else if (Input.GetKeyDown(KeyCode.D))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+            {
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
+                m_SE.VolumeSE(0.8f);
+                m_SE.PlaySE("select/selector_swap");
+            }
         }
         // Shiftが押されたら遷移
         if (Input.GetKeyDown(KeyCode.Space)
@@ -118,7 +129,7 @@ public class Player_1_Script : MonoBehaviour
             m_Fade_flag_1.m_FadeFlag = 2;
         }
 
-        // Shiftが押されたら遷移
+        // Spaceが押されたら遷移
         if (Input.GetKeyDown(KeyCode.LeftShift)
             && m_Fade_flag_1.m_FadeFlag == 0        // フェードアウトしているか
             && m_Right_RotateFlag == false         // 右回転しているか
@@ -126,47 +137,60 @@ public class Player_1_Script : MonoBehaviour
         {
             // フェードインのフラグを1に変更
             m_Fade_flag_1.m_FadeFlag = 1;
+            m_SE.PlaySE("select/selector_select");
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift) && m_Fade_flag_1.m_FadeFlag == 1)
         {
             // シーン変更フラグをtrueにしてフェードインのフラグを2に変更
+            m_SE.VolumeSE(0.1f);
+            m_SE.PlaySE("select/decisioner_dicision");
             m_SceneFlag = true;
             m_Fade_flag_1.m_FadeFlag = 2;
 
         }
         else if (Input.GetKeyDown(KeyCode.LeftControl) && m_Fade_flag_1.m_FadeFlag == 1)
         {
+            m_SE.VolumeSE(0.2f);
+            m_SE.PlaySE("select/decisioner_cancel");
             // フェードインのフラグを3に変更
             m_Fade_flag_1.m_FadeFlag = 3;
         }
 
         //********************************************************************************************
         //================================================================================================
-        //      回転フラグ、フェードインフラグ処理
+        //      XBoxコントローラー処理
         //================================================================================================
-        // Dを押したとき
-        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_R))
+        //  LSを右に倒した
+        if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
+            m_Control = true;
         }
-        // Aを押したとき
-        else if (Input.GetKeyDown(InputXBOX360.P1_XBOX_L))
+        //  LSを左に倒した
+        else if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
+            m_Control = true;
         }
-        // Shiftが押されたら遷移
-        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START))       // フェードアウトしているか
+        else if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) >= -0.3f && Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) <= 0.3f)
+        {
+            m_Control = false;
+
+        }
+        // STARTボタンが押されたら遷移
+        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START) || Input.GetKeyDown(InputXBOX360.P2_XBOX_START))       // フェードアウトしているか
         {
             // フェードインのフラグを1に変更
             m_SceneFlag = true;
             m_Fade_flag_1.m_FadeFlag = 2;
+            m_Fade_flag_2.m_FadeFlag = 2;
         }
 
-        // Shiftが押されたら遷移
+        // Aが押されたら
         if (Input.GetKeyDown(InputXBOX360.P1_XBOX_A)
             && m_Fade_flag_1.m_FadeFlag == 0        // フェードアウトしているか
             && m_Right_RotateFlag == false         // 右回転しているか
@@ -182,6 +206,7 @@ public class Player_1_Script : MonoBehaviour
             m_Fade_flag_1.m_FadeFlag = 2;
 
         }
+        // Bが押されたら
         else if (Input.GetKeyDown(InputXBOX360.P2_XBOX_B) && m_Fade_flag_1.m_FadeFlag == 1)
         {
             // フェードインのフラグを3に変更
@@ -212,7 +237,7 @@ public class Player_1_Script : MonoBehaviour
         if (m_Fade_flag_2.m_FadeFlag == 2 && m_Fade_flag_1.m_FadeFlag == 2)
             m_Label.text = "ゲームを開始します!";
         else
-            m_Label.text = "相手チームの決定を待っています";
+            m_Label.text = "対戦相手がチームを選択しています\nしばらくお待ち下さい…";
 
     }
 
