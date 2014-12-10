@@ -657,7 +657,7 @@ public class CPlayer4 : CPlayer
                 // 味方のＡＩの方向に向ける
                 if (Input.GetKey(InputXBOX360.P4_XBOX_B) && m_isBall == false)
                 {
-                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4);
+                    m_trans.LookAt(CSoccerBallManager.m_soccerBallTransform);
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
                     return;
                 }

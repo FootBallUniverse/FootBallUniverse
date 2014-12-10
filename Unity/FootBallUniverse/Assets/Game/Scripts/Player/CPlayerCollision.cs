@@ -39,11 +39,20 @@ public class CPlayerCollision : MonoBehaviour
     {
         // ボールとぶつかった時の判定
         if (obj.gameObject.tag == "SoccerBall" && this.GetComponent<CPlayer>().m_isBall == false && 
-            this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE)
+            this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE )
         {
             // 浮いているボールの場合は自分のボールになる
             if (obj.transform.parent == GameObject.Find("BallGameObject").transform)
             {
+				CPlayer playerScript = this.GetComponent<CPlayer>();
+
+				// ダッシュチャージ中にボールを取ったらウェイトアニメーションに変更
+				if( playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE )
+				{
+					playerScript.m_animator.Wait();
+					playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+				}
+
                 // ボールの位置をセット
                 Vector3 pos = new Vector3(0.0f, -0.13f, 0.14f);
                 obj.gameObject.GetComponent<TrailRenderer>().enabled = false;
