@@ -97,9 +97,9 @@ public class Player_1_Script : MonoBehaviour
     void Update()
     {
         //================================================================================================
-        //      回転フラグ、フェードインフラグ処理
+        //      キーボード処理
         //================================================================================================
-        // Dを押したとき
+        // Aを押したとき
         if (Input.GetKeyDown(KeyCode.A))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
@@ -110,7 +110,7 @@ public class Player_1_Script : MonoBehaviour
                 m_SE.PlaySE("select/selector_swap");
             }
         }
-        // Aを押したとき
+        // Dを押したとき
         else if (Input.GetKeyDown(KeyCode.D))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
@@ -129,7 +129,7 @@ public class Player_1_Script : MonoBehaviour
             m_Fade_flag_1.m_FadeFlag = 2;
         }
 
-        // Shiftが押されたら遷移
+        // Spaceが押されたら遷移
         if (Input.GetKeyDown(KeyCode.LeftShift)
             && m_Fade_flag_1.m_FadeFlag == 0        // フェードアウトしているか
             && m_Right_RotateFlag == false         // 右回転しているか
@@ -158,9 +158,9 @@ public class Player_1_Script : MonoBehaviour
 
         //********************************************************************************************
         //================================================================================================
-        //      回転フラグ、フェードインフラグ処理
+        //      XBoxコントローラー処理
         //================================================================================================
-        // Dを押したとき
+        //  LSを右に倒した
         if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
@@ -168,7 +168,7 @@ public class Player_1_Script : MonoBehaviour
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
             m_Control = true;
         }
-        // Aを押したとき
+        //  LSを左に倒した
         else if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
@@ -181,15 +181,16 @@ public class Player_1_Script : MonoBehaviour
             m_Control = false;
 
         }
-        // Shiftが押されたら遷移
-        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START))       // フェードアウトしているか
+        // STARTボタンが押されたら遷移
+        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START) || Input.GetKeyDown(InputXBOX360.P2_XBOX_START))       // フェードアウトしているか
         {
             // フェードインのフラグを1に変更
             m_SceneFlag = true;
             m_Fade_flag_1.m_FadeFlag = 2;
+            m_Fade_flag_2.m_FadeFlag = 2;
         }
 
-        // Shiftが押されたら遷移
+        // Aが押されたら
         if (Input.GetKeyDown(InputXBOX360.P1_XBOX_A)
             && m_Fade_flag_1.m_FadeFlag == 0        // フェードアウトしているか
             && m_Right_RotateFlag == false         // 右回転しているか
@@ -205,6 +206,7 @@ public class Player_1_Script : MonoBehaviour
             m_Fade_flag_1.m_FadeFlag = 2;
 
         }
+        // Bが押されたら
         else if (Input.GetKeyDown(InputXBOX360.P2_XBOX_B) && m_Fade_flag_1.m_FadeFlag == 1)
         {
             // フェードインのフラグを3に変更

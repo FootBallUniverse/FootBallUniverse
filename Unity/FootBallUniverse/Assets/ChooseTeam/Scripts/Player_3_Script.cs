@@ -134,8 +134,9 @@ public class Player_3_Script : MonoBehaviour
             }
         }
 
+         // Spaceが押されたら遷移
         if (Input.GetKeyDown(KeyCode.Space)
-            && m_Fade_flag_1.m_FadeFlag < 2)        // フェードアウトしているか
+            && m_Fade_flag_2.m_FadeFlag <= 2)        // フェードアウトしているか
         {
             m_SceneFlag = true;
             m_Fade_flag_2.m_FadeFlag = 2;
@@ -169,7 +170,7 @@ public class Player_3_Script : MonoBehaviour
         //================================================================================================
         //      回転フラグ、フェードインフラグ処理
         //================================================================================================
-        // Dを押したとき
+        // LSを右に倒した
         if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
@@ -180,7 +181,7 @@ public class Player_3_Script : MonoBehaviour
             }
             m_Control = true;
         }
-        // Aを押したとき
+        // LSを左に倒した
         else if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
@@ -196,15 +197,16 @@ public class Player_3_Script : MonoBehaviour
             m_Control = false;
 
         }
-        // Shiftが押されたら遷移
-        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_START))       // フェードアウトしているか
+        // STARTボタンが押されたら遷移
+        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_START) || Input.GetKeyDown(InputXBOX360.P3_XBOX_START))       // フェードアウトしているか
         {
             // フェードインのフラグを1に変更
             m_SceneFlag = true;
             m_Fade_flag_2.m_FadeFlag = 2;
+            m_Fade_flag_1.m_FadeFlag = 2;
         }
 
-        // Shiftが押されたら遷移
+        // Aが押されたら
         if (Input.GetKeyDown(InputXBOX360.P4_XBOX_A)
             && m_Fade_flag_2.m_FadeFlag == 0        // フェードアウトしているか
             && m_Right_RotateFlag == false         // 右回転しているか
@@ -220,6 +222,7 @@ public class Player_3_Script : MonoBehaviour
             m_Fade_flag_2.m_FadeFlag = 2;
 
         }
+        // Bが押されたら
         else if (Input.GetKeyDown(InputXBOX360.P3_XBOX_B) && m_Fade_flag_2.m_FadeFlag == 1)
         {
             // フェードインのフラグを3に変更
