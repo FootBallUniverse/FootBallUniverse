@@ -41,20 +41,6 @@ public class C1P2PGoal : MonoBehaviour {
     //----------------------------------------------------------------------
 	private void OnCollisionEnter(Collision collision)
 	{
-		if (collision.gameObject == GameObject.Find ("SoccerBall")) 
-        {
-
-            // グローバルのゴールのデータに追加
-            TeamData.AddLog(CGameManager.m_nowTime, CSoccerBallManager.m_shootPlayerNo, CSoccerBallManager.m_shootTeamNo, 0, true);
-            CGameManager.m_bluePoint++;
-
-            if (collision.gameObject.transform.parent.name != "BallGameObject")
-            {
-                collision.transform.parent.gameObject.GetComponent<CPlayer>().m_isBall = false;
-            }
-//            collision.gameObject.GetComponent<CSoccerBall>().Restart();
-            CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
-        }
 	}
 
     //----------------------------------------------------------------------

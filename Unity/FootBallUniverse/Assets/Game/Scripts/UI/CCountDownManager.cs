@@ -27,6 +27,7 @@ public class CCountDownManager : MonoBehaviour {
         {
             GameObject obj = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Game/count_down_" + m_countNo));
             obj.transform.parent = m_uiPanel.transform;
+			obj.GetComponent<UISprite>().depth = 9;
             m_gameFrame = 0.0f;
             m_countNo += 1;
 
