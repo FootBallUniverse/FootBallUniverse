@@ -94,6 +94,8 @@ public class CPlayerCollision : MonoBehaviour
             else
             {
                 this.transform.parent.GetComponent<CPlayerAnimator>().TackleSuccess();
+                playerScript.m_playerSE.StopSE();
+                playerScript.m_playerSE.PlaySE("game/tackle_success");
                 playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLESUCCESS;
                 playerScript.m_action.InitTackleSuccess(playerScript.m_human.m_tackleHitMotionLength);
             }
