@@ -267,8 +267,11 @@ public class CPlayer1 : CPlayer {
     private void PlayerStatusShoot()
     {
         // シュート状態が終わったら通常状態に遷移
-        if (this.Shoot() == true)
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		if (this.Shoot () == true) 
+		{
+			m_animator.Wait();
+			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		}
     }
 
     //----------------------------------------------------------------------
@@ -281,8 +284,11 @@ public class CPlayer1 : CPlayer {
     private void PlayerStatusPass()
     {
         // パス状態が終わったら通常状態に遷移
-        if (this.Pass() == true)
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        if (this.Pass () == true) 
+		{
+			m_animator.Wait();
+			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		}
     }
 
     //----------------------------------------------------------------------
@@ -444,7 +450,8 @@ public class CPlayer1 : CPlayer {
         }
 
         // 離されたら押しっぱなしフラグOFF
-        else if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false)
+        else if (InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false &&
+		         Input.GetKey(KeyCode.Space) == false)
         {
             m_isRtPress = false;
         }
@@ -480,7 +487,8 @@ public class CPlayer1 : CPlayer {
         // RTボタンが離されたらシュートかチャージ
         if(m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE && 
             m_isBall == true &&
-            InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false)
+            InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false &&
+		    Input.GetKey(KeyCode.Space) == false)
         {
             this.transform.FindChild("SoccerBall").particleSystem.Stop();
             this.transform.FindChild("SoccerBall").particleSystem.Clear();
@@ -530,7 +538,8 @@ public class CPlayer1 : CPlayer {
             return;
         }
 
-        else if( InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT ) == false )
+        else if( InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT ) == false &&
+		         Input.GetKey(KeyCode.LeftShift) == false)
         {
             m_isLtPress = false;
         }
@@ -545,8 +554,8 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     private void DashHold()
     {
-        if( InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_LT) )
-            // チャージフレーム取得
+		// チャージフレーム取得
+        if( InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_LT))
             m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P1_XBOX_LT, ref m_chargeFrame);
         
         // チャージ時間が一定量以上になったらチャージ状態終了
@@ -555,7 +564,7 @@ public class CPlayer1 : CPlayer {
             m_chargeFrame >= m_human.m_dashChargeLengthMax )
         {
             m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
-            m_animator.ChangeAnimation(m_animator.m_isWait);
+			m_animator.Wait();
 			m_playerSE.StopSE();
             return;
         }
@@ -563,7 +572,8 @@ public class CPlayer1 : CPlayer {
         // LTボタンが離されたら
         if (m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
             m_isBall == false &&
-            InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == false)
+            InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == false &&
+		    Input.GetKey (KeyCode.LeftShift) == false)
         {
             m_camera.ChangeMspeedlock();
             // チャージ時間が一定量以上ならタックル

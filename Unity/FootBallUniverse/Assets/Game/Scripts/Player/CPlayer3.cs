@@ -265,11 +265,13 @@ public class CPlayer3 : CPlayer
     //----------------------------------------------------------------------
     private void PlayerStatusShoot()
     {
-        // シュート状態が終わったら通常状態に遷移
-        if (this.Shoot() == true)
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-    }
-
+		// シュート状態が終わったら通常状態に遷移
+		if (this.Shoot () == true)
+		{
+			m_animator.Wait();
+			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		}
+	}
     //----------------------------------------------------------------------
     // プレイヤーがパス中の状態
     //----------------------------------------------------------------------
@@ -279,10 +281,13 @@ public class CPlayer3 : CPlayer
     //----------------------------------------------------------------------
     private void PlayerStatusPass()
     {
-        // パス状態が終わったら通常状態に遷移
-        if (this.Pass() == true)
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-    }
+		// パス状態が終わったら通常状態に遷移
+		if (this.Pass () == true)
+		{
+			m_animator.Wait();
+			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		}
+	}
 
     //----------------------------------------------------------------------
     // プレイヤーがチャージ中の状態

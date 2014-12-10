@@ -37,6 +37,7 @@ public class CPlayerControler : MonoBehaviour {
         m_playerScript = this.gameObject.transform.parent.GetComponent<CPlayer1>();
         m_player = this.gameObject.transform.parent.gameObject;
         m_playerStatus = ePLAYER_STATUS.ePLAYER1;
+
 	}
 
     //----------------------------------------------------------------------
@@ -46,11 +47,75 @@ public class CPlayerControler : MonoBehaviour {
     // @Return	none
     // @Date	2014/111/11 @Update 2014/111/12  @Author T.kawashita      
     //----------------------------------------------------------------------
-	void Update () {
-        ChangePlayer(); // プレイヤーの切り替え
-        Move();         // 移動
-        Rotation();     // 回転
-        SetBall();      // ボールのセット
+	void Update () 
+	{
+		switch (m_playerScript.m_status) 
+		{
+			// 始めの待機状態
+			case CPlayerManager.ePLAYER_STATUS.eWAIT:
+				break;    
+
+			// カウントダウンの状態
+			case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN: 
+				this.Rotation();
+				break; 
+
+			// 何もしてない状態
+			case CPlayerManager.ePLAYER_STATUS.eNONE:
+				ChangePlayer();    
+				Move ();
+				Rotation();
+				SetBall();
+				InitDashCharge();
+				InitShootCharge();
+				break;    
+
+			// ダッシュ中
+			case CPlayerManager.ePLAYER_STATUS.eDASH: 
+                break;    
+
+			// タックル中
+			case CPlayerManager.ePLAYER_STATUS.eTACKLE: 
+				break;
+
+			// タックルのダメージ受け中
+			case CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE: 
+				break;    
+
+			// タックル成功中
+			case CPlayerManager.ePLAYER_STATUS.eTACKLESUCCESS: 
+				break;
+
+			// シュート中
+			case CPlayerManager.ePLAYER_STATUS.eSHOOT: 
+				break;
+
+			// パス中
+			case CPlayerManager.ePLAYER_STATUS.ePASS:
+				break;
+
+			// チャージ中
+			case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE:                                   
+			case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: 
+				
+				if( m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE )
+					this.DashCharge();
+				if( m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE)
+					this.ShootCharge();
+
+				// 回転
+				this.Rotation();
+				break;
+
+			// 終了
+			case CPlayerManager.ePLAYER_STATUS.eEND:
+				break;
+
+			// ゴールした時
+			case CPlayerManager.ePLAYER_STATUS.eGOAL:
+				break;
+
+		}
 	}
 
     //----------------------------------------------------------------------
@@ -74,8 +139,6 @@ public class CPlayerControler : MonoBehaviour {
 
             m_playerScript = m_player.GetComponent<CPlayer1>();
             m_playerStatus = ePLAYER_STATUS.ePLAYER1;
-
-
         }
         // 2P
         if (Input.GetKeyDown(KeyCode.Alpha2) && m_playerStatus != ePLAYER_STATUS.ePLAYER2)
@@ -87,7 +150,7 @@ public class CPlayerControler : MonoBehaviour {
 
             m_playerScript = m_player.GetComponent<CPlayer2>();
             m_playerStatus = ePLAYER_STATUS.ePLAYER2;
-        }
+		}
 
         // 3P
         if (Input.GetKeyDown(KeyCode.Alpha3) && m_playerStatus != ePLAYER_STATUS.ePLAYER3)
@@ -109,9 +172,8 @@ public class CPlayerControler : MonoBehaviour {
 
 			m_playerScript = m_player.GetComponent<CPlayer4>();
 			m_playerStatus = ePLAYER_STATUS.ePLAYER4;
-        }
-
-
+        
+		}
     }
 
     //----------------------------------------------------------------------
@@ -170,11 +232,11 @@ public class CPlayerControler : MonoBehaviour {
         Vector2 angle = new Vector2(0.0f,0.0f);
 
         // 前回転
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
             angle.y += PLAYER_ROTATION_SPEED;
 
         // 後回転
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.UpArrow))
             angle.y -= PLAYER_ROTATION_SPEED;
 
         // 右回転
@@ -188,6 +250,81 @@ public class CPlayerControler : MonoBehaviour {
         // 回転関数
         m_playerScript.Rotation(angle);
     }
+
+	//----------------------------------------------------------------------
+	// ダッシュチャージの初期化
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita       
+	//----------------------------------------------------------------------
+	public void InitDashCharge()
+	{        
+		// ダッシュが出来る状態になったら(ボールを持っていなかったら)
+		if (m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
+			m_playerScript.m_isBall == false && 
+			Input.GetKeyDown (KeyCode.LeftShift) == true &&
+			m_playerScript.m_isLtPress == false) 
+		{
+			m_playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
+			m_playerScript.m_chargeFrame = 0;
+			m_playerScript.m_isLtPress = true;
+			m_playerScript.m_playerSE.PlaySE("game/charging");
+		
+		}
+	}
+
+	//----------------------------------------------------------------------
+	// ダッシュチャージ
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita       
+	//----------------------------------------------------------------------
+	public void DashCharge()
+	{
+		// チャージフレーム取得
+		if( Input.GetKey(KeyCode.LeftShift) == true )
+			m_playerScript.m_chargeFrame = ShiftKeyPress( ref m_playerScript.m_chargeFrame );
+	}
+
+	//----------------------------------------------------------------------
+	// シュートチャージの初期化
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita       
+	//----------------------------------------------------------------------
+	public void InitShootCharge()
+	{
+		// シュートかパスが打てる状態になったら(ボールが手持ちにある場合）
+		if (m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
+		    m_playerScript.m_isBall == true && 
+		    Input.GetKeyDown(KeyCode.Space) && 
+		    m_playerScript.m_isRtPress == false )
+		{
+			this.transform.parent.FindChild("SoccerBall").particleSystem.Play();
+			m_playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
+			m_playerScript.m_chargeFrame = 0;
+			m_playerScript.m_isRtPress = true;
+			m_playerScript.m_playerSE.PlaySE("game/charging");
+			return;
+		}	
+	}
+
+	//----------------------------------------------------------------------
+	// シュートチャージ
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita       
+	//----------------------------------------------------------------------
+	public void ShootCharge()
+	{
+		// チャージフレーム取得
+		if (Input.GetKey (KeyCode.Space) == true)
+			m_playerScript.m_chargeFrame = SpaceKeyPress (ref m_playerScript.m_chargeFrame);
+	}
 
     //----------------------------------------------------------------------
     // ボールのセット
@@ -209,8 +346,53 @@ public class CPlayerControler : MonoBehaviour {
             CSoccerBallManager.m_shootTeamNo = m_playerScript.m_playerData.m_teamNo;
 
             // プレイヤーのボールに設定
+			// 他のプレイヤーがボールを持っている場合の処理
+			if( CSoccerBallManager.m_soccerBall.transform.parent.tag == "Player")
+				CSoccerBallManager.m_soccerBall.transform.parent.gameObject.GetComponent<CPlayer>().m_isBall = false;
+
             CPlayerManager.m_soccerBallManager.ChangeOwner(m_player.transform,pos);
             m_playerScript.m_isBall = true;
         }
     }   
+
+	//----------------------------------------------------------------------
+	// SPACEキーが押され続けているかどうかを判定
+	//----------------------------------------------------------------------
+	// @Param   int     フレーム数
+	// @Return	int     どれぐらいの時間押されているか(frame)
+	// @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita      
+	//----------------------------------------------------------------------
+	private int SpaceKeyPress(ref int _frame)
+	{
+		if (Input.GetKey(KeyCode.Space) == true)
+		{
+			_frame += (int)(Time.deltaTime * 90);
+			return _frame;
+		}
+		else
+		{
+			_frame = 0;
+			return 0;
+		} 
+	}
+
+	//----------------------------------------------------------------------
+	// SHIFTキーが押され続けているかどうかを判定
+	//----------------------------------------------------------------------
+	// @Param   int     フレーム数
+	// @Return	int     どれぐらいの時間押されているか(frame)
+	// @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita      
+	//----------------------------------------------------------------------
+	private int ShiftKeyPress(ref int _frame)
+	{
+		if (Input.GetKey (KeyCode.LeftShift) == true) {
+			_frame += (int)(Time.deltaTime * 90);
+			return _frame;
+		} 
+		else
+		{
+			_frame = 0;
+			return 0;
+		}
+	}
 }
