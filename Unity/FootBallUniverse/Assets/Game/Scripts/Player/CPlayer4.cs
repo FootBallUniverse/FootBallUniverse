@@ -209,10 +209,13 @@ public class CPlayer4 : CPlayer
     //----------------------------------------------------------------------
     private void PlayerStatusTackle()
     {
-        // タックル状態が終わったらプレイヤーのステータス変更
-        if (this.Tackle() == true)
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-    }
+				// タックル状態が終わったらプレイヤーのステータス変更
+		if (this.Tackle () == true)
+		{
+			m_animator.Wait();
+			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		}
+	}
 
     //----------------------------------------------------------------------
     // プレイヤーがタックル成功中の状態

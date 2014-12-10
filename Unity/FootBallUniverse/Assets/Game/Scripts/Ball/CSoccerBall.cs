@@ -152,7 +152,10 @@ public class CSoccerBall : MonoBehaviour {
         CapsuleCollider capsuleCollider = obj as CapsuleCollider;
 
         // プレイヤーとの当たり判定
-        if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true)
+        if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true && 
+		    playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
+		    playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
+		    playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE)
         {
             // 現在持っているプレイヤーのステータス変更
             CPlayer ballPlayer = this.transform.parent.GetComponent<CPlayer>();
