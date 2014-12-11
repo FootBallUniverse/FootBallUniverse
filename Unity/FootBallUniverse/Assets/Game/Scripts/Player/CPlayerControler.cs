@@ -68,6 +68,7 @@ public class CPlayerControler : MonoBehaviour {
 				SetBall();
 				InitDashCharge();
 				InitShootCharge();
+				ChangeView();
 				break;    
 
 			// ダッシュ中
@@ -167,7 +168,7 @@ public class CPlayerControler : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha4) && m_playerStatus != ePLAYER_STATUS.ePLAYER4)
         { 
 			// 4Pの情報を取得して4Pに切り替える
-			m_player = GameObject.Find("P3%P4").transform.FindChild("Player4").transform.FindChild("player").gameObject;
+			m_player = GameObject.Find("P3&P4").transform.FindChild("Player4").transform.FindChild("player").gameObject;
 			this.ChangeControler(m_player.transform);
 
 			m_playerScript = m_player.GetComponent<CPlayer4>();
@@ -324,6 +325,125 @@ public class CPlayerControler : MonoBehaviour {
 		// チャージフレーム取得
 		if (Input.GetKey (KeyCode.Space) == true)
 			m_playerScript.m_chargeFrame = SpaceKeyPress (ref m_playerScript.m_chargeFrame);
+	}
+
+	//----------------------------------------------------------------------
+	// 視点変更
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita       
+	//----------------------------------------------------------------------
+	public void ChangeView()
+	{
+		if (Input.GetKeyDown (KeyCode.J) || Input.GetKeyDown (KeyCode.I) || Input.GetKeyDown (KeyCode.L) || Input.GetKeyDown (KeyCode.K)) {
+			m_playerScript.m_camera.ChangeRspeedlock ();
+		}
+		
+		// ボールの方向に向ける
+		if (Input.GetKey (KeyCode.L) && m_playerScript.m_isBall == false) 
+		{
+			m_playerScript.m_trans.LookAt (CSoccerBallManager.m_soccerBallTransform);
+			this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+			return;
+		}
+
+
+		switch (m_playerStatus) 
+		{
+		case ePLAYER_STATUS.ePLAYER1:
+			// 2Pの方向に向ける
+			if (Input.GetKey (KeyCode.J)) {
+				m_playerScript.m_trans.LookAt (CPlayerManager.m_player2Transform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			
+			// 敵ゴールへ向ける
+			if (Input.GetKey (KeyCode.I)) {
+				m_playerScript.m_trans.LookAt (CStageManager.m_3p4pGoalTransform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+
+			// 自分のゴールへ向ける
+			if (Input.GetKey (KeyCode.K)) {
+				m_playerScript.m_trans.LookAt (CStageManager.m_1p2pGoalTransform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			break;
+
+		case ePLAYER_STATUS.ePLAYER2:
+
+			// 1Pの方向に向ける
+			if (Input.GetKey (KeyCode.J)) {
+				m_playerScript.m_trans.LookAt (CPlayerManager.m_player1Transform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			
+			// 敵ゴールへ向ける
+			if (Input.GetKey (KeyCode.I)) {
+				m_playerScript.m_trans.LookAt (CStageManager.m_3p4pGoalTransform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			
+			// 自分のゴールへ向ける
+			if (Input.GetKey (KeyCode.K)) {
+				m_playerScript.m_trans.LookAt (CStageManager.m_1p2pGoalTransform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			break;
+
+		case ePLAYER_STATUS.ePLAYER3:
+			// 4Pの方向に向ける
+			if (Input.GetKey (KeyCode.J)) {
+				m_playerScript.m_trans.LookAt (CPlayerManager.m_player4Transform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			
+			// 敵ゴールへ向ける
+			if (Input.GetKey (KeyCode.I)) {
+				m_playerScript.m_trans.LookAt (CStageManager.m_1p2pGoalTransform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			
+			// 自分のゴールへ向ける
+			if (Input.GetKey (KeyCode.K)) {
+				m_playerScript.m_trans.LookAt (CStageManager.m_3p4pGoalTransform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			break;
+
+		case ePLAYER_STATUS.ePLAYER4:
+			// 3Pの方向に向ける
+			if (Input.GetKey (KeyCode.J)) {
+				m_playerScript.m_trans.LookAt (CPlayerManager.m_player3Transform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			
+			// 敵ゴールへ向ける
+			if (Input.GetKey (KeyCode.I)) {
+				m_playerScript.m_trans.LookAt (CStageManager.m_1p2pGoalTransform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			
+			// 自分のゴールへ向ける
+			if (Input.GetKey (KeyCode.K)) {
+				m_playerScript.m_trans.LookAt (CStageManager.m_3p4pGoalTransform);
+				this.transform.parent.transform.rotation = Quaternion.Slerp (this.transform.parent.transform.rotation, m_playerScript.m_trans.rotation, m_playerScript.m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+			break;
+		}
 	}
 
     //----------------------------------------------------------------------

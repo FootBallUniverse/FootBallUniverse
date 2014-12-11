@@ -68,6 +68,7 @@ public class CGoalKeeper : CCpu {
 		this.Restart();
 
 		this.gkState = GK_State.STAY;
+        this.m_status = CPlayerManager.ePLAYER_STATUS.eWAIT;
 		this.transform.position = HOME_POSITION;
 		this.transform.LookAt(new Vector3(0.0f,0.0f,0.0f));
 	}
@@ -79,6 +80,7 @@ public class CGoalKeeper : CCpu {
 	// @Param   none
 	// @Return  none
 	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+    // @Update  2014/12/11 アニメーションのための追加 @Author T.Kawashita
 	//----------------------------------------------------------------------
 	protected void CGoalKeeperUpdate()
 	{
@@ -94,6 +96,24 @@ public class CGoalKeeper : CCpu {
 		{
 			KeeperRestart();
 		}
+
+        switch (m_status)
+        {
+            case CPlayerManager.ePLAYER_STATUS.eNONE: break;
+            case CPlayerManager.ePLAYER_STATUS.eWAIT: break;
+            case CPlayerManager.ePLAYER_STATUS.ePASS: break;
+            
+            // タックルのやられモーション中
+            case CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE:
+                if (m_action.TackleDamage(ref m_pos, -this.transform.forward) == true)
+                {
+                    // やられモーション終了
+                    m_animator.Wait();
+                    m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                }
+
+                break;
+        }
 
 		switch (this.gkState)
 		{
@@ -114,10 +134,13 @@ public class CGoalKeeper : CCpu {
 	// @Param   none
 	// @Return  none
 	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+    // @Update  2014/12/11 アニメーションの関数呼び出し @Author T.Kawashita
 	//----------------------------------------------------------------------
 	protected void CGoalKeeperLateUpdate()
 	{
-		// アニメーション
+        // アニメーション
+        this.Animation();
+
 		m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
 		this.rigidbody.MovePosition(m_pos);
 
@@ -208,17 +231,20 @@ public class CGoalKeeper : CCpu {
 	// @Param   none
 	// @Return  none
 	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+    // @Update  2014/12/11 パスアニメーションのためのステータス変更 @Author T.Kawashita
 	//----------------------------------------------------------------------
 	void TakeBall()
 	{
 		// ボールを取りに行く
 		this.transform.LookAt(this.soccerBallObject.transform.position);
-		Move(new Vector3(0.0f,0.0f,1.0f));
+        Move(new Vector3(0.0f, 0.0f, 1.0f));
+
 
 		// ボールをキャッチ（→パス）
 		if (this.m_isBall)
 		{
 			this.gkState = GK_State.PASS;
+            this.m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
 			this.transform.LookAt(this.frendryData[0].transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
@@ -231,6 +257,7 @@ public class CGoalKeeper : CCpu {
 	// @Param   none
 	// @Return  none
 	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+    // @Update  2014/12/11 パスアニメーションのためのステータス変更 @Author T.Kawashita
 	//----------------------------------------------------------------------
 	void Cach()
 	{
@@ -245,6 +272,7 @@ public class CGoalKeeper : CCpu {
 		if (this.m_isBall)
 		{
 			this.gkState = GK_State.PASS;
+            this.m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
 			this.transform.LookAt(this.frendryData[0].transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
@@ -257,11 +285,15 @@ public class CGoalKeeper : CCpu {
 	// @Param   none
 	// @Return  none
 	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+    // @Update  2014/12/11 パスアニメーションのためのステータス変更 @Author T.Kawashita
 	//----------------------------------------------------------------------
 	void Pass()
 	{
-		if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
-			this.gkState = GK_State.WAIT;
+        if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
+        {
+            this.gkState = GK_State.WAIT;
+            this.m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        }
 	}
 
 
@@ -311,4 +343,29 @@ public class CGoalKeeper : CCpu {
 		// ボールの未来予想座標を返す
 		return refData;
 	}
+
+    //----------------------------------------------------------------------
+    // アニメーション
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/11  @Update 2014/12/11  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void Animation()
+    {
+        switch (m_status)
+        {
+            case CPlayerManager.ePLAYER_STATUS.eNONE:
+            case CPlayerManager.ePLAYER_STATUS.eWAIT:
+            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
+                m_animator.Move(m_speed);
+                break;
+
+            case CPlayerManager.ePLAYER_STATUS.ePASS:
+                m_animator.Pass();
+                break;
+
+        }
+    }
+
 }

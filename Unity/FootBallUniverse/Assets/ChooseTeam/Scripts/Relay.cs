@@ -76,7 +76,7 @@ public class Relay : MonoBehaviour {
             }
             else
             {
-                m_Label.text = "チームを選択中です・・・";
+                m_Label.text = "チームを選択中です。";
             }
         }
 

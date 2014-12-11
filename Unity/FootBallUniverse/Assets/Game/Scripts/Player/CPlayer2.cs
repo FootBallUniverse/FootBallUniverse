@@ -483,7 +483,8 @@ public class CPlayer2 : CPlayer
         // RTボタンが離されたらシュートかチャージ
         if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE &&
             m_isBall == true &&
-            InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT) == false)
+            InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT) == false &&
+		    Input.GetKey(KeyCode.Space) == false )
         {
             this.transform.FindChild("SoccerBall").particleSystem.Stop();
             this.transform.FindChild("SoccerBall").particleSystem.Clear();
@@ -559,7 +560,8 @@ public class CPlayer2 : CPlayer
         // LTボタンが離されたら
         if (m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
             m_isBall == false &&
-            InputXBOX360.IsGetLTButton(InputXBOX360.P2_XBOX_LT) == false)
+            InputXBOX360.IsGetLTButton(InputXBOX360.P2_XBOX_LT) == false &&
+		    Input.GetKey(KeyCode.LeftShift) == false)
         {
             m_camera.ChangeMspeedlock();
             // チャージ時間が一定量以上ならタックル
