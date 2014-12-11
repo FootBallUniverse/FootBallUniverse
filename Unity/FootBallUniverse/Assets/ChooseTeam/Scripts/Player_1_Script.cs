@@ -239,8 +239,9 @@ public class Player_1_Script : MonoBehaviour
         if (m_Fade_flag_2.m_FadeFlag == 2 && m_Fade_flag_1.m_FadeFlag == 2)
             m_Label.text = "ゲームを開始します!";
         else
+        {
             m_Label.text = "対戦相手がチームを選択しています\nしばらくお待ち下さい…";
-
+        }
     }
 
 

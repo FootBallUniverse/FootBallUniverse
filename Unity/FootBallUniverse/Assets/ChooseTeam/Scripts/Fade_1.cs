@@ -17,8 +17,8 @@ public class Fade_1 : MonoBehaviour
         m_tweenAlpha.from = 0;
         m_tweenAlpha.to = 0;
 
-         TweenAlpha.Begin(this.gameObject, 1, 0);
-
+         //TweenAlpha.Begin(this.gameObject, 1, 0);
+         this.transform.GetComponent<UISprite>().alpha = 0.0f;
     }
 
     // Update is called once per frame

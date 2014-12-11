@@ -46,7 +46,7 @@ public class Team_Select : MonoBehaviour {
             }
 
             m_Count+= Time.deltaTime;
-            if (m_Count >= 3.0f)
+            if (m_Count >= 5.0f)
             {
                 if (m_Fade_flag_1.m_Country[0].m_Flag == 3)
                 {
