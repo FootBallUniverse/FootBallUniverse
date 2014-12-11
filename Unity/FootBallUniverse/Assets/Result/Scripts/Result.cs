@@ -206,13 +206,13 @@ public class Result : MonoBehaviour {
 		{
 			// 最初のフェードイン
 			case RESULT_STATE.ALPHA_IN:
-				if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
+                if (GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().enabled == false)
 				{
 					this.state[0] = RESULT_STATE.STAY_FIRST;
 					this.state[1] = RESULT_STATE.STAY_FIRST;
 					ReSetButtonCheck(0, false);
 					ReSetButtonCheck(1, false);
-				}
+    			}
 				break;
 
 			// 最終待機
@@ -233,7 +233,7 @@ public class Result : MonoBehaviour {
 				{
 					this.state[0] = RESULT_STATE.ALPHA_OUT;
 					this.state[1] = RESULT_STATE.ALPHA_OUT;
-					GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().Play(false);
+					GameObject.Find("FeedPanel").GetComponent<TweenAlpha>().Play(true);
 					m_soundPlayer.PlayBGMFadeOut(0.004f);
 				}
 				break;

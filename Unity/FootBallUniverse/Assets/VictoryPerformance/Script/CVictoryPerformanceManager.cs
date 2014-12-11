@@ -74,9 +74,9 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 
 		case eSTATUS_VICTORYPERFORMANCE.ePERFORMANCE:
 			// カメラの位置が変更されたら
-			if(m_mainCamera.transform.localPosition.z == -0.7f &&
-			   m_1p2pCamera.transform.localPosition.z == -0.7f &&
-			   m_3p4pCamera.transform.localPosition.z == -0.7f )
+			if(m_mainCamera.transform.localPosition.z == m_mainCamera.GetComponent<TweenPosition>().to.z &&
+			   m_1p2pCamera.transform.localPosition.z == m_mainCamera.GetComponent<TweenPosition>().to.z &&
+			   m_3p4pCamera.transform.localPosition.z == m_mainCamera.GetComponent<TweenPosition>().to.z )
 			{
 				m_status = eSTATUS_VICTORYPERFORMANCE.eINIT_FADE;
 			}
@@ -84,7 +84,7 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 
 		case eSTATUS_VICTORYPERFORMANCE.eINIT_FADE:
 			m_flame += Time.deltaTime;
-			if( m_flame >= 1.0f ){
+			if( m_flame >= 0.5f ){
 				m_status = eSTATUS_VICTORYPERFORMANCE.eFADE_OUT;
 				m_mainUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CVictoryPerformanceFadeOut> ();
 				m_1p2pUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CVictoryPerformanceFadeOut> ();
@@ -100,9 +100,10 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 			    m_3p4pUIPanel.transform.FindChild("BlackOut").gameObject.GetComponent<TweenAlpha>().enabled ==  false ) 
 			{
 				m_status = eSTATUS_VICTORYPERFORMANCE.eNONE;
-				GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabMain"));
+				GameObject.Instantiate(Resources.Load("Prefab/Result/Manager"));
 				m_resultMain = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabMain"));
 				m_resultSub1 = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabSub0"));
+                m_resultSub2 = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabSub1"));
 			}
 			break;
 		}
