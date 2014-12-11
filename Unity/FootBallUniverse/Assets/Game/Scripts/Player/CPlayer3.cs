@@ -179,6 +179,7 @@ public class CPlayer3 : CPlayer
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART)
         {
             this.Restart();
+			this.transform.localRotation = new Quaternion(0.0f, 90.0f, 0.0f, 0.0f);
         }
     }
 
