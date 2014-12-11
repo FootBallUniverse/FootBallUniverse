@@ -107,7 +107,10 @@ public class Player_1_Script : MonoBehaviour
             {
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
                 m_SE.VolumeSE(0.8f);
-                m_SE.PlaySE("select/selector_swap");
+                if (m_Fade_flag_1.m_FadeFlag == 0)
+                {
+                    m_SE.PlaySE("select/selector_swap");
+                }
             }
         }
         // Dを押したとき
@@ -118,7 +121,10 @@ public class Player_1_Script : MonoBehaviour
             {
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
                 m_SE.VolumeSE(0.8f);
-                m_SE.PlaySE("select/selector_swap");
+                if (m_Fade_flag_1.m_FadeFlag == 0)
+                {
+                    m_SE.PlaySE("select/selector_swap");
+                }
             }
         }
         // Shiftが押されたら遷移
