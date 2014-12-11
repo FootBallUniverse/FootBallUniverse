@@ -8,7 +8,6 @@ public class CEffect : MonoBehaviour {
 	// 子のエフェクト用スクリプト
 	GameObject effectTackle;
 	GameObject effectTackleDamage;
-	GameObject effectTackleAttack;
 	GameObject effectDash;
 	GameObject effectCharge;
 	GameObject effectChargeMax;
@@ -21,13 +20,36 @@ public class CEffect : MonoBehaviour {
 		this.cplayer = this.transform.parent.gameObject.GetComponent<CPlayer>();
 		this.rightFoot = this.transform.parent.transform.FindChild("group1").transform.FindChild("FOOT_R").gameObject;
 		// エフェクト情報取得
-		this.effectTackle       = this.transform.FindChild("Effect_Tackle").gameObject;
+		if (this.transform.parent.gameObject.layer == 8 || this.transform.parent.gameObject.layer == 9)
+		{
+			this.effectTackle = this.transform.FindChild("Effect_Tackle0").gameObject;
+			this.transform.FindChild("Effect_Tackle1").gameObject.SetActive(false);
+			this.effectChargeMax = this.transform.FindChild("Effect_ChargeMax0").gameObject;
+			this.transform.FindChild("Effect_ChargeMax1").gameObject.SetActive(false);
+		}else{
+			this.effectTackle = this.transform.FindChild("Effect_Tackle1").gameObject;
+			this.transform.FindChild("Effect_Tackle0").gameObject.SetActive(false);
+			this.effectChargeMax = this.transform.FindChild("Effect_ChargeMax1").gameObject;
+			this.transform.FindChild("Effect_ChargeMax0").gameObject.SetActive(false);
+		}
+
 		this.effectTackleDamage = this.transform.FindChild("Effect_TackleDamage").gameObject;
-		this.effectTackleAttack = this.transform.FindChild("Effect_TackleAttack").gameObject;
 		this.effectDash         = this.transform.FindChild("Effect_Dash").gameObject;
 		this.effectCharge       = this.transform.FindChild("Effect_Charge").gameObject;
-		this.effectChargeMax    = this.transform.FindChild("Effect_ChargeMax").gameObject;
 		this.effectShoot        = this.transform.FindChild("Effect_Shoot").gameObject;
+
+		// 色指定
+		if (this.transform.parent.gameObject.layer == 8 || this.transform.parent.gameObject.layer == 9)
+		{
+			// 1P&2P
+			this.effectCharge.particleSystem.startColor       = Color.red;
+			this.effectShoot.particleSystem.startColor        = Color.red;
+		}else{
+			// 3P&4P
+			this.effectCharge.particleSystem.startColor       = Color.blue;
+			this.effectShoot.particleSystem.startColor        = Color.blue;
+		}
+
 		AllReSet();
 	}
 
@@ -35,7 +57,6 @@ public class CEffect : MonoBehaviour {
 	{
 		this.effectTackle.SetActive(false);
 		this.effectTackleDamage.SetActive(false);
-		this.effectTackleAttack.SetActive(false);
 		this.effectDash.SetActive(false);
 		this.effectCharge.SetActive(false);
 		this.effectChargeMax.SetActive(false);
@@ -44,11 +65,6 @@ public class CEffect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(this.cplayer.m_status);
-		// 右足セット
-		this.effectShoot.transform.position = this.rightFoot.transform.position;
-		this.effectShoot.transform.rotation = this.rightFoot.transform.rotation;
-
 		switch (this.cplayer.m_status)
 		{
 			case CPlayerManager.ePLAYER_STATUS.eDASH: PlayerStatusDash(); break;                   // ダッシュ中
@@ -60,7 +76,6 @@ public class CEffect : MonoBehaviour {
 			case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE: PlayerStatusShootCharge(); break;     // チャージ中
 			case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge(); break;           // チャージ中
 			case CPlayerManager.ePLAYER_STATUS.eEND: break;                                        // 終了
-			case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal(); break;                   // ゴールした時は何もさせない
 			default: AllReSet();break;                                                             // それ以外（エフェクトをOFF)
 		}
 	}
@@ -72,18 +87,13 @@ public class CEffect : MonoBehaviour {
 	void PlayerStatusTackle()
 	{
 		this.effectTackle.SetActive(true);
+		this.effectTackleDamage.SetActive(false);
+		this.effectCharge.SetActive(false);
 	}
 	void PlayerStatusTackleSuccess()
 	{
-		/*
-		this.effectTackle.SetActive(false);
-		this.effectTackleDamage.SetActive(false);
-		this.effectTackleAttack.SetActive(false);
-		this.effectTackleDash.SetActive(false);
-		this.effectTackleCharge.SetActive(false);
-		this.effectTackleChargeMax.SetActive(false);
-		this.effectTackleShoot.SetActive(false);
-		 */
+		this.effectTackle.SetActive(true);
+		this.effectTackleDamage.SetActive(true);
 	}
 	void PlayerStatusTackleDamage()
 	{
@@ -91,54 +101,39 @@ public class CEffect : MonoBehaviour {
 	}
 	void PlayerStatusShoot()
 	{
-		this.effectShoot.SetActive(true);
+		this.effectCharge.SetActive(false);
 	}
+
+
 	void PlayerStatusPass()
 	{
-		/*
-		this.effectTackle.SetActive(false);
-		this.effectTackleDamage.SetActive(false);
-		this.effectTackleAttack.SetActive(false);
-		this.effectTackleDash.SetActive(false);
-		this.effectTackleCharge.SetActive(false);
-		this.effectTackleChargeMax.SetActive(false);
-		this.effectTackleShoot.SetActive(false);
-		 */
+		this.effectCharge.SetActive(false);
 	}
+
+
 	void PlayerStatusShootCharge()
 	{
-		/*
-		this.effectTackle.SetActive(false);
-		this.effectTackleDamage.SetActive(false);
-		this.effectTackleAttack.SetActive(false);
-		this.effectTackleDash.SetActive(false);
-		this.effectTackleCharge.SetActive(false);
-		this.effectTackleChargeMax.SetActive(false);
-		this.effectTackleShoot.SetActive(false);
-		 */
+		// 右足セット
+		this.effectShoot.transform.position = this.rightFoot.transform.position;
+		this.effectShoot.transform.rotation = this.rightFoot.transform.rotation;
+
+		if(this.cplayer.m_chargeFrame == 60)
+			this.effectCharge.SetActive(true);
+		if (this.cplayer.m_chargeFrame >= 120)
+		{
+			this.effectChargeMax.SetActive(true);
+			this.effectShoot.SetActive(true);
+		}
 	}
 	void PlayerStatusCharge()
 	{
-		/*
-		this.effectTackle.SetActive(false);
-		this.effectTackleDamage.SetActive(false);
-		this.effectTackleAttack.SetActive(false);
-		this.effectTackleDash.SetActive(false);
-		this.effectTackleCharge.SetActive(false);
-		this.effectTackleChargeMax.SetActive(false);
-		this.effectTackleShoot.SetActive(false);
-		 */
-	}
-	void PlayerStatusGoal()
-	{
-		/*
-		this.effectTackle.SetActive(false);
-		this.effectTackleDamage.SetActive(false);
-		this.effectTackleAttack.SetActive(false);
-		this.effectTackleDash.SetActive(false);
-		this.effectTackleCharge.SetActive(false);
-		this.effectTackleChargeMax.SetActive(false);
-		this.effectTackleShoot.SetActive(false);
-		 */
+		// ブースターにセット
+		//this.effectShoot.transform.position = this.rightFoot.transform.position;
+		//this.effectShoot.transform.rotation = this.rightFoot.transform.rotation;
+
+		if (this.cplayer.m_chargeFrame >= 60)
+			this.effectCharge.SetActive(true);
+		//if (this.cplayer.m_chargeFrame >= 120)
+		//	this.effectShoot.SetActive(true);
 	}
 }

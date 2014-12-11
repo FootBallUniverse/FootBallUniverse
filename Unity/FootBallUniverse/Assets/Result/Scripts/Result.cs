@@ -62,7 +62,7 @@ public class Result : MonoBehaviour {
 	{
 		GameObject[] panels = new GameObject[3];
 
-#if true // ドライバ
+#if false // ドライバ
 		TeamData.teamNationality[0] = TeamData.TEAM_NATIONALITY.JAPAN;
 		TeamData.teamNationality[1] = TeamData.TEAM_NATIONALITY.ESPANA;
 
