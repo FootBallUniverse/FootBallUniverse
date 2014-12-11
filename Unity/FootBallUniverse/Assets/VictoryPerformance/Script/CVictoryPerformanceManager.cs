@@ -54,6 +54,7 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 
 		m_flame = 0.0f;
 
+
 //		m_motionPlayer.animation.Stop ();
 	}
 	
