@@ -211,6 +211,163 @@ ModelImporter:
     100410: root
     100412: sakotu
     100414: top
+    100416: pasted__nurbsCircle2
+    100418: defaltpose3:asi1_L1
+    100420: defaltpose3:asi1_R
+    100422: defaltpose3:FOOT_L
+    100424: defaltpose3:FOOT_R
+    100426: defaltpose3:group1
+    100428: defaltpose3:hiji_L
+    100430: defaltpose3:hiji_R
+    100432: defaltpose3:hiza_L
+    100434: defaltpose3:hiza_R
+    100436: defaltpose3:jet
+    100438: defaltpose3:joint10
+    100440: defaltpose3:joint11
+    100442: defaltpose3:joint12
+    100444: defaltpose3:joint13
+    100446: defaltpose3:joint14
+    100448: defaltpose3:joint16
+    100450: defaltpose3:joint17
+    100452: defaltpose3:joint19
+    100454: defaltpose3:joint20
+    100456: defaltpose3:joint21
+    100458: defaltpose3:joint24
+    100460: defaltpose3:joint25
+    100462: defaltpose3:joint26
+    100464: defaltpose3:joint27
+    100466: defaltpose3:joint28
+    100468: defaltpose3:joint30
+    100470: defaltpose3:joint31
+    100472: defaltpose3:joint33
+    100474: defaltpose3:joint34
+    100476: defaltpose3:joint35
+    100478: defaltpose3:kata_L
+    100480: defaltpose3:kata_R
+    100482: defaltpose3:koshi
+    100484: defaltpose3:kubi1
+    100486: defaltpose3:kubi2
+    100488: defaltpose3:locator_L
+    100490: defaltpose3:locator_R
+    100492: defaltpose3:mune
+    100494: defaltpose3:nurbsCircle1
+    100496: defaltpose3:pasted__nurbsCircle1
+    100498: defaltpose3:pasted__nurbsCircle1 1
+    100500: defaltpose3:pasted__nurbsCircle2
+    100502: defaltpose3:pasted__nurbsCircle3
+    100504: defaltpose3:pasted__nurbsCircle4
+    100506: defaltpose3:pasted__pasted__nurbsCircle1
+    100508: defaltpose3:pasted__pasted__nurbsCircle1 1
+    100510: defaltpose3:pasted__pasted__nurbsCircle2
+    100512: defaltpose3:pasted__pasted__pasted__nurbsCircle1
+    100514: defaltpose3:polySurface14
+    100516: defaltpose3:root
+    100518: defaltpose3:sakotu
+    100520: defaltpose3:top
+    100522: defaltpose4:asi1_L1
+    100524: defaltpose4:asi1_R
+    100526: defaltpose4:FOOT_L
+    100528: defaltpose4:FOOT_R
+    100530: defaltpose4:group1
+    100532: defaltpose4:hiji_L
+    100534: defaltpose4:hiji_R
+    100536: defaltpose4:hiza_L
+    100538: defaltpose4:hiza_R
+    100540: defaltpose4:jet
+    100542: defaltpose4:joint10
+    100544: defaltpose4:joint11
+    100546: defaltpose4:joint12
+    100548: defaltpose4:joint13
+    100550: defaltpose4:joint14
+    100552: defaltpose4:joint16
+    100554: defaltpose4:joint17
+    100556: defaltpose4:joint19
+    100558: defaltpose4:joint20
+    100560: defaltpose4:joint21
+    100562: defaltpose4:joint24
+    100564: defaltpose4:joint25
+    100566: defaltpose4:joint26
+    100568: defaltpose4:joint27
+    100570: defaltpose4:joint28
+    100572: defaltpose4:joint30
+    100574: defaltpose4:joint31
+    100576: defaltpose4:joint33
+    100578: defaltpose4:joint34
+    100580: defaltpose4:joint35
+    100582: defaltpose4:kata_L
+    100584: defaltpose4:kata_R
+    100586: defaltpose4:koshi
+    100588: defaltpose4:kubi1
+    100590: defaltpose4:kubi2
+    100592: defaltpose4:locator_L
+    100594: defaltpose4:locator_R
+    100596: defaltpose4:mune
+    100598: defaltpose4:nurbsCircle1
+    100600: defaltpose4:pasted__nurbsCircle1
+    100602: defaltpose4:pasted__nurbsCircle1 1
+    100604: defaltpose4:pasted__nurbsCircle2
+    100606: defaltpose4:pasted__nurbsCircle3
+    100608: defaltpose4:pasted__nurbsCircle4
+    100610: defaltpose4:pasted__pasted__nurbsCircle1
+    100612: defaltpose4:pasted__pasted__nurbsCircle1 1
+    100614: defaltpose4:pasted__pasted__nurbsCircle2
+    100616: defaltpose4:pasted__pasted__pasted__nurbsCircle1
+    100618: defaltpose4:polySurface14
+    100620: defaltpose4:root
+    100622: defaltpose4:sakotu
+    100624: defaltpose4:top
+    100626: defaltpose5:asi1_L1
+    100628: defaltpose5:asi1_R
+    100630: defaltpose5:FOOT_L
+    100632: defaltpose5:FOOT_R
+    100634: defaltpose5:group1
+    100636: defaltpose5:hiji_L
+    100638: defaltpose5:hiji_R
+    100640: defaltpose5:hiza_L
+    100642: defaltpose5:hiza_R
+    100644: defaltpose5:jet
+    100646: defaltpose5:joint10
+    100648: defaltpose5:joint11
+    100650: defaltpose5:joint12
+    100652: defaltpose5:joint13
+    100654: defaltpose5:joint14
+    100656: defaltpose5:joint16
+    100658: defaltpose5:joint17
+    100660: defaltpose5:joint19
+    100662: defaltpose5:joint20
+    100664: defaltpose5:joint21
+    100666: defaltpose5:joint24
+    100668: defaltpose5:joint25
+    100670: defaltpose5:joint26
+    100672: defaltpose5:joint27
+    100674: defaltpose5:joint28
+    100676: defaltpose5:joint30
+    100678: defaltpose5:joint31
+    100680: defaltpose5:joint33
+    100682: defaltpose5:joint34
+    100684: defaltpose5:joint35
+    100686: defaltpose5:kata_L
+    100688: defaltpose5:kata_R
+    100690: defaltpose5:koshi
+    100692: defaltpose5:kubi1
+    100694: defaltpose5:kubi2
+    100696: defaltpose5:locator_L
+    100698: defaltpose5:locator_R
+    100700: defaltpose5:mune
+    100702: defaltpose5:nurbsCircle1
+    100704: defaltpose5:pasted__nurbsCircle1
+    100706: defaltpose5:pasted__nurbsCircle1 1
+    100708: defaltpose5:pasted__nurbsCircle2
+    100710: defaltpose5:pasted__nurbsCircle3
+    100712: defaltpose5:pasted__nurbsCircle4
+    100714: defaltpose5:pasted__pasted__nurbsCircle1
+    100716: defaltpose5:pasted__pasted__nurbsCircle1 1
+    100718: defaltpose5:pasted__pasted__nurbsCircle2
+    100720: defaltpose5:pasted__pasted__pasted__nurbsCircle1
+    100722: defaltpose5:polySurface14
+    100724: defaltpose5:root
+    100726: defaltpose5:sakotu
+    100728: defaltpose5:top
     400000: asi1_L1
     400002: asi1_R
     400004: defaltpose1:asi1_L1
@@ -419,16 +576,179 @@ ModelImporter:
     400410: root
     400412: sakotu
     400414: top
+    400416: pasted__nurbsCircle2
+    400418: defaltpose3:asi1_L1
+    400420: defaltpose3:asi1_R
+    400422: defaltpose3:FOOT_L
+    400424: defaltpose3:FOOT_R
+    400426: defaltpose3:group1
+    400428: defaltpose3:hiji_L
+    400430: defaltpose3:hiji_R
+    400432: defaltpose3:hiza_L
+    400434: defaltpose3:hiza_R
+    400436: defaltpose3:jet
+    400438: defaltpose3:joint10
+    400440: defaltpose3:joint11
+    400442: defaltpose3:joint12
+    400444: defaltpose3:joint13
+    400446: defaltpose3:joint14
+    400448: defaltpose3:joint16
+    400450: defaltpose3:joint17
+    400452: defaltpose3:joint19
+    400454: defaltpose3:joint20
+    400456: defaltpose3:joint21
+    400458: defaltpose3:joint24
+    400460: defaltpose3:joint25
+    400462: defaltpose3:joint26
+    400464: defaltpose3:joint27
+    400466: defaltpose3:joint28
+    400468: defaltpose3:joint30
+    400470: defaltpose3:joint31
+    400472: defaltpose3:joint33
+    400474: defaltpose3:joint34
+    400476: defaltpose3:joint35
+    400478: defaltpose3:kata_L
+    400480: defaltpose3:kata_R
+    400482: defaltpose3:koshi
+    400484: defaltpose3:kubi1
+    400486: defaltpose3:kubi2
+    400488: defaltpose3:locator_L
+    400490: defaltpose3:locator_R
+    400492: defaltpose3:mune
+    400494: defaltpose3:nurbsCircle1
+    400496: defaltpose3:pasted__nurbsCircle1
+    400498: defaltpose3:pasted__nurbsCircle1 1
+    400500: defaltpose3:pasted__nurbsCircle2
+    400502: defaltpose3:pasted__nurbsCircle3
+    400504: defaltpose3:pasted__nurbsCircle4
+    400506: defaltpose3:pasted__pasted__nurbsCircle1
+    400508: defaltpose3:pasted__pasted__nurbsCircle1 1
+    400510: defaltpose3:pasted__pasted__nurbsCircle2
+    400512: defaltpose3:pasted__pasted__pasted__nurbsCircle1
+    400514: defaltpose3:polySurface14
+    400516: defaltpose3:root
+    400518: defaltpose3:sakotu
+    400520: defaltpose3:top
+    400522: defaltpose4:asi1_L1
+    400524: defaltpose4:asi1_R
+    400526: defaltpose4:FOOT_L
+    400528: defaltpose4:FOOT_R
+    400530: defaltpose4:group1
+    400532: defaltpose4:hiji_L
+    400534: defaltpose4:hiji_R
+    400536: defaltpose4:hiza_L
+    400538: defaltpose4:hiza_R
+    400540: defaltpose4:jet
+    400542: defaltpose4:joint10
+    400544: defaltpose4:joint11
+    400546: defaltpose4:joint12
+    400548: defaltpose4:joint13
+    400550: defaltpose4:joint14
+    400552: defaltpose4:joint16
+    400554: defaltpose4:joint17
+    400556: defaltpose4:joint19
+    400558: defaltpose4:joint20
+    400560: defaltpose4:joint21
+    400562: defaltpose4:joint24
+    400564: defaltpose4:joint25
+    400566: defaltpose4:joint26
+    400568: defaltpose4:joint27
+    400570: defaltpose4:joint28
+    400572: defaltpose4:joint30
+    400574: defaltpose4:joint31
+    400576: defaltpose4:joint33
+    400578: defaltpose4:joint34
+    400580: defaltpose4:joint35
+    400582: defaltpose4:kata_L
+    400584: defaltpose4:kata_R
+    400586: defaltpose4:koshi
+    400588: defaltpose4:kubi1
+    400590: defaltpose4:kubi2
+    400592: defaltpose4:locator_L
+    400594: defaltpose4:locator_R
+    400596: defaltpose4:mune
+    400598: defaltpose4:nurbsCircle1
+    400600: defaltpose4:pasted__nurbsCircle1
+    400602: defaltpose4:pasted__nurbsCircle1 1
+    400604: defaltpose4:pasted__nurbsCircle2
+    400606: defaltpose4:pasted__nurbsCircle3
+    400608: defaltpose4:pasted__nurbsCircle4
+    400610: defaltpose4:pasted__pasted__nurbsCircle1
+    400612: defaltpose4:pasted__pasted__nurbsCircle1 1
+    400614: defaltpose4:pasted__pasted__nurbsCircle2
+    400616: defaltpose4:pasted__pasted__pasted__nurbsCircle1
+    400618: defaltpose4:polySurface14
+    400620: defaltpose4:root
+    400622: defaltpose4:sakotu
+    400624: defaltpose4:top
+    400626: defaltpose5:asi1_L1
+    400628: defaltpose5:asi1_R
+    400630: defaltpose5:FOOT_L
+    400632: defaltpose5:FOOT_R
+    400634: defaltpose5:group1
+    400636: defaltpose5:hiji_L
+    400638: defaltpose5:hiji_R
+    400640: defaltpose5:hiza_L
+    400642: defaltpose5:hiza_R
+    400644: defaltpose5:jet
+    400646: defaltpose5:joint10
+    400648: defaltpose5:joint11
+    400650: defaltpose5:joint12
+    400652: defaltpose5:joint13
+    400654: defaltpose5:joint14
+    400656: defaltpose5:joint16
+    400658: defaltpose5:joint17
+    400660: defaltpose5:joint19
+    400662: defaltpose5:joint20
+    400664: defaltpose5:joint21
+    400666: defaltpose5:joint24
+    400668: defaltpose5:joint25
+    400670: defaltpose5:joint26
+    400672: defaltpose5:joint27
+    400674: defaltpose5:joint28
+    400676: defaltpose5:joint30
+    400678: defaltpose5:joint31
+    400680: defaltpose5:joint33
+    400682: defaltpose5:joint34
+    400684: defaltpose5:joint35
+    400686: defaltpose5:kata_L
+    400688: defaltpose5:kata_R
+    400690: defaltpose5:koshi
+    400692: defaltpose5:kubi1
+    400694: defaltpose5:kubi2
+    400696: defaltpose5:locator_L
+    400698: defaltpose5:locator_R
+    400700: defaltpose5:mune
+    400702: defaltpose5:nurbsCircle1
+    400704: defaltpose5:pasted__nurbsCircle1
+    400706: defaltpose5:pasted__nurbsCircle1 1
+    400708: defaltpose5:pasted__nurbsCircle2
+    400710: defaltpose5:pasted__nurbsCircle3
+    400712: defaltpose5:pasted__nurbsCircle4
+    400714: defaltpose5:pasted__pasted__nurbsCircle1
+    400716: defaltpose5:pasted__pasted__nurbsCircle1 1
+    400718: defaltpose5:pasted__pasted__nurbsCircle2
+    400720: defaltpose5:pasted__pasted__pasted__nurbsCircle1
+    400722: defaltpose5:polySurface14
+    400724: defaltpose5:root
+    400726: defaltpose5:sakotu
+    400728: defaltpose5:top
     4300000: polySurface14
     4300002: defaltpose:polySurface14
     4300004: defaltpose1:polySurface14
     4300006: defaltpose2:polySurface14
+    4300008: defaltpose3:polySurface14
+    4300010: defaltpose4:polySurface14
+    4300012: defaltpose5:polySurface14
     7400000: Take 001
     9500000: //RootNode
     13700000: defaltpose1:polySurface14
     13700002: defaltpose2:polySurface14
     13700004: defaltpose:polySurface14
     13700006: polySurface14
+    13700008: defaltpose3:polySurface14
+    13700010: defaltpose4:polySurface14
+    13700012: defaltpose5:polySurface14
   materials:
     importMaterials: 1
     materialName: 0
