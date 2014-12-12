@@ -440,8 +440,7 @@ public class CPlayer1 : CPlayer {
              InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == true && 
              m_isRtPress == false )
         {
-            this.transform.FindChild("SoccerBall").particleSystem.Play();
-//            this.transform.FindChild("Maxcharge").particleSystem.Play();
+			this.transform.FindChild("SoccerBall").transform.FindChild("ShootLine").particleSystem.Play();
             m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
             m_chargeFrame = 0;
             m_isRtPress = true;
@@ -491,10 +490,8 @@ public class CPlayer1 : CPlayer {
             InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == false &&
 		    Input.GetKey(KeyCode.Space) == false)
         {
-            this.transform.FindChild("SoccerBall").particleSystem.Stop();
-            this.transform.FindChild("SoccerBall").particleSystem.Clear();
-  //          this.transform.FindChild("Maxcharge").particleSystem.Stop();
-            this.transform.FindChild("SoccerBall").GetComponent<TrailRenderer>().enabled = true;
+			this.transform.FindChild("SoccerBall").transform.FindChild("ShootLine").particleSystem.Stop();
+			this.transform.FindChild("SoccerBall").transform.FindChild("ShootLine").particleSystem.Clear();
             // チャージ時間が一定量以上ならシュート
             if (m_chargeFrame >= m_human.m_shootChargeLength)
             {

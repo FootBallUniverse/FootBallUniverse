@@ -55,8 +55,11 @@ public class CPlayerCollision : MonoBehaviour
 
                 // ボールの位置をセット
                 Vector3 pos = new Vector3(0.0f, -0.13f, 0.14f);
-                obj.gameObject.GetComponent<TrailRenderer>().enabled = false;
-            
+				if(this.gameObject.name == "player" )
+					obj.GetComponent<CSoccerBall>().SetTrailRed();
+				else
+					obj.GetComponent<CSoccerBall>().SetTrailBlue();
+
                 // プレイヤーのボールに設定
                 CPlayerManager.m_soccerBallManager.ChangeOwner(this.transform, pos);
                 CSoccerBallManager.m_shootPlayerNo = this.GetComponent<CPlayer>().m_playerData.m_playerNo;
@@ -132,7 +135,8 @@ public class CPlayerCollision : MonoBehaviour
                     GameObject soccerBall = obj.transform.FindChild("SoccerBall").gameObject;
                     soccerBall.GetComponent<CSoccerBall>().BlownOff(this.transform);
                     colPlayerScript.m_isBall = false;
-                    obj.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
+					obj.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetTrailWhite();
+					obj.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
                     supporter += CSupporterData.m_damageTackleOnBallSupporter;
                 }
 

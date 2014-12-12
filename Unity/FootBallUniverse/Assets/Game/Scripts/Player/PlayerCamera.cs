@@ -33,27 +33,15 @@ public class PlayerCamera : MonoBehaviour {
 	}
 
 public void CameraUpdate() {
-		Vector3 vectorToCamera;
 		Vector3 wantedPosition;
 		Quaternion targetRotation;
 
-//		if (Rcameraspeed < cameranormalspeed) {
-			//			Rcameraspeed = Rcameraspeed + 1;
-//		}
-//		if (Mcameraspeed < cameranormalspeed) {
-//			ChangeMspeednormal();
-//		}
-		vectorToCamera = this.transform.position - Player.transform.position;
-		if (Mathf.Abs (vectorToCamera.x) < 0.01f && Mathf.Abs (vectorToCamera.y) < 0.01f && Mathf.Abs (vectorToCamera.z) < 0.01f)
-						ChangeRspeednormal ();
 		wantedPosition.x = PCamera.transform.position.x;
 		wantedPosition.y = PCamera.transform.position.y;
 		wantedPosition.z = PCamera.transform.position.z;
-
-
-		targetRotation = Quaternion.LookRotation (vectorToCamera);
-
-		transform.position = Vector3.Lerp (transform.position, wantedPosition, Mcameraspeed * Time.deltaTime);
+		
+//		transform.position = Vector3.Lerp (transform.position, wantedPosition, Mcameraspeed * Time.deltaTime);
+		transform.position = PCamera.transform.position;
 		transform.rotation = Quaternion.Slerp (transform.rotation, Player.transform.rotation, Rcameraspeed * Time.deltaTime);
 
 	}
