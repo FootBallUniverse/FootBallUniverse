@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class CGoalKeeper : CCpu {
-	protected enum GK_State
+	public enum GK_State
 	{
 		WAIT,
 		STAY,
@@ -368,4 +368,7 @@ public class CGoalKeeper : CCpu {
         }
     }
 
+
+	public GK_State GetGKState() { return this.gkState; }
+	public Vector3 GetHomePosition() { return this.HOME_POSITION; }
 }
