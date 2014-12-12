@@ -145,7 +145,7 @@ public class Result : MonoBehaviour {
 					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Blue Team\n Victory";
 					break;
 				case 2:
-					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Draw";
+					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Drow";
 					break;
 			}
 		}

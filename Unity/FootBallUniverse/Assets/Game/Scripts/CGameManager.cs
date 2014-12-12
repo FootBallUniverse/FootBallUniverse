@@ -220,6 +220,47 @@ public class CGameManager : MonoBehaviour {
                 // ゲーム終了待機が終わったらフェードアウトさせる
                 m_nowStatus = eSTATUS.eFADEOUT;
                 m_soundPlayer.PlayBGMFadeOut(0.02f);
+
+                int teamPoint = 0;
+                int redSupporter = 0;
+                int blueSupporter = 0;
+                if (TeamData.GetWinTeamNo() == 0)
+                {
+                    redSupporter += CSupporterData.m_winSupporter;
+
+                    // 得点差を求める
+                    teamPoint = TeamData.GetTeamScore(0) - TeamData.GetTeamScore(1);
+                    if (teamPoint >= 2)
+                        redSupporter += CSupporterData.m_point2WinSupporter;
+
+                    blueSupporter += CSupporterData.m_loseSupporter;
+                }
+                else if (TeamData.GetWinTeamNo() == 1)
+                {
+                    blueSupporter += CSupporterData.m_winSupporter;
+                    // 得点差を求める
+                    teamPoint = TeamData.GetTeamScore(1) - TeamData.GetTeamScore(0);
+                    if (teamPoint >= 2)
+                        blueSupporter += CSupporterData.m_point2WinSupporter;
+
+                    redSupporter += CSupporterData.m_loseSupporter;
+                }
+                else if (TeamData.GetWinTeamNo() == 2)
+                {
+                    redSupporter += CSupporterData.m_drowSupporter;
+                    blueSupporter += CSupporterData.m_drowSupporter;
+
+                    teamPoint = TeamData.GetTeamScore(0);
+                    if (teamPoint >= 2)
+                    {
+                        redSupporter += CSupporterData.m_point2Drow;
+                        blueSupporter += CSupporterData.m_point2Drow;
+                    }
+                }
+
+                // 最後にサポーター追加
+                CSupporterManager.AddSupporter(redSupporter, blueSupporter, true);
+ 
             } 
         }
     }

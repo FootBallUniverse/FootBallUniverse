@@ -113,6 +113,7 @@ public class TeamData
 	//----------------------------------------------------------------------
 	public static int GetWinTeamNo()
 	{
+
 		int[] teamScore = new int[2] { GetTeamScore(0), GetTeamScore(1) };
 
 	if (teamScore[0] == teamScore[1]) return 2;

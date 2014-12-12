@@ -481,6 +481,7 @@ public class CPlayer1 : CPlayer {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
             m_animator.ChangeAnimation(m_animator.m_isWait);
             m_playerSE.StopSE();
+            m_playerSE.PlaySE("game/charge_finish");
             return;
         }
         
@@ -566,6 +567,7 @@ public class CPlayer1 : CPlayer {
             m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
 			m_animator.Wait();
 			m_playerSE.StopSE();
+            m_playerSE.PlaySE("game/charge_finish");
             return;
         }
 
@@ -639,51 +641,46 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     public override void ChangeViewPoint()
     {
-        switch (m_viewPointStatus) {
-				case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
+        switch (m_viewPointStatus) 
+        {
+			case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
 
-                /*
-                // LTボタンが押されたら敵の視点に変更
-                if (Input.GetKeyDown(InputXBOX360.P1_XBOX_L))
-                {
-                    m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.eENEMY;
-                    return;
-                }
-                 * */
-                
-				if (Input.GetKeyDown (InputXBOX360.P1_XBOX_X) || Input.GetKeyDown (InputXBOX360.P1_XBOX_Y) || Input.GetKeyDown (InputXBOX360.P1_XBOX_B) || Input.GetKeyDown (InputXBOX360.P1_XBOX_A)) {
-						m_camera.ChangeRspeedlock ();
-				}
+                       
+			if (Input.GetKeyDown (InputXBOX360.P1_XBOX_X) || Input.GetKeyDown (InputXBOX360.P1_XBOX_Y) || Input.GetKeyDown (InputXBOX360.P1_XBOX_B) || Input.GetKeyDown (InputXBOX360.P1_XBOX_A))
+            {
+                m_playerSE.PlaySE("game/rockon");
+				m_camera.ChangeRspeedlock ();
+			}
 
-                // ボールの方向に向ける
-				if (Input.GetKey (InputXBOX360.P1_XBOX_B) && m_isBall == false) 
-				{
-					m_trans.LookAt (CSoccerBallManager.m_soccerBallTransform);
+            // ボールの方向に向ける
+			if (Input.GetKey (InputXBOX360.P1_XBOX_B) && m_isBall == false) 
+			{
+				m_trans.LookAt (CSoccerBallManager.m_soccerBallTransform);
+				this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+				return;
+			}
+
+            // 2Pの方向に向ける
+			if (Input.GetKey (InputXBOX360.P1_XBOX_X)) {
+					m_trans.LookAt (CPlayerManager.m_player2Transform);
 					this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
 					return;
-				}
+			}
 
-                // 2Pの方向に向ける
-				if (Input.GetKey (InputXBOX360.P1_XBOX_X)) {
-						m_trans.LookAt (CPlayerManager.m_player2Transform);
-						this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-						return;
-				}
+            // 敵ゴールへ向ける
+			if (Input.GetKey (InputXBOX360.P1_XBOX_Y)) {
+					m_trans.LookAt (CStageManager.m_3p4pGoalTransform);
+					this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+					return;
+			}
 
-                // 敵ゴールへ向ける
-				if (Input.GetKey (InputXBOX360.P1_XBOX_Y)) {
-						m_trans.LookAt (CStageManager.m_3p4pGoalTransform);
-						this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-						return;
-				}
-
-                // 自分のゴールへ向ける
-				if (Input.GetKey (InputXBOX360.P1_XBOX_A)) {
-						m_trans.LookAt (CStageManager.m_1p2pGoalTransform);
-						this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-						return;
-				}
-				break;
+            // 自分のゴールへ向ける
+			if (Input.GetKey (InputXBOX360.P1_XBOX_A)) {
+					m_trans.LookAt (CStageManager.m_1p2pGoalTransform);
+					this.transform.rotation = Quaternion.Slerp (this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+					return;
+			}
+			break;
 	/*			
             case CPlayerManager.eVIEW_POINT_STATUS.eENEMY:
                 // RTボタンが押されたら味方の視点に変更

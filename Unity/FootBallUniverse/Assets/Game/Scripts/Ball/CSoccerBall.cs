@@ -172,6 +172,22 @@ public class CSoccerBall : MonoBehaviour {
             CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
             playerScript.m_isBall = true;
 
+            // 相手のボールの場合サポーター追加
+            int supporter = 0;
+            supporter += CSupporterData.m_getBallSupporter;
+
+            if( playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo )
+                supporter += CSupporterData.m_takeBallSupporter;
+
+            if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH)
+            {
+                if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
+                    supporter += CSupporterData.m_takeBallDashSupporter;
+    
+                supporter += CSupporterData.m_getBallDashSupporter;
+            }
+            CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
+
         }
     }
 
