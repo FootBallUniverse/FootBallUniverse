@@ -18,8 +18,8 @@ public class DeliveryCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float ballMovePoint;
-		Debug.Log("old = " + this.oldBallPosition + "  now = " + this.Ball.transform.position);
-		Debug.Log(Vector3.Distance(this.oldBallPosition,this.Ball.transform.position));
+//		Debug.Log("old = " + this.oldBallPosition + "  now = " + this.Ball.transform.position);
+//		Debug.Log(Vector3.Distance(this.oldBallPosition,this.Ball.transform.position));
 
 		if (Input.GetKey(KeyCode.F1)) this.cameraLength += 0.001f;
 		if (Input.GetKey(KeyCode.F2)) this.cameraLength -= 0.001f;

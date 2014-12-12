@@ -116,8 +116,13 @@ public class CPlayerCollision : MonoBehaviour
                 soccerBall.GetComponent<CSoccerBall>().BlownOff(this.transform);
                 colPlayerScript.m_isBall = false;
                 obj.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
-
+				CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo,CSupporterData.m_damageTackleOnBallSupporter);
             }
+			// 持っていない場合
+			else if (colPlayerScript.m_isBall == false)
+			{
+
+			}
         }
     }
 
