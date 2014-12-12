@@ -82,8 +82,8 @@ public class CGameManager : MonoBehaviour {
             case eSTATUS.eENDWAIT: GameEndWait();  break;           // ゲーム終了待機状態
             case eSTATUS.eEND:                 
                 // リザルト画面に遷移させる
-                Application.LoadLevel("Result");
-                break;
+			Application.LoadLevel("VictoryPerformance");
+			break;
 
             default:                               break;
         }
@@ -166,7 +166,7 @@ public class CGameManager : MonoBehaviour {
     {
         m_frame += Time.deltaTime;
         // アニメーション終わって少し時間がたったらフェードアウト
-        if (m_frame >= 4.0f)
+        if (m_frame >= 1.0f)
         {
             m_nowStatus = eSTATUS.eGOALWAIT;
             m_frame = 0.0f;

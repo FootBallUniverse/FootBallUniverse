@@ -120,6 +120,12 @@ public class TeamData
 		else return 1;
 	}
 
+	// サポーターの追加
+	public static void AddSupporter (int _teamNo, int _num)
+	{
+		suppoterByTeam [_teamNo] += _num;
+	}
+
 	//----------------------------------------------------------------------
 	// その他関数
 	//----------------------------------------------------------------------
