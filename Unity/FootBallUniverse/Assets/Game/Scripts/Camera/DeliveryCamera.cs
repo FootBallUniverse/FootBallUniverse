@@ -120,11 +120,17 @@ public class DeliveryCamera : MonoBehaviour {
 
 	void ViewGoleLate()
 	{
+		//int i = this.lookGoalNo + 1;
+
+		/*
 		this.transform.position = Ball.transform.position;
-		this.transform.rotation = Ball.transform.rotation;
-		this.transform.position = new Vector3( this.transform.localPosition.x,
-		                                       this.transform.localPosition.y,
-		                                       this.transform.localPosition.z - 2.0f);
+		this.transform.rotation = Ball.rigidbody.rotation;
+
+		this.transform.localPosition = new Vector3( this.transform.localPosition.x,
+		                                            this.transform.localPosition.y,
+		                                            this.transform.localPosition.z - 2.0f);
+		*/
+
 		this.transform.LookAt(this.keeperScript[this.lookGoalNo].GetComponent<CGoalKeeper>().GetHomePosition());
 
 		if (this.keeperScript[this.lookGoalNo].GetComponent<CGoalKeeper>().GetGKState() != CGoalKeeper.GK_State.CAT)
