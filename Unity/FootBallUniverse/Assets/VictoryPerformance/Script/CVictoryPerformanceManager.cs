@@ -37,6 +37,13 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 	void Start () {
 		m_status = eSTATUS_VICTORYPERFORMANCE.eFADE_IN;
 
+		if (TeamData.GetWinTeamNo () == 0 || TeamData.GetWinTeamNo () == 1) {
+			GameObject.Instantiate(Resources.Load("Prefab/Result/player_victory"));
+		}
+		else if (TeamData.GetWinTeamNo () == 2) {
+			GameObject.Instantiate(Resources.Load("prefab/Result/player_draw"));
+		}
+
 		// パネル取得
 		m_mainUIPanel = GameObject.Find ("MainUI").transform.FindChild ("Camera").transform.FindChild ("Anchor").transform.FindChild ("Panel").gameObject;	
 		m_1p2pUIPanel = GameObject.Find ("1p2pUI").transform.FindChild ("Camera").transform.FindChild ("Anchor").transform.FindChild ("Panel").gameObject;
@@ -45,9 +52,15 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 		m_mainUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CFadeIn> ();
 		m_1p2pUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CFadeIn> ();
 		m_3p4pUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CFadeIn> ();
-	
-		m_motionPlayer = GameObject.Find ("player_victory").gameObject;
 
+		if (TeamData.GetWinTeamNo () == 0 || TeamData.GetWinTeamNo () == 1) 
+		{
+			m_motionPlayer = GameObject.Find ("player_victory(Clone)").gameObject;
+		}
+		else if (TeamData.GetWinTeamNo () == 2) 
+		{
+			m_motionPlayer = GameObject.Find("player_draw(Clone)").gameObject;	
+		}
 		m_mainCamera = GameObject.Find ("MainCamera").gameObject;
 		m_1p2pCamera = GameObject.Find ("1p2pCamera").gameObject;
 		m_3p4pCamera = GameObject.Find ("3p4pCamera").gameObject;

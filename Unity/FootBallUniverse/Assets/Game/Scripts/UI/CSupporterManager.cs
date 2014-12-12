@@ -59,7 +59,19 @@ public class CSupporterManager : MonoBehaviour {
 		// 青チーム
 		else if (_teamNo == 2) 
 		{
-				
+			m_redSupporter_blueLabel = (GameObject)Instantiate(Resources.Load("Prefab/Game/Supporter/blueSupporter_redLabel"));
+			m_redSupporter_blueNum = (GameObject)Instantiate(Resources.Load("Prefab/Game/Supporter/blueSupporter_redNum"));
+			m_redSupporter_blueLabel.transform.parent = m_uiPanelP1P2.transform;
+			m_redSupporter_blueNum.transform.parent = m_uiPanelP1P2.transform;
+
+			m_redSupporter_blueLabel.transform.localPosition = new Vector3(240.0f,245.0f,0.0f);
+			m_redSupporter_blueLabel.transform.localScale = new Vector3(40.0f,40.0f,1.0f);
+
+			m_redSupporter_blueNum.transform.localPosition = new Vector3(250.0f,200.0f,0.0f);
+			m_redSupporter_blueNum.transform.localScale = new Vector3(60.0f,50.0f,1.0f);
+
+			m_redSupporter_blueNum.GetComponent<CSupporter>().StartSupporterDraw("+"+_count.ToString());
+			m_redSupporter_blueLabel.GetComponent<CSupporter>().StartSupporterDraw("サポーター");
 		}
 	}
 

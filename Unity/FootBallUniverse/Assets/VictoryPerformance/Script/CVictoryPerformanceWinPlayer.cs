@@ -22,6 +22,8 @@ public class CVictoryPerformanceWinPlayer : MonoBehaviour {
             this.transform.localRotation = Quaternion.Euler(0.0f, 270.0f, 0.0f);
 
             GameObject.Find("MainCamera").transform.LookAt(this.transform);
+			GameObject.Find("1p2pCamera").transform.LookAt(this.transform);
+			GameObject.Find("3p4pCamera").transform.LookAt(this.transform);
 
             GameObject.Find("MainCamera").transform.localPosition = new Vector3(this.transform.localPosition.x,
                                                                                 this.transform.localPosition.y + 0.92f,
