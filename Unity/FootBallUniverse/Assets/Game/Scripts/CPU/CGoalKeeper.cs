@@ -248,6 +248,9 @@ public class CGoalKeeper : CCpu {
 			this.transform.LookAt(this.frendryData[0].transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
+		// ボールが範囲外に出たら待機へ戻る
+		if (Vector3.Distance(this.HOME_POSITION, this.soccerBallObject.transform.position) >= ARAT_SPACE)
+			this.gkState = GK_State.STAY;
 	}
 
 
@@ -276,6 +279,9 @@ public class CGoalKeeper : CCpu {
 			this.transform.LookAt(this.frendryData[0].transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
+		// ボールが範囲外に出たら待機へ戻る
+		if (Vector3.Distance(this.HOME_POSITION, this.soccerBallObject.transform.position) >= ARAT_SPACE)
+			this.gkState = GK_State.STAY;
 	}
 
 

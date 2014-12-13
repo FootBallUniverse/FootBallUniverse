@@ -101,6 +101,10 @@ public class CEffect : MonoBehaviour {
 	}
 	void PlayerStatusShoot()
 	{
+		// 右足セット
+		this.effectShoot.transform.position = this.rightFoot.transform.position;
+		this.effectShoot.transform.rotation = this.rightFoot.transform.rotation;
+
 		this.effectCharge.SetActive(false);
 	}
 
