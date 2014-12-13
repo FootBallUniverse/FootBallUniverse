@@ -53,6 +53,34 @@ public class C3P4PGoal : MonoBehaviour {
 			CGameManager.m_redPoint++;
 			
 			CGameManager.m_nowStatus = CGameManager.eSTATUS.eGOAL;
-		}
+
+            // サポーター追加
+            int redSupporter = 0;
+            int blueSupporter = 0;
+
+            // オウンゴールではない場合
+            if (CSoccerBallManager.m_shootTeamNo != 2)
+            {
+                // 同点に追いつくシュート
+                if (TeamData.GetTeamScore(0) == TeamData.GetTeamScore(1))
+                    redSupporter += CSupporterData.m_getDrawPointSupporter;
+
+                // 同点から逆転するシュート
+                else if (TeamData.GetTeamScore(0) - 1 == TeamData.GetTeamScore(1))
+                    redSupporter += CSupporterData.m_getDrawReversPointSupporter;
+
+                redSupporter += CSupporterData.m_getPointSupporter;
+
+            }
+            // オウンゴールの場合は点数は入る
+            else if (CSoccerBallManager.m_shootTeamNo == 2)
+            {
+                blueSupporter += CSupporterData.m_getPointSupporter;
+            }
+
+            // 最後にサポーター追加
+            CSupporterManager.AddSupporter(redSupporter, blueSupporter, true);
+
+        }
 	}
 }

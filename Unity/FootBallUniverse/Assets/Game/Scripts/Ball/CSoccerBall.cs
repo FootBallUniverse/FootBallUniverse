@@ -29,7 +29,8 @@ public class CSoccerBall : MonoBehaviour {
         m_isPlayer = false;
 
         this.rigidbody.angularVelocity = new Vector3(Random.value * 10.0f, 0.0f, Random.value * 10.0f);
-    }
+		SetTrailWhite();
+	}
 
     //----------------------------------------------------------------------
     // 初期化
@@ -73,6 +74,8 @@ public class CSoccerBall : MonoBehaviour {
         // 速度ベクトル，角速度ベクトルの初期化
         this.rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         this.rigidbody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+
+		SetTrailWhite();
 
         return true;
     }
@@ -172,7 +175,83 @@ public class CSoccerBall : MonoBehaviour {
             CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
             playerScript.m_isBall = true;
 
+            // 相手のボールの場合サポーター追加
+            int supporter = 0;
+            supporter += CSupporterData.m_getBallSupporter;
+
+            if( playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo )
+                supporter += CSupporterData.m_takeBallSupporter;
+
+            if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH)
+            {
+                if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
+                    supporter += CSupporterData.m_takeBallDashSupporter;
+    
+                supporter += CSupporterData.m_getBallDashSupporter;
+            }
+            CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
+
         }
     }
 
+	//----------------------------------------------------------------------
+	// トレイルの色替え赤
+	//----------------------------------------------------------------------
+	// @Param   none     
+	// @Return	none
+	// @Date	2014/12/8  @Update 2014/12/8  @Author T.Kaneko     
+	//----------------------------------------------------------------------
+	public void SetTrailRed()
+	{
+		this.transform.FindChild("ShootLine").particleSystem.Play();
+		this.transform.FindChild("ShootLine").particleSystem.Clear();
+		this.transform.FindChild("ShootLine").GetComponent<ParticleSystem> ().startColor = new Color (255, 0, 0);
+		this.transform.FindChild ("TrailBlue").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailBlue").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailWhite").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailWhite").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailRed").gameObject.SetActive (true);
+		this.transform.FindChild ("TrailRed").GetComponent<TrailRenderer> ().time = 3;
+	}
+	
+	//----------------------------------------------------------------------
+	// トレイルの色替え青
+	//----------------------------------------------------------------------
+	// @Param   none     
+	// @Return	none
+	// @Date	2014/12/8  @Update 2014/12/8  @Author T.Kaneko     
+	//----------------------------------------------------------------------
+	public void SetTrailBlue()
+	{ 
+		this.transform.FindChild("ShootLine").particleSystem.Play();
+		this.transform.FindChild("ShootLine").particleSystem.Clear();
+		this.transform.FindChild("ShootLine").GetComponent<ParticleSystem> ().startColor = new Color (0, 0, 255);
+		this.transform.FindChild ("TrailRed").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailRed").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailWhite").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailWhite").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailBlue").gameObject.SetActive (true);
+		this.transform.FindChild ("TrailBlue").GetComponent<TrailRenderer> ().time = 3;
+	}
+	
+	//----------------------------------------------------------------------
+	// トレイルの色替え白
+	//----------------------------------------------------------------------
+	// @Param   none     
+	// @Return	none
+	// @Date	2014/12/8  @Update 2014/12/8  @Author T.Kaneko     
+	//----------------------------------------------------------------------
+	public void SetTrailWhite()
+	{ 
+		// ボールの軌道パーティクル処理
+		this.transform.FindChild("ShootLine").particleSystem.Stop();
+		this.transform.FindChild("ShootLine").particleSystem.Clear();
+		this.transform.FindChild("ShootLine").GetComponent<ParticleSystem> ().startColor = new Color (255, 255, 255);
+		this.transform.FindChild ("TrailRed").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailRed").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailBlue").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailBlue").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailWhite").gameObject.SetActive (true);
+		this.transform.FindChild ("TrailWhite").GetComponent<TrailRenderer> ().time = 3;
+	}
 }

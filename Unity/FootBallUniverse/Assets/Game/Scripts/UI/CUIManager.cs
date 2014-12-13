@@ -144,6 +144,7 @@ public class CUIManager : MonoBehaviour {
             case CGameManager.eSTATUS.eCOUNTDOWN:
                 if (m_gameObjectP1P2 == false && m_gameObjectP3P4 == false)
                 {
+                    CGameManager.m_soundPlayer.PlaySE("game/kickoff");
                     m_uiStatus = eUISTATUS.eGAME;
                     CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;
                 }

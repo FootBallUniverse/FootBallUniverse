@@ -55,8 +55,11 @@ public class CPlayerCollision : MonoBehaviour
 
                 // ボールの位置をセット
                 Vector3 pos = new Vector3(0.0f, -0.13f, 0.14f);
-                obj.gameObject.GetComponent<TrailRenderer>().enabled = false;
-            
+				if(this.gameObject.name == "player" )
+					obj.GetComponent<CSoccerBall>().SetTrailRed();
+				else
+					obj.GetComponent<CSoccerBall>().SetTrailBlue();
+
                 // プレイヤーのボールに設定
                 CPlayerManager.m_soccerBallManager.ChangeOwner(this.transform, pos);
                 CSoccerBallManager.m_shootPlayerNo = this.GetComponent<CPlayer>().m_playerData.m_playerNo;
@@ -67,6 +70,19 @@ public class CPlayerCollision : MonoBehaviour
 
                 // ボールの判定をトリガーにする
                 obj.GetComponent<SphereCollider>().isTrigger = true;
+
+                // サポーター追加
+                int supporter = 0;
+
+                if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH)
+                    supporter += CSupporterData.m_getBallDashSupporter;
+
+                // 味方が蹴ったボール
+                if (CSoccerBallManager.m_shootTeamNo == playerScript.m_playerData.m_teamNo)
+                    supporter += CSupporterData.m_getBallPassSupporter;
+
+                supporter += CSupporterData.m_getBallSupporter;
+                CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
 
             }
 
@@ -109,20 +125,25 @@ public class CPlayerCollision : MonoBehaviour
             colPlayerScript.m_action.InitTackleDamage(colPlayerScript.m_human.m_tackleDamageMotionLength,
                                                         colPlayerScript.m_human.m_tackleDamageInitSpeed,
                                                         colPlayerScript.m_human.m_tackleDamageDecFrame);
-            // ボールを持っている場合は飛ばす
-            if (colPlayerScript.m_isBall == true)
+            if (playerScript.m_playerData.m_teamNo != colPlayerScript.m_playerData.m_teamNo)
             {
-                GameObject soccerBall = obj.transform.FindChild("SoccerBall").gameObject;
-                soccerBall.GetComponent<CSoccerBall>().BlownOff(this.transform);
-                colPlayerScript.m_isBall = false;
-                obj.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
-				CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo,CSupporterData.m_damageTackleOnBallSupporter);
-            }
-			// 持っていない場合
-			else if (colPlayerScript.m_isBall == false)
-			{
+                int supporter = 0;
 
-			}
+                // ボールを持っている場合は飛ばす
+                if (colPlayerScript.m_isBall == true)
+                {
+                    GameObject soccerBall = obj.transform.FindChild("SoccerBall").gameObject;
+                    soccerBall.GetComponent<CSoccerBall>().BlownOff(this.transform);
+                    colPlayerScript.m_isBall = false;
+					obj.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetTrailWhite();
+					obj.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
+                    supporter += CSupporterData.m_damageTackleOnBallSupporter;
+                }
+
+                // サポーター追加
+                supporter += CSupporterData.m_damageTackleSupporter;
+                CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
+            }
         }
     }
 
