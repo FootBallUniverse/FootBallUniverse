@@ -173,6 +173,9 @@ public class CSoccerBall : MonoBehaviour {
 								this.SetTrailRed ();
 						if (obj.gameObject.tag == "BlueTeam")
 								this.SetTrailBlue ();
+						
+//						CGameManager.m_soundPlayer.PlaySE("game/boll_totta");
+
 						CPlayerManager.m_soccerBallManager.ChangeOwner (player.transform, pos);
 						CSoccerBallManager.m_shootPlayerNo = playerScript.m_playerData.m_playerNo;
 						CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
@@ -192,6 +195,7 @@ public class CSoccerBall : MonoBehaviour {
 								supporter += CSupporterData.m_getBallDashSupporter;
 						}
 						CSupporterManager.AddSupporter (playerScript.m_playerData.m_teamNo, supporter);
+						playerScript.m_playerSE.PlaySE("game/supoter_up");
 
 				}
     }
@@ -199,6 +203,8 @@ public class CSoccerBall : MonoBehaviour {
 	void OnCollisionEnter(Collision col){
 		if(col.gameObject.tag == "Stage")
 		{
+			CGameManager.m_soundPlayer.ChangeSEVolume(0.9f);
+			CGameManager.m_soundPlayer.PlaySE("game/ball_to_wall");
 			this.SetTrailYellow();
 		}
 	}

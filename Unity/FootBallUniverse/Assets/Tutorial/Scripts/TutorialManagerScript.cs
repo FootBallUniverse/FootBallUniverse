@@ -147,13 +147,36 @@ public class TutorialManagerScript : MonoBehaviour {
 	void Update()
 	{
 		// Input
-		if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START)) this.buttonCheck[0] = true;
-		if (Input.GetKeyDown(InputXBOX360.P2_XBOX_START)) this.buttonCheck[1] = true;
-		if (Input.GetKeyDown(InputXBOX360.P3_XBOX_START)) this.buttonCheck[2] = true;
-		if (Input.GetKeyDown(InputXBOX360.P4_XBOX_START)) this.buttonCheck[3] = true;
-		if (Input.GetKeyDown(KeyCode.LeftShift))  this.buttonCheck[0] = this.buttonCheck[1] = true;
-		if (Input.GetKeyDown(KeyCode.RightShift)) this.buttonCheck[2] = this.buttonCheck[3] = true;
-
+        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START) && this.buttonCheck[0] == false)
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[0] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P2_XBOX_START) && this.buttonCheck[1] == false)
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[1] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P3_XBOX_START) && this.buttonCheck[2] == false)
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[2] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_START) && this.buttonCheck[3] == false)
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[3] = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[0] = this.buttonCheck[1] = true;
+        }
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[2] = this.buttonCheck[3] = true;
+        }
 
 		// 遷移
 		switch (this.state)
@@ -185,6 +208,7 @@ public class TutorialManagerScript : MonoBehaviour {
 			case TUTORIAL_STATE.TUTORIAL0:
 				if (GetButtonCheck())
 				{
+                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
 					ReSetButtonCheck();
 					this.state = TUTORIAL_STATE.TUTORIAL1;
 				}
@@ -200,6 +224,7 @@ public class TutorialManagerScript : MonoBehaviour {
 
 				if (GetButtonCheck())
 				{
+                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
 					ReSetButtonCheck();
 					this.state = TUTORIAL_STATE.TUTORIAL2;
 				}
@@ -213,6 +238,7 @@ public class TutorialManagerScript : MonoBehaviour {
 
 				if (GetButtonCheck())
 				{
+                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
 					ReSetButtonCheck();
 					this.state = TUTORIAL_STATE.TUTORIAL3;
 				}
@@ -226,6 +252,7 @@ public class TutorialManagerScript : MonoBehaviour {
 				this.guidVewer[2].SetActive(false);
 				if (GetButtonCheck())
 				{
+                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
 					for (int i = 0; i < 3; i++)
 						this.bloackOut[i].GetComponent<TweenAlpha>().Play(false);
 					this.state = TUTORIAL_STATE.FAID_OUT;
@@ -238,7 +265,10 @@ public class TutorialManagerScript : MonoBehaviour {
 					 !this.bloackOut[1].GetComponent<TweenAlpha>().enabled &&
 					 !this.bloackOut[2].GetComponent<TweenAlpha>().enabled)
 				{
+                    TeamData.suppoterByTeam[0] = 0;
+                    TeamData.suppoterByTeam[1] = 0;
 					Application.LoadLevel("MainGame");
+                    
 				}
 				break;
 		}

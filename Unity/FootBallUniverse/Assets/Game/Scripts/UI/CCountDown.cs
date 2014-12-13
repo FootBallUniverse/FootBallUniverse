@@ -34,16 +34,21 @@ public class CCountDown : MonoBehaviour {
             m_frame += Time.deltaTime;
 
             if (m_frame >= 0.75f && m_isTween == true)
-                GameObject.Destroy(this.gameObject);
-
-            // 0.5秒経ったら
-            if (m_frame >= 0.5f && m_isTween == false)
+			{
+				GameObject.Destroy(this.gameObject);
+			}
+            // 0.25秒経ったら
+            if (m_frame >= 0.25f && m_isTween == false)
             {
                 m_tweenAlpha.delay = 0.0f;
                 m_tweenAlpha.Play(false);
                 m_isTween = true;
 
-                m_tweenPosition.from = new Vector3(this.transform.localPosition.x, -30.0f, 0.0f);
+				CGameManager.m_soundPlayer.ChangeSEVolume(0.1f);
+				CGameManager.m_soundPlayer.PlaySE("game/time_count");
+
+//this.transform.Find("Player1").transform.GetChild("player").transform.GetComponent<CPlayer1>().m_playerSE.PlaySE("game/time_count");
+				m_tweenPosition.from = new Vector3(this.transform.localPosition.x, -30.0f, 0.0f);
                 m_tweenPosition.to = new Vector3(this.transform.localPosition.x, 30.0f, 0.0f);
                 m_tweenPosition.delay = 0.0f;
                 m_tweenPosition.Play(false);

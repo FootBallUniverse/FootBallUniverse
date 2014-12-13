@@ -59,6 +59,11 @@ public class CPlayerCollision : MonoBehaviour
 					obj.GetComponent<CSoccerBall>().SetTrailRed();
 				if(this.gameObject.tag == "BlueTeam" )
 					obj.GetComponent<CSoccerBall>().SetTrailBlue();
+				CGameManager.m_soundPlayer.ChangeSEVolume(1.0f);
+				CGameManager.m_soundPlayer.PlaySE("game/boll_totta");
+
+//				this.GetComponent<CPlayer>().m_playerSE.PlaySE("game/boll_totta");
+
 
                 // プレイヤーのボールに設定
                 CPlayerManager.m_soccerBallManager.ChangeOwner(this.transform, pos);
@@ -83,6 +88,7 @@ public class CPlayerCollision : MonoBehaviour
 
                 supporter += CSupporterData.m_getBallSupporter;
                 CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
+//				playerScript.m_playerSE.PlaySE("game/supoter_up");
 
             }
 
@@ -143,6 +149,7 @@ public class CPlayerCollision : MonoBehaviour
 				// サポーター追加
                 supporter += CSupporterData.m_damageTackleSupporter;
                 CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
+				playerScript.m_playerSE.PlaySE("game/supoter_up");
             }
         }
     }
