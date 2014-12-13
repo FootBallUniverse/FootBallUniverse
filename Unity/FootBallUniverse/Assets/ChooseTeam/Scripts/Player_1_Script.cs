@@ -272,11 +272,11 @@ public class Player_1_Script : MonoBehaviour
     //=========================================================================================//
     // みぎ回転処理                                                                              //
     //=========================================================================================//
-    void Left_Rotate()
+    void Right_Rotate()
     {
 
         // 左回転フラグがTRUEの時、90°右回転してフラグをFALSEにする
-        if (m_Left_RotateFlag == true)
+        if (m_Right_RotateFlag == true)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -321,7 +321,7 @@ public class Player_1_Script : MonoBehaviour
 
                 // 回転数のカウントを0に戻し、左回転フラグをfalseにする
                 m_Count = 0;
-                m_Left_RotateFlag = false;
+                m_Right_RotateFlag = false;
 
             }
 
@@ -333,10 +333,10 @@ public class Player_1_Script : MonoBehaviour
     //=========================================================================================//
     // ひだり回転処理                                                                              //
     //=========================================================================================//
-    void Right_Rotate()
+    void Left_Rotate()
     {
         // 右回転フラグがtrueの時
-        if (m_Right_RotateFlag == true)
+        if (m_Left_RotateFlag == true)
         {
 
             for (int i = 0; i < 4; i++)
@@ -381,7 +381,7 @@ public class Player_1_Script : MonoBehaviour
                 }
                 // 回転数のカウントを0にして右回転フラグをfalseにする
                 m_Count = 0;
-                m_Right_RotateFlag = false;
+                m_Left_RotateFlag = false;
             }
             // 回転数をカウント
             m_Count++;

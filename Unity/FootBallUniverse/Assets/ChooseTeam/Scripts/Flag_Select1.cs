@@ -35,7 +35,7 @@ public class Flag_Select1 : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            if (m_team1.m_Right_RotateFlag == true)
+            if (m_team1.m_Left_RotateFlag == true)
             {
                 m_FlagPos[i].x -= 0.01f;
 
@@ -44,7 +44,7 @@ public class Flag_Select1 : MonoBehaviour
                     m_FlagPos[i].x = 0.49f;
                 }
             }
-            if (m_team1.m_Left_RotateFlag == true)
+            if (m_team1.m_Right_RotateFlag == true)
             {
                 m_FlagPos[i].x += 0.01f;
 
