@@ -75,9 +75,6 @@ public class CGoalKeeper2Mesh : CDefaultMesh {
     //----------------------------------------------------------------------
     void OnWillRenderObject()
     {
-        // 配信画面用のカメラなら無効
-        if ("DeliveryCamera" == Camera.current.name)
-            return;
 
         GameObject camera = GameObject.Find(Camera.current.name);
 
