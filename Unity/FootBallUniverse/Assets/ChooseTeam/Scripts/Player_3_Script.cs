@@ -177,26 +177,34 @@ public class Player_3_Script : MonoBehaviour
         //      回転フラグ、フェードインフラグ処理
         //================================================================================================
         // LSを右に倒した
-        if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
+        if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
             {
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
-                m_SE.PlaySE("select/decisioner_dicision");
+                m_SE.VolumeSE(0.8f);
+                if (m_Fade_flag_2.m_FadeFlag == 0)
+                {
+                    m_SE.PlaySE("select/selector_swap");
+                }
             }
             m_Control = true;
         }
         // LSを左に倒した
-        else if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
+        else if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
             {
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
-                m_SE.PlaySE("select/decisioner_dicision");
+                m_SE.VolumeSE(0.8f);
+                if (m_Fade_flag_2.m_FadeFlag == 0)
+                {
+                    m_SE.PlaySE("select/selector_swap");
+                }
+                m_Control = true;
             }
-            m_Control = true;
         }
         else if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) >= -0.3f && Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) <= 0.3f)
         {
@@ -220,11 +228,15 @@ public class Player_3_Script : MonoBehaviour
             && m_Right_RotateFlag == false         // 右回転しているか
             && m_Left_RotateFlag == false)         // 左回転しているか
         {
+
             // フェードインのフラグを1に変更
             m_Fade_flag_2.m_FadeFlag = 1;
+            m_SE.PlaySE("select/selector_select");
         }
         else if (Input.GetKeyDown(InputXBOX360.P3_XBOX_A) && m_Fade_flag_2.m_FadeFlag == 1)
         {
+            m_SE.VolumeSE(0.1f);
+            m_SE.PlaySE("select/decisioner_dicision");
             // シーン変更フラグをtrueにしてフェードインのフラグを2に変更
             m_SceneFlag = true;
             m_Fade_flag_2.m_FadeFlag = 2;
@@ -233,6 +245,8 @@ public class Player_3_Script : MonoBehaviour
         // Bが押されたら
         else if (Input.GetKeyDown(InputXBOX360.P3_XBOX_B) && m_Fade_flag_2.m_FadeFlag == 1)
         {
+            m_SE.VolumeSE(0.2f);
+            m_SE.PlaySE("select/decisioner_cancel");
             // フェードインのフラグを3に変更
             m_Fade_flag_2.m_FadeFlag = 3;
         }
