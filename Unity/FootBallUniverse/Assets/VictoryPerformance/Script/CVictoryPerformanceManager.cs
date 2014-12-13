@@ -33,6 +33,11 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 	private GameObject m_resultSub1;
 	private GameObject m_resultSub2;
 
+    public static CSoundPlayer m_soundPlayer;
+
+    public static CPlayerSE m_player1p2pSE;
+    public static CPlayerSE m_player3p4pSE;
+
 	// Use this for initialization
 	void Start () {
 		m_status = eSTATUS_VICTORYPERFORMANCE.eFADE_IN;
@@ -43,6 +48,13 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 		else if (TeamData.GetWinTeamNo () == 2) {
 			GameObject.Instantiate(Resources.Load("prefab/Result/player_draw"));
 		}
+
+        m_player1p2pSE = GameObject.Find("1p2pCamera").GetComponent<CPlayerSE>();
+        m_player3p4pSE = GameObject.Find("3p4pCamera").GetComponent<CPlayerSE>();
+
+        m_soundPlayer = new CSoundPlayer();
+        m_soundPlayer.ChangeVolume(0.1f, true);
+        m_soundPlayer.PlaySE("result/supoter_finish");
 
 		// パネル取得
 		m_mainUIPanel = GameObject.Find ("MainUI").transform.FindChild ("Camera").transform.FindChild ("Anchor").transform.FindChild ("Panel").gameObject;	
@@ -113,6 +125,7 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 			    m_1p2pUIPanel.transform.FindChild("BlackOut").gameObject.GetComponent<TweenAlpha> ().enabled == false &&
 			    m_3p4pUIPanel.transform.FindChild("BlackOut").gameObject.GetComponent<TweenAlpha>().enabled ==  false ) 
 			{
+                m_soundPlayer.ChangeVolume(0.04f,true);
 				m_status = eSTATUS_VICTORYPERFORMANCE.eNONE;
 				GameObject.Instantiate(Resources.Load("Prefab/Result/Manager"));
 				m_resultMain = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabMain"));

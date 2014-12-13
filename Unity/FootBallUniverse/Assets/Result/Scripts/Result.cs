@@ -224,10 +224,22 @@ public class Result : MonoBehaviour {
 		this.SubPanels[1,1].transform.FindChild("NUM_Supporter_Team1").GetComponent<DrawNumber>().number = this.suppoterBffByTeam[1,1];
 
 		// ボタンチェック
-		if(Input.GetKeyDown(InputXBOX360.P1_XBOX_A)) this.buttonCheck[0,0] = true;
-		if(Input.GetKeyDown(InputXBOX360.P2_XBOX_A)) this.buttonCheck[0,1] = true;
-		if(Input.GetKeyDown(InputXBOX360.P3_XBOX_A)) this.buttonCheck[1,0] = true;
-		if(Input.GetKeyDown(InputXBOX360.P4_XBOX_A)) this.buttonCheck[1,1] = true;
+        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_A))
+        {
+            this.buttonCheck[0, 0] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P2_XBOX_A))
+        {
+            this.buttonCheck[0, 1] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P3_XBOX_A))
+        {
+            this.buttonCheck[1, 0] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_A))
+        {
+            this.buttonCheck[1, 1] = true;
+        }
 		if(Input.GetKeyDown(KeyCode.LeftShift))      this.buttonCheck[0,0] = this.buttonCheck[0,1] = true;
 		if(Input.GetKeyDown(KeyCode.RightShift))     this.buttonCheck[1,0] = this.buttonCheck[1,1] = true;
 
