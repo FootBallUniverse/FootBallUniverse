@@ -112,7 +112,7 @@ public class Player_3_Script : MonoBehaviour
         //      回転フラグ、フェードインフラグ処理
         //================================================================================================
         // Dを押したとき
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
@@ -126,7 +126,7 @@ public class Player_3_Script : MonoBehaviour
             }
         }
         // Aを押したとき
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
@@ -177,7 +177,7 @@ public class Player_3_Script : MonoBehaviour
         //      回転フラグ、フェードインフラグ処理
         //================================================================================================
         // LSを右に倒した
-        if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
+        if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
@@ -192,7 +192,7 @@ public class Player_3_Script : MonoBehaviour
             m_Control = true;
         }
         // LSを左に倒した
-        else if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
+        else if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
@@ -396,4 +396,6 @@ public class Player_3_Script : MonoBehaviour
         }
     }
 }
+
+
 

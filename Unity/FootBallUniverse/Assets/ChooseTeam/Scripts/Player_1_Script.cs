@@ -100,7 +100,7 @@ public class Player_1_Script : MonoBehaviour
         //      キーボード処理
         //================================================================================================
         // Aを押したとき
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
@@ -114,7 +114,7 @@ public class Player_1_Script : MonoBehaviour
             }
         }
         // Dを押したとき
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
@@ -167,7 +167,7 @@ public class Player_1_Script : MonoBehaviour
         //      XBoxコントローラー処理
         //================================================================================================
         //  LSを右に倒した
-        if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
+        if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
@@ -182,14 +182,14 @@ public class Player_1_Script : MonoBehaviour
             m_Control = true;
         }
         //  LSを左に倒した
-        else if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
+        else if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
             {
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
                 m_SE.VolumeSE(0.8f);
-                if (m_Fade_flag_2.m_FadeFlag == 0)
+                if (m_Fade_flag_1.m_FadeFlag == 0)
                 {
                     m_SE.PlaySE("select/selector_swap");
                 }
@@ -388,4 +388,5 @@ public class Player_1_Script : MonoBehaviour
         }
     }
 }
+
 
