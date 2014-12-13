@@ -16,7 +16,9 @@ public class CFadeIn : MonoBehaviour {
         m_tweenAlpha.from = 1;
         m_tweenAlpha.to = 0;
 
-        m_tweenAlpha.Play(true);    
+        m_tweenAlpha.Play(true); 
+
+        this.GetComponent<UISprite>().depth = 100;
 	}
 	
 	// Update is called once per frame

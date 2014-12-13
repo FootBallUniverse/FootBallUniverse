@@ -18,6 +18,8 @@ public class CFadeOut : MonoBehaviour {
 
         m_tweenAlpha.Play(false);
 
+        this.GetComponent<UISprite>().depth = 100;
+
 	}
 	
 	// Update is called once per frame

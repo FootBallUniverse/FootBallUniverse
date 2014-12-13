@@ -44,6 +44,11 @@ public class CUIManager : MonoBehaviour {
     public GameObject m_uiPanelP1P2;           // P1P2UI用パネル
     public GameObject m_uiPanelP3P4;           // P3P4UI用パネル
 
+    public GameObject m_goalPanelMain;
+    public GameObject m_goalPanelP1P2;
+    public GameObject m_goalPanelP3P4;
+
+
     // UIの時間用
     public UISprite m_TimeMinP1P2;
     public UISprite m_TimeTenSecP1P2;
@@ -67,7 +72,11 @@ public class CUIManager : MonoBehaviour {
 	public UISprite m_pointRedMain;
 	public UISprite m_pointBlueMain;
 
+    public string[] GOAL;
+                                     
+    public int m_count;
     public bool m_isEnd;
+    public float m_frame;
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -116,9 +125,19 @@ public class CUIManager : MonoBehaviour {
         // 最初の得点設定
         Goal();
 
+        GOAL = new string[6];
+        GOAL[0] = "G";
+        GOAL[1] = "O";
+        GOAL[2] = "A";
+        GOAL[3] = "L";
+        GOAL[4] = "EX";
+        GOAL[5] = "BACK";
+
         m_uiStatus = eUISTATUS.eWAIT;
 
         m_isEnd = false;
+        m_count = 0;
+        m_frame = 0.0f;
 
 	}
 
@@ -240,13 +259,80 @@ public class CUIManager : MonoBehaviour {
                 switch (m_uiStatus)
                 {
                     case eUISTATUS.eGOAL:
+                        m_count = 0;
+                        m_goalPanelMain = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/GoalPanel"));
+                        m_goalPanelP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/GoalPanel"));
+                        m_goalPanelP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/GoalPanel"));
+
+                        m_goalPanelMain.transform.parent = m_uiPanelMain.transform;
+                        m_goalPanelP1P2.transform.parent = m_uiPanelP1P2.transform;
+                        m_goalPanelP3P4.transform.parent = m_uiPanelP3P4.transform;
+
+                        m_goalPanelMain.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                        m_goalPanelP1P2.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                        m_goalPanelP3P4.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
+                        m_goalPanelMain.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        m_goalPanelP1P2.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        m_goalPanelP3P4.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+                        m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+                        m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+						m_gameObjectMain = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+
+                        m_gameObjectMain.transform.parent = m_goalPanelMain.transform;
+                        m_gameObjectP1P2.transform.parent = m_goalPanelP1P2.transform;
+                        m_gameObjectP3P4.transform.parent = m_goalPanelP3P4.transform;
+
                         m_uiStatus = eUISTATUS.eGOALWAIT;
                         break;
 
                     case eUISTATUS.eGOALWAIT:
-                        m_blackoutMain.AddComponent<CFadeOut>();
-                        m_blackoutP1P2.AddComponent<CFadeOut>();
-                        m_blackoutP3P4.AddComponent<CFadeOut>();
+                        m_frame += Time.deltaTime;
+
+                        if (m_gameObjectP1P2.GetComponent<TweenPosition>().enabled == false && m_count < 3)
+                        {
+                            m_count++;
+                            m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+                            m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+                            m_gameObjectMain = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+
+                            m_gameObjectMain.transform.parent = m_goalPanelMain.transform;
+                            m_gameObjectP1P2.transform.parent = m_goalPanelP1P2.transform;
+                            m_gameObjectP3P4.transform.parent = m_goalPanelP3P4.transform;
+                        }
+
+                        if (m_gameObjectP1P2.GetComponent<TweenPosition>().enabled == false && m_count == 3)
+                        {
+                            m_count++;
+                            m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count+1] + "_sprite"));
+                            m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count+1] + "_sprite"));
+                            m_gameObjectMain = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count+1] + "_sprite"));
+
+                            m_gameObjectMain.transform.parent = m_goalPanelMain.transform;
+                            m_gameObjectP1P2.transform.parent = m_goalPanelP1P2.transform;
+                            m_gameObjectP3P4.transform.parent = m_goalPanelP3P4.transform;
+                            m_gameObjectMain.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                            m_gameObjectP1P2.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                            m_gameObjectP3P4.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
+                            m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+                            m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+                            m_gameObjectMain = (GameObject)Instantiate(Resources.Load("Prefab/Game/Goal/" + GOAL[m_count] + "_sprite"));
+
+                            m_gameObjectMain.transform.parent = m_goalPanelMain.transform;
+                            m_gameObjectP1P2.transform.parent = m_goalPanelP1P2.transform;
+                            m_gameObjectP3P4.transform.parent = m_goalPanelP3P4.transform;
+                            m_frame = 0.0f;
+                        }
+
+                        if (m_gameObjectP1P2.GetComponent<TweenPosition>().enabled == false && m_count == 4 && m_frame >= 2.0f)
+                        {
+                            m_blackoutMain.AddComponent<CFadeOut>();
+                            m_blackoutP1P2.AddComponent<CFadeOut>();
+                            m_blackoutP3P4.AddComponent<CFadeOut>();
+                            m_uiStatus = eUISTATUS.eGOALFADEOUT;
+                        }
                         break;
 
                     case eUISTATUS.eGOALFADEOUT:
@@ -255,6 +341,11 @@ public class CUIManager : MonoBehaviour {
                             m_blackoutP1P2.GetComponent<TweenAlpha>().enabled == false &&
                             m_blackoutP3P4.GetComponent<TweenAlpha>().enabled == false)
                         {
+
+                            Destroy(m_goalPanelMain);
+                            Destroy(m_goalPanelP1P2);
+                            Destroy(m_goalPanelP3P4);
+
                             this.Goal();
 							CGameManager.RestartGame();
                             m_uiStatus = eUISTATUS.eGOALFADEIN;
