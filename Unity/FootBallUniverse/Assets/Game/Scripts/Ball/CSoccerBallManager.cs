@@ -11,7 +11,6 @@ public class CSoccerBallManager : MonoBehaviour {
     public static int m_shootPlayerNo;                  // シュート（パス）したプレイヤーの番号
     public static int m_shootTeamNo;                    // シュートしたチームの番号
     public static Transform m_soccerBallTransform;      // サッカーボールの位置
-
     // 低数値
     public const int eTEAM_1 = 0;
     public const int eTEAM_2 = 1;

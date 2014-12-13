@@ -201,6 +201,8 @@ public class CSoccerBall : MonoBehaviour {
     }
 
 	void OnCollisionEnter(Collision col){
+		this.transform.FindChild("ShootLine").particleSystem.Stop();
+		this.transform.FindChild("ShootLine").particleSystem.Clear();
 		if(col.gameObject.tag == "Stage")
 		{
 			CGameManager.m_soundPlayer.ChangeSEVolume(0.9f);

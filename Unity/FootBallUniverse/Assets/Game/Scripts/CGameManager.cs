@@ -194,6 +194,7 @@ public class CGameManager : MonoBehaviour {
     private void GamePlay()
     {
         this.PlayTime();    // 時間計測用
+        this.DebugKey();    // デバッグ用
     }
 
     //----------------------------------------------------------------------
@@ -219,6 +220,7 @@ public class CGameManager : MonoBehaviour {
                 // ゲーム終了待機が終わったらフェードアウトさせる
                 m_nowStatus = eSTATUS.eFADEOUT;
                 m_soundPlayer.PlayBGMFadeOut(0.02f);
+				this.transform.Find("SoccerBall").rigidbody.velocity = new Vector3(0,0,0);
 
                 int teamPoint = 0;
                 int redSupporter = 0;
@@ -330,5 +332,25 @@ public class CGameManager : MonoBehaviour {
         CGameData.SetData(CUtility.ChangeArray(ref work,csvData,0 ));
 
         return true;
+    }
+
+    //----------------------------------------------------------------------
+    // デバッグ用ボタン
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/10/27  @Update 2014/10/28  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void DebugKey()
+    {
+        // 残り時間を0秒にする
+        if (Input.GetKeyDown(KeyCode.Escape) ||
+            InputXBOX360.IsGetAllSelectButton())
+        {
+            m_isGamePlay = false;
+            CGameData.m_gamePlayTime = 0;
+            m_nowStatus = eSTATUS.eENDWAIT;
+            m_frame = 0.0f;
+        }
     }
 }
