@@ -424,7 +424,7 @@ public class CUIManager : MonoBehaviour {
 	{
 		m_pointRedP1P2.spriteName = "num_" + CGameManager.m_redPoint + "_red";
 		m_pointRedP3P4.spriteName = "num_" + CGameManager.m_redPoint + "_red";
-		m_pointRedMain.spriteName = "num_" + CGameManager.m_bluePoint + "_red";
+		m_pointRedMain.spriteName = "num_" + CGameManager.m_redPoint + "_red";
 		m_pointBlueP1P2.spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
 		m_pointBlueP3P4.spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
 		m_pointBlueMain.spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
