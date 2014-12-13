@@ -304,7 +304,6 @@ public class CPlayerControler : MonoBehaviour {
 		    Input.GetKeyDown(KeyCode.Space) && 
 		    m_playerScript.m_isRtPress == false )
 		{
-			this.transform.parent.FindChild("SoccerBall").particleSystem.Play();
 			m_playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
 			m_playerScript.m_chargeFrame = 0;
 			m_playerScript.m_isRtPress = true;
@@ -514,5 +513,6 @@ public class CPlayerControler : MonoBehaviour {
 			_frame = 0;
 			return 0;
 		}
+
 	}
 }
