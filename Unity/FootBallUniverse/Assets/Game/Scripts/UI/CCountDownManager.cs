@@ -100,6 +100,7 @@ public class CCountDownManager : MonoBehaviour {
             if (m_gameFrame >= 0.4f)
             {
                 m_uiPanel.transform.FindChild("KickOffPanel").GetComponent<TweenAlpha>().Play(true);
+                GameObject.Destroy(this.gameObject);
             }
         }
 	}
