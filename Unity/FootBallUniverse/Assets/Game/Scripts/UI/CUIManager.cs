@@ -67,6 +67,8 @@ public class CUIManager : MonoBehaviour {
 	public UISprite m_pointRedMain;
 	public UISprite m_pointBlueMain;
 
+    public bool m_isEnd;
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -115,6 +117,8 @@ public class CUIManager : MonoBehaviour {
         Goal();
 
         m_uiStatus = eUISTATUS.eWAIT;
+
+        m_isEnd = false;
 
 	}
 
@@ -184,6 +188,22 @@ public class CUIManager : MonoBehaviour {
 
             // ゲーム終了時の待機中状態
             case CGameManager.eSTATUS.eENDWAIT:
+                if (m_isEnd == false)
+                {
+                    m_isEnd = true;
+                    GameObject obj = (GameObject)Instantiate(Resources.Load("Prefab/Game/TimeUP"));
+                    obj.transform.parent = m_uiPanelMain.transform;
+                    obj.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                    obj.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
+                    obj = (GameObject)Instantiate(Resources.Load("Prefab/Game/TimeUP"));
+                    obj.transform.parent = m_uiPanelP1P2.transform;
+                    obj.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                    obj.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
+                    obj = (GameObject)Instantiate(Resources.Load("Prefab/Game/TimeUP"));
+                    obj.transform.parent = m_uiPanelP3P4.transform;
+                    obj.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+                    obj.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
+                }
                 CalcTime();
                 break;
 
@@ -224,9 +244,9 @@ public class CUIManager : MonoBehaviour {
                         break;
 
                     case eUISTATUS.eGOALWAIT:
-//                        m_blackoutMain.AddComponent<CFadeOut>();
-//                        m_blackoutP1P2.AddComponent<CFadeOut>();
-//                        m_blackoutP3P4.AddComponent<CFadeOut>();
+                        m_blackoutMain.AddComponent<CFadeOut>();
+                        m_blackoutP1P2.AddComponent<CFadeOut>();
+                        m_blackoutP3P4.AddComponent<CFadeOut>();
                         break;
 
                     case eUISTATUS.eGOALFADEOUT:

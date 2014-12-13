@@ -66,7 +66,7 @@ public class CGameData
     {
         m_gamePlayTime = int.Parse(_arrayData[0]);
         m_ballDecRec = float.Parse(_arrayData[1]);
-        m_gameEndTime = 10;
+        m_gameEndTime = 3;
 
         return true;
     }

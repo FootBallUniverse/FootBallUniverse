@@ -45,7 +45,7 @@ public class CCountDownManager : MonoBehaviour {
                 m_countDownObject.transform.parent = m_uiPanel.transform.FindChild("KickOffPanel").transform;
                 m_countDownObject.transform.localPosition = new Vector3(1000.0f, 0.0f, 0.0f);
                 m_countDownObject.transform.localScale = new Vector3(500.0f, 140.0f, 0.0f);
-                m_countDownObject.GetComponent<UISprite>().depth = 10;
+                m_countDownObject.GetComponent<UISprite>().depth = 20;
                 m_isCount = true;
             }
 

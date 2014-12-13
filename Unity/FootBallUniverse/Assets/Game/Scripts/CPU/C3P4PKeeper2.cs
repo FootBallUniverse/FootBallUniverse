@@ -32,7 +32,6 @@ public class C3P4PKeeper2 : CGoalKeeper {
 	//----------------------------------------------------------------------
 	void Update()
 	{
-		Debug.Log("gkState = " + this.gkState + " m_state = " + this.m_status);
 		this.CGoalKeeperUpdate();
 	}
 

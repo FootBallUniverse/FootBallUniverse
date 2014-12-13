@@ -177,6 +177,9 @@ public class Result : MonoBehaviour {
 				case 2:
                     panels[j].transform.FindChild("VictorySprite").GetComponent<UISprite>().spriteName = "draw";
                     panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().enabled = false;
+                    panels[j].transform.FindChild("VictorySprite").localPosition = new Vector3(panels[j].transform.FindChild("VictorySprite").localPosition.x,
+                                                                                               panels[j].transform.FindChild("VictorySprite").localPosition.y - 50.0f,
+                                                                                               panels[j].transform.FindChild("VictorySprite").localPosition.z);
 //					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Drow";
 					break;
 			}
