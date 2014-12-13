@@ -55,9 +55,9 @@ public class CPlayerCollision : MonoBehaviour
 
                 // ボールの位置をセット
                 Vector3 pos = new Vector3(0.0f, -0.13f, 0.14f);
-				if(this.gameObject.name == "player" )
+				if(this.gameObject.tag == "RedTeam" )
 					obj.GetComponent<CSoccerBall>().SetTrailRed();
-				else
+				if(this.gameObject.tag == "BlueTeam" )
 					obj.GetComponent<CSoccerBall>().SetTrailBlue();
 
                 // プレイヤーのボールに設定
@@ -91,7 +91,7 @@ public class CPlayerCollision : MonoBehaviour
 
         // タックルの当たり判定
         if (this.GetComponent<CPlayer>().m_status == CPlayerManager.ePLAYER_STATUS.eTACKLE &&
-            (obj.gameObject.tag == "Player") || (obj.gameObject.tag == "cpu") || (obj.gameObject.tag == "GoalKeeper"))
+            ((obj.gameObject.tag == "RedTeam") || (obj.gameObject.tag == "BlueTeam")))
         {
             CPlayer playerScript = this.GetComponent<CPlayer>();
 

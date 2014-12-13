@@ -99,7 +99,7 @@ public class CSoccerBall : MonoBehaviour {
     // @Return	none
     // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
     //----------------------------------------------------------------------
-	void Update () {	    
+	void Update () {
 	}
 
     //----------------------------------------------------------------------
@@ -170,6 +170,10 @@ public class CSoccerBall : MonoBehaviour {
             // 当たった方のプレイヤーに持ち主を変更
             // プレイヤーのボールに設定
             Vector3 pos = new Vector3(0.0f,-0.13f,0.14f);
+			if(obj.gameObject.tag == "RedTeam" )
+				this.SetTrailRed();
+			if(obj.gameObject.tag == "BlueTeam" )
+				this.SetTrailBlue();
             CPlayerManager.m_soccerBallManager.ChangeOwner(player.transform, pos);
             CSoccerBallManager.m_shootPlayerNo = playerScript.m_playerData.m_playerNo;
             CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
