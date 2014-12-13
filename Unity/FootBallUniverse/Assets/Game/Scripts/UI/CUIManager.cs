@@ -106,9 +106,9 @@ public class CUIManager : MonoBehaviour {
         m_TimeTenSecP3P4 = m_uiPanelP3P4.transform.FindChild("time_tensec").gameObject.GetComponent<UISprite>();
         m_TimeSecP3P4 = m_uiPanelP3P4.transform.FindChild("time_sec").gameObject.GetComponent<UISprite>();
 
-		m_TimeMinMain = m_uiPanelMain.transform.FindChild("time_min").gameObject.GetComponent<UISprite>();
-		m_TimeTenSecMain = m_uiPanelMain.transform.FindChild("time_tensec").gameObject.GetComponent<UISprite>();
-		m_TimeSecMain = m_uiPanelMain.transform.FindChild("time_sec").gameObject.GetComponent<UISprite>();
+		m_TimeMinMain    = m_uiPanelMain.transform.FindChild("Viewer").transform.FindChild("time_min").gameObject.GetComponent<UISprite>();
+		m_TimeTenSecMain = m_uiPanelMain.transform.FindChild("Viewer").transform.FindChild("time_tensec").gameObject.GetComponent<UISprite>();
+		m_TimeSecMain = m_uiPanelMain.transform.FindChild("Viewer").transform.FindChild("time_sec").gameObject.GetComponent<UISprite>();
 
         m_pointRedP1P2 = m_uiPanelP1P2.transform.FindChild("1p2pteam_point").gameObject.GetComponent<UISprite>();
         m_pointBlueP1P2 = m_uiPanelP1P2.transform.FindChild("3p4pteam_point").gameObject.GetComponent<UISprite>();
@@ -116,14 +116,19 @@ public class CUIManager : MonoBehaviour {
         m_pointRedP3P4 = m_uiPanelP3P4.transform.FindChild("1p2pteam_point").gameObject.GetComponent<UISprite>();
         m_pointBlueP3P4 = m_uiPanelP3P4.transform.FindChild("3p4pteam_point").gameObject.GetComponent<UISprite>();
 
-		m_pointRedMain = m_uiPanelMain.transform.FindChild("1p2pteam_point").gameObject.GetComponent<UISprite>();
-		m_pointBlueMain = m_uiPanelMain.transform.FindChild("3p4pteam_point").gameObject.GetComponent<UISprite>();
+		m_pointRedMain = m_uiPanelMain.transform.FindChild("Viewer").transform.FindChild("1p2pteam_point").gameObject.GetComponent<UISprite>();
+		m_pointBlueMain = m_uiPanelMain.transform.FindChild("Viewer").transform.FindChild("3p4pteam_point").gameObject.GetComponent<UISprite>();
 
         // 最初の時間設定
         CalcTime();
 
         // 最初の得点設定
         Goal();
+
+		// 配信画面の大型得点表示を削除
+		m_uiPanelMain.transform.FindChild("BigViewer").transform.FindChild("1p2pteam_point2").GetComponent<UISprite>().spriteName = "num_" + CGameManager.m_redPoint + "_red";
+		m_uiPanelMain.transform.FindChild("BigViewer").transform.FindChild("3p4pteam_point2").GetComponent<UISprite>().spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
+		m_uiPanelMain.transform.FindChild("BigViewer").gameObject.SetActive(false);
 
         GOAL = new string[6];
         GOAL[0] = "G";
@@ -326,8 +331,25 @@ public class CUIManager : MonoBehaviour {
                             m_frame = 0.0f;
                         }
 
-                        if (m_gameObjectP1P2.GetComponent<TweenPosition>().enabled == false && m_count == 4 && m_frame >= 2.0f)
+						// 点数表示
+						if (m_gameObjectP1P2.GetComponent<TweenPosition>().enabled == false && m_count == 4 && m_frame >= 2.0f)
+						{
+							m_uiPanelMain.transform.FindChild("BigViewer").gameObject.SetActive(true);
+						}
+
+						// 点数加算
+						if (m_gameObjectP1P2.GetComponent<TweenPosition>().enabled == false && m_count == 4 && m_frame >= 3.0f)
+						{
+							// ここで勝利がわに１加算
+							m_uiPanelMain.transform.FindChild("BigViewer").transform.FindChild("1p2pteam_point2").GetComponent<UISprite>().spriteName = "num_" + CGameManager.m_redPoint + "_red";
+							m_uiPanelMain.transform.FindChild("BigViewer").transform.FindChild("3p4pteam_point2").GetComponent<UISprite>().spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
+						}
+
+
+						// フェードアウト開始
+                        if (m_gameObjectP1P2.GetComponent<TweenPosition>().enabled == false && m_count == 4 && m_frame >= 5.0f)
                         {
+							m_uiPanelMain.transform.FindChild("BigViewer").gameObject.SetActive(false);
                             m_blackoutMain.AddComponent<CFadeOut>();
                             m_blackoutP1P2.AddComponent<CFadeOut>();
                             m_blackoutP3P4.AddComponent<CFadeOut>();
