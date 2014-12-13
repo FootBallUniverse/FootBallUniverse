@@ -348,10 +348,10 @@ public class Player_1_Script : MonoBehaviour
                             Position[i].x -= 0.1f;
                         break;
                     case 1:
-                        Position[i].x = 1.85f;
+                        Position[i].x = 1.75f;
                         break;
                     case 2:
-                        Position[i].x = 1.85f;
+                        Position[i].x = 1.75f;
                         break;
                     case 3:
                         if (Position[i].x > -2.25f)
