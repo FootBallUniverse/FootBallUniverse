@@ -268,7 +268,11 @@ public class CGoalKeeper : CCpu {
 
 		targetPosition = GetFuterBallPosition();
 		this.transform.LookAt(targetPosition);
+
+		//if (1 < Vector3.Distance(this.transform.position, targetPosition)) Move(new Vector3(0.0f, 0.0f, 1.0f));
+		//else this.transform.position = targetPosition;
 		Move(new Vector3(0.0f, 0.0f, 1.0f));
+		
 		this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
 
 		// ボールをキャッチ（→パス）
@@ -315,7 +319,9 @@ public class CGoalKeeper : CCpu {
 		if (this.transform.position != HOME_POSITION)
 		{
 			this.transform.LookAt(HOME_POSITION);
-			Move(new Vector3(0.0f, 0.0f, 0.1f));
+			if (0.5f < Vector3.Distance(this.transform.position, HOME_POSITION)) Move(new Vector3(0.0f, 0.0f, 0.5f));
+			else this.transform.position = HOME_POSITION;
+
 			this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
 		}
 	}
@@ -373,7 +379,6 @@ public class CGoalKeeper : CCpu {
 
         }
     }
-
 
 	public GK_State GetGKState() { return this.gkState; }
 	public Vector3 GetHomePosition() { return this.HOME_POSITION; }
