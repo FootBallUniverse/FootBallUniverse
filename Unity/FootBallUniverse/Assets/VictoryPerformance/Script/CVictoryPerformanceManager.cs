@@ -53,6 +53,7 @@ public class CVictoryPerformanceManager : MonoBehaviour {
         m_player3p4pSE = GameObject.Find("3p4pCamera").GetComponent<CPlayerSE>();
 
         m_soundPlayer = new CSoundPlayer();
+        m_soundPlayer.ChangeSEVolume(0.4f);
         m_soundPlayer.PlaySE("result/supoter_finish");
 
 		// パネル取得
@@ -77,7 +78,6 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 		m_3p4pCamera = GameObject.Find ("3p4pCamera").gameObject;
 
 		m_flame = 0.0f;
-
 
 //		m_motionPlayer.animation.Stop ();
 	}
@@ -104,6 +104,7 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 			   m_3p4pCamera.transform.localPosition.z == m_mainCamera.GetComponent<TweenPosition>().to.z )
 			{
 				m_status = eSTATUS_VICTORYPERFORMANCE.eINIT_FADE;
+                m_soundPlayer.ChangeSEVolume(0.3f);
 			}
 			break;
 
@@ -129,7 +130,7 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 				m_resultMain = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabMain"));
 				m_resultSub1 = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabSub0"));
                 m_resultSub2 = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabSub1"));
-			}
+            }
 			break;
 		}
 
