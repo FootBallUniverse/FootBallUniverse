@@ -59,6 +59,7 @@ public class CGameManager : MonoBehaviour {
         m_soundPlayer = new CSoundPlayer();
         m_soundPlayer.PlayBGMFadeIn("game/bgm_01", 0.05f);
 
+
 	}
 
     //----------------------------------------------------------------------
@@ -342,14 +343,6 @@ public class CGameManager : MonoBehaviour {
     //----------------------------------------------------------------------
     private void DebugKey()
     {
-        // Tキーもしくは1Pのスタートボタンが押されたらタイマをON/OFF
-        if (Input.GetKeyDown(KeyCode.T) ||
-            Input.GetKeyDown(InputXBOX360.P1_XBOX_START))
-        {
-            CGameData.m_isTimer ^= true;
-            Debug.Log("Stop : " + CGameData.m_isTimer);
-        }
-
         // 残り時間を0秒にする
         if (Input.GetKeyDown(KeyCode.Escape) ||
             InputXBOX360.IsGetAllSelectButton())

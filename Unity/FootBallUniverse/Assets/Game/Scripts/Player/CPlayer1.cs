@@ -144,6 +144,11 @@ public class CPlayer1 : CPlayer {
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN;
         }
+
+        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        }
     }
 
     //----------------------------------------------------------------------

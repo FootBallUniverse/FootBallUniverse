@@ -22,10 +22,13 @@ public class TutorialManagerScript : MonoBehaviour {
 	GameObject[] buttonVewer = new GameObject[4];
 	GameObject[] bloackOut   = new GameObject[3];
 
+    CSoundPlayer m_soundPlayer;
+
 	// Use this for initialization
 	void Start () {
 		// メインゲーム呼び出し
 		Application.LoadLevelAdditive("MainGame");
+
 	}
 
 	//----------------------------------------------------------------------
@@ -37,6 +40,9 @@ public class TutorialManagerScript : MonoBehaviour {
 	//----------------------------------------------------------------------
 	void InitTutorial()
 	{
+        CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;
+        CGameData.m_isTimer = false;
+
 		// 配信用カメラ削除
 		GameObject.Find("DeliveryCamera").SetActive(false);
 		// チュートリアルに必要のない機能を無効化
@@ -65,7 +71,17 @@ public class TutorialManagerScript : MonoBehaviour {
 		GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_sec").gameObject.SetActive(false);
 		GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_tensec").gameObject.SetActive(false);
 		GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_min").gameObject.SetActive(false);
-		// オブジェクト挿入
+
+        GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("BlackOut").gameObject.SetActive(false);
+        GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("BlackOut").gameObject.SetActive(false);
+
+        GameObject.Find("BGMObject").gameObject.SetActive(false);
+        GameObject.Find("SEObject").gameObject.SetActive(false);
+
+        m_soundPlayer = new CSoundPlayer();
+        m_soundPlayer.PlayBGMFadeIn("tutorial/bgm_01", 0.05f);
+
+        // オブジェクト挿入
 		for (int i = 0; i < 3; i++)
 			this.guidVewer[i] = GameObject.Find("GuidVewer" + i);
 
@@ -131,10 +147,10 @@ public class TutorialManagerScript : MonoBehaviour {
 	void Update()
 	{
 		// Input
-		if (Input.GetKeyDown(InputXBOX360.P1_XBOX_A)) this.buttonCheck[0] = true;
-		if (Input.GetKeyDown(InputXBOX360.P2_XBOX_A)) this.buttonCheck[1] = true;
-		if (Input.GetKeyDown(InputXBOX360.P3_XBOX_A)) this.buttonCheck[2] = true;
-		if (Input.GetKeyDown(InputXBOX360.P4_XBOX_A)) this.buttonCheck[3] = true;
+		if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START)) this.buttonCheck[0] = true;
+		if (Input.GetKeyDown(InputXBOX360.P2_XBOX_START)) this.buttonCheck[1] = true;
+		if (Input.GetKeyDown(InputXBOX360.P3_XBOX_START)) this.buttonCheck[2] = true;
+		if (Input.GetKeyDown(InputXBOX360.P4_XBOX_START)) this.buttonCheck[3] = true;
 		if (Input.GetKeyDown(KeyCode.LeftShift))  this.buttonCheck[0] = this.buttonCheck[1] = true;
 		if (Input.GetKeyDown(KeyCode.RightShift)) this.buttonCheck[2] = this.buttonCheck[3] = true;
 
