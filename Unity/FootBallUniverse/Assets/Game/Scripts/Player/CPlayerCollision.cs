@@ -133,7 +133,7 @@ public class CPlayerCollision : MonoBehaviour
 	            GameObject soccerBall = obj.transform.FindChild("SoccerBall").gameObject;
 	            soccerBall.GetComponent<CSoccerBall>().BlownOff(this.transform);
 	            colPlayerScript.m_isBall = false;
-					obj.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetTrailWhite();
+					obj.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetTrailYellow();
 					obj.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
 	            supporter += CSupporterData.m_damageTackleOnBallSupporter;
 	        }
