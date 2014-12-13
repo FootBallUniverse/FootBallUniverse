@@ -154,8 +154,6 @@ public class CSoccerBall : MonoBehaviour {
 				CPlayer playerScript = obj.GetComponent<CPlayer> ();
 				CapsuleCollider capsuleCollider = obj as CapsuleCollider;
 
-		Debug.Log ("Collision");
-
 				// プレイヤーとの当たり判定
 				if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true && 
 						playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
@@ -263,5 +261,24 @@ public class CSoccerBall : MonoBehaviour {
 		this.transform.FindChild ("TrailBlue").GetComponent<TrailRenderer> ().time = -1;
 		this.transform.FindChild ("TrailYellow").gameObject.SetActive (true);
 		this.transform.FindChild ("TrailYellow").GetComponent<TrailRenderer> ().time = 3;
+	}
+	//----------------------------------------------------------------------
+	// トレイルの表示を消す
+	//----------------------------------------------------------------------
+	// @Param   none     
+	// @Return	none
+	// @Date	2014/12/14  @Update 2014/12/14  @Author T.Kaneko     
+	//----------------------------------------------------------------------
+	public void StopTrail()
+	{ 
+		this.transform.FindChild("ShootLine").particleSystem.Stop();
+		this.transform.FindChild("ShootLine").particleSystem.Clear();
+		this.transform.FindChild ("TrailRed").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailRed").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailBlue").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailBlue").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailYellow").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailYellow").GetComponent<TrailRenderer> ().time = -1;
+
 	}
 }

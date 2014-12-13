@@ -81,6 +81,9 @@ public class C3P4PGoal : MonoBehaviour {
             // 最後にサポーター追加
             CSupporterManager.AddSupporter(redSupporter, blueSupporter, true);
 
+			collider.gameObject.transform.GetComponent<CSoccerBall>().StopTrail();
+
+
         }
 	}
 }

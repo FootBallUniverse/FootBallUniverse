@@ -88,6 +88,8 @@ public class C1P2PGoal : MonoBehaviour {
             // 最後にサポーター追加
             CSupporterManager.AddSupporter(redSupporter, blueSupporter, true);
 
+			collider.gameObject.GetComponent<CSoccerBall>().StopTrail();
+
         }
 
     }
