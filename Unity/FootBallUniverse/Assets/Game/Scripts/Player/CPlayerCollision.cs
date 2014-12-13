@@ -125,22 +125,22 @@ public class CPlayerCollision : MonoBehaviour
             colPlayerScript.m_action.InitTackleDamage(colPlayerScript.m_human.m_tackleDamageMotionLength,
                                                         colPlayerScript.m_human.m_tackleDamageInitSpeed,
                                                         colPlayerScript.m_human.m_tackleDamageDecFrame);
-            if (playerScript.m_playerData.m_teamNo != colPlayerScript.m_playerData.m_teamNo)
-            {
-                int supporter = 0;
 
-                // ボールを持っている場合は飛ばす
-                if (colPlayerScript.m_isBall == true)
-                {
-                    GameObject soccerBall = obj.transform.FindChild("SoccerBall").gameObject;
-                    soccerBall.GetComponent<CSoccerBall>().BlownOff(this.transform);
-                    colPlayerScript.m_isBall = false;
+			int supporter = 0;
+			// ボールを持っている場合は飛ばす
+	        if (colPlayerScript.m_isBall == true)
+	        {
+	            GameObject soccerBall = obj.transform.FindChild("SoccerBall").gameObject;
+	            soccerBall.GetComponent<CSoccerBall>().BlownOff(this.transform);
+	            colPlayerScript.m_isBall = false;
 					obj.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetTrailWhite();
 					obj.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
-                    supporter += CSupporterData.m_damageTackleOnBallSupporter;
-                }
+	            supporter += CSupporterData.m_damageTackleOnBallSupporter;
+	        }
 
-                // サポーター追加
+			if (playerScript.m_playerData.m_teamNo != colPlayerScript.m_playerData.m_teamNo)
+			{
+				// サポーター追加
                 supporter += CSupporterData.m_damageTackleSupporter;
                 CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
             }
