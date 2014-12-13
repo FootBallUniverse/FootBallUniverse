@@ -27,6 +27,13 @@ public class TutorialManagerScript : MonoBehaviour {
 		Application.LoadLevelAdditive("MainGame");
 	}
 
+	//----------------------------------------------------------------------
+	// チュートリアル画面の初期化
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
 	void InitTutorial()
 	{
 		// 配信用カメラ削除
@@ -56,6 +63,14 @@ public class TutorialManagerScript : MonoBehaviour {
 		ReSetButtonCheck();
 	}
 
+	//----------------------------------------------------------------------
+	// ４人ともボタンを押したかを返す
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Param   check  true:ボタンがおされた/false:ボタンがおされていない
+	// @Return  none
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
 	bool GetButtonCheck()
 	{
 		for (int i = 0; i < 4; i++)
@@ -65,12 +80,26 @@ public class TutorialManagerScript : MonoBehaviour {
 		return true;
 	}
 
+	//----------------------------------------------------------------------
+	// ボタンが押されたかのチェックを初期化
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
 	void ReSetButtonCheck()
 	{
 		for (int i = 0; i < 4; i++)
 			this.buttonCheck[i] = false;
 	}
 
+	//----------------------------------------------------------------------
+	// ボタンを押せ　を描するかしないかを判断させる
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
 	void ButtonDraw()
 	{
 		for (int i = 0; i < 4; i++)
@@ -91,6 +120,8 @@ public class TutorialManagerScript : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.LeftShift))  this.buttonCheck[0] = this.buttonCheck[1] = true;
 		if (Input.GetKeyDown(KeyCode.RightShift)) this.buttonCheck[2] = this.buttonCheck[3] = true;
 
+
+		// 遷移
 		switch (this.state)
 		{
 			case TUTORIAL_STATE.WAIT:

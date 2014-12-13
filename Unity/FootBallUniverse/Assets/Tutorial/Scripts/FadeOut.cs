@@ -43,7 +43,7 @@ public class FadeOut : MonoBehaviour
             m_FadeCount += Time.deltaTime;
             if (m_FadeCount >= 1.0f)
             {
-                Application.LoadLevel("MainGame");
+                Application.LoadLevel("Tutorial");
             }
         }
     }
