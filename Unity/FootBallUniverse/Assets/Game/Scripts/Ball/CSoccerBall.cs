@@ -29,7 +29,7 @@ public class CSoccerBall : MonoBehaviour {
         m_isPlayer = false;
 
         this.rigidbody.angularVelocity = new Vector3(Random.value * 10.0f, 0.0f, Random.value * 10.0f);
-		SetTrailWhite();
+		SetTrailYellow();
 	}
 
     //----------------------------------------------------------------------
@@ -75,7 +75,7 @@ public class CSoccerBall : MonoBehaviour {
         this.rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         this.rigidbody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
 
-		SetTrailWhite();
+		SetTrailYellow();
 
         return true;
     }
@@ -150,54 +150,60 @@ public class CSoccerBall : MonoBehaviour {
     //----------------------------------------------------------------------
     void OnTriggerEnter(Collider obj)
     {
-        GameObject player = obj.gameObject;
-        CPlayer playerScript = obj.GetComponent<CPlayer>();
-        CapsuleCollider capsuleCollider = obj as CapsuleCollider;
+				GameObject player = obj.gameObject;
+				CPlayer playerScript = obj.GetComponent<CPlayer> ();
+				CapsuleCollider capsuleCollider = obj as CapsuleCollider;
 
-        // プレイヤーとの当たり判定
-        if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true && 
-		    playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
-		    playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
-		    playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE)
-        {
-            // 現在持っているプレイヤーのステータス変更
-            CPlayer ballPlayer = this.transform.parent.GetComponent<CPlayer>();
-            this.transform.parent.transform.parent.GetComponent<CPlayerAnimator>().TackleDamage();
-            ballPlayer.m_isBall = false;
-            ballPlayer.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
-            ballPlayer.m_action.InitTackleDamage(ballPlayer.m_human.m_stealDamageLength, 0.0f, ballPlayer.m_human.m_stealDamageLength);
+		Debug.Log ("Collision");
+
+				// プレイヤーとの当たり判定
+				if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true && 
+						playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
+						playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
+						playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE) {
+						// 現在持っているプレイヤーのステータス変更
+						CPlayer ballPlayer = this.transform.parent.GetComponent<CPlayer> ();
+						this.transform.parent.transform.parent.GetComponent<CPlayerAnimator> ().TackleDamage ();
+						ballPlayer.m_isBall = false;
+						ballPlayer.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
+						ballPlayer.m_action.InitTackleDamage (ballPlayer.m_human.m_stealDamageLength, 0.0f, ballPlayer.m_human.m_stealDamageLength);
             
-            // 当たった方のプレイヤーに持ち主を変更
-            // プレイヤーのボールに設定
-            Vector3 pos = new Vector3(0.0f,-0.13f,0.14f);
-			if(obj.gameObject.tag == "RedTeam" )
-				this.SetTrailRed();
-			if(obj.gameObject.tag == "BlueTeam" )
-				this.SetTrailBlue();
-            CPlayerManager.m_soccerBallManager.ChangeOwner(player.transform, pos);
-            CSoccerBallManager.m_shootPlayerNo = playerScript.m_playerData.m_playerNo;
-            CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
-            playerScript.m_isBall = true;
+						// 当たった方のプレイヤーに持ち主を変更
+						// プレイヤーのボールに設定
+						Vector3 pos = new Vector3 (0.0f, -0.13f, 0.14f);
+						if (obj.gameObject.tag == "RedTeam")
+								this.SetTrailRed ();
+						if (obj.gameObject.tag == "BlueTeam")
+								this.SetTrailBlue ();
+						CPlayerManager.m_soccerBallManager.ChangeOwner (player.transform, pos);
+						CSoccerBallManager.m_shootPlayerNo = playerScript.m_playerData.m_playerNo;
+						CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
+						playerScript.m_isBall = true;
 
-            // 相手のボールの場合サポーター追加
-            int supporter = 0;
-            supporter += CSupporterData.m_getBallSupporter;
+						// 相手のボールの場合サポーター追加
+						int supporter = 0;
+						supporter += CSupporterData.m_getBallSupporter;
 
-            if( playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo )
-                supporter += CSupporterData.m_takeBallSupporter;
+						if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
+								supporter += CSupporterData.m_takeBallSupporter;
 
-            if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH)
-            {
-                if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
-                    supporter += CSupporterData.m_takeBallDashSupporter;
+						if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH) {
+								if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
+										supporter += CSupporterData.m_takeBallDashSupporter;
     
-                supporter += CSupporterData.m_getBallDashSupporter;
-            }
-            CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
+								supporter += CSupporterData.m_getBallDashSupporter;
+						}
+						CSupporterManager.AddSupporter (playerScript.m_playerData.m_teamNo, supporter);
 
-        }
+				}
     }
 
+	void OnCollisionEnter(Collision col){
+		if(col.gameObject.tag == "Stage")
+		{
+			this.SetTrailYellow();
+		}
+	}
 	//----------------------------------------------------------------------
 	// トレイルの色替え赤
 	//----------------------------------------------------------------------
@@ -212,8 +218,8 @@ public class CSoccerBall : MonoBehaviour {
 		this.transform.FindChild("ShootLine").GetComponent<ParticleSystem> ().startColor = new Color (255, 0, 0);
 		this.transform.FindChild ("TrailBlue").gameObject.SetActive (false);
 		this.transform.FindChild ("TrailBlue").GetComponent<TrailRenderer> ().time = -1;
-		this.transform.FindChild ("TrailWhite").gameObject.SetActive (false);
-		this.transform.FindChild ("TrailWhite").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailYellow").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailYellow").GetComponent<TrailRenderer> ().time = -1;
 		this.transform.FindChild ("TrailRed").gameObject.SetActive (true);
 		this.transform.FindChild ("TrailRed").GetComponent<TrailRenderer> ().time = 3;
 	}
@@ -232,8 +238,8 @@ public class CSoccerBall : MonoBehaviour {
 		this.transform.FindChild("ShootLine").GetComponent<ParticleSystem> ().startColor = new Color (0, 0, 255);
 		this.transform.FindChild ("TrailRed").gameObject.SetActive (false);
 		this.transform.FindChild ("TrailRed").GetComponent<TrailRenderer> ().time = -1;
-		this.transform.FindChild ("TrailWhite").gameObject.SetActive (false);
-		this.transform.FindChild ("TrailWhite").GetComponent<TrailRenderer> ().time = -1;
+		this.transform.FindChild ("TrailYellow").gameObject.SetActive (false);
+		this.transform.FindChild ("TrailYellow").GetComponent<TrailRenderer> ().time = -1;
 		this.transform.FindChild ("TrailBlue").gameObject.SetActive (true);
 		this.transform.FindChild ("TrailBlue").GetComponent<TrailRenderer> ().time = 3;
 	}
@@ -245,7 +251,7 @@ public class CSoccerBall : MonoBehaviour {
 	// @Return	none
 	// @Date	2014/12/8  @Update 2014/12/8  @Author T.Kaneko     
 	//----------------------------------------------------------------------
-	public void SetTrailWhite()
+	public void SetTrailYellow()
 	{ 
 		// ボールの軌道パーティクル処理
 		this.transform.FindChild("ShootLine").particleSystem.Stop();
@@ -255,7 +261,7 @@ public class CSoccerBall : MonoBehaviour {
 		this.transform.FindChild ("TrailRed").GetComponent<TrailRenderer> ().time = -1;
 		this.transform.FindChild ("TrailBlue").gameObject.SetActive (false);
 		this.transform.FindChild ("TrailBlue").GetComponent<TrailRenderer> ().time = -1;
-		this.transform.FindChild ("TrailWhite").gameObject.SetActive (true);
-		this.transform.FindChild ("TrailWhite").GetComponent<TrailRenderer> ().time = 3;
+		this.transform.FindChild ("TrailYellow").gameObject.SetActive (true);
+		this.transform.FindChild ("TrailYellow").GetComponent<TrailRenderer> ().time = 3;
 	}
 }
