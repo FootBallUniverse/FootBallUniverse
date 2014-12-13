@@ -184,10 +184,7 @@ public class Result : MonoBehaviour {
 					break;
 			}
 		}
-
-        Debug.Log(TeamData.suppoterBffByTeam[0]);
-        Debug.Log(TeamData.suppoterBffByTeam[1]);
-
+		
 		// 数値初期化
 		for (int i = 0; i < 2; i++)
 		{

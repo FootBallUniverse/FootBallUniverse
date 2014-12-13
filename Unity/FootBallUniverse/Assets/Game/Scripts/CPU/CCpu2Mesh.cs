@@ -12,12 +12,13 @@ public class CCpu2Mesh : CDefaultMesh {
     //----------------------------------------------------------------------
     void Start()
     {
-        GameObject obj = this.transform.parent.transform.FindChild("CPU2NGUI").gameObject;
+        GameObject obj = this.transform.FindChild("CPU2NGUI").gameObject;
         m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
         m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;
         m_p32DPanel = obj.transform.FindChild("Player3Panel").gameObject;
         m_p42DPanel = obj.transform.FindChild("Player4Panel").gameObject;
-    }
+		m_deli2DPanel = obj.transform.FindChild("DeliveryPanel").gameObject;
+	}
 
     //----------------------------------------------------------------------
     // 更新

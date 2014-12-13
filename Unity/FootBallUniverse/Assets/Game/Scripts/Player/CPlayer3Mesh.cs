@@ -12,13 +12,14 @@ public class CPlayer3Mesh : CDefaultMesh {
     //----------------------------------------------------------------------
     void Start()
     {
-        GameObject obj = this.transform.parent.transform.parent.transform.FindChild("Player3Camera").gameObject;
+        GameObject obj = this.gameObject;
         obj = obj.transform.FindChild("Player3NGUI").gameObject;
         m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
         m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;
         m_p32DPanel = obj.transform.FindChild("Player3Panel").gameObject;
         m_p42DPanel = obj.transform.FindChild("Player4Panel").gameObject;
-    }
+		m_deli2DPanel = obj.transform.FindChild("DeliveryPanel").gameObject;
+	}
 
     //----------------------------------------------------------------------
     // 更新
@@ -83,18 +84,18 @@ public class CPlayer3Mesh : CDefaultMesh {
 
         // プレイヤー１のカメラにプレイヤー３が映ったら
         if ("Player1Camera" == Camera.current.name)
-            m_p12DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+			m_p12DPanel.transform.rotation = camera.transform.localRotation;
         
         // プレイヤー２のカメラにプレイヤー３が映ったら
         if ("Player2Camera" == Camera.current.name)
-            m_p22DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+			m_p22DPanel.transform.rotation = camera.transform.localRotation;
     
 		// プレイヤー４のカメラにプレイヤー３が映ったら
 		if ("Player4Camera" == Camera.current.name)
-			m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+			m_p42DPanel.transform.rotation = camera.transform.localRotation;
 
 		// 配信カメラにプレイヤー３が映ったら
 		if ("DeliveryCamera" == Camera.current.name)
-			m_p32DPanel.transform.localRotation = camera.transform.localRotation;
+			m_deli2DPanel.transform.rotation = camera.transform.localRotation;
 	}
 }
