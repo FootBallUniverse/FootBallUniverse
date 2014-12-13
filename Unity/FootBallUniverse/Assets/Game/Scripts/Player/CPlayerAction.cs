@@ -249,7 +249,7 @@ public class CPlayerAction {
         if (m_passFrame >= (float)m_passTakeOfFrame / 60 && _isBall == true)
         {
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.velocity = _forward * m_passInitSpeed;
-            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 1.0f;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 15.0f;
             _player.transform.FindChild("SoccerBall").GetComponent<SphereCollider>().isTrigger = false;
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().m_isPlayer = false;
             _isBall = false;
@@ -283,7 +283,7 @@ public class CPlayerAction {
         if (m_shootFrame >= (float)m_shootTakeOfFrame / 60 && _isBall == true)
         {
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.velocity = _forward * m_shootInitSpeed;
-            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 1.0f;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 30.0f;
             _player.transform.FindChild("SoccerBall").GetComponent<SphereCollider>().isTrigger = false;
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().m_isPlayer = false;
             _isBall = false;    // プレイヤーのボールではない状態にする

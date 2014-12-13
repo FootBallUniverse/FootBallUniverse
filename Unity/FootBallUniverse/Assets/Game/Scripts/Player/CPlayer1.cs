@@ -469,18 +469,24 @@ public class CPlayer1 : CPlayer {
         if( InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) )
             m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P1_XBOX_RT,ref m_chargeFrame);
 
+        if (m_chargeFrame >= m_human.m_tackleChangeLength && m_isSE == false)
+        {
+            m_playerSE.PlaySE("game/charge_finish");
+            m_isSE = true;
+        }
+
         // チャージ時間が一定量以上ならシュートホールド状態終了
         if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE && 
             m_isBall == true && 
             m_chargeFrame >= m_human.m_shootChargeLengthMax)
         {
-            this.transform.FindChild("SoccerBall").particleSystem.Stop();
-            this.transform.FindChild("SoccerBall").particleSystem.Clear();
+ //           this.transform.FindChild("SoccerBall").particleSystem.Stop();
+ //           this.transform.FindChild("SoccerBall").particleSystem.Clear();
 //            this.transform.FindChild("Maxcharge").particleSystem.Stop();
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
             m_animator.ChangeAnimation(m_animator.m_isWait);
             m_playerSE.StopSE();
-            m_playerSE.PlaySE("game/charge_finish");
+            m_isSE = false;
             return;
         }
         
@@ -510,6 +516,7 @@ public class CPlayer1 : CPlayer {
             }
 
             // 初期化
+            m_isSE = false;
             m_chargeFrame = InputXBOX360.RTButtonPress(InputXBOX360.P1_XBOX_RT,ref m_chargeFrame);
         }
     }
@@ -555,7 +562,13 @@ public class CPlayer1 : CPlayer {
 		// チャージフレーム取得
         if( InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_LT))
             m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P1_XBOX_LT, ref m_chargeFrame);
-        
+
+        if (m_chargeFrame >= m_human.m_tackleChangeLength && m_isSE == false)
+        {
+            m_playerSE.PlaySE("game/charge_finish");
+            m_isSE = true;
+        }
+
         // チャージ時間が一定量以上になったらチャージ状態終了
         if( m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
             m_isBall == false &&
@@ -564,7 +577,7 @@ public class CPlayer1 : CPlayer {
             m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
 			m_animator.Wait();
 			m_playerSE.StopSE();
-            m_playerSE.PlaySE("game/charge_finish");
+            m_isSE = false;
             return;
         }
 
@@ -593,6 +606,7 @@ public class CPlayer1 : CPlayer {
 			}
 
             // 初期化
+            m_isSE = false;
             m_chargeFrame = InputXBOX360.LTButtonPress(InputXBOX360.P1_XBOX_LT, ref m_chargeFrame);
         }
     }

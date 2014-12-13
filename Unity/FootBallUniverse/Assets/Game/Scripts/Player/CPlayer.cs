@@ -25,6 +25,7 @@ public class CPlayer : MonoBehaviour {
     public bool m_isRtPress;                // RTボタンが押され続けているか
     public bool m_isLtPress;                // LTボタンが押され続けているか
     public bool m_isBall;                   // ボールを持っているかどうか
+    public bool m_isSE;                     // SEの交換に使う
 
     // カメラのコンポーネント
     public PlayerCamera m_camera;
@@ -52,6 +53,7 @@ public class CPlayer : MonoBehaviour {
         m_isRtPress = false;
         m_isLtPress = false;
         m_isBall = false;
+        m_isSE = false;
     }
 
     //----------------------------------------------------------------------
@@ -77,6 +79,7 @@ public class CPlayer : MonoBehaviour {
         m_isRtPress = false;
         m_isLtPress = false;
         m_isBall = false;
+        m_isSE = false;
 
         m_playerSE = this.transform.GetComponent<CPlayerSE>();
 
@@ -110,6 +113,7 @@ public class CPlayer : MonoBehaviour {
         m_isBall = false;
         m_isLtPress = false;
         m_isRtPress = false;
+        m_isSE = false;
 
         return true;
     }
