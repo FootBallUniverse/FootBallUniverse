@@ -53,7 +53,6 @@ public class CVictoryPerformanceManager : MonoBehaviour {
         m_player3p4pSE = GameObject.Find("3p4pCamera").GetComponent<CPlayerSE>();
 
         m_soundPlayer = new CSoundPlayer();
-        m_soundPlayer.ChangeVolume(0.1f, true);
         m_soundPlayer.PlaySE("result/supoter_finish");
 
 		// パネル取得
@@ -125,7 +124,6 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 			    m_1p2pUIPanel.transform.FindChild("BlackOut").gameObject.GetComponent<TweenAlpha> ().enabled == false &&
 			    m_3p4pUIPanel.transform.FindChild("BlackOut").gameObject.GetComponent<TweenAlpha>().enabled ==  false ) 
 			{
-                m_soundPlayer.ChangeVolume(0.04f,true);
 				m_status = eSTATUS_VICTORYPERFORMANCE.eNONE;
 				GameObject.Instantiate(Resources.Load("Prefab/Result/Manager"));
 				m_resultMain = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabMain"));
