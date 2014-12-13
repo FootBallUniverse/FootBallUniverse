@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class CGoalKeeper1Mesh : CDefaultMesh {
-
+	
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -12,12 +12,13 @@ public class CGoalKeeper1Mesh : CDefaultMesh {
     //----------------------------------------------------------------------
     void Start()
     {
-        GameObject obj = this.transform.parent.transform.FindChild("GoalKeeper1NGUI").gameObject;
+        GameObject obj = this.transform.FindChild("GoalKeeper1NGUI").gameObject;
         m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
         m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;
         m_p32DPanel = obj.transform.FindChild("Player3Panel").gameObject;
         m_p42DPanel = obj.transform.FindChild("Player4Panel").gameObject;
-    }
+		m_deli2DPanel = obj.transform.FindChild("DeliveryPanel").gameObject;
+	}
 
     //----------------------------------------------------------------------
     // 更新
@@ -74,27 +75,28 @@ public class CGoalKeeper1Mesh : CDefaultMesh {
     //----------------------------------------------------------------------
     void OnWillRenderObject()
     {
-        // 配信画面用のカメラなら無効
-        if ("DeliveryCamera" == Camera.current.name)
-            return;
 
         GameObject camera = GameObject.Find(Camera.current.name);
 
         // プレイヤー１のカメラにCPUが映ったら
         if ("Player1Camera" == Camera.current.name)
-            m_p12DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+            m_p12DPanel.transform.rotation = camera.transform.localRotation;
 
         // プレイヤー２のカメラにCPUが映ったら
         if ("Player2Camera" == Camera.current.name)
-            m_p22DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+			m_p22DPanel.transform.rotation = camera.transform.localRotation;
 
         // プレイヤー３のカメラにCPUが映ったら
         if ("Player3Camera" == Camera.current.name)
-            m_p32DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+			m_p32DPanel.transform.rotation = camera.transform.localRotation;
 
-        // プレイヤー４のカメラにCPUが映ったら
-        if ("Player4Camera" == Camera.current.name)
-            m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
-    
-    }
+		// プレイヤー４のカメラにCPUが映ったら
+		if ("Player4Camera" == Camera.current.name)
+			m_p42DPanel.transform.rotation = camera.transform.localRotation;
+		
+		// 配信カメラにCPUが映ったら
+		if ("DeliveryCamera" == Camera.current.name)
+			m_deli2DPanel.transform.rotation = camera.transform.localRotation;
+		
+	}
 }

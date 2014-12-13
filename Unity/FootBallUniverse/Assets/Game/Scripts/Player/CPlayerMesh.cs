@@ -7,6 +7,7 @@ public class CDefaultMesh : MonoBehaviour {
     protected GameObject m_p22DPanel;   // 2Dのプレイヤー2用パネル
     protected GameObject m_p32DPanel;   // 2Dのプレイヤー3用パネル
     protected GameObject m_p42DPanel;   // 2Dのプレイヤー4用パネル
+	protected GameObject m_deli2DPanel; // 2Dの配信用パネル
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -20,6 +21,7 @@ public class CDefaultMesh : MonoBehaviour {
         m_p22DPanel = null;
         m_p32DPanel = null;
         m_p42DPanel = null;	
+		m_deli2DPanel = null;
 	}
 
     //----------------------------------------------------------------------
