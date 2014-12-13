@@ -12,7 +12,7 @@ public class CPlayer3Mesh : CDefaultMesh {
     //----------------------------------------------------------------------
     void Start()
     {
-        GameObject obj = this.transform.parent.transform.FindChild("PlayerCamera").gameObject;
+        GameObject obj = this.transform.parent.transform.parent.transform.FindChild("Player3Camera").gameObject;
         obj = obj.transform.FindChild("Player3NGUI").gameObject;
         m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
         m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;
@@ -76,8 +76,7 @@ public class CPlayer3Mesh : CDefaultMesh {
     void OnWillRenderObject()
     {
         // 自分のカメラなら無効
-        if ("Player3Camera2" == Camera.current.name ||
-           "DeliveryCamera" == Camera.current.name)
+        if ("Player3Camera2" == Camera.current.name)
             return;
 
         GameObject camera = GameObject.Find(Camera.current.name);
@@ -90,8 +89,12 @@ public class CPlayer3Mesh : CDefaultMesh {
         if ("Player2Camera" == Camera.current.name)
             m_p22DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
     
-        // プレイヤー４のカメラにプレイヤー３が映ったら
-        if ("Player4Camera" == Camera.current.name)
-            m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
-    }
+		// プレイヤー４のカメラにプレイヤー３が映ったら
+		if ("Player4Camera" == Camera.current.name)
+			m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+
+		// 配信カメラにプレイヤー３が映ったら
+		if ("DeliveryCamera" == Camera.current.name)
+			m_p32DPanel.transform.localRotation = camera.transform.localRotation;
+	}
 }

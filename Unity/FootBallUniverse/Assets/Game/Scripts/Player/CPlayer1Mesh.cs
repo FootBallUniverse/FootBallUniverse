@@ -11,7 +11,7 @@ public class CPlayer1Mesh : CDefaultMesh {
     // @Date	2014/11/28  @Update 2014/11/28  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Start () {
-        GameObject obj = this.transform.parent.transform.FindChild("PlayerCamera").gameObject;
+        GameObject obj = this.transform.parent.transform.parent.transform.FindChild("Player1Camera").gameObject;
         obj = obj.transform.FindChild("Player1NGUI").gameObject;
         m_p12DPanel = obj.transform.FindChild("Player1Panel").gameObject;
         m_p22DPanel = obj.transform.FindChild("Player2Panel").gameObject;
@@ -75,19 +75,21 @@ public class CPlayer1Mesh : CDefaultMesh {
     void OnWillRenderObject()   
     {
         // 自分のカメラなら無効
-        if ("Player1Camera" == Camera.current.name ||
-           "DeliveryCamera" == Camera.current.name)
-            return;
+        if ("Player1Camera" == Camera.current.name )
+			return;
 
         GameObject camera = GameObject.Find(Camera.current.name );
 
         if ("Player2Camera" == Camera.current.name)
-            m_p22DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+            m_p22DPanel.transform.localRotation = camera.transform.localRotation;
 
         if ("Player3Camera" == Camera.current.name)
-            m_p32DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
+            m_p32DPanel.transform.localRotation = camera.transform.localRotation;
 
         if ("Player4Camera" == Camera.current.name)
-            m_p42DPanel.transform.localRotation = camera.transform.parent.transform.localRotation;
-    }
+            m_p42DPanel.transform.localRotation = camera.transform.localRotation;
+
+		if ("DeliveryCamera" == Camera.current.name)
+			m_p12DPanel.transform.localRotation = camera.transform.localRotation;
+	}
 }

@@ -25,7 +25,7 @@ public class CPlayer1 : CPlayer {
         this.SetData();
 
         // プレイヤーの情報をマップにセット
- //       Color color = Color.red;
+//       Color color = Color.red;
 //        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 
         // プレイヤーのアニメーターをセット

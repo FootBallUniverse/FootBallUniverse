@@ -25,8 +25,8 @@ public class CPlayer3 : CPlayer {
 		this.SetData();
 		
 		// プレイヤーの情報をマップにセット
-		//       Color color = Color.red;
-		//        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
+//       Color color = Color.red;
+//        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 		
 		// プレイヤーのアニメーターをセット
 		m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
