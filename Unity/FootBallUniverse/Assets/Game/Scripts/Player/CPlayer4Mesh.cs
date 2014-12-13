@@ -89,7 +89,7 @@ public class CPlayer4Mesh : CDefaultMesh {
 			m_p22DPanel.transform.rotation = camera.transform.localRotation;
 
         // プレイヤー３のカメラにプレイヤー4が映ったら
-        if ("Player4Camera" == Camera.current.name)
+        if ("Player3Camera" == Camera.current.name)
 			m_p32DPanel.transform.rotation = camera.transform.localRotation;
 
 		// 配信カメラにプレイヤー4が映ったら
