@@ -16,6 +16,7 @@ public class CGoalKeeper : CCpu {
 
 	protected GK_State gkState            = GK_State.STAY;
 	protected Vector3 HOME_POSITION       = new Vector3(0.0f, 0.0f, 0.0f);
+	protected CGameManager gameManager    = new CGameManager();
 	protected const float ARAT_SPACE      = 15.0f;
 	protected const float TAKE_BALL_SPACE = 10.0f;
 
@@ -53,6 +54,9 @@ public class CGoalKeeper : CCpu {
 
 		// ホームポジションをセット
 		this.HOME_POSITION = new Vector3(this.m_playerData.m_xPos, this.m_playerData.m_yPos, this.m_playerData.m_zPos);
+
+		// ゲームマネージャをセット
+		this.gameManager = GameObject.Find("GameManager").GetComponent<CGameManager>();
 	}
 
 
@@ -68,7 +72,6 @@ public class CGoalKeeper : CCpu {
 		this.Restart();
 
 		this.gkState = GK_State.STAY;
-        this.m_status = CPlayerManager.ePLAYER_STATUS.eWAIT;
 		this.transform.position = HOME_POSITION;
 		this.transform.LookAt(new Vector3(0.0f,0.0f,0.0f));
 	}
@@ -91,39 +94,51 @@ public class CGoalKeeper : CCpu {
 
 		this.CheckGamePlay();
 
-		if (this.m_status == CPlayerManager.ePLAYER_STATUS.eGOAL ||
-			this.m_status == CPlayerManager.ePLAYER_STATUS.eEND)
+		Debug.Log(CGameManager.m_nowStatus);
+		if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
+		{
+			/*
+			if (this.m_status == CPlayerManager.ePLAYER_STATUS.eGOAL ||
+				this.m_status == CPlayerManager.ePLAYER_STATUS.eGOALWAIT ||
+				this.m_status == CPlayerManager.ePLAYER_STATUS.eGOALPERFOMANCE ||
+				this.m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN ||
+				this.m_status == CPlayerManager.ePLAYER_STATUS.eEND)
+			{
+				KeeperRestart();
+			}*/
+
+			switch (m_status)
+			{
+				case CPlayerManager.ePLAYER_STATUS.eNONE: break;
+				case CPlayerManager.ePLAYER_STATUS.eWAIT: break;
+				case CPlayerManager.ePLAYER_STATUS.ePASS: break;
+
+				// タックルのやられモーション中
+				case CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE:
+					if (m_action.TackleDamage(ref m_pos, -this.transform.forward) == true)
+					{
+						// やられモーション終了
+						m_animator.Wait();
+						m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+					}
+
+					break;
+			}
+
+			switch (this.gkState)
+			{
+				case GK_State.WAIT: Wait(); break;
+				case GK_State.STAY: Stay(); break;
+				case GK_State.ON_ALERT: OnAlert(); break;
+				case GK_State.TAKE_BALL: TakeBall(); break;
+				case GK_State.CAT: Cach(); break;
+				case GK_State.PASS: Pass(); break;
+				case GK_State.BACK_HOME: BackHome(); break;
+			}
+		}
+		else
 		{
 			KeeperRestart();
-		}
-
-        switch (m_status)
-        {
-            case CPlayerManager.ePLAYER_STATUS.eNONE: break;
-            case CPlayerManager.ePLAYER_STATUS.eWAIT: break;
-            case CPlayerManager.ePLAYER_STATUS.ePASS: break;
-            
-            // タックルのやられモーション中
-            case CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE:
-                if (m_action.TackleDamage(ref m_pos, -this.transform.forward) == true)
-                {
-                    // やられモーション終了
-                    m_animator.Wait();
-                    m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-                }
-
-                break;
-        }
-
-		switch (this.gkState)
-		{
-			case GK_State.WAIT: Wait(); break;
-			case GK_State.STAY: Stay(); break;
-			case GK_State.ON_ALERT: OnAlert(); break;
-			case GK_State.TAKE_BALL: TakeBall(); break;
-			case GK_State.CAT: Cach(); break;
-			case GK_State.PASS: Pass(); break;
-			case GK_State.BACK_HOME: BackHome(); break;
 		}
 	}
 
