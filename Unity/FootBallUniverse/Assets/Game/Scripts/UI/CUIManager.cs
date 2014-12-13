@@ -19,6 +19,7 @@ public class CUIManager : MonoBehaviour {
         eGAME,
         eENDWAIT,
         eGOAL,
+        eGOALWAIT,
         eGOALFADEOUT,
         eGOALFADEIN,
     }
@@ -219,10 +220,13 @@ public class CUIManager : MonoBehaviour {
                 switch (m_uiStatus)
                 {
                     case eUISTATUS.eGOAL:
-                        m_blackoutMain.AddComponent<CFadeOut>();
-                        m_blackoutP1P2.AddComponent<CFadeOut>();
-                        m_blackoutP3P4.AddComponent<CFadeOut>();
-                        m_uiStatus = eUISTATUS.eGOALFADEOUT;
+                        m_uiStatus = eUISTATUS.eGOALWAIT;
+                        break;
+
+                    case eUISTATUS.eGOALWAIT:
+//                        m_blackoutMain.AddComponent<CFadeOut>();
+//                        m_blackoutP1P2.AddComponent<CFadeOut>();
+//                        m_blackoutP3P4.AddComponent<CFadeOut>();
                         break;
 
                     case eUISTATUS.eGOALFADEOUT:

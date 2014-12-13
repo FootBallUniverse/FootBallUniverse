@@ -139,13 +139,45 @@ public class Result : MonoBehaviour {
 			switch (TeamData.GetWinTeamNo())
 			{
 				case 0:
-					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "RED Team\n Victory";
+                    switch (TeamData.teamNationality[0])
+                    {
+                        case TeamData.TEAM_NATIONALITY.BRASIL:
+                            panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().spriteName = "name_Brazil_red";
+                            break;
+                        case TeamData.TEAM_NATIONALITY.ENGLAND:
+                            panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().spriteName = "name_England_red";
+                            break;
+                        case TeamData.TEAM_NATIONALITY.ESPANA:
+                            panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().spriteName = "name_Spain_red";
+                            break;
+                        case TeamData.TEAM_NATIONALITY.JAPAN:
+                            panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().spriteName = "name_Japan_red";
+                            break;
+                    }
 					break;
 				case 1:
-					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Blue Team\n Victory";
+					panels[j].transform.FindChild("VictorySprite").GetComponent<UISprite>().spriteName = "winner";
+                    // 国旗国名
+                    switch (TeamData.teamNationality[1])
+                    {
+                        case TeamData.TEAM_NATIONALITY.BRASIL:
+                            panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().spriteName = "name_Brazil_blue";
+                            break;
+                        case TeamData.TEAM_NATIONALITY.ENGLAND:
+                            panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().spriteName = "name_England_blue";
+                            break;
+                        case TeamData.TEAM_NATIONALITY.ESPANA:
+                            panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().spriteName = "name_Spain_blue";
+                            break;
+                        case TeamData.TEAM_NATIONALITY.JAPAN:
+                            panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().spriteName = "name_Japan_blue";
+                            break;
+                    }
 					break;
 				case 2:
-					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Drow";
+                    panels[j].transform.FindChild("VictorySprite").GetComponent<UISprite>().spriteName = "draw";
+                    panels[j].transform.FindChild("VictoryWorldName").GetComponent<UISprite>().enabled = false;
+//					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Drow";
 					break;
 			}
 		}

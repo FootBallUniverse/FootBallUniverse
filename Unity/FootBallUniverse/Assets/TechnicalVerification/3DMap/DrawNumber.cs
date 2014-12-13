@@ -31,7 +31,7 @@ public class DrawNumber : MonoBehaviour {
 			// 数字を描画する
 			vewFlag = true;
 			this.numberPlace[i].SetActive(true);
-			this.numberPlace[i].GetComponent<UISprite>().spriteName = "count_" + workNumber + "w";
+			this.numberPlace[i].GetComponent<UISprite>().spriteName = "count_" + workNumber;
 		}
 	}
 }

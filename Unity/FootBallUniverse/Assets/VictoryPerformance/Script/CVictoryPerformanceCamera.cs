@@ -13,7 +13,7 @@ public class CVictoryPerformanceCamera : MonoBehaviour {
 
 		if (TeamData.GetWinTeamNo () == 2) 
 		{
-			this.transform.localPosition = new Vector3 (0.0f, 0.0f, -0.7f);
+			this.transform.localPosition = new Vector3 (0.0f, 0.0f, -0.8f);
 			this.transform.localRotation = Quaternion.Euler (new Vector3 (0.0f, 0.0f, 0.0f));
 		}
 	}
