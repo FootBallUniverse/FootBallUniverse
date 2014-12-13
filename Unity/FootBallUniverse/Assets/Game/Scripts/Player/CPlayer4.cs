@@ -185,7 +185,8 @@ public class CPlayer4 : CPlayer {
 		if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eRESTART)
 		{
 			this.Restart();
-		}
+            this.transform.localRotation = Quaternion.Euler(0.0f,180.0f,0.0f);
+        }
 	}
 	
 	//----------------------------------------------------------------------
