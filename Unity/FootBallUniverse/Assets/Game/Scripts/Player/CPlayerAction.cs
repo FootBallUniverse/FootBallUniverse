@@ -253,12 +253,12 @@ public class CPlayerAction {
             _player.transform.FindChild("SoccerBall").GetComponent<SphereCollider>().isTrigger = false;
             _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().m_isPlayer = false;
             _isBall = false;
-        }
+			_player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
+		}
 
         // パスモーション終わりの時間になった場合はコンポーネントを切り替えて終了
         if (m_passFrame >= (float)m_passMotionLength / 60)
         {
-            _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
             return true;
         }
 
