@@ -31,6 +31,7 @@ public class CUIManager : MonoBehaviour {
         BLUE
     };
 
+	public GameObject m_gameObjectMain;        // Main用のGameObject
     public GameObject m_gameObjectP1P2;        // P1P2UI用GameObject
     public GameObject m_gameObjectP3P4;        // P3P4UI用GameObject
 
@@ -51,18 +52,27 @@ public class CUIManager : MonoBehaviour {
     public UISprite m_TimeTenSecP3P4;
     public UISprite m_TimeSecP3P4;
 
+	public UISprite m_TimeMinMain;
+	public UISprite m_TimeTenSecMain;
+	public UISprite m_TimeSecMain;
+
     // UIのポイント用
     public UISprite m_pointRedP1P2;
     public UISprite m_pointBlueP1P2;
+
     public UISprite m_pointRedP3P4;
     public UISprite m_pointBlueP3P4;
+
+	public UISprite m_pointRedMain;
+	public UISprite m_pointBlueMain;
 
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita   
+    // @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita
+	//          2014/12/13 @Update 2014/12/13 @Author T.Takeuchi
     //----------------------------------------------------------------------
 	void Start () {
         
@@ -84,11 +94,18 @@ public class CUIManager : MonoBehaviour {
         m_TimeTenSecP3P4 = m_uiPanelP3P4.transform.FindChild("time_tensec").gameObject.GetComponent<UISprite>();
         m_TimeSecP3P4 = m_uiPanelP3P4.transform.FindChild("time_sec").gameObject.GetComponent<UISprite>();
 
+		m_TimeMinMain = m_uiPanelMain.transform.FindChild("time_min").gameObject.GetComponent<UISprite>();
+		m_TimeTenSecMain = m_uiPanelMain.transform.FindChild("time_tensec").gameObject.GetComponent<UISprite>();
+		m_TimeSecMain = m_uiPanelMain.transform.FindChild("time_sec").gameObject.GetComponent<UISprite>();
+
         m_pointRedP1P2 = m_uiPanelP1P2.transform.FindChild("1p2pteam_point").gameObject.GetComponent<UISprite>();
         m_pointBlueP1P2 = m_uiPanelP1P2.transform.FindChild("3p4pteam_point").gameObject.GetComponent<UISprite>();
 
         m_pointRedP3P4 = m_uiPanelP3P4.transform.FindChild("1p2pteam_point").gameObject.GetComponent<UISprite>();
         m_pointBlueP3P4 = m_uiPanelP3P4.transform.FindChild("3p4pteam_point").gameObject.GetComponent<UISprite>();
+
+		m_pointRedMain = m_uiPanelMain.transform.FindChild("1p2pteam_point").gameObject.GetComponent<UISprite>();
+		m_pointBlueMain = m_uiPanelMain.transform.FindChild("3p4pteam_point").gameObject.GetComponent<UISprite>();
 
         // 最初の時間設定
         CalcTime();
@@ -106,6 +123,7 @@ public class CUIManager : MonoBehaviour {
     // @Param   none			
     // @Return	none
     // @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita      
+	//          2014/12/13 @Update 2014/12/13 @Author T.Takeuchi
     //----------------------------------------------------------------------
 	void Update () {
 
@@ -131,6 +149,8 @@ public class CUIManager : MonoBehaviour {
                             // カウントダウンのマネージャー用GameObjectを生成
                             m_gameObjectP1P2 = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
                             m_gameObjectP3P4 = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
+							m_gameObjectMain = (GameObject)Instantiate(Resources.Load("Prefab/Game/CountDownManager"));
+							m_gameObjectMain.transform.parent = m_uiPanelMain.transform;
                             m_gameObjectP1P2.transform.parent = m_uiPanelP1P2.transform;
                             m_gameObjectP3P4.transform.parent = m_uiPanelP3P4.transform;
                             m_uiStatus = eUISTATUS.eCOUNTDOWN;
@@ -142,7 +162,7 @@ public class CUIManager : MonoBehaviour {
 
             // カウントダウン中
             case CGameManager.eSTATUS.eCOUNTDOWN:
-                if (m_gameObjectP1P2 == false && m_gameObjectP3P4 == false)
+                if (m_gameObjectMain == false && m_gameObjectP1P2 == false && m_gameObjectP3P4 == false)
                 {
                     CGameManager.m_soundPlayer.PlaySE("game/kickoff");
                     m_uiStatus = eUISTATUS.eGAME;
@@ -243,6 +263,7 @@ public class CUIManager : MonoBehaviour {
     // @Param	none		
     // @Return	none
     // @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita      
+	//          2014/12/13 @Update 2014/12/13 @Author T.Takeuchi
     //----------------------------------------------------------------------
     private void CalcTime()
     {
@@ -270,20 +291,27 @@ public class CUIManager : MonoBehaviour {
         m_TimeTenSecP3P4.spriteName = "num_" + tenSecTime.ToString();
         m_TimeSecP3P4.spriteName = "num_" + secTime.ToString();
 
-    }
+		m_TimeMinMain.spriteName = "num_" + minTime.ToString();
+		m_TimeTenSecMain.spriteName = "num_" + tenSecTime.ToString();
+		m_TimeSecMain.spriteName = "num_" + secTime.ToString();
 
-    //----------------------------------------------------------------------
-    // ゴールした時のUIの変更
-    //----------------------------------------------------------------------
-    // @Param	none		
-    // @Return	none
-    // @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita      
-    //----------------------------------------------------------------------
-    public void Goal()
-    {
-        m_pointRedP1P2.spriteName = "num_" + CGameManager.m_redPoint + "_red";
-        m_pointRedP3P4.spriteName = "num_" + CGameManager.m_redPoint + "_red";
-        m_pointBlueP1P2.spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
-        m_pointBlueP3P4.spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
-    }
+	}
+
+	//----------------------------------------------------------------------
+	// ゴールした時のUIの変更
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/8  @Update 2014/12/8  @Author T.Kawashita      
+	//          2014/12/13 @Update 2014/12/13 @Author T.Takeuchi
+	//----------------------------------------------------------------------
+	public void Goal()
+	{
+		m_pointRedP1P2.spriteName = "num_" + CGameManager.m_redPoint + "_red";
+		m_pointRedP3P4.spriteName = "num_" + CGameManager.m_redPoint + "_red";
+		m_pointRedMain.spriteName = "num_" + CGameManager.m_bluePoint + "_red";
+		m_pointBlueP1P2.spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
+		m_pointBlueP3P4.spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
+		m_pointBlueMain.spriteName = "num_" + CGameManager.m_bluePoint + "_blue";
+	}
 }
