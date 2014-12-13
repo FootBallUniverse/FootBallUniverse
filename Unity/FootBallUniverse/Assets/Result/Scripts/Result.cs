@@ -185,6 +185,9 @@ public class Result : MonoBehaviour {
 			}
 		}
 
+        Debug.Log(TeamData.suppoterBffByTeam[0]);
+        Debug.Log(TeamData.suppoterBffByTeam[1]);
+
 		// 数値初期化
 		for (int i = 0; i < 2; i++)
 		{
@@ -199,6 +202,8 @@ public class Result : MonoBehaviour {
 		TeamData.suppoterByTeam[0] = TeamData.suppoterByTeam[1] = 0;
 		// シュートログをクリア
 		TeamData.ClearLog();
+
+
 	}
 
 
