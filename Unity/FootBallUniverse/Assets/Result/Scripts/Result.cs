@@ -232,11 +232,12 @@ public class Result : MonoBehaviour {
         }
         if (Input.GetKeyDown(InputXBOX360.P2_XBOX_A) && this.buttonCheck[0,1] == false)
         {
+            m_soundPlayer.PlaySE("result/button_push");
             this.buttonCheck[0, 1] = true;
         }
         if (Input.GetKeyDown(InputXBOX360.P3_XBOX_A) && this.buttonCheck[1,0] == false)
-            m_soundPlayer.PlaySE("result/button_push");
         {
+            m_soundPlayer.PlaySE("result/button_push");
             this.buttonCheck[1, 0] = true;
         }
         if (Input.GetKeyDown(InputXBOX360.P4_XBOX_A) && this.buttonCheck[1,1] == false)
