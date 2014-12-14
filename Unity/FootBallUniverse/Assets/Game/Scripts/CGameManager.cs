@@ -220,7 +220,6 @@ public class CGameManager : MonoBehaviour {
                 // ゲーム終了待機が終わったらフェードアウトさせる
                 m_nowStatus = eSTATUS.eFADEOUT;
                 m_soundPlayer.PlayBGMFadeOut(0.02f);
-				this.transform.Find("SoccerBall").rigidbody.velocity = new Vector3(0,0,0);
 
                 int teamPoint = 0;
                 int redSupporter = 0;
@@ -300,6 +299,7 @@ public class CGameManager : MonoBehaviour {
 
                 if (CGameData.m_gamePlayTime <= 0)
                 {
+                    CSoccerBallManager.m_soccerBall.transform.rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
                     m_isGamePlay = false;
                     m_nowStatus = eSTATUS.eENDWAIT;
                     m_frame = 0.0f;
