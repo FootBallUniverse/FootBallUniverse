@@ -188,7 +188,7 @@ public class Player_1_Script : MonoBehaviour
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Right_RotateFlag == false)
             {
-                m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
+                m_Right_RotateFlag = true;    // 左回転のフラグをtrueにする
                 m_SE.VolumeSE(0.8f);
                 if (m_Fade_flag_1.m_FadeFlag == 0)
                 {
