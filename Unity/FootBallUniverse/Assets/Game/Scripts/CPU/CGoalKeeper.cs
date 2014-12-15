@@ -94,7 +94,6 @@ public class CGoalKeeper : CCpu {
 
 		this.CheckGamePlay();
 
-		Debug.Log(CGameManager.m_nowStatus);
 		if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
 		{
 			/*
