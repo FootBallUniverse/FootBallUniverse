@@ -72,7 +72,7 @@ public class CGoalKeeper : CCpu {
 		this.Restart();
 
 		this.gkState = GK_State.STAY;
-		this.transform.position = HOME_POSITION;
+		//this.transform.position = HOME_POSITION;
 		this.transform.LookAt(new Vector3(0.0f,0.0f,0.0f));
 	}
 
@@ -97,16 +97,6 @@ public class CGoalKeeper : CCpu {
 		Debug.Log(CGameManager.m_nowStatus);
 		if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
 		{
-			/*
-			if (this.m_status == CPlayerManager.ePLAYER_STATUS.eGOAL ||
-				this.m_status == CPlayerManager.ePLAYER_STATUS.eGOALWAIT ||
-				this.m_status == CPlayerManager.ePLAYER_STATUS.eGOALPERFOMANCE ||
-				this.m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN ||
-				this.m_status == CPlayerManager.ePLAYER_STATUS.eEND)
-			{
-				KeeperRestart();
-			}*/
-
 			switch (m_status)
 			{
 				case CPlayerManager.ePLAYER_STATUS.eNONE: break;
@@ -153,8 +143,8 @@ public class CGoalKeeper : CCpu {
 	//----------------------------------------------------------------------
 	protected void CGoalKeeperLateUpdate()
 	{
-        // アニメーション
-        this.Animation();
+		// アニメーション
+		this.Animation();
 
 		m_speed = new Vector3(0.0f, 0.0f, 0.0f);    // 最後にスピードを初期化
 		this.rigidbody.MovePosition(m_pos);
@@ -252,14 +242,14 @@ public class CGoalKeeper : CCpu {
 	{
 		// ボールを取りに行く
 		this.transform.LookAt(this.soccerBallObject.transform.position);
-        Move(new Vector3(0.0f, 0.0f, 1.0f));
+		Move(new Vector3(0.0f, 0.0f, 1.0f));
 
 
 		// ボールをキャッチ（→パス）
 		if (this.m_isBall)
 		{
 			this.gkState = GK_State.PASS;
-            this.m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
+			this.m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
 			this.transform.LookAt(this.frendryData[0].transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
@@ -294,7 +284,7 @@ public class CGoalKeeper : CCpu {
 		if (this.m_isBall)
 		{
 			this.gkState = GK_State.PASS;
-            this.m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
+			this.m_status = CPlayerManager.ePLAYER_STATUS.ePASS;
 			this.transform.LookAt(this.frendryData[0].transform.position);
 			this.m_action.InitPass(this.m_human.m_passInitSpeed, this.m_human.m_passMotionLength, this.m_human.m_passTakeOfFrame);
 		}
@@ -310,15 +300,15 @@ public class CGoalKeeper : CCpu {
 	// @Param   none
 	// @Return  none
 	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
-    // @Update  2014/12/11 パスアニメーションのためのステータス変更 @Author T.Kawashita
+	// @Update  2014/12/11 パスアニメーションのためのステータス変更 @Author T.Kawashita
 	//----------------------------------------------------------------------
 	void Pass()
 	{
-        if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
-        {
-            this.gkState = GK_State.WAIT;
-            this.m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-        }
+		if (this.m_action.Pass(this.gameObject, this.transform.forward, ref this.m_isBall))
+		{
+			this.gkState = GK_State.WAIT;
+			this.m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+		}
 	}
 
 
@@ -371,30 +361,31 @@ public class CGoalKeeper : CCpu {
 		return refData;
 	}
 
-    //----------------------------------------------------------------------
-    // アニメーション
-    //----------------------------------------------------------------------
-    // @Param	none		
-    // @Return	none
-    // @Date	2014/12/11  @Update 2014/12/11  @Author T.Kawashita      
-    //----------------------------------------------------------------------
-    private void Animation()
-    {
-        switch (m_status)
-        {
-            case CPlayerManager.ePLAYER_STATUS.eNONE:
-            case CPlayerManager.ePLAYER_STATUS.eWAIT:
-            case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
-                m_animator.Move(m_speed);
-                break;
 
-            case CPlayerManager.ePLAYER_STATUS.ePASS:
-                m_animator.Pass();
-                break;
+	//----------------------------------------------------------------------
+	// アニメーション
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/11  @Update 2014/12/11  @Author T.Kawashita      
+	//----------------------------------------------------------------------
+	private void Animation()
+	{
+		switch (m_status)
+		{
+			case CPlayerManager.ePLAYER_STATUS.eNONE:
+			case CPlayerManager.ePLAYER_STATUS.eWAIT:
+			case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
+				m_animator.Move(m_speed);
+				break;
 
-        }
-    }
+			case CPlayerManager.ePLAYER_STATUS.ePASS:
+				m_animator.Pass();
+				break;
+		}
+	}
 
-	public GK_State GetGKState() { return this.gkState; }
+	/*取得関数*/
+	public GK_State GetGKState()     { return this.gkState; }
 	public Vector3 GetHomePosition() { return this.HOME_POSITION; }
 }
