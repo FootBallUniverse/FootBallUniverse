@@ -25,7 +25,7 @@ public class Team_Select : MonoBehaviour {
 
         // 音楽再生用ゲームオブジェクト作成
         m_soundPlayer = new CSoundPlayer();
-        m_soundPlayer.PlayBGMFadeIn("select/bgm_01", 0.05f);
+        m_soundPlayer.PlayBGMFadeIn("select/bgm_01", 0.1f);
 
 	}
 	

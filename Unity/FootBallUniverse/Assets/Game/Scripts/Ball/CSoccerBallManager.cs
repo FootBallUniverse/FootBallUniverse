@@ -84,6 +84,8 @@ public class CSoccerBallManager : MonoBehaviour {
 		m_soccerBallTransform = m_soccerBall.transform;
 	}
 
+
+
     //----------------------------------------------------------------------
     // サッカーボールの持ち主を変更
     //----------------------------------------------------------------------

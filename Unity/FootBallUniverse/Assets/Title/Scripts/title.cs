@@ -34,7 +34,7 @@ public class title : MonoBehaviour {
         m_soundPlayer = new CSoundPlayer();
         m_SE = this.gameObject.GetComponent<SEPlay>();
         m_soundPlayer.PlayBGMFadeIn("title/bgm_01", 0.02f);
-        m_SE.VolumeSE(0.2f);
+        m_SE.VolumeSE(0.5f);
     }
 
 	// Update is called once per frame

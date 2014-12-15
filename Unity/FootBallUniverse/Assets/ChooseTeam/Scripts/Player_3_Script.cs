@@ -112,7 +112,7 @@ public class Player_3_Script : MonoBehaviour
         //      回転フラグ、フェードインフラグ処理
         //================================================================================================
         // Dを押したとき
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
@@ -126,7 +126,7 @@ public class Player_3_Script : MonoBehaviour
             }
         }
         // Aを押したとき
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
@@ -182,7 +182,7 @@ public class Player_3_Script : MonoBehaviour
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
             {
-                m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
+                m_Left_RotateFlag = true;      // 右回転のフラグをtrueにする
                 m_SE.VolumeSE(0.8f);
                 if (m_Fade_flag_2.m_FadeFlag == 0)
                 {
@@ -197,7 +197,7 @@ public class Player_3_Script : MonoBehaviour
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
             {
-                m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
+                m_Right_RotateFlag = true;    // 左回転のフラグをtrueにする
                 m_SE.VolumeSE(0.8f);
                 if (m_Fade_flag_2.m_FadeFlag == 0)
                 {
