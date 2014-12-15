@@ -35,7 +35,7 @@ public class SEPlayer : MonoBehaviour
         AudioClip audioClip = (AudioClip)Resources.Load("Sound/SE/" + _audioName);
 
         // SE再生
-        m_seAudioSource.volume = 0.2f;
+        m_seAudioSource.volume = 1.0f;
         m_seAudioSource.PlayOneShot(audioClip);
 
         return true;

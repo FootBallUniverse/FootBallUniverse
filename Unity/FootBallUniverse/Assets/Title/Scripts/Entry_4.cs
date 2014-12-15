@@ -6,6 +6,7 @@ public class Entry_4 : MonoBehaviour
     // 親情報の取得用
     title m_Title;
     SEPlay m_SE;
+    int a;
     // 速度
     public Vector2 SPEED = new Vector2(0.05f, 0.01f);
     // エントリーしたかどうかの確認用フラグ
@@ -16,6 +17,7 @@ public class Entry_4 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        a = 0;
         // キャンセル用に初期位置を保存
         Position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         m_inFlag = false;
@@ -29,6 +31,8 @@ public class Entry_4 : MonoBehaviour
     {
         // 移動処理
         Move();
+
+        Debug.Log(m_SE.m_seAudioSource.volume);
     }
 
     // 移動関数
@@ -43,7 +47,9 @@ public class Entry_4 : MonoBehaviour
                 Input.GetKeyDown(InputXBOX360.P4_XBOX_A) ||
                 InputXBOX360.IsGetAllStartButton() == true)
             {
-                m_SE.VolumeSE(0.2f);
+                m_SE.VolumeSE(1.0f);
+                a += 1;
+                Debug.Log("a" + a);
                 m_SE.PlaySE("title/entry_on");
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
@@ -58,7 +64,7 @@ public class Entry_4 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R) ||
                 Input.GetKeyDown(InputXBOX360.P4_XBOX_B))
             {
-                m_SE.VolumeSE(0.1f);
+                m_SE.VolumeSE(0.01f);
                 m_SE.PlaySE("title/entry_cancel");
                 m_inFlag = false;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす

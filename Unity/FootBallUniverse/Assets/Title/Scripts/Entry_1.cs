@@ -23,6 +23,7 @@ public class Entry_1 : MonoBehaviour
         GameObject Entry_time = this.transform.parent.gameObject;
         m_Title = Entry_time.GetComponent<title>();
         m_SE = Entry_time.GetComponent<SEPlay>();
+
     }
 
     // Update is called once per frame
@@ -44,7 +45,8 @@ public class Entry_1 : MonoBehaviour
                 Input.GetKeyDown(InputXBOX360.P1_XBOX_A) ||
                 InputXBOX360.IsGetAllStartButton() == true)
             {
-                m_SE.VolumeSE(0.2f);
+                m_SE.VolumeSE(1.0f);
+                Debug.Log(m_SE.m_seAudioSource.volume + "あああああああああああああああああ");
                 m_SE.PlaySE("title/entry_on");
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
@@ -60,6 +62,8 @@ public class Entry_1 : MonoBehaviour
                 Input.GetKeyDown(InputXBOX360.P1_XBOX_B))
             {
                 m_SE.VolumeSE(0.1f);
+
+                Debug.Log(m_SE.m_seAudioSource.volume);
                 m_SE.PlaySE("title/entry_cancel");
                 m_inFlag = false;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす

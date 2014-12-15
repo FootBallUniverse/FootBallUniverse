@@ -100,13 +100,13 @@ public class Player_1_Script : MonoBehaviour
         //      キーボード処理
         //================================================================================================
         // Aを押したとき
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
             {
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
-                m_SE.VolumeSE(0.8f);
+                m_SE.VolumeSE(1.0f);
                 if (m_Fade_flag_1.m_FadeFlag == 0)
                 {
                     m_SE.PlaySE("select/selector_swap");
@@ -114,13 +114,13 @@ public class Player_1_Script : MonoBehaviour
             }
         }
         // Dを押したとき
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.D))
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
             {
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
-                m_SE.VolumeSE(0.8f);
+                m_SE.VolumeSE(1.0f);
                 if (m_Fade_flag_1.m_FadeFlag == 0)
                 {
                     m_SE.PlaySE("select/selector_swap");
@@ -143,12 +143,13 @@ public class Player_1_Script : MonoBehaviour
         {
             // フェードインのフラグを1に変更
             m_Fade_flag_1.m_FadeFlag = 1;
+            m_SE.VolumeSE(1.0f);
             m_SE.PlaySE("select/selector_select");
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift) && m_Fade_flag_1.m_FadeFlag == 1)
         {
             // シーン変更フラグをtrueにしてフェードインのフラグを2に変更
-            m_SE.VolumeSE(0.1f);
+            m_SE.VolumeSE(0.3f);
             m_SE.PlaySE("select/decisioner_dicision");
             m_SceneFlag = true;
             m_Fade_flag_1.m_FadeFlag = 2;
@@ -172,7 +173,7 @@ public class Player_1_Script : MonoBehaviour
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
             {
-                m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
+                m_Left_RotateFlag = true;      // 右回転のフラグをtrueにする
                 m_SE.VolumeSE(0.8f);
                 if (m_Fade_flag_2.m_FadeFlag == 0)
                 {
@@ -185,7 +186,7 @@ public class Player_1_Script : MonoBehaviour
         else if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) <= -1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
-            if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+            if (m_Right_RotateFlag == false && m_Right_RotateFlag == false)
             {
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
                 m_SE.VolumeSE(0.8f);
