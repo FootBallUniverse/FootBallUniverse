@@ -43,7 +43,6 @@ public class Button_2 : MonoBehaviour
                 Input.GetKeyDown(InputXBOX360.P2_XBOX_A) ||
                 InputXBOX360.IsGetAllStartButton() == true)
             {
-                Debug.Log("Player2 Entry");
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
                 transform.position = new Vector3(transform.position.x, 2048.0f, transform.position.z);
@@ -57,7 +56,6 @@ public class Button_2 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.W) ||
                 Input.GetKeyDown(InputXBOX360.P2_XBOX_B))
             {
-                Debug.Log("Player2 FAILED");
                 m_inFlag = false;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
                 transform.position = Position;

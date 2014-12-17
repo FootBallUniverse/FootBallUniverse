@@ -31,8 +31,6 @@ public class Entry_4 : MonoBehaviour
     {
         // 移動処理
         Move();
-
-        Debug.Log(m_SE.m_seAudioSource.volume);
     }
 
     // 移動関数
@@ -49,7 +47,6 @@ public class Entry_4 : MonoBehaviour
             {
                 m_SE.VolumeSE(1.0f);
                 a += 1;
-                Debug.Log("a" + a);
                 m_SE.PlaySE("title/entry_on");
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
