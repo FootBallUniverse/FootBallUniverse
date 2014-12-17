@@ -75,6 +75,15 @@ public class Player_1_Script : MonoBehaviour
         Position[2] = m_Country[2].m_Country.transform.position;
         Position[3] = m_Country[3].m_Country.transform.position;
 
+        Position[0].x = 6.25f;
+        Position[1].x = 6.25f;
+        Position[2].x = 2.25f;
+        Position[3].x = 4.25f;
+
+        Position[0] = m_Country[0].m_Country.transform.position;
+        Position[1] = m_Country[1].m_Country.transform.position;
+        Position[2] = m_Country[2].m_Country.transform.position;
+        Position[3] = m_Country[3].m_Country.transform.position;
         // カウント、回転フラグの初期化
         m_Count = 0;
         m_Right_RotateFlag = false;
