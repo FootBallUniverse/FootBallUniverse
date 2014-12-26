@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CVictoryPerformanceWinPlayerMesh : MonoBehaviour {
+public class CResultWinPlayerMesh : MonoBehaviour {
 
-	// Use this for initialization
+    //----------------------------------------------------------------------
+    // コンストラクタ
+    //----------------------------------------------------------------------
+    // @Param   none			
+    // @Return	none
+    // @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Start () {
+
 		int winTeamNo = TeamData.GetWinTeamNo ();
 
 		// 1P側の勝利
@@ -70,8 +77,14 @@ public class CVictoryPerformanceWinPlayerMesh : MonoBehaviour {
 		}
 
 	}
-	
-	// Update is called once per frame
+
+    //----------------------------------------------------------------------
+    // 更新
+    //----------------------------------------------------------------------
+    // @Param   none			
+    // @Return	none
+    // @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Update () {
 		
 	}

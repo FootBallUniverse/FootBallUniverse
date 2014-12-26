@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CVictoryPerformanceManager : MonoBehaviour {
+public class CResultManager : MonoBehaviour {
 
 	// 勝利演出モーションのステータス
 	public enum eSTATUS_VICTORYPERFORMANCE
@@ -29,13 +29,19 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 	private GameObject m_1p2pCamera;
 	private GameObject m_3p4pCamera;
 
-	private GameObject m_resultMain;
-	private GameObject m_resultSub1;
-	private GameObject m_resultSub2;
+	public static GameObject m_resultMain;
+	public static GameObject m_resultSub1;
+	public static    GameObject m_resultSub2;
 
     public static CSoundPlayer m_soundPlayer;
 
-	// Use this for initialization
+    //----------------------------------------------------------------------
+    // コンストラクタ
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Start () {
 		m_status = eSTATUS_VICTORYPERFORMANCE.eFADE_IN;
 
@@ -75,8 +81,14 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 
 //		m_motionPlayer.animation.Stop ();
 	}
-	
-	// Update is called once per frame
+
+    //----------------------------------------------------------------------
+    // 更新
+    //----------------------------------------------------------------------
+    // @Param   none			
+    // @Return	none
+    // @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Update ()
 	{
 		switch (m_status) 
@@ -106,9 +118,9 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 			m_flame += Time.deltaTime;
 			if( m_flame >= 0.5f ){
 				m_status = eSTATUS_VICTORYPERFORMANCE.eFADE_OUT;
-				m_mainUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CVictoryPerformanceFadeOut> ();
-				m_1p2pUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CVictoryPerformanceFadeOut> ();
-				m_3p4pUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CVictoryPerformanceFadeOut> ();
+				m_mainUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CResultFadeOut> ();
+				m_1p2pUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CResultFadeOut> ();
+				m_3p4pUIPanel.transform.FindChild ("BlackOut").gameObject.AddComponent<CResultFadeOut> ();
 				
 			}
 			break;
@@ -121,7 +133,7 @@ public class CVictoryPerformanceManager : MonoBehaviour {
 			{
 				m_status = eSTATUS_VICTORYPERFORMANCE.eNONE;
 				GameObject.Instantiate(Resources.Load("Prefab/Result/Manager"));
-				m_resultMain = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabMain"));
+    		    m_resultMain = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabMain"));
                 m_resultSub2 = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabSub1"));
                 m_resultSub1 = (GameObject)GameObject.Instantiate(Resources.Load("Prefab/Result/ResultPrefabSub0"));
             }

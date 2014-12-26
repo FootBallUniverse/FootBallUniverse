@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CVictoryPerformanceWinPlayer : MonoBehaviour {
-
+public class CResultWinPlayer : MonoBehaviour {
 
     //----------------------------------------------------------------------
     // コンストラクタ

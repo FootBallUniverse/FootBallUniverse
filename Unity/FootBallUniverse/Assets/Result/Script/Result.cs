@@ -49,7 +49,7 @@ public class Result : MonoBehaviour {
 		// music
 		m_soundPlayer = new CSoundPlayer();
         m_soundPlayer.PlayBGMFadeIn("result/bgm_01", 0.002f);
-        CVictoryPerformanceManager.m_soundPlayer.StopSE();
+        CResultManager.m_soundPlayer.StopSE();
     }
 
 	//----------------------------------------------------------------------
@@ -111,8 +111,15 @@ public class Result : MonoBehaviour {
 			{
 				// チーム得点
 				panels[j].transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.GetTeamScore(i);
-				if (TeamData.GetTeamScore(i) < 10) panels[j].transform.FindChild("Score" + i).transform.FindChild("num02").transform.localPosition = new Vector3(0.0f, 0.0f);
-				else panels[j].transform.FindChild("Score" + i).transform.FindChild("num02").transform.localPosition = new Vector3(0.5f, 0.0f);
+                if (TeamData.GetTeamScore(i) < 10)
+                {
+                    panels[j].transform.FindChild("Score" + i).transform.FindChild("num02").transform.localPosition = new Vector3(0.0f, 0.0f);
+                }
+                else
+                {
+                    panels[j].transform.FindChild("Score" + i).transform.FindChild("num02").transform.localPosition = new Vector3(0.5f, 0.0f);
+                }
+
 
 				// 国旗国名
 				switch (TeamData.teamNationality[i])
@@ -181,7 +188,6 @@ public class Result : MonoBehaviour {
                     panels[j].transform.FindChild("VictorySprite").localPosition = new Vector3(panels[j].transform.FindChild("VictorySprite").localPosition.x,
                                                                                                panels[j].transform.FindChild("VictorySprite").localPosition.y - 50.0f,
                                                                                                panels[j].transform.FindChild("VictorySprite").localPosition.z);
-//					panels[j].transform.FindChild("VictoryLabel").GetComponent<UILabel>().text = "Drow";
 					break;
 			}
 		}
@@ -201,7 +207,10 @@ public class Result : MonoBehaviour {
 		// シュートログをクリア
 		TeamData.ClearLog();
 
-
+        CResultManager.m_resultMain.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("MainPanel").transform.GetComponent<UIPanel>().alpha = 1;
+        CResultManager.m_resultSub1.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("SubPanel0").transform.GetComponent<UIPanel>().alpha = 1;
+        CResultManager.m_resultSub2.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("SubPanel1").transform.GetComponent<UIPanel>().alpha = 1;
+       
 	}
 
 

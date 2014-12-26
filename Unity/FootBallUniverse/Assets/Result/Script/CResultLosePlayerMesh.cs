@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CVictoryPerformanceLosePlayerMesh : MonoBehaviour {
+public class CResultLosePlayerMesh : MonoBehaviour {
 
-	// Use this for initialization
+    //----------------------------------------------------------------------
+    // コンストラクタ
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita    
+    //----------------------------------------------------------------------
 	void Start () {
 
 		int winTeamNo = TeamData.GetWinTeamNo ();
@@ -63,15 +69,15 @@ public class CVictoryPerformanceLosePlayerMesh : MonoBehaviour {
 				break;
 			}										
 		}
-		
-		// 引き分け
-		else if (winTeamNo == 2) 
-		{
-			Debug.Log ("引き分け");
-		}	
 	}
-	
-	// Update is called once per frame
+
+    //----------------------------------------------------------------------
+    // 更新
+    //----------------------------------------------------------------------
+    // @Param   none			
+    // @Return	none
+    // @Date	2014/12/10  @Update 2014/12/10  @Author T.Kawashita      
+    //----------------------------------------------------------------------
 	void Update () {
 	
 	}
