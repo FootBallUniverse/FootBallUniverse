@@ -111,6 +111,7 @@ public class Result : MonoBehaviour {
 			{
 				// チーム得点
 				panels[j].transform.FindChild("Score" + i).GetComponent<DrawNumber>().number = TeamData.GetTeamScore(i);
+                panels[j].transform.FindChild("Score" + i).GetComponent<DrawNumber>().Init();
                 if (TeamData.GetTeamScore(i) < 10)
                 {
                     panels[j].transform.FindChild("Score" + i).transform.FindChild("num02").transform.localPosition = new Vector3(0.0f, 0.0f);
@@ -199,7 +200,7 @@ public class Result : MonoBehaviour {
 			this.suppoterBffByWorld[i] = TeamData.suppoterByWorld;
 			for (int j = 0; j < 2; j++)
 				this.suppoterBffByTeam[i, j] = TeamData.suppoterByTeam[j];
-			ReSetButtonCheck(i,true);
+			ReSetButtonCheck(i,false);
 		}
 		// TeamDataを統合、クリア
 		TeamData.suppoterByWorld += (TeamData.suppoterByTeam[0] + TeamData.suppoterByTeam[1]);
@@ -254,16 +255,24 @@ public class Result : MonoBehaviour {
             m_soundPlayer.PlaySE("result/button_push");
             this.buttonCheck[1, 1] = true;
         }
-		if(Input.GetKeyDown(KeyCode.LeftShift))      this.buttonCheck[0,0] = this.buttonCheck[0,1] = true;
-		if(Input.GetKeyDown(KeyCode.RightShift))     this.buttonCheck[1,0] = this.buttonCheck[1,1] = true;
+
+        // デバッグ用ボタン
+        this.DebugButton();
+
 
 		// ボタン表示
 		for (int i = 0; i < 2; i++)
 			for (int j = 0; j < 2; j++)
 			{
-				if (this.buttonCheck[i, j]) this.button[i, j].SetActive(false);
-				else                        this.button[i, j].SetActive(true);
-			}
+                if (this.buttonCheck[i, j] == true)
+                {
+                    this.button[i, j].SetActive(false);
+                }
+                else
+                {
+                    this.button[i, j].SetActive(true);
+                }
+            }
 		// 遷移（左右画面共有）
 		switch (this.state[0])
 		{
@@ -424,8 +433,28 @@ public class Result : MonoBehaviour {
 	//----------------------------------------------------------------------
 	void ReSetButtonCheck(int no,bool check)
 	{
-		for(int i = 0; i < 2; i++) this.buttonCheck[no,i] = check;
+		for(int i = 0; i < 2; i++) 
+            this.buttonCheck[no,i] = check;
 	}
+
+    //----------------------------------------------------------------------
+    // デバッグ用
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/12/29  @Update 2014/12/29  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void DebugButton()
+    {
+        // LShiftが押されたら1P2Pスキップ
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            this.buttonCheck[0, 0] = this.buttonCheck[0, 1] = true;
+        // RShiftが押されたら3P4Pスキップ
+        if (Input.GetKeyDown(KeyCode.RightShift))
+            this.buttonCheck[1, 0] = this.buttonCheck[1, 1] = true;
+    }
+
+
 }
 
 // End of File

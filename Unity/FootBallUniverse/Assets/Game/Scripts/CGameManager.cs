@@ -82,7 +82,7 @@ public class CGameManager : MonoBehaviour {
             case eSTATUS.eENDWAIT: GameEndWait();  break;           // ゲーム終了待機状態
             case eSTATUS.eEND:                 
                 // リザルト画面に遷移させる
-			Application.LoadLevel("VictoryPerformance");
+			Application.LoadLevel("Result");
 			break;
 
             default:                               break;
