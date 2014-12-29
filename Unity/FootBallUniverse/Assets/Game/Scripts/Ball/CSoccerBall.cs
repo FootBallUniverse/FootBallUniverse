@@ -146,58 +146,64 @@ public class CSoccerBall : MonoBehaviour {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/12/7  @Update 2014/12/7  @Author T.Kawashita      
+    // @Date	2014/12/7  @Update 2014/12/7  @Author T.Kawashita     
+    // @Update  2014/12/29 ボールを取った瞬間にあがるスピードの準備
     //----------------------------------------------------------------------
     void OnTriggerEnter(Collider obj)
     {
-				GameObject player = obj.gameObject;
-				CPlayer playerScript = obj.GetComponent<CPlayer> ();
-				CapsuleCollider capsuleCollider = obj as CapsuleCollider;
+		GameObject player = obj.gameObject;
+		CPlayer playerScript = obj.GetComponent<CPlayer> ();
+		CapsuleCollider capsuleCollider = obj as CapsuleCollider;
 
-				// プレイヤーとの当たり判定
-				if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true && 
-						playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
-						playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
-						playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE) {
-						// 現在持っているプレイヤーのステータス変更
-						CPlayer ballPlayer = this.transform.parent.GetComponent<CPlayer> ();
-						this.transform.parent.transform.parent.GetComponent<CPlayerAnimator> ().TackleDamage ();
-						ballPlayer.m_isBall = false;
-						ballPlayer.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
-						ballPlayer.m_action.InitTackleDamage (ballPlayer.m_human.m_stealDamageLength, 0.0f, ballPlayer.m_human.m_stealDamageLength);
+		// プレイヤーとの当たり判定
+		if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true && 
+			playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
+			playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
+			playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE)
+        {
+			// 現在持っているプレイヤーのステータス変更
+			CPlayer ballPlayer = this.transform.parent.GetComponent<CPlayer> ();
+			this.transform.parent.transform.parent.GetComponent<CPlayerAnimator> ().TackleDamage ();
+			ballPlayer.m_isBall = false;
+			ballPlayer.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
+			ballPlayer.m_action.InitTackleDamage (ballPlayer.m_human.m_stealDamageLength, 0.0f, ballPlayer.m_human.m_stealDamageLength);
             
-						// 当たった方のプレイヤーに持ち主を変更
-						// プレイヤーのボールに設定
-						Vector3 pos = new Vector3 (0.0f, -0.13f, 0.14f);
-						if (obj.gameObject.tag == "RedTeam")
-								this.SetTrailRed ();
-						if (obj.gameObject.tag == "BlueTeam")
-								this.SetTrailBlue ();
-						
-//						CGameManager.m_soundPlayer.PlaySE("game/boll_totta");
+			// 当たった方のプレイヤーに持ち主を変更
+			// プレイヤーのボールに設定
+			Vector3 pos = new Vector3 (0.0f, -0.13f, 0.14f);
+			if (obj.gameObject.tag == "RedTeam")
+					this.SetTrailRed ();
+			if (obj.gameObject.tag == "BlueTeam")
+					this.SetTrailBlue ();
+					
+			CPlayerManager.m_soccerBallManager.ChangeOwner (player.transform, pos);
+			CSoccerBallManager.m_shootPlayerNo = playerScript.m_playerData.m_playerNo;
+			CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
+			playerScript.m_isBall = true;
 
-						CPlayerManager.m_soccerBallManager.ChangeOwner (player.transform, pos);
-						CSoccerBallManager.m_shootPlayerNo = playerScript.m_playerData.m_playerNo;
-						CSoccerBallManager.m_shootTeamNo = playerScript.m_playerData.m_teamNo;
-						playerScript.m_isBall = true;
+            // ボールを取った後スピードを速くする準備
+            playerScript.m_action.InitGetBall(playerScript.m_human.m_getBallAccSpeedDupRate,
+                                              playerScript.m_human.m_getBallAccDurationFrame,
+                                              playerScript.m_human.m_getBallAccDecFrame);
+            playerScript.m_isGetBall = true;
 
-						// 相手のボールの場合サポーター追加
-						int supporter = 0;
-						supporter += CSupporterData.m_getBallSupporter;
+			// 相手のボールの場合サポーター追加
+			int supporter = 0;
+			supporter += CSupporterData.m_getBallSupporter;
 
-						if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
-								supporter += CSupporterData.m_takeBallSupporter;
+			if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
+					supporter += CSupporterData.m_takeBallSupporter;
 
-						if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH) {
-								if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
-										supporter += CSupporterData.m_takeBallDashSupporter;
+			if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH) {
+					if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
+							supporter += CSupporterData.m_takeBallDashSupporter;
     
-								supporter += CSupporterData.m_getBallDashSupporter;
-						}
-						CSupporterManager.AddSupporter (playerScript.m_playerData.m_teamNo, supporter);
-						playerScript.m_playerSE.PlaySE("game/supoter_up");
+					supporter += CSupporterData.m_getBallDashSupporter;
+			}
+			CSupporterManager.AddSupporter (playerScript.m_playerData.m_teamNo, supporter);
+			playerScript.m_playerSE.PlaySE("game/supoter_up");
 
-				}
+		}
     }
 
 	void OnCollisionEnter(Collision col){

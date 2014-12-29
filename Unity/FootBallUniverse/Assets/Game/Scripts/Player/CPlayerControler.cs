@@ -471,6 +471,12 @@ public class CPlayerControler : MonoBehaviour {
 
             CPlayerManager.m_soccerBallManager.ChangeOwner(m_player.transform,pos);
             m_playerScript.m_isBall = true;
+
+            // 取った瞬間スピードがあがる処理の追加
+            m_playerScript.m_action.InitGetBall(m_playerScript.m_human.m_getBallAccSpeedDupRate,
+                                                m_playerScript.m_human.m_getBallAccDurationFrame,
+                                                m_playerScript.m_human.m_getBallAccDecFrame);
+            m_playerScript.m_isGetBall = true;
         }
     }   
 

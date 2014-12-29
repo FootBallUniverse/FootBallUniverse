@@ -321,31 +321,6 @@ public class CPlayer4 : CPlayer {
 	}
 	
 	//----------------------------------------------------------------------
-	// プレイヤーの移動
-	//----------------------------------------------------------------------
-	// @Param	Vector3     移動量		
-	// @Return	none
-	// @Date	2014/10/16  @Update 2014/11/11  @Author T.Kawashita      
-	//----------------------------------------------------------------------
-	public override void Move(Vector3 _speed)
-	{
-		// ボールを持っている場合は遅くなる
-		if (m_isBall == true)
-		{
-			m_speed.x += _speed.x * m_human.m_playerMoveSpeedHold;
-			m_speed.z += _speed.z * m_human.m_playerMoveSpeedHold;
-		}
-		else
-		{
-			m_speed.x += _speed.x * m_human.m_playerMoveSpeed;
-			m_speed.z += _speed.z * m_human.m_playerMoveSpeed;
-		}
-		
-		// 移動アクション
-		m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right);
-	}
-	
-	//----------------------------------------------------------------------
 	// プレイヤーの回転
 	//----------------------------------------------------------------------
 	// @Param	Vector2     回転量		

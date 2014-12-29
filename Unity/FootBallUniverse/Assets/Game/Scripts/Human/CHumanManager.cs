@@ -4,7 +4,7 @@ using System.Collections;
 public class CHumanManager : MonoBehaviour {
 
     private const int m_worldNum = 4;
-    private const int m_humanStatusNum = 38;
+    private const int m_humanStatusNum = 41;
 
     public static CJapanHuman m_japanHuman;
     public static CBrasilHuman m_brasilHuman;

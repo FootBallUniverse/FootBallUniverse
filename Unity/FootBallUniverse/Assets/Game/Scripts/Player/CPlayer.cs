@@ -24,6 +24,7 @@ public class CPlayer : MonoBehaviour {
     public int m_chargeFrame;               // チャージ時のフレーム数
     public bool m_isRtPress;                // RTボタンが押され続けているか
     public bool m_isLtPress;                // LTボタンが押され続けているか
+    public bool m_isGetBall;                // ボールを取った瞬間かどうか
     public bool m_isBall;                   // ボールを持っているかどうか
     public bool m_isSE;                     // SEの交換に使う
 
@@ -53,6 +54,7 @@ public class CPlayer : MonoBehaviour {
         m_isRtPress = false;
         m_isLtPress = false;
         m_isBall = false;
+        m_isGetBall = false;
         m_isSE = false;
     }
 
@@ -79,6 +81,7 @@ public class CPlayer : MonoBehaviour {
         m_isRtPress = false;
         m_isLtPress = false;
         m_isBall = false;
+        m_isGetBall = false;
         m_isSE = false;
 
         m_playerSE = this.transform.GetComponent<CPlayerSE>();
@@ -147,14 +150,37 @@ public class CPlayer : MonoBehaviour {
     }
 
     //----------------------------------------------------------------------
-    // 移動(仮想関数)
+    // プレイヤーの移動
     //----------------------------------------------------------------------
-    // @Param	Vector3     移動量
+    // @Param	Vector3     移動量		
     // @Return	none
-    // @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita      
+    // @Date	2014/10/16  @Update 2014/11/11  @Author T.Kawashita      
+    // @Update  2014/12/29  ボールを取った瞬間ならスピードがあがる処理追加
     //----------------------------------------------------------------------
     public virtual void Move(Vector3 _speed)
     {
+        // ボールを取った瞬間ならスピードアップ
+        if (m_isBall == true && m_isGetBall == true)
+        {
+            m_isGetBall = m_action.GetBallSpeedUp(ref _speed);
+        }
+
+        // ボールを持っている場合は遅くなる
+        if (m_isBall == true && m_isGetBall == false)
+        {
+            m_speed.x += _speed.x * m_human.m_playerMoveSpeedHold;
+            m_speed.z += _speed.z * m_human.m_playerMoveSpeedHold;
+        }
+        // それ以外の移動
+        else
+        {
+            m_speed.x += _speed.x * m_human.m_playerMoveSpeed;
+            m_speed.z += _speed.z * m_human.m_playerMoveSpeed;
+        }
+     
+        // 移動アクション
+        m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right);
+    
     }
 
     //----------------------------------------------------------------------

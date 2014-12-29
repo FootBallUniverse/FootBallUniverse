@@ -24,12 +24,8 @@ public class CPlayer1 : CPlayer {
         // プレイヤーごとの値をセット
         this.SetData();
 
-        // プレイヤーの情報をマップにセット
-//       Color color = Color.red;
-//        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
-
         // プレイヤーのアニメーターをセット
-       m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
+        m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
 
         // カメラをセット
         m_camera = this.gameObject.transform.parent.FindChild("Player1Camera").GetComponent<PlayerCamera>();
@@ -45,7 +41,7 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     void Update () 
 	{
-
+        // ボールを持っている場合位置を先に変更
         if (m_isBall == true)
             this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, -0.13f, 0.14f));
 
@@ -112,7 +108,7 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/28  @Update 2014/11/17  @Author T.Kawashita      
+    // @Date	2014/10/28  @Update 2014/11/17  @Author T.Kawashita   
     //----------------------------------------------------------------------
     private void PlayerStatusNone()
     {
@@ -316,31 +312,6 @@ public class CPlayer1 : CPlayer {
         // ダッシュチャージ中ならダッシュの処理のみ
         if (m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
             this.DashHold();                // ダッシュホールド状態
-    }
-
-    //----------------------------------------------------------------------
-    // プレイヤーの移動
-    //----------------------------------------------------------------------
-    // @Param	Vector3     移動量		
-    // @Return	none
-    // @Date	2014/10/16  @Update 2014/11/11  @Author T.Kawashita      
-    //----------------------------------------------------------------------
-    public override void Move(Vector3 _speed)
-    {
-        // ボールを持っている場合は遅くなる
-        if (m_isBall == true)
-        {
-            m_speed.x += _speed.x * m_human.m_playerMoveSpeedHold;
-            m_speed.z += _speed.z * m_human.m_playerMoveSpeedHold;
-        }
-        else
-        {
-            m_speed.x += _speed.x * m_human.m_playerMoveSpeed;
-            m_speed.z += _speed.z * m_human.m_playerMoveSpeed;
-        }
-     
-        // 移動アクション
-        m_action.Move(ref m_pos, m_speed, this.transform.forward, this.transform.right);
     }
 
     //----------------------------------------------------------------------

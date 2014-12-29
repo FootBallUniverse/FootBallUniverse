@@ -39,6 +39,12 @@ public class CPlayerAction {
     private float m_tackleDamageDecSpeed;       // タックルの減速量
     private int m_tackleDamageDecFrame;         // タックルダメージの減速開始時間 
 
+    private float m_getBallFrame;                 // ボールを取得した瞬間あがるフレーム数
+    private float m_getBallSpeedDupRate;        // ボールを取得した瞬間あがるスピードの倍率
+    private int m_getBallDuratioinFrame;        // ボールを取得した瞬間あがるスピードのフレーム数
+    private int m_getBallDecFrame;              // ボールを取得した瞬間あがる量減少開始時間
+    private float m_getBallSpeedDecRate;        // 減速倍率
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -78,6 +84,12 @@ public class CPlayerAction {
         m_tackleDamageInitSpeed = 0.0f;
         m_tackleDamageDecFrame = 0;
         m_tackleDamageDecSpeed = 0.0f;
+
+        m_getBallFrame = 0.0f;
+        m_getBallSpeedDupRate = 0.0f;
+        m_getBallDuratioinFrame = 0;
+        m_getBallDecFrame = 0;
+        m_getBallSpeedDecRate = 0.0f;
     }
 
     //----------------------------------------------------------------------
@@ -164,7 +176,7 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     public bool Tackle(ref Vector3 _tacklePos, Vector3 _forward)
     {
-        // フレームをデルタタイムで足していく
+        // フレーム数取得
         m_tackleFrame += Time.deltaTime;
 
         // 減速開始フレームになった場合はスピードを減速させていく
@@ -192,7 +204,7 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     public bool TackleSuccess()
     {
-        // フレームをデルタタイムで足していく
+        // フレーム数取得
         m_tackleSuccessFrame += Time.deltaTime;
 
         // タックル成功モーション終了
@@ -212,7 +224,7 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     public bool TackleDamage(ref Vector3 _pos, Vector3 _back)
     {
-        // フレームをデルタタイムで足していく
+        // フレーム数取得
         m_tackleDamageFrame += Time.deltaTime;
 
         // 減速開始フレームになった場合はスピードを減速させていく
@@ -242,7 +254,7 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     public bool Pass(GameObject _player, Vector3 _forward, ref bool _isBall)
     {
-        // 60Fたったかどうか計算
+        // フレーム数取得
         m_passFrame += Time.deltaTime;
 
         // パス状態に切り替わった場合はスクリプトの中身を変更
@@ -276,7 +288,7 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     public bool Shoot(GameObject _player,Vector3 _forward,ref bool _isBall)
     {
-        // 60Fたったかどうか計算
+        // フレーム数取得
         m_shootFrame += Time.deltaTime;
 
         // シュート状態に切り替わった場合はスクリプトの中身を変更
@@ -302,6 +314,35 @@ public class CPlayerAction {
      }
 
     //----------------------------------------------------------------------
+    // プレイヤーがボール取った後のスピードアップ
+    //----------------------------------------------------------------------
+    // @Param   _speed      プレイヤーのスピード			
+    // @Return	bool        スピードアップ時間が終了したかどうか
+    // @Date	2014/12/29  @Update 2014/12/29  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public bool GetBallSpeedUp(ref Vector3 _speed)
+    {
+        // フレーム数取得
+        m_getBallFrame += Time.deltaTime;
+
+        // 減速開始時間になった場合はレートを減らしていく
+        if (m_getBallFrame >= (float)m_getBallDecFrame / 60)
+            m_getBallSpeedDupRate -= m_getBallSpeedDecRate;
+
+        // 計算したレートを現在のスピードに掛ける
+        _speed.x = _speed.x * m_getBallSpeedDupRate;
+        _speed.y = _speed.y * m_getBallSpeedDupRate;
+        _speed.z = _speed.z * m_getBallSpeedDupRate;
+
+        // スピードアップ終了の時間になった場合は終わる
+        if (m_getBallFrame >= (float)m_getBallDuratioinFrame / 60)
+            return false;
+
+        // まだスピードアップする
+        return true;
+    }
+
+    //----------------------------------------------------------------------
     // プレイヤーのダッシュの初期化
     //----------------------------------------------------------------------
     // @Param	float    ダッシュの初速度
@@ -321,6 +362,7 @@ public class CPlayerAction {
         m_dashDecSpeed = _dashInitSpeed / (float)( m_dashMotionLength - m_dashDecFrame );
 
     }
+
 
     //----------------------------------------------------------------------
     // プレイヤーのタックルの初期化
@@ -381,7 +423,7 @@ public class CPlayerAction {
     //----------------------------------------------------------------------
     // @Param	_initShootSpeed     シュートの初速度
 	// @Param   _shootMotionLength  シュートの全体フレーム
-    // @Param   _shootTakeOfFrame
+    // @Param   _shootTakeOfFrame   足を離れる時間
     // @Return	none
     // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
     //----------------------------------------------------------------------
@@ -408,5 +450,25 @@ public class CPlayerAction {
         m_passInitSpeed = _initPassSpeed;
         m_passMotionLength = _passMotionLength;
         m_passTakeOfFrame = _passTakeOfFrame;
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーがボールを取った瞬間にあがるスピードの初期化
+    //----------------------------------------------------------------------
+    // @Param	_rate               あがる倍率
+	// @Param   _durationFrame      全体フレーム
+	// @Param   _decFrame           倍率を下げ始める時間
+    // @Return	none
+    // @Date	2014/12/29  @Update 2014/12/29  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void InitGetBall(float _rate, int _durationFrame, int _decFrame)
+    {
+        m_getBallFrame = 0.0f;
+        m_getBallSpeedDupRate = _rate;
+        m_getBallDuratioinFrame = _durationFrame;
+        m_getBallDecFrame = _decFrame;
+
+        // スピードアップ倍率の減速量計算
+        m_getBallSpeedDecRate = _rate / (float)(m_getBallDuratioinFrame - m_getBallDecFrame);
     }
 }

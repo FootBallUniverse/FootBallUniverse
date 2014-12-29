@@ -42,6 +42,9 @@ public class CHuman {
     public float m_tackleDamageInitSpeed;    // タックルをくらったほうの初期スピード
     public int m_tackleDamageDecFrame;       // タックルをくらった方のスピードの減速フレーム
     public int m_stealDamageLength;          // ボールを奪われた時のダメージ
+    public float m_getBallAccSpeedDupRate;   // ボールを取得した後のスピードに掛ける値
+    public int m_getBallAccDurationFrame;    // ボールを取得した時のスピードを変更するフレーム数
+    public int m_getBallAccDecFrame;         // ボールを取得した時このフレーム数が経過したら減らしていくフレーム
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -112,6 +115,9 @@ public class CHuman {
         m_tackleDamageInitSpeed = float.Parse(_value[35]);
         m_tackleDamageDecFrame = int.Parse(_value[36]);
         m_stealDamageLength = int.Parse(_value[37]);
+        m_getBallAccSpeedDupRate = float.Parse(_value[38]);
+        m_getBallAccDurationFrame = int.Parse(_value[39]);
+        m_getBallAccDecFrame = int.Parse(_value[40]);
     }
 
 

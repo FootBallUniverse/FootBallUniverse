@@ -34,6 +34,7 @@ public class CPlayerCollision : MonoBehaviour
     // @Return	none
     // @Other   CallBack
     // @Date	2014/11/28  @Update 2014/11/28  @Author T.Kawashita      
+    // @Update  2014/12/29  ボールを取った瞬間の時の処理追加
     //----------------------------------------------------------------------
     void OnTriggerEnter(Collider obj)
     {
@@ -62,23 +63,24 @@ public class CPlayerCollision : MonoBehaviour
 				CGameManager.m_soundPlayer.ChangeSEVolume(1.0f);
 				CGameManager.m_soundPlayer.PlaySE("game/boll_totta");
 
-//				this.GetComponent<CPlayer>().m_playerSE.PlaySE("game/boll_totta");
-
-
                 // プレイヤーのボールに設定
                 CPlayerManager.m_soccerBallManager.ChangeOwner(this.transform, pos);
                 CSoccerBallManager.m_shootPlayerNo = this.GetComponent<CPlayer>().m_playerData.m_playerNo;
                 CSoccerBallManager.m_shootTeamNo = this.GetComponent<CPlayer>().m_playerData.m_teamNo;
-
-
                 this.gameObject.GetComponent<CPlayer>().m_isBall = true;
 
                 // ボールの判定をトリガーにする
                 obj.GetComponent<SphereCollider>().isTrigger = true;
 
+                // ボールを取った後スピードを速くする準備
+                playerScript.m_action.InitGetBall(playerScript.m_human.m_getBallAccSpeedDupRate, 
+                                                  playerScript.m_human.m_getBallAccDurationFrame, 
+                                                  playerScript.m_human.m_getBallAccDecFrame);
+                playerScript.m_isGetBall = true;
+
                 // サポーター追加
                 int supporter = 0;
-
+                // プレイヤーのステータスがダッシュだったらサポーター増加
                 if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH)
                     supporter += CSupporterData.m_getBallDashSupporter;
 
@@ -89,7 +91,6 @@ public class CPlayerCollision : MonoBehaviour
                 supporter += CSupporterData.m_getBallSupporter;
                 CSupporterManager.AddSupporter(playerScript.m_playerData.m_teamNo, supporter);
 //				playerScript.m_playerSE.PlaySE("game/supoter_up");
-
             }
 
                      
