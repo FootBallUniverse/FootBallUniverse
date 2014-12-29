@@ -49,26 +49,28 @@ public class Flag_Select1 : MonoBehaviour
                         break;
                     case 1:
                         m_FlagPos[i].x -= 0.01f;
-                        break;
-                    case 2:
-                        m_FlagPos[i].x -= 0.042f;
-                        if (m_FlagPos[i].x <= -0.7f)
-                        {
-                            m_FlagPos[i].x = 0.69f;
-                        }
-                        if (m_FlagPos[i].x <= -0.21f)
-                        {
-                            TweenAlpha.Begin(m_Country[i], 0.05f, 0.0f);
-                        }
-                        else if (m_FlagPos[i].x <= 0.54f)
+                        if (m_FlagPos[i].x <= 0.3f)
                         {
                             TweenAlpha.Begin(m_Country[i], 0.1f, 1.0f);
                         }
                         break;
+                    case 2:
+                        m_FlagPos[i].x -= 0.02f;
+                        if (m_FlagPos[i].x <= -0.5f)
+                        {
+                            m_FlagPos[i].x = 0.49f;
+                        }
+                        if (m_FlagPos[i].x <= -0.31f)
+                        {
+                            TweenAlpha.Begin(m_Country[i], 0.05f, 0.0f);
+                        }
+                        //else if (m_FlagPos[i].x <= 0.58f)
+                        //{
+                        //    TweenAlpha.Begin(m_Country[i], 0.15f, 1.0f);
+                        //}
+                        break;
                     case 3:
                         m_FlagPos[i].x -= 0.01f;
-
-                       
                         break;
                 }
             }
@@ -78,12 +80,20 @@ public class Flag_Select1 : MonoBehaviour
                 {
                     case 0:
                         m_FlagPos[i].x += 0.01f;
+                        if (m_FlagPos[i].x >= 0.11f)
+                        {
+                            TweenAlpha.Begin(m_Country[i], 0.05f, 0.0f);
+                        }
                         break;
                     case 1:
-                        m_FlagPos[i].x += 0.042f;
-                        if (m_FlagPos[i].x >= 0.69f)
+                        m_FlagPos[i].x += 0.02f;
+                        if (m_FlagPos[i].x >= 0.49f)
                         {
-                            m_FlagPos[i].x = -0.7f;
+                            m_FlagPos[i].x = -0.5f;
+                        }
+                        else if(m_FlagPos[i].x <= -0.3f)
+                        {
+                            TweenAlpha.Begin(m_Country[i], 0.1f, 1.0f);
                         }
                         break;
                     case 2:
@@ -91,30 +101,32 @@ public class Flag_Select1 : MonoBehaviour
                         break;
                     case 3:
                         m_FlagPos[i].x += 0.01f;
-
                         break;
                 }
             }
+
             if (m_team1.m_Right_RotateFlag == false && m_team1.m_Left_RotateFlag == false)
             {
-                if (m_FlagPos[i].x <= 0.04f && m_FlagPos[i].x >= -0.04f)
+                if (m_FlagPos[i].x <= -0.04f && m_FlagPos[i].x >= -0.14f)
                 {
-                    m_FlagPos[i].x = 0.0f;
+                    m_FlagPos[i].x = -0.1f;
                 }
-                if (m_FlagPos[i].x <= 0.24f && m_FlagPos[i].x >= 0.16f)
+                if (m_FlagPos[i].x <= 0.14f && m_FlagPos[i].x >= 0.06f)
                 {
-                    m_FlagPos[i].x = 0.2f;
+                    m_FlagPos[i].x = 0.1f;
                 }
-                if (m_FlagPos[i].x <= 0.44f && m_FlagPos[i].x >= 0.36f)
+                if (m_FlagPos[i].x <= 0.34f && m_FlagPos[i].x >= 0.26f)
                 {
-                    m_FlagPos[i].x = 0.4f;
+                    m_FlagPos[i].x = 0.3f;
                 }
-                if (m_FlagPos[i].x <= -0.16f && m_FlagPos[i].x >= -0.24f)
+                if (m_FlagPos[i].x <= -0.26f && m_FlagPos[i].x >= -0.34f)
                 {
-                    m_FlagPos[i].x = -0.2f;
+                    m_FlagPos[i].x = -0.3f;
                 }
             }
             m_Country[i].transform.position = m_FlagPos[i];
         }
     }
 }
+
+

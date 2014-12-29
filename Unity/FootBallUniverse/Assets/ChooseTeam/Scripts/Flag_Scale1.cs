@@ -20,7 +20,7 @@ public class Flag_Scale1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.transform.position.x >= -0.1f && this.gameObject.transform.position.x <= 0.1f)
+        if (this.gameObject.transform.position.x >= -0.2f && this.gameObject.transform.position.x <= 0.0f)
         {
             TweenScale.Begin(this.gameObject, 0.1f, m_MaxScale);
         }
@@ -29,4 +29,6 @@ public class Flag_Scale1 : MonoBehaviour
             TweenScale.Begin(this.gameObject, 0.1f, m_MinScale);
         }
     }
+
 }
+
