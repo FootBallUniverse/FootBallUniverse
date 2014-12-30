@@ -27,7 +27,7 @@ public class Result : MonoBehaviour {
 	private bool[,] buttonCheck       = new bool[2,2];
 	private int[,] suppoterBffByTeam  = new int[2, 2];
 	private int[] suppoterBffByWorld  = new int[2];
-	public  int AddSuppoterTime;
+	private int AddSuppoterTime = 120;      // ロールの速さ調整用(フレーム数)
 	private int count;
 	public int  countMax = 120;
 
@@ -62,6 +62,12 @@ public class Result : MonoBehaviour {
 	void Init()
 	{
 		GameObject[] panels = new GameObject[3];
+
+        // 各種値初期化
+        count = 0;
+
+        for (int i = 0; i < 2; ++i)
+            works[i] = 0;
 
 #if false // ドライバ
 		TeamData.teamNationality[0] = TeamData.TEAM_NATIONALITY.JAPAN;
@@ -105,7 +111,7 @@ public class Result : MonoBehaviour {
 		this.button[1, 0] = panels[2].transform.FindChild("Next_0").gameObject;
 		this.button[1, 1] = panels[2].transform.FindChild("Next_1").gameObject;
 
-		for (int j = 0; j < 3; j++)
+  		for (int j = 0; j < 3; j++)
 		{
 			for (int i = 0; i < 2; i++)
 			{
@@ -211,7 +217,7 @@ public class Result : MonoBehaviour {
         CResultManager.m_resultMain.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("MainPanel").transform.GetComponent<UIPanel>().alpha = 1;
         CResultManager.m_resultSub1.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("SubPanel0").transform.GetComponent<UIPanel>().alpha = 1;
         CResultManager.m_resultSub2.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("SubPanel1").transform.GetComponent<UIPanel>().alpha = 1;
-       
+
 	}
 
 
@@ -235,22 +241,24 @@ public class Result : MonoBehaviour {
 		this.SubPanels[1,1].transform.FindChild("NUM_Supporter_Team1").GetComponent<DrawNumber>().number = this.suppoterBffByTeam[1,1];
 
 		// ボタンチェック
-        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_A) && this.buttonCheck[0,0] == false)
+        // 1P
+        if ((Input.GetKeyDown(InputXBOX360.P1_XBOX_A) || Input.GetKeyDown(KeyCode.Alpha1)) && this.buttonCheck[0,0] == false)
         {
             this.buttonCheck[0, 0] = true;
             m_soundPlayer.PlaySE("result/button_push");
         }
-        if (Input.GetKeyDown(InputXBOX360.P2_XBOX_A) && this.buttonCheck[0,1] == false)
+        // 2P
+        if ((Input.GetKeyDown(InputXBOX360.P2_XBOX_A) || Input.GetKeyDown(KeyCode.Alpha2)) && this.buttonCheck[0,1] == false)
         {
             m_soundPlayer.PlaySE("result/button_push");
             this.buttonCheck[0, 1] = true;
         }
-        if (Input.GetKeyDown(InputXBOX360.P3_XBOX_A) && this.buttonCheck[1,0] == false)
+        if ((Input.GetKeyDown(InputXBOX360.P3_XBOX_A) || Input.GetKeyDown(KeyCode.Alpha3)) && this.buttonCheck[1,0] == false)
         {
             m_soundPlayer.PlaySE("result/button_push");
             this.buttonCheck[1, 0] = true;
         }
-        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_A) && this.buttonCheck[1,1] == false)
+        if ((Input.GetKeyDown(InputXBOX360.P4_XBOX_A) || Input.GetKeyDown(KeyCode.Alpha4 )) && this.buttonCheck[1,1] == false)
         {
             m_soundPlayer.PlaySE("result/button_push");
             this.buttonCheck[1, 1] = true;
@@ -364,8 +372,6 @@ public class Result : MonoBehaviour {
 					{
 						this.state[i] = RESULT_STATE.ADDING_WORLD_SUPPORTER;
 						this.SubPanels[i,0].GetComponent<TweenScale>().Play(true);
-                        if (this.AddSuppoterTime == 0)
-                            this.AddSuppoterTime++;
 						works[0] = this.suppoterBffByTeam[i,0] / this.AddSuppoterTime;
 						works[1] = this.suppoterBffByTeam[i,1] / this.AddSuppoterTime;
 					}

@@ -191,7 +191,21 @@ public class CPlayer : MonoBehaviour {
     // @Date	2014/11/12  @Update 2014/11/12  @Author T.Kawashita      
     //----------------------------------------------------------------------
     public virtual void Rotation(Vector2 _angle)
-    { 
+    {
+        Vector3 angle = new Vector3(0.0f, 0.0f, 0.0f);
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
+            m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN)
+        {
+            angle.y = _angle.x * m_human.m_cameraMoveSpeed;
+            angle.x = _angle.y * m_human.m_cameraMoveSpeed;
+        }
+        else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE ||
+                 m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
+        {
+            angle.y = _angle.x * m_human.m_cameraMoveSpeedCharging;
+            angle.x = _angle.y * m_human.m_cameraMoveSpeedCharging;
+        }
+        this.transform.Rotate(angle);
     }
 
     //----------------------------------------------------------------------

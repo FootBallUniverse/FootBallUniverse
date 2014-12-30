@@ -322,31 +322,6 @@ public class CPlayer3 : CPlayer {
 	}
 		
 	//----------------------------------------------------------------------
-	// プレイヤーの回転
-	//----------------------------------------------------------------------
-	// @Param	Vector2     回転量		
-	// @Return	none
-	// @Date	2014/10/16  @Update 2014/11/12   @Author T.Kawashita      
-	//----------------------------------------------------------------------
-	public override void Rotation(Vector2 _angle)
-	{
-		Vector3 angle = new Vector3(0.0f,0.0f,0.0f);
-		if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
-		    m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN)
-		{
-			angle.y = _angle.x * m_human.m_cameraMoveSpeed;
-			angle.x = _angle.y * m_human.m_cameraMoveSpeed;
-		}
-		else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE ||
-		         m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
-		{
-			angle.y = _angle.x * m_human.m_cameraMoveSpeedCharging;
-			angle.x = _angle.y * m_human.m_cameraMoveSpeedCharging;
-		}
-		this.transform.Rotate(angle);
-	}
-	
-	//----------------------------------------------------------------------
 	// プレイヤーのダッシュ関連処理
 	//----------------------------------------------------------------------
 	// @Param	none		

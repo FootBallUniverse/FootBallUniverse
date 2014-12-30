@@ -8,7 +8,8 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita      
+    // @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita
+    // @Update  2014/12/30  一部処理を一括に変更  
     //----------------------------------------------------------------------
     void Start () {
 
@@ -197,8 +198,7 @@ public class CPlayer1 : CPlayer {
         {
             m_animator.Wait();
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-        }
-        
+        } 
     }
 
     //----------------------------------------------------------------------
@@ -312,31 +312,6 @@ public class CPlayer1 : CPlayer {
         // ダッシュチャージ中ならダッシュの処理のみ
         if (m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
             this.DashHold();                // ダッシュホールド状態
-    }
-
-    //----------------------------------------------------------------------
-    // プレイヤーの回転
-    //----------------------------------------------------------------------
-    // @Param	Vector2     回転量		
-    // @Return	none
-    // @Date	2014/10/16  @Update 2014/11/12   @Author T.Kawashita      
-    //----------------------------------------------------------------------
-    public override void Rotation(Vector2 _angle)
-    {
-        Vector3 angle = new Vector3(0.0f,0.0f,0.0f);
-        if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
-            m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN)
-        {
-            angle.y = _angle.x * m_human.m_cameraMoveSpeed;
-            angle.x = _angle.y * m_human.m_cameraMoveSpeed;
-        }
-        else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE ||
-                 m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
-        {
-            angle.y = _angle.x * m_human.m_cameraMoveSpeedCharging;
-            angle.x = _angle.y * m_human.m_cameraMoveSpeedCharging;
-        }
-        this.transform.Rotate(angle);
     }
 
     //----------------------------------------------------------------------
