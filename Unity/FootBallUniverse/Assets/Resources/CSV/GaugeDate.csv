@@ -1,0 +1,2 @@
+value_init,value_min,value_max,level_border_0,level_border_1,level_border_2,level_border_3,value_incrementPerFrame,value_supporterToIPF_rate,value_decrementPerFrame_1,value_decrementPerFrame_2,value_decrementPerFrame_3
+0.0000,0.0000,200.0000,0.0000,50.0000,100.0000,200.0000,0.5000,0.0001,1,2,3
