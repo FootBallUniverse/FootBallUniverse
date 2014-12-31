@@ -36,7 +36,7 @@ public class CSupporterManager : MonoBehaviour {
 		// データ上を更新させる
 		int num = _count;
 		int addSupporter = CalcSupporter (ref num);
-		TeamData.AddSupporter (0, addSupporter);
+		TeamData.AddSupporter (_teamNo - 1, addSupporter);
 	
 		// 表示物を変更させる
 		// 赤チーム

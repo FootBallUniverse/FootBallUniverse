@@ -208,10 +208,12 @@ public class Result : MonoBehaviour {
 				this.suppoterBffByTeam[i, j] = TeamData.suppoterByTeam[j];
 			ReSetButtonCheck(i,false);
 		}
+
 		// TeamDataを統合、クリア
 		TeamData.suppoterByWorld += (TeamData.suppoterByTeam[0] + TeamData.suppoterByTeam[1]);
 		TeamData.suppoterByTeam[0] = TeamData.suppoterByTeam[1] = 0;
-		// シュートログをクリア
+		
+        // シュートログをクリア
 		TeamData.ClearLog();
 
         CResultManager.m_resultMain.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("MainPanel").transform.GetComponent<UIPanel>().alpha = 1;
