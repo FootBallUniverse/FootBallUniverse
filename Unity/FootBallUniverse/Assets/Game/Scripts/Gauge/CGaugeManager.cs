@@ -47,9 +47,11 @@ public class CGaugeManager : MonoBehaviour {
     // @Date	2014/12/31  @Update 2014/12/31  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Update () {
+        
         // ゲーム中の時だけゲージのレートを増やす
         switch (CGameManager.m_nowStatus)
         {
+    
             case CGameManager.eSTATUS.eGAME:
                 this.CalcRate(ref m_1p2pUpGaugeRate, 0);
                 this.CalcRate(ref m_3p4pUpGaugeRate, 1);
@@ -67,8 +69,6 @@ public class CGaugeManager : MonoBehaviour {
     //----------------------------------------------------------------------
     void LateUpdate()
     {
-        m_1p2pUpGaugeRate = 0.0f;
-        m_3p4pUpGaugeRate = 0.0f;
     }
 
     //----------------------------------------------------------------------
@@ -118,7 +118,6 @@ public class CGaugeManager : MonoBehaviour {
         return true;
     }
 
-
     //----------------------------------------------------------------------
     // ゲージのレートの計算
     //----------------------------------------------------------------------
@@ -128,10 +127,92 @@ public class CGaugeManager : MonoBehaviour {
     //----------------------------------------------------------------------
     private float CalcRate(ref float _rate, int _teamNo)
     {
-
+        _rate = 0.0f;   // ゲージを一旦クリア
         _rate += (float)TeamData.suppoterByTeam[_teamNo] * m_supporterGaugeRate;
         _rate += m_defaultGaugeRate;
 
         return _rate;
+    }
+
+    //----------------------------------------------------------------------
+    // レートの取得
+    //----------------------------------------------------------------------
+    // @Param   _gauge      ゲージ
+    // @Param	_teamNo     チーム番号		
+    // @Return	float       計算後のゲージ
+    // @Date	2015/1/1  @Update 2015/1/1  @Author T.Kawashita
+    // @Update  2015/1/3  ゲージの計算処理もこちらで行うよう設定
+    //                  　理由：最大レートをチェックしたいため
+    //----------------------------------------------------------------------
+    public static float GetGaugeRate(ref float _gauge,int _teamNo)
+    {
+        // ゲージ量がマックスではないかどうか
+        if (_gauge != m_maxValue)
+        {
+            // プレイヤー1,2のレート
+            if (_teamNo == 1)
+            {
+                _gauge += m_1p2pUpGaugeRate;
+            }
+            // プレイヤー3,4のレート
+            else if (_teamNo == 2)
+            {
+                _gauge += m_3p4pUpGaugeRate;
+            }
+
+            if (_gauge >= m_maxValue)
+                _gauge = m_maxValue;
+        }
+
+        // 値がマックスならそのまま返す
+        return _gauge;
+    }
+
+    //----------------------------------------------------------------------
+    // レベル1ゲージ減少中の処理
+    //----------------------------------------------------------------------
+    // @Param	ref float   ゲージ		
+    // @Return	bool        ゲージ減少が終了かどうか
+    // @Date	2015/1/3  @Update 2015/1/3  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static bool CalcLevel1Rate(ref float _gauge)
+    {
+        _gauge -= m_decrementValue1;
+        if (_gauge <= m_minValue)
+            return true;
+
+        return false;
+    }
+
+    //----------------------------------------------------------------------
+    // レベル2ゲージ減少中の処理
+    //----------------------------------------------------------------------
+    // @Param	ref float   ゲージ		
+    // @Return	bool        ゲージ減少が終了したかどうか
+    // @Date	2015/1/3  @Update 2015/1/3  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static bool CalcLevel2Rate(ref float _gauge)
+    {
+        _gauge -= m_decrementValue2;
+        if (_gauge <= m_minValue)
+            return true;
+
+        return false;
+    }
+
+    //----------------------------------------------------------------------
+    // レベル3ゲージ減少中の処理
+    //----------------------------------------------------------------------
+    // @Param	ref float   ゲージ		
+    // @Return	bool        ゲージ減少が終了したかどうか
+    // @Date	2015/1/3  @Update 2015/1/3  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static bool CalcLevel3Rate(ref float _gauge)
+    {
+        _gauge -= m_decrementValue3;
+        if (_gauge <= m_minValue)
+            return true;
+
+        return false;
     }
 }

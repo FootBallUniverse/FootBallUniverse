@@ -19,6 +19,7 @@ public class CPlayer : MonoBehaviour {
     public CPlayerAction m_action;          // プレイヤーのアクション
     public CPlayerAnimator m_animator;      // プレイヤーのアニメーション
     public CHuman m_human;                  // プレイヤーの国のインスタンス
+    public CPlayerGauge m_gauge;            // プレイヤーごとのゲージ
     public CPlayerSE m_playerSE;            // プレイヤーのSE
 
     public int m_chargeFrame;               // チャージ時のフレーム数
@@ -84,6 +85,7 @@ public class CPlayer : MonoBehaviour {
         m_isGetBall = false;
         m_isSE = false;
 
+        m_gauge = this.transform.GetComponent<CPlayerGauge>();
         m_playerSE = this.transform.GetComponent<CPlayerSE>();
 
         return true;
@@ -138,15 +140,20 @@ public class CPlayer : MonoBehaviour {
     // @Return	none
     // @Date	2014/10/28  @Update 2014/11/21  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    protected void CheckGamePlay()
+    protected virtual void CheckGamePlay()
     { 
         // ゲーム終了かどうか判定
         if (CGameManager.m_isGamePlay == false)
+        {
             m_status = CPlayerManager.ePLAYER_STATUS.eEND;  // 終了していたらステータス変更
-    
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNOTGAME;
+        }
         // ゴールを決めたかどうか判定
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGOALPERFOMANCE)
+        {
             m_status = CPlayerManager.ePLAYER_STATUS.eGOAL; // ゴール状態に遷移
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNOTGAME;
+        }
     }
 
     //----------------------------------------------------------------------

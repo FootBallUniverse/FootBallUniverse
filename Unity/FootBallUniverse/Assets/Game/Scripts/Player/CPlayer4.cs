@@ -20,13 +20,10 @@ public class CPlayer4 : CPlayer {
 		// 国の情報をセット / 国によってマテリアルを変更
 		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
 		this.transform.FindChild("polySurface14").GetComponent<CPlayer4Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
+        m_gauge.m_teamNo = 2;
 		
 		// プレイヤーごとの値をセット
 		this.SetData();
-		
-		// プレイヤーの情報をマップにセット
-//       Color color = Color.red;
-//        CPlayerManager.m_playerManager.SetMap(this.gameObject, color);
 		
 		// プレイヤーのアニメーターをセット
 		m_animator = this.gameObject.transform.parent.GetComponent<CPlayerAnimator>();
@@ -148,6 +145,7 @@ public class CPlayer4 : CPlayer {
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNORMAL;
         }
 
 	}
@@ -169,6 +167,7 @@ public class CPlayer4 : CPlayer {
 		if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
 		{
 			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNORMAL;
 		}
 	}
 	

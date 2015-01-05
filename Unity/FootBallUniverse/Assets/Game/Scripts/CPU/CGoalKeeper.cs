@@ -384,6 +384,28 @@ public class CGoalKeeper : CCpu {
 		}
 	}
 
+    //----------------------------------------------------------------------
+    // ゲームがプレイ中かどうか判定
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2015/1/3  @Update 2015/1/3  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    protected override void CheckGamePlay()
+    {
+        // ゲーム終了かどうか判定
+        if (CGameManager.m_isGamePlay == false)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eEND;  // 終了していたらステータス変更
+        }
+        // ゴールを決めたかどうか判定
+        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGOALPERFOMANCE)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eGOAL; // ゴール状態に遷移
+        }
+    }
+
+
 	/*取得関数*/
 	public GK_State GetGKState()     { return this.gkState; }
 	public Vector3 GetHomePosition() { return this.HOME_POSITION; }

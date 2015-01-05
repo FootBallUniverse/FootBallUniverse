@@ -21,7 +21,8 @@ public class CPlayer1 : CPlayer {
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
         this.transform.FindChild("polySurface14").GetComponent<CPlayer1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
-        
+        m_gauge.m_teamNo = 1;
+
         // プレイヤーごとの値をセット
         this.SetData();
 
@@ -64,7 +65,6 @@ public class CPlayer1 : CPlayer {
             case CPlayerManager.ePLAYER_STATUS.eEND:                                        break;    // 終了
             case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal();                   break;    // ゴールした時は何もさせない
         }
-
 
     }
 
@@ -120,6 +120,7 @@ public class CPlayer1 : CPlayer {
         // 回転
         Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));
         this.Rotation(angle);
+
     
         this.LTDashTackle();        // ダッシュかタックルの判定
         this.RTShootPass();         // パスかシュートの判定
@@ -145,6 +146,7 @@ public class CPlayer1 : CPlayer {
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNORMAL;
         }
     }
 
@@ -165,6 +167,7 @@ public class CPlayer1 : CPlayer {
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNORMAL;
         }
     }
 
@@ -689,4 +692,23 @@ public class CPlayer1 : CPlayer {
         }
     }
 
+    //----------------------------------------------------------------------
+    // ゲージ解放アクション
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2015/1/3  @Update 2015/1/3  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void GaugeAction()
+    {
+        // 右アナログスティックが押し込まれたら
+        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_RIGHT_ANALOG_PRESS))
+        {
+            if (m_gauge.GaugeDecrement() != 0)
+            {
+ 
+            }
+        }
+
+    }
 }
