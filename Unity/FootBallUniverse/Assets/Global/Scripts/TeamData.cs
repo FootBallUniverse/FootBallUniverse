@@ -8,14 +8,17 @@ public class TeamData
 	// 国籍表
 	public enum TEAM_NATIONALITY
 	{
+        NONE,
 		JAPAN,
 		ESPANA,
 		ENGLAND,
 		BRASIL,
-		NATIONALITY_MAX
+		NATIONALITY_MAX,
 	};
+
 	private static string[] TeamNationalityName = new string[(int)TEAM_NATIONALITY.NATIONALITY_MAX] {
-		"日本",
+		"NONE",
+        "日本",
 		"スペイン",
 		"イングランド",
 		"ブラジル"

@@ -393,16 +393,22 @@ public class CPlayerAction {
             {
                 // ブラジルのシュート
                 case TeamData.TEAM_NATIONALITY.BRASIL:
+                    CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.BRASIL;
                     shootSpeed *= CGaugeManager.m_brazilShootRate;
                     break;
 
                 case TeamData.TEAM_NATIONALITY.JAPAN:
+                    CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.JAPAN;
                     break;
                 
                 case TeamData.TEAM_NATIONALITY.ENGLAND:
+                    CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.ENGLAND;
+                    CSoccerBallManager.m_isOverRimitShoot = true;
                     break;
 
                 case TeamData.TEAM_NATIONALITY.ESPANA:
+                    CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.ESPANA;
+                    CSoccerBallManager.m_isOverRimitShoot = true;
                     break;
 
             }

@@ -42,8 +42,25 @@ public class CPlayerCollision : MonoBehaviour
         if (obj.gameObject.tag == "SoccerBall" && this.GetComponent<CPlayer>().m_isBall == false && 
             this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE )
         {
+            // オーバーリミット状態のシュートならそれに応じて変更
+            if (obj.transform.parent == GameObject.Find("BallGameObject").transform &&
+               CSoccerBallManager.m_isOverRimitShoot == true)
+            {
+                switch (CSoccerBallManager.m_team)
+                {
+                    case TeamData.TEAM_NATIONALITY.ENGLAND:
+                        break;
+
+                    // スペインはあたったらプレイヤーが吹っ飛ぶ
+                    case TeamData.TEAM_NATIONALITY.ESPANA:
+                        break;
+                }
+            }
+
+
             // 浮いているボールの場合は自分のボールになる
-            if (obj.transform.parent == GameObject.Find("BallGameObject").transform)
+            if (obj.transform.parent == GameObject.Find("BallGameObject").transform &&
+                CSoccerBallManager.m_isOverRimitShoot == false)
             {
 				CPlayer playerScript = this.GetComponent<CPlayer>();
 

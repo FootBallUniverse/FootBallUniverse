@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CGaugeManager : MonoBehaviour {
 
-    private const int m_gaugeStatusNum = 15;
+    private const int m_gaugeStatusNum = 19;
 
     public static float m_1p2pUpGaugeRate;
     public static float m_3p4pUpGaugeRate;
@@ -24,6 +24,10 @@ public class CGaugeManager : MonoBehaviour {
     public static float m_brazilShootRate;      // ブラジルのシュート増加量
     public static float m_brazilPassRate;       // ブラジルのパスの増加量
     public static float m_brazilSpeedRate;      // ブラジルの移動速度の増加量
+    public static float m_englandAccRate;       // イングランドのシュートの加速度
+    public static float m_englandShootLimit;    // イングランドのシュートの限界
+    public static float m_spainLowSpeed;        // スペインが一定速度以下になったらスピード落ちる値
+    public static float m_japanHoldRadius;      // 日本の取れる広さ
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -119,6 +123,10 @@ public class CGaugeManager : MonoBehaviour {
         m_brazilShootRate = float.Parse(_array[12]);
         m_brazilPassRate = float.Parse(_array[13]);
         m_brazilSpeedRate = float.Parse(_array[14]);
+        m_englandAccRate = float.Parse(_array[15]);
+        m_englandShootLimit = float.Parse(_array[16]);
+        m_spainLowSpeed = float.Parse(_array[17]);
+        m_japanHoldRadius = float.Parse(_array[18]);
 
         return true;
     }

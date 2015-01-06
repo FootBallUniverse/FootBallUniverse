@@ -100,6 +100,8 @@ public class CSoccerBall : MonoBehaviour {
     // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Update () {
+
+
 	}
 
     //----------------------------------------------------------------------
@@ -156,10 +158,12 @@ public class CSoccerBall : MonoBehaviour {
 		CapsuleCollider capsuleCollider = obj as CapsuleCollider;
 
 		// プレイヤーとの当たり判定
+        // 同じチームの場合は取れない
 		if (capsuleCollider != null && playerScript.m_isBall == false && m_isPlayer == true && 
 			playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
 			playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eDASHCHARGE &&
-			playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE)
+			playerScript.m_status != CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE &&
+            playerScript.m_playerData.m_teamNo != this.transform.parent.GetComponent<CPlayer>().m_playerData.m_teamNo)
         {
 			// 現在持っているプレイヤーのステータス変更
 			CPlayer ballPlayer = this.transform.parent.GetComponent<CPlayer> ();
@@ -195,10 +199,10 @@ public class CSoccerBall : MonoBehaviour {
 					supporter += CSupporterData.m_takeBallSupporter;
 
 			if (playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eDASH) {
-					if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
-							supporter += CSupporterData.m_takeBallDashSupporter;
+				if (playerScript.m_playerData.m_teamNo != ballPlayer.m_playerData.m_teamNo)
+					supporter += CSupporterData.m_takeBallDashSupporter;
     
-					supporter += CSupporterData.m_getBallDashSupporter;
+				supporter += CSupporterData.m_getBallDashSupporter;
 			}
 			CSupporterManager.AddSupporter (playerScript.m_playerData.m_teamNo, supporter);
 			playerScript.m_playerSE.PlaySE("game/supoter_up");
