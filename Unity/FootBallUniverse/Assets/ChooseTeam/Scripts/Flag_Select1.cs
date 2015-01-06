@@ -6,11 +6,10 @@ public class Flag_Select1 : MonoBehaviour
     public Player_1_Script m_team1;
     public GameObject[] m_Country = new GameObject[4];
     public Vector3[] m_FlagPos = new Vector3[4];
-    public Vector3[] m_MinScale = new Vector3[4];
-    public Vector3[] m_MaxScale = new Vector3[4];
     public TweenAlpha[] m_Alpha = new TweenAlpha[4];
     public Vector3 m_PlusScale;
     int[] m_Flag = new int[4];
+    float m_Center_Pos = 0.0f;
     // Use this for initialization
     void Start()
     {
@@ -49,7 +48,7 @@ public class Flag_Select1 : MonoBehaviour
                         break;
                     case 1:
                         m_FlagPos[i].x -= 0.01f;
-                        if (m_FlagPos[i].x <= 0.3f)
+                        if (m_FlagPos[i].x <= m_Center_Pos + 0.3f)
                         {
                             TweenAlpha.Begin(m_Country[i], 0.1f, 1.0f);
                         }
@@ -64,10 +63,6 @@ public class Flag_Select1 : MonoBehaviour
                         {
                             TweenAlpha.Begin(m_Country[i], 0.05f, 0.0f);
                         }
-                        //else if (m_FlagPos[i].x <= 0.58f)
-                        //{
-                        //    TweenAlpha.Begin(m_Country[i], 0.15f, 1.0f);
-                        //}
                         break;
                     case 3:
                         m_FlagPos[i].x -= 0.01f;

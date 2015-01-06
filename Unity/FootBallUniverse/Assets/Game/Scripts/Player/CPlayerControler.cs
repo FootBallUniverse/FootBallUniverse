@@ -62,6 +62,7 @@ public class CPlayerControler : MonoBehaviour {
 
 			// 何もしてない状態
 			case CPlayerManager.ePLAYER_STATUS.eNONE:
+            case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT:
 				ChangePlayer();    
 				Move ();
 				Rotation();
@@ -69,7 +70,7 @@ public class CPlayerControler : MonoBehaviour {
 				InitDashCharge();
 				InitShootCharge();
 				ChangeView();
-				break;    
+				break;
 
 			// ダッシュ中
 			case CPlayerManager.ePLAYER_STATUS.eDASH: 

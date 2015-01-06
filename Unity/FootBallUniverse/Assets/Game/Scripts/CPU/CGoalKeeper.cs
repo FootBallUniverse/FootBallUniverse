@@ -76,6 +76,40 @@ public class CGoalKeeper : CCpu {
 		this.transform.LookAt(new Vector3(0.0f,0.0f,0.0f));
 	}
 
+    //----------------------------------------------------------------------
+    // ゴールした後のリスタート
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2014/11/25  @Update 2014/11/25  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    protected override bool Restart()
+    {
+        // 位置と回転をセットしなおす
+        m_pos = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
+        this.transform.localPosition = m_pos;
+        m_angle = new Vector3(0.0f, 0.0f, 0.0f);
+        this.transform.localRotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+
+        // 状態を変更
+        this.m_status = CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN;
+        this.m_oldStatus = CPlayerManager.ePLAYER_STATUS.eNONE;
+        this.m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
+
+        // アニメーションを元に戻す
+        this.m_speed = new Vector3(0.0f, 0.0f, 0.0f);
+
+        // その他変数初期化
+        m_chargeFrame = 0;
+        m_isBall = false;
+        m_isLtPress = false;
+        m_isRtPress = false;
+        m_isOverRimit = false;
+        m_isSE = false;
+
+        return true;
+    }
+
 
 	//----------------------------------------------------------------------
 	// 更新
@@ -383,6 +417,28 @@ public class CGoalKeeper : CCpu {
 				break;
 		}
 	}
+
+    //----------------------------------------------------------------------
+    // ゲームがプレイ中かどうか判定
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2015/1/3  @Update 2015/1/3  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    protected override void CheckGamePlay()
+    {
+        // ゲーム終了かどうか判定
+        if (CGameManager.m_isGamePlay == false)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eEND;  // 終了していたらステータス変更
+        }
+        // ゴールを決めたかどうか判定
+        if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGOALPERFOMANCE)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eGOAL; // ゴール状態に遷移
+        }
+    }
+
 
 	/*取得関数*/
 	public GK_State GetGKState()     { return this.gkState; }

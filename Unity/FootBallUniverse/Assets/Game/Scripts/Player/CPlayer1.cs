@@ -21,7 +21,8 @@ public class CPlayer1 : CPlayer {
         // 国の情報をセット / 国によってマテリアルを変更
         m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
         this.transform.FindChild("polySurface14").GetComponent<CPlayer1Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
-        
+        m_gauge.m_teamNo = 1;
+
         // プレイヤーごとの値をセット
         this.SetData();
 
@@ -63,8 +64,8 @@ public class CPlayer1 : CPlayer {
             case CPlayerManager.ePLAYER_STATUS.eDASHCHARGE: PlayerStatusCharge();           break;    // チャージ中
             case CPlayerManager.ePLAYER_STATUS.eEND:                                        break;    // 終了
             case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal();                   break;    // ゴールした時は何もさせない
+            case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT: PlayerStatusOverRimit();         break;    // オーバーリミット状態
         }
-
 
     }
 
@@ -120,9 +121,12 @@ public class CPlayer1 : CPlayer {
         // 回転
         Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));
         this.Rotation(angle);
+
     
         this.LTDashTackle();        // ダッシュかタックルの判定
         this.RTShootPass();         // パスかシュートの判定
+
+        this.GaugeAction();         // ゲージのアクション状態
 
         this.ChangeViewPoint();     // 視点変更
     }
@@ -145,6 +149,61 @@ public class CPlayer1 : CPlayer {
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNORMAL;
+        }
+    }
+
+    //----------------------------------------------------------------------
+    // プレイヤーのオーバーリミット状態
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2015/1/6  @Update 2014/1/6  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    private void PlayerStatusOverRimit()
+    {
+        Vector3 speed = new Vector3(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X), 0.0f, Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y));
+
+
+        // 国によってオーバーリミットの状態を変える
+        switch(TeamData.teamNationality[0])
+        {
+            case TeamData.TEAM_NATIONALITY.JAPAN:
+            break;
+
+            case TeamData.TEAM_NATIONALITY.ENGLAND:
+            break;
+
+            case TeamData.TEAM_NATIONALITY.ESPANA:
+            break;
+
+            // ブラジル
+            case TeamData.TEAM_NATIONALITY.BRASIL:
+            speed.x *= CGaugeManager.m_brazilSpeedRate;
+            speed.y *= CGaugeManager.m_brazilSpeedRate;
+            speed.z *= CGaugeManager.m_brazilSpeedRate;
+            break;
+        }
+
+        // 移動
+        this.Move(speed);
+
+        // 回転
+        Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));
+        this.Rotation(angle);
+
+
+        this.LTDashTackle();        // ダッシュかタックルの判定
+        this.RTShootPass();         // パスかシュートの判定
+
+        this.ChangeViewPoint();     // 視点変更
+
+        // ゲージが0になったら
+        if (m_gauge.m_status == CPlayerGauge.eGAUGESTATUS.eNORMAL)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+
+            // 終了エフェクト
         }
     }
 
@@ -165,6 +224,7 @@ public class CPlayer1 : CPlayer {
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNORMAL;
         }
     }
 
@@ -197,7 +257,7 @@ public class CPlayer1 : CPlayer {
         if (this.Dash() == true)
         {
             m_animator.Wait();
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
         } 
     }
 
@@ -214,7 +274,7 @@ public class CPlayer1 : CPlayer {
         if (this.Tackle () == true)
 		{
 			m_animator.Wait();	
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+			m_status = m_oldStatus;
 		}
 	}
 
@@ -233,7 +293,7 @@ public class CPlayer1 : CPlayer {
             if (m_action.TackleSuccess() == true)
             {
                 m_animator.Wait();
-                m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                m_status = m_oldStatus;
             }
         }
     }
@@ -253,7 +313,7 @@ public class CPlayer1 : CPlayer {
             if (m_action.TackleDamage(ref m_pos,-this.transform.forward) == true)
             {
                 m_animator.Wait();
-                m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                m_status = m_oldStatus;
             }
         }
     }
@@ -271,7 +331,7 @@ public class CPlayer1 : CPlayer {
 		if (this.Shoot () == true) 
 		{
 			m_animator.Wait();
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+			m_status = m_oldStatus;
 		}
     }
 
@@ -288,7 +348,7 @@ public class CPlayer1 : CPlayer {
         if (this.Pass () == true) 
 		{
 			m_animator.Wait();
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+			m_status = m_oldStatus;
 		}
     }
 
@@ -386,11 +446,13 @@ public class CPlayer1 : CPlayer {
     private void RTShootPass()
     {
         // シュートかパスが打てる状態になったら(ボールが手持ちにある場合）
-        if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
+        if ((m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
+             m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT ) &&
              m_isBall == true && 
              InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == true && 
              m_isRtPress == false )
         {
+            m_oldStatus = m_status;
             m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
             m_chargeFrame = 0;
             m_isRtPress = true;
@@ -430,7 +492,7 @@ public class CPlayer1 : CPlayer {
             m_isBall == true && 
             m_chargeFrame >= m_human.m_shootChargeLengthMax)
         {
-            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
             m_animator.ChangeAnimation(m_animator.m_isWait);
             m_playerSE.StopSE();
             m_isSE = false;
@@ -476,11 +538,13 @@ public class CPlayer1 : CPlayer {
     private void LTDashTackle()
     {
         // ダッシュが出来る状態になったら(ボールを持っていなかったら)
-        if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
+        if ((m_status == CPlayerManager.ePLAYER_STATUS.eNONE || 
+            m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT) &&
              m_isBall == false && 
              InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == true &&
              m_isLtPress == false)
         {
+            m_oldStatus = m_status;
             m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
             m_chargeFrame = 0;
             m_isLtPress = true;
@@ -519,7 +583,7 @@ public class CPlayer1 : CPlayer {
             m_isBall == false &&
             m_chargeFrame >= m_human.m_dashChargeLengthMax )
         {
-            m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status  = m_oldStatus;
 			m_animator.Wait();
 			m_playerSE.StopSE();
             m_isSE = false;
@@ -571,6 +635,7 @@ public class CPlayer1 : CPlayer {
             case CPlayerManager.ePLAYER_STATUS.eNONE:
             case CPlayerManager.ePLAYER_STATUS.eWAIT:
             case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
+            case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT:
                 m_animator.Move(m_speed); break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE: 
                 m_animator.ShootCharge(); break;
@@ -600,8 +665,6 @@ public class CPlayer1 : CPlayer {
         switch (m_viewPointStatus) 
         {
 			case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
-
-                       
 			if (Input.GetKeyDown (InputXBOX360.P1_XBOX_X) || Input.GetKeyDown (InputXBOX360.P1_XBOX_Y) || Input.GetKeyDown (InputXBOX360.P1_XBOX_B) || Input.GetKeyDown (InputXBOX360.P1_XBOX_A))
             {
                 m_playerSE.PlaySE("game/rockon");
@@ -637,56 +700,27 @@ public class CPlayer1 : CPlayer {
 					return;
 			}
 			break;
-	/*			
-            case CPlayerManager.eVIEW_POINT_STATUS.eENEMY:
-                // RTボタンが押されたら味方の視点に変更
-                if (Input.GetKeyDown(InputXBOX360.P1_XBOX_R))
-                {
-                    m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
-                    return;
-                }
-
-                if (Input.GetKeyDown(InputXBOX360.P1_XBOX_X) || Input.GetKeyDown(InputXBOX360.P1_XBOX_Y) || Input.GetKeyDown(InputXBOX360.P1_XBOX_B) || Input.GetKeyDown(InputXBOX360.P1_XBOX_A))
-                {
-                    m_camera.ChangeRspeedlock();
-                }
-
-                // 3Pの方向に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_X))
-                {
-
-                    m_trans.LookAt(CPlayerManager.m_player3Transform);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
-
-                // 4Pの方向に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_Y))
-                {
-                    m_trans.LookAt(CPlayerManager.m_player4Transform);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
-
-                // 敵AIの方に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_B))
-                {
-                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
-
-                // 敵キーパーの方に向ける
-                if (Input.GetKey(InputXBOX360.P1_XBOX_A))
-                {
-                    m_trans.LookAt(CCpuManager.m_cpuManager.m_cpuP3P4Keeper);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
-
-                break;
-                */
         }
     }
 
+    //----------------------------------------------------------------------
+    // ゲージ解放アクション
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2015/1/3  @Update 2015/1/3  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public void GaugeAction()
+    {
+        // 右アナログスティックが押し込まれたら
+        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_RIGHT_ANALOG_PRESS))
+        {
+            if (m_gauge.GaugeDecrement() != 0)
+            {
+                // ここにエフェクトの開始とかを入れる
+                m_status = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
+            }
+        }
+
+    }
 }

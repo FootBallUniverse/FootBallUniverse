@@ -8,6 +8,7 @@ using System.Collections;
 public class CPlayer : MonoBehaviour {
 
     public CPlayerManager.ePLAYER_STATUS m_status;
+    public CPlayerManager.ePLAYER_STATUS m_oldStatus;
     public CPlayerManager.eVIEW_POINT_STATUS m_viewPointStatus;
     
     public Vector3 m_pos;        // 位置座標
@@ -19,6 +20,7 @@ public class CPlayer : MonoBehaviour {
     public CPlayerAction m_action;          // プレイヤーのアクション
     public CPlayerAnimator m_animator;      // プレイヤーのアニメーション
     public CHuman m_human;                  // プレイヤーの国のインスタンス
+    public CPlayerGauge m_gauge;            // プレイヤーごとのゲージ
     public CPlayerSE m_playerSE;            // プレイヤーのSE
 
     public int m_chargeFrame;               // チャージ時のフレーム数
@@ -26,6 +28,7 @@ public class CPlayer : MonoBehaviour {
     public bool m_isLtPress;                // LTボタンが押され続けているか
     public bool m_isGetBall;                // ボールを取った瞬間かどうか
     public bool m_isBall;                   // ボールを持っているかどうか
+    public bool m_isOverRimit;              // オーバーリミット状態かどうか
     public bool m_isSE;                     // SEの交換に使う
 
     // カメラのコンポーネント
@@ -44,6 +47,7 @@ public class CPlayer : MonoBehaviour {
         m_speed = new Vector3();
         m_angle = new Vector3();
         m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+        m_oldStatus = CPlayerManager.ePLAYER_STATUS.eNONE;
         m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
 
         m_human = new CHuman();
@@ -55,6 +59,7 @@ public class CPlayer : MonoBehaviour {
         m_isLtPress = false;
         m_isBall = false;
         m_isGetBall = false;
+        m_isOverRimit = false;
         m_isSE = false;
     }
 
@@ -71,6 +76,7 @@ public class CPlayer : MonoBehaviour {
         m_speed = new Vector3(0.0f,0.0f,0.0f);
         m_angle = new Vector3(0.0f,0.0f,0.0f);
         m_status = CPlayerManager.ePLAYER_STATUS.eWAIT;
+        m_oldStatus = CPlayerManager.ePLAYER_STATUS.eNONE;
         m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
 
         m_human = new CHuman();
@@ -82,8 +88,10 @@ public class CPlayer : MonoBehaviour {
         m_isLtPress = false;
         m_isBall = false;
         m_isGetBall = false;
+        m_isOverRimit = false;
         m_isSE = false;
 
+        m_gauge = this.transform.GetComponent<CPlayerGauge>();
         m_playerSE = this.transform.GetComponent<CPlayerSE>();
 
         return true;
@@ -96,7 +104,7 @@ public class CPlayer : MonoBehaviour {
     // @Return	none
     // @Date	2014/11/25  @Update 2014/11/25  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    protected bool Restart()
+    protected virtual bool Restart()
     {
         // 位置と回転をセットしなおす
         m_pos = new Vector3(m_playerData.m_xPos, m_playerData.m_yPos, m_playerData.m_zPos);
@@ -106,6 +114,7 @@ public class CPlayer : MonoBehaviour {
 
         // 状態を変更
         this.m_status = CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN;
+        this.m_oldStatus = CPlayerManager.ePLAYER_STATUS.eNONE;
         this.m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.ePLAYER;
 
         // アニメーションを元に戻す
@@ -116,7 +125,10 @@ public class CPlayer : MonoBehaviour {
         m_isBall = false;
         m_isLtPress = false;
         m_isRtPress = false;
+        m_isOverRimit = false;
         m_isSE = false;
+
+        m_gauge.Init();
 
         return true;
     }
@@ -138,15 +150,20 @@ public class CPlayer : MonoBehaviour {
     // @Return	none
     // @Date	2014/10/28  @Update 2014/11/21  @Author T.Kawashita      
     //----------------------------------------------------------------------
-    protected void CheckGamePlay()
+    protected virtual void CheckGamePlay()
     { 
         // ゲーム終了かどうか判定
         if (CGameManager.m_isGamePlay == false)
+        {
             m_status = CPlayerManager.ePLAYER_STATUS.eEND;  // 終了していたらステータス変更
-    
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNOTGAME;
+        }
         // ゴールを決めたかどうか判定
         if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGOALPERFOMANCE)
+        {
             m_status = CPlayerManager.ePLAYER_STATUS.eGOAL; // ゴール状態に遷移
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNOTGAME;
+        }
     }
 
     //----------------------------------------------------------------------
@@ -194,13 +211,15 @@ public class CPlayer : MonoBehaviour {
     {
         Vector3 angle = new Vector3(0.0f, 0.0f, 0.0f);
         if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
-            m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN)
+            m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN ||
+            m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT)
         {
             angle.y = _angle.x * m_human.m_cameraMoveSpeed;
             angle.x = _angle.y * m_human.m_cameraMoveSpeed;
         }
         else if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE ||
-                 m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE)
+                 m_status == CPlayerManager.ePLAYER_STATUS.eDASHCHARGE || 
+                 m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT)
         {
             angle.y = _angle.x * m_human.m_cameraMoveSpeedCharging;
             angle.x = _angle.y * m_human.m_cameraMoveSpeedCharging;
