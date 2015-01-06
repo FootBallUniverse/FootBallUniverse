@@ -14,6 +14,12 @@ public class TeamData
 		BRASIL,
 		NATIONALITY_MAX
 	};
+	private static string[] TeamNationalityName = new string[(int)TEAM_NATIONALITY.NATIONALITY_MAX] {
+		"日本",
+		"スペイン",
+		"イングランド",
+		"ブラジル"
+	};
 
 	// ゴールログ
 	public struct SHOOT_LOG
@@ -135,6 +141,7 @@ public class TeamData
 	public static SHOOT_LOG GetLogData(int logNo) { return (SHOOT_LOG)logs[logNo]; }  // シュートログデータ（引数要素目）を取得
 	public static void ClearLog() { logs.Clear(); }                                   // シュートログをクリア
 	public static int GetCountLog() { return logs.Count; }                            // シュートログ要素数を取得
+	public static string GetTeamNationalityName(TEAM_NATIONALITY nationality){return TeamNationalityName[(int)nationality];} // チーム名取得
 };
 
 // End of File

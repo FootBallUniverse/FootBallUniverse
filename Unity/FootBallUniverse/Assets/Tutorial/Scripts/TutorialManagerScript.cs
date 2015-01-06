@@ -35,12 +35,9 @@ public class TutorialManagerScript : MonoBehaviour {
 		"取られてしまったな。なら取り返すまでだ！ダッシュやタックルを使って追いつき、ボールをスティールしてやれ！",
 		"おっと、いつの間にかこんな時間だ。もうすぐ試合が始まってしまうな…君たちなら、きっと勝てる。最高の試合を見せてくれ！"
 		};
+
 	// チュートリアル用サブメッセージ（仮置）
-	string[] SubMessage = new string[6]{
-		"日本",
-		"イングランド",
-		"スペイン",
-		"ブラジル",
+	string[] SubMessage = new string[]{
 		"左",
 		"右"
 	};
@@ -59,7 +56,7 @@ public class TutorialManagerScript : MonoBehaviour {
 		SCENE0_Message03,
 		SCENE0_Instruction00,
 		SCENE0_Play00,
-		SCENE0_Play01,
+		//SCENE0_Play01,
 		SCENE0_Message04,
 		SCENE0_Message05,
 		// 各自チュートリアル
@@ -101,12 +98,39 @@ public class TutorialManagerScript : MonoBehaviour {
 		TUTORIAL_STATE_MAX
 	};
 
-	TUTORIAL_STATE[] state   = new TUTORIAL_STATE[2];
-	bool[] buttonCheck       = new bool[4];
+	enum BUTTON_TYPE
+	{
+		A,
+		START,
+		NO_VIEW
+	};
 
-	GameObject[] buttonVewer = new GameObject[4];
-	GameObject[] bloackOut   = new GameObject[3];
-	GameObject[] messageLog  = new GameObject[2];
+	struct DEF
+	{
+		public bool L_S;
+		public bool R_S;
+		public bool L_T;
+		public bool R_T;
+		public bool B_A;
+		public bool B_B;
+		public bool B_X;
+		public bool B_Y;
+	};
+
+	DEF controle;
+
+	
+
+	GameObject[] player = new GameObject[4];
+	GameObject[] keeper = new GameObject[2];
+	TUTORIAL_STATE[] state    = new TUTORIAL_STATE[2];
+	BUTTON_TYPE[] buttonType  = new BUTTON_TYPE[2];
+	bool[] buttonCheck        = new bool[4];
+
+	GameObject[] buttonVewer  = new GameObject[4];
+	GameObject[] bloackOut    = new GameObject[3];
+	GameObject[] messageLog   = new GameObject[2];
+	GameObject[] guidSubVewer = new GameObject[2];
 
     CSoundPlayer m_soundPlayer;
 
@@ -125,8 +149,22 @@ public class TutorialManagerScript : MonoBehaviour {
 		for (int i = 0; i < 3; i++)
 			this.guidVewer[i] = GameObject.Find("GuidVewer" + i);
 
+		for (int i = 0; i < 2; i++)
+			this.guidSubVewer[i] = GameObject.Find("SubPanel"+i).transform.FindChild("GuidVewer").gameObject;
+
 		for (int i = 0; i < 4; i++)
 			this.buttonVewer[i] = GameObject.Find("Next_" + i);
+	}
+
+	void Controle()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			// 行動を無効化
+			player[i].GetComponent<CPlayer>().m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+
+			continue;
+		}
 	}
 
 	//----------------------------------------------------------------------
@@ -161,8 +199,10 @@ public class TutorialManagerScript : MonoBehaviour {
 		this.bloackOut[2] = GameObject.Find("SubPanelFeed1").gameObject;
 		// メッセージログ
 		this.messageLog[0] = GameObject.Find("SubPanel0").gameObject.transform.FindChild("MessageLog").gameObject;
-		this.messageLog[0] = GameObject.Find("SubPanel1").gameObject.transform.FindChild("MessageLog").gameObject;
-		
+		this.messageLog[1] = GameObject.Find("SubPanel1").gameObject.transform.FindChild("MessageLog").gameObject;
+		// プレイヤーセット
+		for (int i = 1; i < 5; i++) this.player[i-1] = GameObject.Find("Player" + i).transform.FindChild("player").gameObject;
+
 		// 制限時間OFF
 		GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_colon").gameObject.SetActive(false);
 		GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_sec").gameObject.SetActive(false);
@@ -188,6 +228,8 @@ public class TutorialManagerScript : MonoBehaviour {
 		this.guidVewer[0].GetComponent<UISprite>().spriteName = "user'sGuide_1";
 		this.guidVewer[1].SetActive(false);
 		this.guidVewer[2].SetActive(false);
+		this.guidSubVewer[0].SetActive(false);
+		this.guidSubVewer[1].SetActive(false);
 
 		ReSetAllButtonCheck();
 	}
@@ -284,6 +326,39 @@ public class TutorialManagerScript : MonoBehaviour {
 	}
 
 	//----------------------------------------------------------------------
+	// ４人のボタンを強制的にチェック
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/20  @Update 2014/12/20  @Author T.Takeuichi
+	//----------------------------------------------------------------------
+	void SetActiveAllButtonCheck()
+	{
+		for (int i = 0; i < 4; i++)
+			this.buttonCheck[i] = true;
+	}
+
+	//----------------------------------------------------------------------
+	// チーム２人のボタンを強制的にチェック
+	//----------------------------------------------------------------------
+	// @Param   teamNo チーム番号（０で左、１で右）
+	// @Return  none
+	// @Date    2014/12/20  @Update 2014/12/20  @Author T.Takeuichi
+	//----------------------------------------------------------------------
+	void SetActiveButtonCheck(int teamNo)
+	{
+		if (teamNo == 0)
+		{
+			this.buttonCheck[0] = true;
+			this.buttonCheck[1] = true;
+		}else if (teamNo == 1){
+			this.buttonCheck[2] = true;
+			this.buttonCheck[3] = true;
+		}
+		else return;
+	}
+
+	//----------------------------------------------------------------------
 	// ボタンが押されたらチェックを入れる（Ａボタン）
 	//----------------------------------------------------------------------
 	// @Param   none
@@ -372,7 +447,12 @@ public class TutorialManagerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		Debug.Log(this.state[0] + " /" + this.state[1]);
+		string message;
+
+		if(player[0] != null)Controle();
+
+		Debug.Log(this.state[0] + " / " + this.state[1]);
+
 		for (int i = 0; i < 2; i++)
 		{
 			switch (this.state[i])
@@ -387,108 +467,294 @@ public class TutorialManagerScript : MonoBehaviour {
 					if ( !this.bloackOut[0].GetComponent<TweenAlpha>().enabled &&
 				         !this.bloackOut[1].GetComponent<TweenAlpha>().enabled &&
 				         !this.bloackOut[2].GetComponent<TweenAlpha>().enabled )
-						this.state[i] = TUTORIAL_STATE.SCENE0_Message00;break;
-
-				case TUTORIAL_STATE.SCENE0_Message00:
-				case TUTORIAL_STATE.SCENE0_Message01:
-				case TUTORIAL_STATE.SCENE0_Message02:
-				case TUTORIAL_STATE.SCENE0_Message03:
-				case TUTORIAL_STATE.SCENE0_Message04:
-					SetButton_A();
-
-					// 次へ遷移
-					if (GetButtonCheck(i))
 					{
-						this.messageLog[i].GetComponent<UILabel>().text = this.MainMessage[0];
-						ReSetButtonCheck(i);
-						this.state[i] += 1;
+						this.state[i] = TUTORIAL_STATE.SCENE0_Message00;
+						break;
 					}
+					break;
+				case TUTORIAL_STATE.SCENE0_Message00:
+					message = this.MainMessage[0] + TeamData.GetTeamNationalityName(TeamData.teamNationality[i]) + this.MainMessage[1] + "○○" + this.MainMessage[2];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE0_Message01:
+					message = this.MainMessage[3];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE0_Message02:
+					message = this.MainMessage[4];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE0_Message03:
+					message = this.MainMessage[5];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE0_Message04:
+					message = this.MainMessage[6];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE0_Message05:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[11];
+					SetButton_A();
+					NextState(i, message);
 					break;
 
 				case TUTORIAL_STATE.SCENE0_Instruction00:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					// 表示
+					SetButton_START();
+					NextState(i);
 					break;
 
 				case TUTORIAL_STATE.SCENE0_Play00:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					NextState(i);
+					break;
+
+					//=======================シーン2
+
+				case TUTORIAL_STATE.SCENE1_Message00:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[7];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction00:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					// 表示
+					SetButton_START();
+					NextState(i);
+					break;
+				case TUTORIAL_STATE.SCENE1_Play00:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					NextState(i);
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message01:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[8];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction01:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					NextState(i);
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message02:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[9];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message03:
+					message = this.MainMessage[10];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction02:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					// 表示
+					SetButton_START();
+					NextState(i);
+					break;
+				case TUTORIAL_STATE.SCENE1_Play01:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					NextState(i);
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message04:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[11];
+					SetButton_A();
+					NextState(i,message);
+					break;
+				//=======================シーン3
+
+				case TUTORIAL_STATE.SCENE2_Message00:
+					message = this.MainMessage[12];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Instruction00:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					// 表示
+					SetButton_START();
+					NextState(i);
+					break;
+				case TUTORIAL_STATE.SCENE2_Play00:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					NextState(i);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Message01:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[13];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Play01:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					NextState(i);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Message02:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[14];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Play02:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					NextState(i);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Message03:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[15];
+					SetButton_A();
+					NextState(i, message);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Message04:
+					message = this.MainMessage[16];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Message05:
+					message = this.MainMessage[17];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Message06:
+					message = this.MainMessage[18];
+					SetButton_A();
+					NextState(i,message);
+					break;
+
+				case TUTORIAL_STATE.SCENE2_Wait00:
+					NextState(i);
+					break;
+
+				//=======================シーン4
+
+				case TUTORIAL_STATE.SCENE3_Message00:
+					message = this.MainMessage[11];
+					SetButton_A();
+					//NextStateAll(message);
+					break;
+
+				case TUTORIAL_STATE.SCENE3_Play00: break;
+				case TUTORIAL_STATE.SCENE3_Message01: break;
+				case TUTORIAL_STATE.SCENE3_Message02: break;
+				case TUTORIAL_STATE.SCENE3_Instruction00: break;
+				case TUTORIAL_STATE.SCENE3_Message11: break;
+				case TUTORIAL_STATE.SCENE3_Message12: break;
+				case TUTORIAL_STATE.SCENE3_Message13: break;
+				case TUTORIAL_STATE.SCENE3_Message04: break;
+
+				case TUTORIAL_STATE.FAID_OUT:
+					if ( !this.bloackOut[0].GetComponent<TweenAlpha>().enabled &&
+						 !this.bloackOut[1].GetComponent<TweenAlpha>().enabled &&
+						 !this.bloackOut[2].GetComponent<TweenAlpha>().enabled)
+					{
+						TeamData.suppoterByTeam[0] = 0;
+						TeamData.suppoterByTeam[1] = 0;
+						Application.LoadLevel("MainGame"); 
+					}
 					break;
 			}
 		}
-		// Input
-		//SetButton_START();
-
-		// 遷移
-		/*
-		switch (this.state[0])
-		{
-
-
-			case TUTORIAL_STATE.TUTORIAL0:
-				if (GetAllButtonCheck())
-				{
-                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
-					ReSetAllButtonCheck();
-					this.state = TUTORIAL_STATE.TUTORIAL1;
-				}
-				break;
-
-
-			case TUTORIAL_STATE.TUTORIAL1:
-				this.guidVewer[0].SetActive(false);
-				this.guidVewer[1].SetActive(true);
-				this.guidVewer[1].GetComponent<UISprite>().spriteName = "user'sGuide_2";
-				this.guidVewer[2].SetActive(true);
-				this.guidVewer[2].GetComponent<UISprite>().spriteName = "user'sGuide_3";
-
-				if (GetAllButtonCheck())
-				{
-                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
-					ReSetAllButtonCheck();
-					this.state = TUTORIAL_STATE.TUTORIAL2;
-				}
-				break;
-			case TUTORIAL_STATE.TUTORIAL2:
-				this.guidVewer[0].SetActive(false);
-				this.guidVewer[1].SetActive(true);
-				this.guidVewer[1].GetComponent<UISprite>().spriteName = "user'sGuide_4";
-				this.guidVewer[2].SetActive(true);
-				this.guidVewer[2].GetComponent<UISprite>().spriteName = "user'sGuide_5";
-
-				if (GetAllButtonCheck())
-				{
-                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
-					ReSetAllButtonCheck();
-					this.state = TUTORIAL_STATE.TUTORIAL3;
-				}
-				break;
-
-
-			case TUTORIAL_STATE.TUTORIAL3:
-				this.guidVewer[0].SetActive(true);
-				this.guidVewer[0].GetComponent<UISprite>().spriteName = "user'sGuide_6";
-				this.guidVewer[1].SetActive(false);
-				this.guidVewer[2].SetActive(false);
-				if (GetAllButtonCheck())
-				{
-                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
-					for (int i = 0; i < 3; i++)
-						this.bloackOut[i].GetComponent<TweenAlpha>().Play(false);
-					this.state = TUTORIAL_STATE.FAID_OUT;
-				}
-				break;
-
-
-			case TUTORIAL_STATE.FAID_OUT:
-				if ( !this.bloackOut[0].GetComponent<TweenAlpha>().enabled &&
-					 !this.bloackOut[1].GetComponent<TweenAlpha>().enabled &&
-					 !this.bloackOut[2].GetComponent<TweenAlpha>().enabled)
-				{
-                    TeamData.suppoterByTeam[0] = 0;
-                    TeamData.suppoterByTeam[1] = 0;
-					Application.LoadLevel("MainGame");
-                    
-				}
-				break;
-		}
-		*/
 		ButtonDraw();
+	}
+
+	void NextState(int teamNo,string message)
+	{
+		// 次へ遷移
+		if (GetButtonCheck(teamNo))
+		{
+			this.messageLog[teamNo].GetComponent<UILabel>().text = message;
+			ReSetButtonCheck(teamNo);
+			this.state[teamNo] += 1;
+		}
+	}
+
+	void NextState(int teamNo)
+	{
+		// 次へ遷移
+		if (GetButtonCheck(teamNo))
+		{
+			ReSetButtonCheck(teamNo);
+			this.state[teamNo] += 1;
+		}
+	}
+
+	void NextStateAll( string message0,string message1)
+	{
+		// 次へ遷移
+		if (GetAllButtonCheck())
+		{
+			this.messageLog[0].GetComponent<UILabel>().text = message0;
+			this.messageLog[1].GetComponent<UILabel>().text = message1;
+			ReSetAllButtonCheck();
+			this.state[0] += 1;
+			this.state[1] += 1;
+		}
+	}
+
+	void NextStateAll()
+	{
+		// 次へ遷移
+		if (GetAllButtonCheck())
+		{
+			ReSetAllButtonCheck();
+			this.state[0] += 1;
+			this.state[1] += 1;
+		}
 	}
 }
