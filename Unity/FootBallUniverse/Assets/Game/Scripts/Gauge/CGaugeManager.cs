@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CGaugeManager : MonoBehaviour {
 
-    private const int m_gaugeStatusNum = 12;
+    private const int m_gaugeStatusNum = 15;
 
     public static float m_1p2pUpGaugeRate;
     public static float m_3p4pUpGaugeRate;
@@ -21,6 +21,9 @@ public class CGaugeManager : MonoBehaviour {
     public static float m_decrementValue1;      // レベル1の減少量
     public static float m_decrementValue2;      // レベル2の減少量
     public static float m_decrementValue3;      // レベル3の減少量
+    public static float m_brazilShootRate;      // ブラジルのシュート増加量
+    public static float m_brazilPassRate;       // ブラジルのパスの増加量
+    public static float m_brazilSpeedRate;      // ブラジルの移動速度の増加量
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -114,6 +117,9 @@ public class CGaugeManager : MonoBehaviour {
         m_decrementValue1 = float.Parse(_array[9]);
         m_decrementValue2 = float.Parse(_array[10]);
         m_decrementValue3 = float.Parse(_array[11]);
+        m_brazilShootRate = float.Parse(_array[12]);
+        m_brazilPassRate = float.Parse(_array[13]);
+        m_brazilSpeedRate = float.Parse(_array[14]);
 
         return true;
     }

@@ -27,6 +27,7 @@ public class CPlayerManager : MonoBehaviour{
     // プレイヤーのステータス
     public enum ePLAYER_STATUS
     {
+        eTUTORIAL,
         eWAIT,
         eCOUNTDOWN,
         eNONE,
@@ -38,6 +39,7 @@ public class CPlayerManager : MonoBehaviour{
         eTACKLESUCCESS,
         eTACKLEDAMAGE,
         eDASHCHARGE,
+        eOVERRIMIT,
         eHOLD,
         ePASS,
         eGOAL,

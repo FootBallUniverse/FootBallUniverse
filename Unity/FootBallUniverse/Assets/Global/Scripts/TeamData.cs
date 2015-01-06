@@ -29,7 +29,7 @@ public class TeamData
 	private static TeamData teamData = new TeamData();
 
 	// 各種データ（デバッグ時エラー防止のため初期値が入っています）
-	public  static TEAM_NATIONALITY[] teamNationality = new TEAM_NATIONALITY[2] { TEAM_NATIONALITY.JAPAN, TEAM_NATIONALITY.BRASIL }; // 国籍
+	public  static TEAM_NATIONALITY[] teamNationality = new TEAM_NATIONALITY[2] { TEAM_NATIONALITY.BRASIL, TEAM_NATIONALITY.BRASIL }; // 国籍
 	public  static int[]              suppoterByTeam  = new int[2];     // チーム別サポーター数
 	private static ArrayList          logs            = new ArrayList(); // ログデータ格納（カプセル化）
 	public  static int                suppoterByWorld;                   // 世界中のサポーター数
