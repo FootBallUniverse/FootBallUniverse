@@ -177,6 +177,7 @@ public class Player_1_Script : MonoBehaviour
         //      XBoxコントローラー処理
         //================================================================================================
         //  LSを右に倒した
+        // Debug.Log(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X));
         if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) >= 1.0f && m_Control == false)
         {
             // 右回転フラグと左回転フラグがFALSEのときだけTRUEにする
@@ -208,8 +209,10 @@ public class Player_1_Script : MonoBehaviour
         }
         else if (Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) >= -0.3f && Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X) <= 0.3f)
         {
-            m_Control = false;
-
+            if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+            {
+                m_Control = false;
+            }
         }
         // STARTボタンが押されたら遷移
         if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START) 
@@ -262,8 +265,8 @@ public class Player_1_Script : MonoBehaviour
         }
         else
         {
-            m_Right_RotateFlag = false;
-            m_Left_RotateFlag = false;
+            // m_Right_RotateFlag = false;
+            // m_Left_RotateFlag = false;
         }
 
         //================================================================================================
@@ -398,5 +401,3 @@ public class Player_1_Script : MonoBehaviour
         }
     }
 }
-
-

@@ -13,6 +13,7 @@ public class PlayerAnimator : MonoBehaviour
     public int m_isWait;
     public int m_isShoot;
     public int m_isDashCharge;
+    public int m_isSelect;
 
     //----------------------------------------------------------------------
     // コンストラクタ
@@ -28,6 +29,7 @@ public class PlayerAnimator : MonoBehaviour
         m_isWait = Animator.StringToHash("isWait");
         m_isShoot = Animator.StringToHash("isShoot");
         m_isDashCharge = Animator.StringToHash("isDashCharge");
+        m_isSelect = Animator.StringToHash("isSelect");
 
         m_oldAnimation = m_isWait;
 

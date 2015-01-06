@@ -213,7 +213,10 @@ public class Player_3_Script : MonoBehaviour
         }
         else if (Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) >= -0.3f && Input.GetAxis(InputXBOX360.P4_XBOX_LEFT_ANALOG_X) <= 0.3f)
         {
-            m_Control = false;
+            if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
+            {
+                m_Control = false;
+            }
 
         }
         // STARTボタンが押されたら遷移

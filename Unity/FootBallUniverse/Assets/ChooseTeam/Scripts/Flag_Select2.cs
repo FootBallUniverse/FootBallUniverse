@@ -45,7 +45,6 @@ public class Flag_Select2 : MonoBehaviour
                 {
                     case 0:
                         m_FlagPos2[i].x -= 0.01f;
-                        Debug.Log(m_team2.m_Country[i].m_Country + "あああああ");
                         break;
 
                     case 1:
@@ -58,7 +57,6 @@ public class Flag_Select2 : MonoBehaviour
                         {
                             TweenAlpha.Begin(m_Country2[i], 0.1f, 1.0f);
                         }
-                        Debug.Log(m_team2.m_Country[i].m_Country + "いいいいい");
                         break;
 
                     case 2:
@@ -67,16 +65,14 @@ public class Flag_Select2 : MonoBehaviour
                         {
                             TweenAlpha.Begin(m_Country2[i], 0.05f, 0.0f);
                         }
-                        Debug.Log(m_team2.m_Country[i].m_Country + "ううううう");
                         break;
 
                     case 3:
                         m_FlagPos2[i].x -= 0.01f;
-                        Debug.Log(m_team2.m_Country[i].m_Country + "えええええ");
                         break;
                 }
             }
-            if (m_team2.m_Right_RotateFlag == true)// ←押した
+            else if (m_team2.m_Right_RotateFlag == true)// ←押した
             {
                 switch (m_Flag2[i])
                 {
