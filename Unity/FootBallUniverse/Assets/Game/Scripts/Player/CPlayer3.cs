@@ -64,10 +64,7 @@ public class CPlayer3 : CPlayer {
 		    case CPlayerManager.ePLAYER_STATUS.eEND:                                        break;    // 終了
 		    case CPlayerManager.ePLAYER_STATUS.eGOAL: PlayerStatusGoal();                   break;    // ゴールした時は何もさせない
             case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT: PlayerStatusOverRimit();         break;    // オーバーリミット状態
-
-        }
-		
-		
+        }		
 	}
 	
 	//----------------------------------------------------------------------
@@ -250,7 +247,7 @@ public class CPlayer3 : CPlayer {
 		if (this.Dash() == true)
 		{
 			m_animator.Wait();
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
 		}
 		
 	}
@@ -267,8 +264,8 @@ public class CPlayer3 : CPlayer {
 		// タックル状態が終わったらプレイヤーのステータス変更
 		if (this.Tackle () == true)
 		{
-			m_animator.Wait();	
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+			m_animator.Wait();
+            m_status = m_oldStatus;
 		}
 	}
 	
@@ -287,7 +284,7 @@ public class CPlayer3 : CPlayer {
 			if (m_action.TackleSuccess() == true)
 			{
 				m_animator.Wait();
-				m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                m_status = m_oldStatus;
 			}
 		}
 	}
@@ -307,7 +304,7 @@ public class CPlayer3 : CPlayer {
 			if (m_action.TackleDamage(ref m_pos,-this.transform.forward) == true)
 			{
 				m_animator.Wait();
-				m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                m_status = m_oldStatus;
 			}
 		}
 	}
@@ -325,7 +322,7 @@ public class CPlayer3 : CPlayer {
 		if (this.Shoot () == true) 
 		{
 			m_animator.Wait();
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
 		}
 	}
 	
@@ -342,7 +339,7 @@ public class CPlayer3 : CPlayer {
 		if (this.Pass () == true) 
 		{
 			m_animator.Wait();
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
 		}
 	}
 	
@@ -445,6 +442,7 @@ public class CPlayer3 : CPlayer {
 		    InputXBOX360.IsGetRTButton(InputXBOX360.P3_XBOX_RT) == true && 
 		    m_isRtPress == false )
 		{
+            m_oldStatus = m_status;
 			m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
 			m_chargeFrame = 0;
 			m_isRtPress = true;
@@ -484,7 +482,7 @@ public class CPlayer3 : CPlayer {
 		    m_isBall == true && 
 		    m_chargeFrame >= m_human.m_shootChargeLengthMax)
 		{
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
 			m_animator.ChangeAnimation(m_animator.m_isWait);
 			m_playerSE.StopSE();
 			m_isSE = false;
@@ -535,6 +533,7 @@ public class CPlayer3 : CPlayer {
 		    InputXBOX360.IsGetLTButton(InputXBOX360.P3_XBOX_LT) == true &&
 		    m_isLtPress == false)
 		{
+            m_oldStatus = m_status;
 			m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
 			m_chargeFrame = 0;
 			m_isLtPress = true;
@@ -573,7 +572,7 @@ public class CPlayer3 : CPlayer {
 		   m_isBall == false &&
 		   m_chargeFrame >= m_human.m_dashChargeLengthMax )
 		{
-			m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
 			m_animator.Wait();
 			m_playerSE.StopSE();
 			m_isSE = false;
@@ -625,6 +624,7 @@ public class CPlayer3 : CPlayer {
 		case CPlayerManager.ePLAYER_STATUS.eNONE:
 		case CPlayerManager.ePLAYER_STATUS.eWAIT:
 		case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
+        case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT:
 			m_animator.Move(m_speed); break;
 		case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE: 
 			m_animator.ShootCharge(); break;
@@ -638,7 +638,6 @@ public class CPlayer3 : CPlayer {
 			m_animator.Dash(); break;
 		case CPlayerManager.ePLAYER_STATUS.eTACKLE:
 			m_animator.Tackle(); break;
-			
 		}
 	}
 
@@ -655,51 +654,44 @@ public class CPlayer3 : CPlayer {
         {
             case CPlayerManager.eVIEW_POINT_STATUS.ePLAYER:
 
-                // LTボタンが押されたら敵の視点に変更
-  //              if (Input.GetKeyDown(InputXBOX360.P3_XBOX_L))
-  //              {
-  //                  m_viewPointStatus = CPlayerManager.eVIEW_POINT_STATUS.eENEMY;
-  //                  return;
-  //              }
+            if (Input.GetKeyDown(InputXBOX360.P3_XBOX_X) || Input.GetKeyDown(InputXBOX360.P3_XBOX_Y) || Input.GetKeyDown(InputXBOX360.P3_XBOX_B) || Input.GetKeyDown(InputXBOX360.P3_XBOX_A))
+            {
+				m_playerSE.PlaySE("game/rockon");
+				m_camera.ChangeRspeedlock();
+            }
 
-                if (Input.GetKeyDown(InputXBOX360.P3_XBOX_X) || Input.GetKeyDown(InputXBOX360.P3_XBOX_Y) || Input.GetKeyDown(InputXBOX360.P3_XBOX_B) || Input.GetKeyDown(InputXBOX360.P3_XBOX_A))
-                {
-					m_playerSE.PlaySE("game/rockon");
-					m_camera.ChangeRspeedlock();
-                }
+            // 味方プレイヤーに向ける
+            if (Input.GetKey(InputXBOX360.P3_XBOX_X))
+            {
+                m_trans.LookAt(CPlayerManager.m_player4Transform);
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+                return;
+            }
 
-                // 味方プレイヤーに向ける
-                if (Input.GetKey(InputXBOX360.P3_XBOX_X))
-                {
-                    m_trans.LookAt(CPlayerManager.m_player4Transform);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
+            // 敵ゴールに向ける
+            if (Input.GetKey(InputXBOX360.P3_XBOX_Y))
+            {
+                m_trans.LookAt(CStageManager.m_1p2pGoalTransform);
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+                return;
+            }
 
-                // 敵ゴールに向ける
-                if (Input.GetKey(InputXBOX360.P3_XBOX_Y))
-                {
-                    m_trans.LookAt(CStageManager.m_1p2pGoalTransform);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
+            // ボールの方向に向ける
+            if (Input.GetKey(InputXBOX360.P3_XBOX_B) && m_isBall == false)
+            {
+                m_trans.LookAt(CSoccerBallManager.m_soccerBallTransform);
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+                return;
+            }
 
-                // ボールの方向に向ける
-                if (Input.GetKey(InputXBOX360.P3_XBOX_B) && m_isBall == false)
-                {
-                    m_trans.LookAt(CSoccerBallManager.m_soccerBallTransform);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
-
-                // 味方キーパーの方に向ける
-                if (Input.GetKey(InputXBOX360.P3_XBOX_A))
-                {
-                    m_trans.LookAt(CStageManager.m_3p4pGoalTransform);
-                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
-                    return;
-                }
-                break;
+            // 味方キーパーの方に向ける
+            if (Input.GetKey(InputXBOX360.P3_XBOX_A))
+            {
+                m_trans.LookAt(CStageManager.m_3p4pGoalTransform);
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, m_trans.rotation, m_camera.Rcameraspeed * Time.deltaTime);
+                return;
+            }
+            break;
         }
     }
 
@@ -719,6 +711,7 @@ public class CPlayer3 : CPlayer {
             {
                 // ここにエフェクトの開始とかを入れる
                 m_status = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
+                m_isOverRimit = true;
             }
         }
 

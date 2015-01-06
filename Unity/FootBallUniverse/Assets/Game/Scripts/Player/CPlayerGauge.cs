@@ -42,7 +42,6 @@ public class CPlayerGauge : MonoBehaviour{
     //----------------------------------------------------------------------
     public void Init()
     {
-        m_status = eGAUGESTATUS.eNORMAL;
         m_gauge = 0.0f;
     }
 
@@ -101,19 +100,19 @@ public class CPlayerGauge : MonoBehaviour{
     public int GaugeDecrement()
     {
         // レベル3
-        if (m_gauge >= CGaugeManager.m_decrementValue3)
+        if (m_gauge >= CGaugeManager.m_levelBorder3)
         {
             m_status = eGAUGESTATUS.eLEVEL3DECREMENT;
             return 3;
         }
         // レベル2
-        else if (m_gauge >= CGaugeManager.m_decrementValue2)
+        else if (m_gauge >= CGaugeManager.m_levelBorder2)
         {
             m_status = eGAUGESTATUS.eLEVEL2DECREMENT;
             return 2;
         }
         // レベル1
-        else if (m_gauge >= CGaugeManager.m_decrementValue1)
+        else if (m_gauge >= CGaugeManager.m_levelBorder1)
         {
             m_status = eGAUGESTATUS.eLEVEL1DECREMENT;
             return 1;

@@ -54,7 +54,6 @@ public class CGaugeManager : MonoBehaviour {
         // ゲーム中の時だけゲージのレートを増やす
         switch (CGameManager.m_nowStatus)
         {
-    
             case CGameManager.eSTATUS.eGAME:
                 this.CalcRate(ref m_1p2pUpGaugeRate, 0);
                 this.CalcRate(ref m_3p4pUpGaugeRate, 1);
