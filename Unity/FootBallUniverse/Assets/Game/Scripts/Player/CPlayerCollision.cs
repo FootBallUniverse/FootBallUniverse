@@ -40,7 +40,9 @@ public class CPlayerCollision : MonoBehaviour
     {
         // ボールとぶつかった時の判定
         if (obj.gameObject.tag == "SoccerBall" && this.GetComponent<CPlayer>().m_isBall == false && 
-            this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE )
+            this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
+		    this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eSHOOT		 &&
+		    this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eSMASHSHOOT)
         {
             // オーバーリミット状態のシュートならそれに応じて変更
             if (obj.transform.parent == GameObject.Find("BallGameObject").transform &&
