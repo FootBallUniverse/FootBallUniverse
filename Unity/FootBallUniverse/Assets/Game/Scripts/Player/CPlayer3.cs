@@ -46,7 +46,9 @@ public class CPlayer3 : CPlayer {
 		if (m_isBall == true)
 			this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, -0.13f, 0.14f));
 		
-		m_pos = this.transform.localPosition;   
+		m_pos = this.transform.localPosition;
+
+        CGaugeManager.m_p3Gauge = m_gauge.m_gauge;
 		
 		switch (m_status)
 		{

@@ -29,6 +29,12 @@ public class CGaugeManager : MonoBehaviour {
     public static float m_spainLowSpeed;        // スペインが一定速度以下になったらスピード落ちる値
     public static float m_japanHoldRadius;      // 日本の取れる広さ
 
+    // プレイヤーごとのゲージ量
+    public static float m_p1Gauge;
+    public static float m_p2Gauge;
+    public static float m_p3Gauge;
+    public static float m_p4Gauge;
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -41,6 +47,11 @@ public class CGaugeManager : MonoBehaviour {
         // 各種初期化
         m_1p2pUpGaugeRate = 0.0f;
         m_3p4pUpGaugeRate = 0.0f;
+
+        m_p1Gauge = 0.0f;
+        m_p2Gauge = 0.0f;
+        m_p3Gauge = 0.0f;
+        m_p4Gauge = 0.0f;
 
         // CSVのデータをロードして格納
         this.LoadData();
@@ -240,4 +251,27 @@ public class CGaugeManager : MonoBehaviour {
 
         return false;
     }
+
+    //----------------------------------------------------------------------
+    // 現在のレベルを返す
+    //----------------------------------------------------------------------
+    // @Param	float       ゲージ		
+    // @Return	int         現在のレベル
+    // @Date	2015/1/8  @Update 2015/1/8  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public static int GetLevel(float _gauge)
+    {
+        if (_gauge >= m_levelBorder3)
+            return 3;
+
+        else if (_gauge >= m_levelBorder2)
+            return 2;
+
+        else if (_gauge >= m_levelBorder1)
+            return 1;
+
+        else
+            return 0;
+    }
+
 }

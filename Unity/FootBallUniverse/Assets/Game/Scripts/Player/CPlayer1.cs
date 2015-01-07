@@ -47,7 +47,9 @@ public class CPlayer1 : CPlayer {
         if (m_isBall == true)
             this.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().SetPosition(new Vector3(0.0f, -0.13f, 0.14f));
 
-        m_pos = this.transform.localPosition;   
+        m_pos = this.transform.localPosition;
+
+        CGaugeManager.m_p1Gauge = m_gauge.m_gauge;
 
         switch (m_status)
         {
@@ -163,7 +165,6 @@ public class CPlayer1 : CPlayer {
     private void PlayerStatusOverRimit()
     {
         Vector3 speed = new Vector3(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X), 0.0f, Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y));
-
 
         // 国によってオーバーリミットの状態を変える
         switch(TeamData.teamNationality[0])

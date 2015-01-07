@@ -49,7 +49,7 @@ public class CResultManager : MonoBehaviour {
 			GameObject.Instantiate(Resources.Load("Prefab/Result/player_victory"));
 		}
 		else if (TeamData.GetWinTeamNo () == 2) {
-			GameObject.Instantiate(Resources.Load("prefab/Result/player_draw"));
+			GameObject.Instantiate(Resources.Load("prefab/Result/player_draw_1"));
 		}
 
         m_soundPlayer = new CSoundPlayer();
@@ -71,7 +71,7 @@ public class CResultManager : MonoBehaviour {
 		}
 		else if (TeamData.GetWinTeamNo () == 2) 
 		{
-			m_motionPlayer = GameObject.Find("player_draw(Clone)").gameObject;	
+			m_motionPlayer = GameObject.Find("player_draw_1(Clone)").gameObject;	
 		}
 		m_mainCamera = GameObject.Find ("MainCamera").gameObject;
 		m_1p2pCamera = GameObject.Find ("1p2pCamera").gameObject;
