@@ -202,6 +202,14 @@ public class CPlayer1 : CPlayer {
         if (m_gauge.m_status == CPlayerGauge.eGAUGESTATUS.eNORMAL)
         {
             m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_isOverRimit = false;
+
+            // 日本の場合は取れる範囲を元に戻す
+            if (TeamData.teamNationality[0] == TeamData.TEAM_NATIONALITY.JAPAN)
+            {
+                // ボールの取れる範囲をセット
+                this.GetComponent<SphereCollider>().radius = m_human.m_holdRangeRadius;
+            }
 
             // 終了エフェクト
         }
@@ -413,9 +421,13 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     private bool Shoot()
     {        
-        // シュート中
-        if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOT)
+        // 普通のシュート中
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOT && m_isOverRimit == false)
             return m_action.Shoot(this.gameObject, this.transform.forward, ref m_isBall);
+
+        // OverRimitのシュート
+        if (m_status == CPlayerManager.ePLAYER_STATUS.eSHOOT && m_isOverRimit == true)
+            return m_action.OverRimitShoot(this.gameObject, this.transform.forward, ref m_isBall, TeamData.teamNationality[0]);
 
         return false;
     }
@@ -430,8 +442,13 @@ public class CPlayer1 : CPlayer {
     private bool Pass()
     {
         // パス中
-        if (m_status == CPlayerManager.ePLAYER_STATUS.ePASS)
+        if (m_status == CPlayerManager.ePLAYER_STATUS.ePASS && m_isOverRimit == false)
             return m_action.Pass(this.gameObject, this.transform.forward, ref m_isBall);
+
+        // OverRimitのパス
+        if (m_status == CPlayerManager.ePLAYER_STATUS.ePASS && m_isOverRimit == true)
+            return m_action.OverRimitPass(this.gameObject, this.transform.forward, ref m_isBall, TeamData.teamNationality[0]);
+
 
         return false;
     }
@@ -719,6 +736,14 @@ public class CPlayer1 : CPlayer {
             {
                 // ここにエフェクトの開始とかを入れる
                 m_status = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
+                m_isOverRimit = true;
+
+                // 日本の場合はボールを取れる範囲を増やす
+                if (TeamData.teamNationality[0] == TeamData.TEAM_NATIONALITY.JAPAN)
+                {
+                    // ボールの取れる範囲を変更
+                    this.GetComponent<SphereCollider>().radius = CGaugeManager.m_japanHoldRadius;
+                }
             }
         }
 

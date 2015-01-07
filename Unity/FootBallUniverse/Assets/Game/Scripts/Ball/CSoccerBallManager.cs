@@ -11,6 +11,9 @@ public class CSoccerBallManager : MonoBehaviour {
     public static int m_shootPlayerNo;                  // シュート（パス）したプレイヤーの番号
     public static int m_shootTeamNo;                    // シュートしたチームの番号
     public static Transform m_soccerBallTransform;      // サッカーボールの位置
+    public static bool m_isOverRimitShoot;              // オーバーリミットのシュートが離れたかどうか
+    public static TeamData.TEAM_NATIONALITY m_team;     // チーム
+
     // 低数値
     public const int eTEAM_1 = 0;
     public const int eTEAM_2 = 1;
@@ -38,6 +41,10 @@ public class CSoccerBallManager : MonoBehaviour {
         // サッカーボールの情報を初期化
         m_shootPlayerNo = eNONE;
         m_shootTeamNo = eTEAM_NONE;
+
+        // オーバーリミット用変数初期化
+        m_isOverRimitShoot = false;
+        m_team = TeamData.TEAM_NATIONALITY.NONE;
 
         // サッカーボールをセット
         m_soccerBall = this.gameObject.transform.FindChild("SoccerBall").gameObject;
@@ -71,7 +78,6 @@ public class CSoccerBallManager : MonoBehaviour {
 
 	}
 
-	
 	//----------------------------------------------------------------------
 	// 最後の更新
 	//----------------------------------------------------------------------
@@ -83,8 +89,6 @@ public class CSoccerBallManager : MonoBehaviour {
 	{
 		m_soccerBallTransform = m_soccerBall.transform;
 	}
-
-
 
     //----------------------------------------------------------------------
     // サッカーボールの持ち主を変更
@@ -117,6 +121,9 @@ public class CSoccerBallManager : MonoBehaviour {
 	public static void Restart()
 	{
 		m_soccerBall.GetComponent<CSoccerBall> ().Restart (new Vector3 (0.0f, 0.0f, 0.0f));
+
+        m_isOverRimitShoot = false;
+        m_team = TeamData.TEAM_NATIONALITY.NONE;
 	}
 
 }

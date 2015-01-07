@@ -8,14 +8,17 @@ public class TeamData
 	// 国籍表
 	public enum TEAM_NATIONALITY
 	{
+        NONE,
 		JAPAN,
 		ESPANA,
 		ENGLAND,
 		BRASIL,
-		NATIONALITY_MAX
+		NATIONALITY_MAX,
 	};
+
 	private static string[] TeamNationalityName = new string[(int)TEAM_NATIONALITY.NATIONALITY_MAX] {
-		"日本",
+		"NONE",
+        "日本",
 		"スペイン",
 		"イングランド",
 		"ブラジル"
@@ -35,7 +38,7 @@ public class TeamData
 	private static TeamData teamData = new TeamData();
 
 	// 各種データ（デバッグ時エラー防止のため初期値が入っています）
-	public  static TEAM_NATIONALITY[] teamNationality = new TEAM_NATIONALITY[2] { TEAM_NATIONALITY.BRASIL, TEAM_NATIONALITY.BRASIL }; // 国籍
+	public  static TEAM_NATIONALITY[] teamNationality = new TEAM_NATIONALITY[2] { TEAM_NATIONALITY.ESPANA, TEAM_NATIONALITY.BRASIL }; // 国籍
 	public  static int[]              suppoterByTeam  = new int[2];     // チーム別サポーター数
 	private static ArrayList          logs            = new ArrayList(); // ログデータ格納（カプセル化）
 	public  static int                suppoterByWorld;                   // 世界中のサポーター数
@@ -121,7 +124,7 @@ public class TeamData
 	{
 
 		int[] teamScore = new int[2] { GetTeamScore(0), GetTeamScore(1) };
-
+    
 	if (teamScore[0] == teamScore[1]) return 2;
 		else if (teamScore[0] > teamScore[1]) return 0;
 		else return 1;

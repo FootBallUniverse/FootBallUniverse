@@ -278,12 +278,67 @@ public class CPlayerAction {
     }
 
     //----------------------------------------------------------------------
+    // オーバーリミット状態のパス
+    //----------------------------------------------------------------------
+    // @Param	_player     プレイヤーのゲームオブジェクト
+	// @Param   _forwrd     プレイヤーの前方向ベクトル
+	// @Param   _isBall     プレイヤーがボールを持っているかどうか
+    // @Return	bool        パスが終わったかどうか
+    // @Date	2015/1/6  @Update 2015/1/6  @Author T.Kawashita       
+    //----------------------------------------------------------------------
+    public bool OverRimitPass(GameObject _player, Vector3 _forward, ref bool _isBall, TeamData.TEAM_NATIONALITY _team)
+    {
+        // フレーム数取得
+        m_passFrame += Time.deltaTime;
+
+        // パス状態に切り替わった場合はスクリプトの中身を変更
+        if (m_passFrame >= (float)m_passTakeOfFrame / 60 && _isBall == true)
+        {
+            Vector3 passSpeed = _forward * m_passInitSpeed;
+
+            // チームによって処理変更
+            switch (_team)
+            {
+                // ブラジルのシュート
+                case TeamData.TEAM_NATIONALITY.BRASIL:
+                    passSpeed *= CGaugeManager.m_brazilPassRate;
+                    break;
+
+                case TeamData.TEAM_NATIONALITY.JAPAN:
+                    break;
+
+                case TeamData.TEAM_NATIONALITY.ENGLAND:
+                    break;
+
+                case TeamData.TEAM_NATIONALITY.ESPANA:
+                    break;
+
+            }
+
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.velocity = passSpeed;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 15.0f;
+            _player.transform.FindChild("SoccerBall").GetComponent<SphereCollider>().isTrigger = false;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().m_isPlayer = false;
+            _isBall = false;
+            _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
+        }
+
+        // パスモーション終わりの時間になった場合はコンポーネントを切り替えて終了
+        if (m_passFrame >= (float)m_passMotionLength / 60)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    //----------------------------------------------------------------------
     // プレイヤーのシュート
     //----------------------------------------------------------------------
     // @Param	_player     プレイヤーのゲームオブジェクト
 	// @Param   _forward    プレイヤーの前方向ベクトル
 	// @Param   _isBall     プレイヤーがボールを持っているかどうか
-    // @Return	bool    シュートが終わったかどうか
+    // @Return	bool        シュートが終わったかどうか
     // @Date	2014/10/27  @Update 2014/10/28  @Author T.Kawashita      
     //----------------------------------------------------------------------
     public bool Shoot(GameObject _player,Vector3 _forward,ref bool _isBall)
@@ -312,6 +367,69 @@ public class CPlayerAction {
         // シュートモーション終了していない
         return false;
      }
+
+    //----------------------------------------------------------------------
+    // オーバーリミット状態のシュート
+    //----------------------------------------------------------------------
+    // @Param	_player     プレイヤーのゲームオブジェクト
+	// @Param   _forward    プレイヤーの前方向ベクトル
+	// @Param   _isBall     プレイヤーがボールを持っているかどうか
+    // @Param   _team       チーム
+    // @Return	bool        シュートが終わったかどうか
+    // @Date	2015/1/6  @Update 2015/1/6  @Author T.Kawashita      
+    //----------------------------------------------------------------------
+    public bool OverRimitShoot(GameObject _player, Vector3 _forward, ref bool _isBall, TeamData.TEAM_NATIONALITY _team)
+    {
+        // フレーム数取得
+        m_shootFrame += Time.deltaTime;
+
+        // シュート状態に切り替わった場合はスクリプトの中身を変更
+        if (m_shootFrame >= (float)m_shootTakeOfFrame / 60 && _isBall == true)
+        {
+            Vector3 shootSpeed = _forward * m_shootInitSpeed;
+
+            // チームによって処理変更
+            switch (_team)
+            {
+                // ブラジルのシュート
+                case TeamData.TEAM_NATIONALITY.BRASIL:
+                    CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.BRASIL;
+                    shootSpeed *= CGaugeManager.m_brazilShootRate;
+                    break;
+
+                case TeamData.TEAM_NATIONALITY.JAPAN:
+                    CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.JAPAN;
+                    break;
+                
+                case TeamData.TEAM_NATIONALITY.ENGLAND:
+                    CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.ENGLAND;
+                    CSoccerBallManager.m_isOverRimitShoot = true;
+                    break;
+
+                case TeamData.TEAM_NATIONALITY.ESPANA:
+                    CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.ESPANA;
+                    CSoccerBallManager.m_isOverRimitShoot = true;
+                    break;
+
+            }
+
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.velocity = shootSpeed;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().rigidbody.angularVelocity = _forward * 30.0f;
+            _player.transform.FindChild("SoccerBall").GetComponent<SphereCollider>().isTrigger = false;
+            _player.transform.FindChild("SoccerBall").GetComponent<CSoccerBall>().m_isPlayer = false;
+            _isBall = false;    // プレイヤーのボールではない状態にする
+            _player.transform.FindChild("SoccerBall").parent = GameObject.Find("BallGameObject").transform;
+        }
+
+        // シュートモーション終わりの時間になった場合はコンポーネントを切り替えて終了
+        if (m_shootFrame >= (float)m_shootMotionLength / 60)
+        {
+            return true;
+        }
+
+        // シュートモーション終了していない
+        return false;
+    }
 
     //----------------------------------------------------------------------
     // プレイヤーがボール取った後のスピードアップ

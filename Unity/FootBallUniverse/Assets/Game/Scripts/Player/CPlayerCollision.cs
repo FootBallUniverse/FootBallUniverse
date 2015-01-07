@@ -40,10 +40,50 @@ public class CPlayerCollision : MonoBehaviour
     {
         // ボールとぶつかった時の判定
         if (obj.gameObject.tag == "SoccerBall" && this.GetComponent<CPlayer>().m_isBall == false && 
-            this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE )
+            this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE &&
+		    this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eSHOOT		 &&
+		    this.GetComponent<CPlayer>().m_status != CPlayerManager.ePLAYER_STATUS.eSMASHSHOOT)
         {
+            // オーバーリミット状態のシュートならそれに応じて変更
+            if (obj.transform.parent == GameObject.Find("BallGameObject").transform &&
+               CSoccerBallManager.m_isOverRimitShoot == true)
+            {
+                switch (CSoccerBallManager.m_team)
+                {
+                    // イングランドの場合は加速を止める
+                    case TeamData.TEAM_NATIONALITY.ENGLAND:
+                        CSoccerBallManager.m_isOverRimitShoot = false;
+                        CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.NONE;
+                        break;
+
+                    // スペインはあたったらプレイヤーが吹っ飛ぶ
+                    case TeamData.TEAM_NATIONALITY.ESPANA:
+                        // 相手を吹っ飛ばされモーションに変更
+                        CPlayer colPlayerScript = this.GetComponent<CPlayer>();
+                        if (colPlayerScript.m_playerData.m_teamNo != CSoccerBallManager.m_shootTeamNo)
+                        {
+                            this.transform.LookAt(obj.transform);
+                            this.transform.parent.GetComponent<CPlayerAnimator>().TackleDamage();
+                            colPlayerScript.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
+
+                            colPlayerScript.m_action.InitTackleDamage(colPlayerScript.m_human.m_tackleDamageMotionLength,
+                                                                      colPlayerScript.m_human.m_tackleDamageInitSpeed,
+                                                                      colPlayerScript.m_human.m_tackleDamageDecFrame);
+
+                            CSoccerBallManager.m_isOverRimitShoot = false;
+                            CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.NONE;
+                            return;
+                        }
+                        break;
+                }
+            }
+
+
             // 浮いているボールの場合は自分のボールになる
-            if (obj.transform.parent == GameObject.Find("BallGameObject").transform)
+            if (obj.transform.parent == GameObject.Find("BallGameObject").transform &&
+                (CSoccerBallManager.m_isOverRimitShoot == false ||
+                (CSoccerBallManager.m_isOverRimitShoot== true && 
+                this.GetComponent<CPlayer>().m_playerData.m_teamNo == CSoccerBallManager.m_shootTeamNo )))
             {
 				CPlayer playerScript = this.GetComponent<CPlayer>();
 

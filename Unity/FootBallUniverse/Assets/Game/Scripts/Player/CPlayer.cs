@@ -123,6 +123,9 @@ public class CPlayer : MonoBehaviour {
         // アニメーションを元に戻す
         this.m_speed = new Vector3(0.0f, 0.0f, 0.0f);
 
+        // ボールの取れる範囲をセット
+        this.GetComponent<SphereCollider>().radius = m_human.m_holdRangeRadius;
+
         // その他変数初期化
         m_chargeFrame = 0;
         m_isBall = false;

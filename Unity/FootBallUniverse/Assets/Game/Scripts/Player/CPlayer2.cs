@@ -195,6 +195,22 @@ public class CPlayer2 : CPlayer {
         this.RTShootPass();         // パスかシュートの判定
 
         this.ChangeViewPoint();     // 視点変更
+
+        // ゲージが0になったら
+        if (m_gauge.m_status == CPlayerGauge.eGAUGESTATUS.eNORMAL)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_isOverRimit = false;
+
+            // 日本の場合は取れる範囲を元に戻す
+            if (TeamData.teamNationality[0] == TeamData.TEAM_NATIONALITY.JAPAN)
+            {
+                // ボールの取れる範囲をセット
+                this.GetComponent<SphereCollider>().radius = m_human.m_holdRangeRadius;
+            }
+
+            // 終了エフェクト
+        }
     }
 	
 	//----------------------------------------------------------------------
@@ -214,7 +230,7 @@ public class CPlayer2 : CPlayer {
 		if (CGameManager.m_nowStatus == CGameManager.eSTATUS.eGAME)
 		{
 			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
-            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNORMAL;
+            m_gauge.m_status = CPlayerGauge.eGAUGESTATUS.eNORMAL; ;
 		}
 	}
 	
@@ -247,7 +263,7 @@ public class CPlayer2 : CPlayer {
 		if (this.Dash() == true)
 		{
 			m_animator.Wait();
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
 		}
 		
 	}
@@ -264,8 +280,8 @@ public class CPlayer2 : CPlayer {
 		// タックル状態が終わったらプレイヤーのステータス変更
 		if (this.Tackle () == true)
 		{
-			m_animator.Wait();	
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+			m_animator.Wait();
+            m_status = m_oldStatus;
 		}
 	}
 	
@@ -284,7 +300,7 @@ public class CPlayer2 : CPlayer {
 			if (m_action.TackleSuccess() == true)
 			{
 				m_animator.Wait();
-				m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                m_status = m_oldStatus;
 			}
 		}
 	}
@@ -304,7 +320,7 @@ public class CPlayer2 : CPlayer {
 			if (m_action.TackleDamage(ref m_pos,-this.transform.forward) == true)
 			{
 				m_animator.Wait();
-				m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                m_status = m_oldStatus;
 			}
 		}
 	}
@@ -322,7 +338,7 @@ public class CPlayer2 : CPlayer {
 		if (this.Shoot () == true) 
 		{
 			m_animator.Wait();
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
 		}
 	}
 	
@@ -339,7 +355,7 @@ public class CPlayer2 : CPlayer {
 		if (this.Pass () == true) 
 		{
 			m_animator.Wait();
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_oldStatus;
 		}
 	}
 	
@@ -442,6 +458,7 @@ public class CPlayer2 : CPlayer {
 		    InputXBOX360.IsGetRTButton(InputXBOX360.P2_XBOX_RT) == true && 
 		    m_isRtPress == false )
 		{
+            m_oldStatus = m_oldStatus;
 			m_status = CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE;
 			m_chargeFrame = 0;
 			m_isRtPress = true;
@@ -481,7 +498,7 @@ public class CPlayer2 : CPlayer {
 		    m_isBall == true && 
 		    m_chargeFrame >= m_human.m_shootChargeLengthMax)
 		{
-			m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_status;
 			m_animator.ChangeAnimation(m_animator.m_isWait);
 			m_playerSE.StopSE();
 			m_isSE = false;
@@ -532,6 +549,7 @@ public class CPlayer2 : CPlayer {
 		    InputXBOX360.IsGetLTButton(InputXBOX360.P2_XBOX_LT) == true &&
 		    m_isLtPress == false)
 		{
+            m_oldStatus = m_status;
 			m_status = CPlayerManager.ePLAYER_STATUS.eDASHCHARGE;
 			m_chargeFrame = 0;
 			m_isLtPress = true;
@@ -570,7 +588,7 @@ public class CPlayer2 : CPlayer {
 		   m_isBall == false &&
 		   m_chargeFrame >= m_human.m_dashChargeLengthMax )
 		{
-			m_status  = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_status = m_status;
 			m_animator.Wait();
 			m_playerSE.StopSE();
 			m_isSE = false;
@@ -622,6 +640,7 @@ public class CPlayer2 : CPlayer {
 		case CPlayerManager.ePLAYER_STATUS.eNONE:
 		case CPlayerManager.ePLAYER_STATUS.eWAIT:
 		case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
+        case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT:
 			m_animator.Move(m_speed); break;
 		case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE: 
 			m_animator.ShootCharge(); break;
@@ -707,6 +726,15 @@ public class CPlayer2 : CPlayer {
             {
                 // ここにエフェクトの開始とかを入れる
                 m_status = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
+                m_isOverRimit = true;
+
+                // 日本の場合はボールを取れる範囲を増やす
+                if (TeamData.teamNationality[0] == TeamData.TEAM_NATIONALITY.JAPAN)
+                {
+                    // ボールの取れる範囲を変更
+                    this.GetComponent<SphereCollider>().radius = CGaugeManager.m_japanHoldRadius;
+                }
+
             }
         }
 
