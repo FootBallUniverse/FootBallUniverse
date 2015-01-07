@@ -15,6 +15,9 @@ public class CPlayer : MonoBehaviour {
     public Vector3 m_speed;      // 移動量
     public Vector3 m_angle;      // 回転角度
 
+	public Vector3 m_oldPos;
+	public Vector3 m_oldAngle;
+
     public CPlayerData m_playerData;        // プレイヤーのデータ
 
     public CPlayerAction m_action;          // プレイヤーのアクション
@@ -140,7 +143,8 @@ public class CPlayer : MonoBehaviour {
     // @Return	none
     // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
     //----------------------------------------------------------------------
-	void Update () {	
+	void Update () {
+		Debug.Log("test");
 	}
 
     //----------------------------------------------------------------------
