@@ -162,7 +162,7 @@ public class CPlayer3 : CPlayer {
 
 
         // 国によってオーバーリミットの状態を変える
-        switch (TeamData.teamNationality[0])
+        switch (TeamData.teamNationality[1])
         {
             case TeamData.TEAM_NATIONALITY.JAPAN:
                 break;
@@ -193,6 +193,22 @@ public class CPlayer3 : CPlayer {
         this.RTShootPass();         // パスかシュートの判定
 
         this.ChangeViewPoint();     // 視点変更
+
+        // ゲージが0になったら
+        if (m_gauge.m_status == CPlayerGauge.eGAUGESTATUS.eNORMAL)
+        {
+            m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+            m_isOverRimit = false;
+
+            // 日本の場合は取れる範囲を元に戻す
+            if (TeamData.teamNationality[1] == TeamData.TEAM_NATIONALITY.JAPAN)
+            {
+                // ボールの取れる範囲をセット
+                this.GetComponent<SphereCollider>().radius = m_human.m_holdRangeRadius;
+            }
+
+            // 終了エフェクト
+        }
     }
 	
 	//----------------------------------------------------------------------
