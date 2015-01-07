@@ -45,7 +45,7 @@ public class Entry_2 : MonoBehaviour
                 InputXBOX360.IsGetAllStartButton() == true)
             {
                 m_SE.VolumeSE(1.0f);
-                m_SE.PlaySE("title/entry_on");
+                m_SE.PlaySE("title/entry_go");
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
                 transform.position = new Vector3(transform.position.x, 2048.0f, transform.position.z);
@@ -59,7 +59,7 @@ public class Entry_2 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.W) ||
                 Input.GetKeyDown(InputXBOX360.P2_XBOX_B))
             {
-                m_SE.VolumeSE(0.01f);
+                m_SE.VolumeSE(0.1f);
                 m_SE.PlaySE("title/entry_cancel");
                 m_inFlag = false;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす

@@ -46,7 +46,7 @@ public class Entry_1 : MonoBehaviour
                 InputXBOX360.IsGetAllStartButton() == true)
             {
                 m_SE.VolumeSE(1.0f);
-                m_SE.PlaySE("title/entry_on");
+                m_SE.PlaySE("title/entry_go");
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
                 transform.position = new Vector3(transform.position.x, 2048.0f, transform.position.z);
