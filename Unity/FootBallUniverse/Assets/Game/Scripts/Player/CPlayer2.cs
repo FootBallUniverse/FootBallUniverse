@@ -711,6 +711,14 @@ public class CPlayer2 : CPlayer {
                 // ここにエフェクトの開始とかを入れる
                 m_status = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
                 m_isOverRimit = true;
+
+                // 日本の場合はボールを取れる範囲を増やす
+                if (TeamData.teamNationality[0] == TeamData.TEAM_NATIONALITY.JAPAN)
+                {
+                    // ボールの取れる範囲を変更
+                    this.GetComponent<SphereCollider>().radius = CGaugeManager.m_japanHoldRadius;
+                }
+
             }
         }
 

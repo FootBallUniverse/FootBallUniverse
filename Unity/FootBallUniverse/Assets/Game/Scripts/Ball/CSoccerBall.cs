@@ -75,6 +75,8 @@ public class CSoccerBall : MonoBehaviour {
         this.rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         this.rigidbody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
 
+        
+
 		SetTrailYellow();
 
         return true;
@@ -100,7 +102,23 @@ public class CSoccerBall : MonoBehaviour {
     // @Date	2014/10/27  @Update 2014/10/27  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Update () {
-
+        
+        // オーバーリミットのシュートが放たれてなおかつイングランドだった場合は加速させていく
+        if (CSoccerBallManager.m_isOverRimitShoot == true && CSoccerBallManager.m_team == TeamData.TEAM_NATIONALITY.ENGLAND)
+        {
+            // 上限値を超えたら元に戻す
+            if (this.GetComponent<Rigidbody>().velocity.x >= CGaugeManager.m_englandShootLimit ||
+                this.GetComponent<Rigidbody>().velocity.y >= CGaugeManager.m_englandShootLimit ||
+                this.GetComponent<Rigidbody>().velocity.z >= CGaugeManager.m_englandShootLimit)
+            {
+                CSoccerBallManager.m_isOverRimitShoot = false;
+                CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.NONE;
+            }
+            else
+            {
+                this.GetComponent<Rigidbody>().velocity *= CGaugeManager.m_englandAccRate;
+            }
+        }
 
 	}
 

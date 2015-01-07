@@ -78,7 +78,6 @@ public class CSoccerBallManager : MonoBehaviour {
 
 	}
 
-	
 	//----------------------------------------------------------------------
 	// 最後の更新
 	//----------------------------------------------------------------------
@@ -90,8 +89,6 @@ public class CSoccerBallManager : MonoBehaviour {
 	{
 		m_soccerBallTransform = m_soccerBall.transform;
 	}
-
-
 
     //----------------------------------------------------------------------
     // サッカーボールの持ち主を変更
@@ -124,6 +121,9 @@ public class CSoccerBallManager : MonoBehaviour {
 	public static void Restart()
 	{
 		m_soccerBall.GetComponent<CSoccerBall> ().Restart (new Vector3 (0.0f, 0.0f, 0.0f));
+
+        m_isOverRimitShoot = false;
+        m_team = TeamData.TEAM_NATIONALITY.NONE;
 	}
 
 }

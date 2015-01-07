@@ -51,6 +51,8 @@ public class CPlayerCollision : MonoBehaviour
                 switch (CSoccerBallManager.m_team)
                 {
                     case TeamData.TEAM_NATIONALITY.ENGLAND:
+                        CSoccerBallManager.m_isOverRimitShoot = false;
+                        CSoccerBallManager.m_team = TeamData.TEAM_NATIONALITY.NONE;
                         break;
 
                     // スペインはあたったらプレイヤーが吹っ飛ぶ
