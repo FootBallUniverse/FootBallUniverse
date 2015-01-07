@@ -18,8 +18,8 @@ public class CPlayer3 : CPlayer {
 		CPlayerManager.SetPlayerData(this.m_playerData, CPlayerManager.PLAYER_3);
 		
 		// 国の情報をセット / 国によってマテリアルを変更
-		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[0]);
-		this.transform.FindChild("polySurface14").GetComponent<CPlayer3Mesh>().ChangeMaterial(TeamData.teamNationality[0]);
+		m_human = CHumanManager.GetWorldInstance(TeamData.teamNationality[1]);
+		this.transform.FindChild("polySurface14").GetComponent<CPlayer3Mesh>().ChangeMaterial(TeamData.teamNationality[1]);
         m_gauge.m_teamNo = 2;
 
 		// プレイヤーごとの値をセット

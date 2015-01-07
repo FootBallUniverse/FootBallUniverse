@@ -228,6 +228,9 @@ public class CSoccerBall : MonoBehaviour {
 		}
     }
 
+
+
+
 	void OnCollisionEnter(Collision col){
 		this.transform.FindChild("ShootLine").particleSystem.Stop();
 		this.transform.FindChild("ShootLine").particleSystem.Clear();
