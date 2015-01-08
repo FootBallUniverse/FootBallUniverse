@@ -730,7 +730,7 @@ public class CPlayer2 : CPlayer {
     public void GaugeAction()
     {
         // 右アナログスティックが押し込まれたら
-        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_RIGHT_ANALOG_PRESS))
+        if (Input.GetKeyDown(InputXBOX360.P2_XBOX_RIGHT_ANALOG_PRESS))
         {
             if (m_gauge.GaugeDecrement() != 0)
             {
