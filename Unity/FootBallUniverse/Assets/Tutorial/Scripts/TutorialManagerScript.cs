@@ -114,6 +114,9 @@ public class TutorialManagerScript : MonoBehaviour {
 	GameObject[] guidSubVewer = new GameObject[2];
 	GameObject ball;
 
+	int takeBallTeamNo = 2;
+	int oldTakeBallTeamNo = 2;
+
 	CSoundPlayer m_soundPlayer;
 
 	// Use this for initialization
@@ -670,7 +673,9 @@ public class TutorialManagerScript : MonoBehaviour {
 
 					if (this.ball.GetComponent<CSoccerBall>().m_isPlayer)
 					{
+						if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 2].GetComponent<CPlayer>().m_isGetBall == true) this.takeBallTeamNo = i;
 						this.buttonCheck[i * 2] = true;
+						this.buttonCheck[i * 2+1] = true;
 						this.controle[i * 2].rotation     = false;
 						this.controle[i * 2 + 1].rotation = false;
 						this.controle[i * 2].move         = false;
@@ -682,7 +687,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.messageLog[i].SetActive(true);
 					this.guidSubVewer[i].SetActive(false);
 
-					if(this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2+2].GetComponent<CPlayer>().m_isGetBall == true)
+					if(this.takeBallTeamNo == i)
 						 message = this.MainMessage[12];
 					else message = this.MainMessage[13];
 
@@ -697,16 +702,53 @@ public class TutorialManagerScript : MonoBehaviour {
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Play02:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+					this.controle[i*2].rotation     = true;
+					this.controle[i*2 + 1].rotation = true;
+					this.controle[i*2].move         = true;
+					this.controle[i*2 + 1].move     = true;
+					this.controle[i*2].shoote       = true;
+					this.controle[i*2 + 1].shoote   = true;
+					this.controle[i*2].takkle       = true;
+					this.controle[i*2 + 1].takkle   = true;
 
-					// test
-					SetButton_A();
-					// endTest
+					if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 2].GetComponent<CPlayer>().m_isGetBall == true)
+						if (this.takeBallTeamNo != i)
+							for(int j = 0; j < 4; j++)
+								this.buttonCheck[j]     = true;
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Instruction04:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+
+					this.controle[i*2].rotation     = false;
+					this.controle[i*2 + 1].rotation = false;
+					this.controle[i*2].move         = false;
+					this.controle[i*2 + 1].move     = false;
+					this.controle[i*2].shoote       = false;
+					this.controle[i*2 + 1].shoote   = false;
+					this.controle[i*2].takkle       = false;
+					this.controle[i*2 + 1].takkle   = false;
+
+					SetButton_START();
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Play03:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					this.controle[i*2].rotation     = true;
+					this.controle[i*2 + 1].rotation = true;
+					this.controle[i*2].move         = true;
+					this.controle[i*2 + 1].move     = true;
+					this.controle[i*2].shoote       = true;
+					this.controle[i*2 + 1].shoote   = true;
+					this.controle[i*2].takkle       = true;
+					this.controle[i*2 + 1].takkle   = true;
+
+
 					break;
 
 
