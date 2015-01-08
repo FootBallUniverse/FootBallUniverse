@@ -505,6 +505,7 @@ public class TutorialManagerScript : MonoBehaviour {
 		string message;
 
 		if(player[0] != null)Controle();
+		if (Input.GetKeyDown(KeyCode.Space)) Application.LoadLevel("MainGame"); 
 
 		for (int i = 0; i < 2; i++)
 		{
@@ -617,7 +618,7 @@ public class TutorialManagerScript : MonoBehaviour {
 						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
 						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
 					}
-					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.player[i * 2], 10))
+					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.ball, 10))
 					{
 						this.buttonCheck[i * 2 + 1] = true;
 						this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
@@ -724,7 +725,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
 					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.charge   = true;
 
-					if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 2].GetComponent<CPlayer>().m_isGetBall == true)
+					if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 1].GetComponent<CPlayer>().m_isGetBall == true)
 						if (this.takeBallTeamNo != i)
 							for (int j = 0; j < 4; j++)
 							{
