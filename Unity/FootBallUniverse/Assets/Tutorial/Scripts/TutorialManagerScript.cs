@@ -561,25 +561,24 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.guidSubVewer[i].SetActive(false);
 					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
 					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
-					/*
+					
 					// お互いがむいたらチェック
 					if (GetCheck2ObjectDegree(this.player[i * 2], this.player[i * 2 + 1], 30))
 					{
 						this.buttonCheck[i * 2] = true;
-						this.controle[i * 2].rotation = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
 					}
 					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.player[i * 2], 30))
 					{
 						this.buttonCheck[i * 2 + 1] = true;
-						this.controle[i * 2].rotation = false;
-					}*/
+						this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+					}
+
 					break;
 
 				case TUTORIAL_STATE.SCENE0_Message04:
 					this.messageLog[i].SetActive(true);
 					this.guidSubVewer[i].SetActive(false);
-					//this.controle[i*2].rotation     = false;
-					//this.controle[i*2 + 1].rotation = false;
 					message = this.MainMessage[6];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
@@ -606,27 +605,29 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Play00:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
-					//this.controle[i*2].rotation     = true;
-					//this.controle[i*2 + 1].rotation = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
 					
 					// 全員がボールを見たらチェック
 					if (GetCheck2ObjectDegree(this.player[i * 2], this.ball, 10))
 					{
 						this.buttonCheck[i * 2] = true;
-						//this.controle[i * 2].rotation = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
 					}
 					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.player[i * 2], 10))
 					{
 						this.buttonCheck[i * 2 + 1] = true;
-						//this.controle[i * 2].rotation = false;
+						this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+						this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
 					}
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Message01:
 					message = this.MainMessage[9];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
-					//this.controle[i*2].rotation     = false;
-					//this.controle[i*2 + 1].rotation = false;
 					SetButton_A();
 					break;
 
@@ -659,20 +660,32 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Play01:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
-					//this.controle[i*2].rotation     = true;
-					//this.controle[i*2 + 1].rotation = true;
-					//this.controle[i*2].move         = true;
-					//this.controle[i*2 + 1].move     = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+
 
 					if (this.ball.GetComponent<CSoccerBall>().m_isPlayer)
 					{
-						if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 2].GetComponent<CPlayer>().m_isGetBall == true) this.takeBallTeamNo = i;
+						if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 1].GetComponent<CPlayer>().m_isGetBall == true) this.takeBallTeamNo = i;
 						this.buttonCheck[i * 2] = true;
 						this.buttonCheck[i * 2+1] = true;
-						//this.controle[i * 2].rotation     = false;
-						//this.controle[i * 2 + 1].rotation = false;
-						//this.controle[i * 2].move         = false;
-						//this.controle[i * 2 + 1].move     = false;
+
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_x   = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_z   = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+
+						this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.move_x   = false;
+						this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.move_z   = false;
+						this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+						this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
 					}
 					break;
 
@@ -697,33 +710,37 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Play02:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
-					//this.controle[i*2].rotation     = true;
-					//this.controle[i*2 + 1].rotation = true;
-					//this.controle[i*2].move         = true;
-					//this.controle[i*2 + 1].move     = true;
-					//this.controle[i*2].shoote       = true;
-					//this.controle[i*2 + 1].shoote   = true;
-					//this.controle[i*2].takkle       = true;
-					//this.controle[i*2 + 1].takkle   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.charge   = true;
+
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.charge   = true;
 
 					if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 2].GetComponent<CPlayer>().m_isGetBall == true)
 						if (this.takeBallTeamNo != i)
-							for(int j = 0; j < 4; j++)
-								this.buttonCheck[j]     = true;
+							for (int j = 0; j < 4; j++)
+							{
+								this.player[j].GetComponent<CPlayer>().m_controlePermission.move_x   = false;
+								this.player[j].GetComponent<CPlayer>().m_controlePermission.move_z   = false;
+								this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+								this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+								this.player[j].GetComponent<CPlayer>().m_controlePermission.shoote   = false;
+								this.player[j].GetComponent<CPlayer>().m_controlePermission.charge   = false;
+								this.buttonCheck[j] = true;
+							}
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Instruction04:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
-
-					//this.controle[i*2].rotation     = false;
-					//this.controle[i*2 + 1].rotation = false;
-					//this.controle[i*2].move         = false;
-					//this.controle[i*2 + 1].move     = false;
-					//this.controle[i*2].shoote       = false;
-					//this.controle[i*2 + 1].shoote   = false;
-					//this.controle[i*2].takkle       = false;
-					//this.controle[i*2 + 1].takkle   = false;
 
 					SetButton_START();
 					break;
@@ -732,14 +749,19 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
 
-					//this.controle[i*2].rotation     = true;
-					//this.controle[i*2 + 1].rotation = true;
-					//this.controle[i*2].move         = true;
-					//this.controle[i*2 + 1].move     = true;
-					//this.controle[i*2].shoote       = true;
-					//this.controle[i*2 + 1].shoote   = true;
-					//this.controle[i*2].takkle       = true;
-					//this.controle[i*2 + 1].takkle   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.charge   = true;
+
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.charge   = true;
 
 
 					break;
