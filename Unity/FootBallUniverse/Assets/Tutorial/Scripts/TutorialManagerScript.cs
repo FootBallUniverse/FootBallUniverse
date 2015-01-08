@@ -108,12 +108,13 @@ public class TutorialManagerScript : MonoBehaviour {
 	GameObject[] bloackOut    = new GameObject[3];
 	GameObject[] messageLog   = new GameObject[2];
 	GameObject[] guidSubVewer = new GameObject[2];
+	GameObject ball;
 
 	CSoundPlayer m_soundPlayer;
 
 	// Use this for initialization
 	void Start () {
-#if true
+#if false
 		Application.LoadLevel("MainGame");
 		return;
 #endif
@@ -143,6 +144,32 @@ public class TutorialManagerScript : MonoBehaviour {
 		for(int i = 0; i < 2; i ++)
 			for(int j = 0; j < 2; j++)
 				this.controle[i].move = this.controle[i].rotation = this.controle[i].shoote = this.controle[i].takkle = false;
+	}
+
+
+	//----------------------------------------------------------------------
+	// 目標のオブジェクトがいる方向に向いているか判断
+	//----------------------------------------------------------------------
+	// @Param   obj1    基準にしたいオブジェクト
+	//          obj2    目標のオブジェクト
+	//          _degree 許容範囲内角度
+	// @Return  bool  範囲内:true   範囲外:false
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
+	bool GetCheck2ObjectDegree(GameObject obj1,GameObject obj2,float _degree)
+	{
+		Vector3 vec = obj2.transform.position - obj1.transform.position;
+		float[] length = new float[2];
+		// 長さを求める
+		length[0] = Vector3.Distance(Vector3.zero, obj1.transform.forward);
+		length[1] = Vector3.Distance(Vector3.zero, vec);
+
+		// なす角度を求める
+		float cos = Mathf.Acos(Vector3.Dot(obj1.transform.forward,vec) / (length[0] * length[1]));
+		float degree = cos * 180 / Mathf.PI;
+
+		if (degree <= _degree) return true;
+		return false;
 	}
 
 	void Controle()
@@ -223,6 +250,9 @@ public class TutorialManagerScript : MonoBehaviour {
 
         m_soundPlayer = new CSoundPlayer();
         m_soundPlayer.PlayBGMFadeIn("tutorial/bgm_01", 0.05f);
+
+		// ボールオブジェクト取得
+		this.ball = GameObject.Find("SoccerBall").gameObject;
 
 		// 最初の画面に合わせて設定
 		this.guidVewer[0].SetActive(true);
@@ -412,17 +442,6 @@ public class TutorialManagerScript : MonoBehaviour {
 			m_soundPlayer.PlaySE("tutorial/button_push");
 			this.buttonCheck[3] = true;
 		}
-		// DEBUG用（ＰＣ）
-		if (Input.GetKeyDown(KeyCode.LeftShift))
-		{
-			m_soundPlayer.PlaySE("tutorial/button_push");
-			this.buttonCheck[0] = this.buttonCheck[1] = true;
-		}
-		if (Input.GetKeyDown(KeyCode.RightShift))
-		{
-			m_soundPlayer.PlaySE("tutorial/button_push");
-			this.buttonCheck[2] = this.buttonCheck[3] = true;
-		}
 	}
 
 	//----------------------------------------------------------------------
@@ -454,6 +473,17 @@ public class TutorialManagerScript : MonoBehaviour {
 			m_soundPlayer.PlaySE("tutorial/button_push");
 			this.buttonCheck[3] = true;
 		}
+	}
+
+	//----------------------------------------------------------------------
+	// デバッグ用ボタン（シフト）
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2015/01/09  @Update 2015/01/09  @Author T.Takeuichi
+	//----------------------------------------------------------------------
+	void SetButton_Debug_SHIFT()
+	{
 		// DEBUG用（ＰＣ）
 		if (Input.GetKeyDown(KeyCode.LeftShift))
 		{
@@ -472,8 +502,6 @@ public class TutorialManagerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-
-		Debug.Log(this.state[0] + "  /  " +this.state[1]);
 		string message;
 
 		if(player[0] != null)Controle();
@@ -534,13 +562,17 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.controle[i*2].rotation     = true;
 					this.controle[i * 2 + 1].rotation = true;
 
-
-						//test
-						//testEnd
-
-					// test
-					SetButton_A();
-					// endTest
+					// お互いがむいたらチェック
+					if (GetCheck2ObjectDegree(this.player[i * 2], this.player[i * 2 + 1], 30))
+					{
+						this.buttonCheck[i * 2] = true;
+						this.controle[i * 2].rotation = false;
+					}
+					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.player[i * 2], 30))
+					{
+						this.buttonCheck[i * 2 + 1] = true;
+						this.controle[i * 2].rotation = false;
+					}
 					break;
 
 				case TUTORIAL_STATE.SCENE0_Message04:
@@ -576,9 +608,18 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.guidSubVewer[i].SetActive(false);
 					this.controle[i*2].rotation     = true;
 					this.controle[i*2 + 1].rotation = true;
-					// test
-					SetButton_A();
-					// endTest
+					
+					// 全員がボールを見たらチェック
+					if (GetCheck2ObjectDegree(this.player[i * 2], this.ball, 30))
+					{
+						this.buttonCheck[i * 2] = true;
+						this.controle[i * 2].rotation = false;
+					}
+					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.player[i * 2], 30))
+					{
+						this.buttonCheck[i * 2 + 1] = true;
+						this.controle[i * 2].rotation = false;
+					}
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Message01:
@@ -647,6 +688,7 @@ public class TutorialManagerScript : MonoBehaviour {
 
 		ButtonDraw();
 		NextState();
+		SetButton_Debug_SHIFT();
 
 		if (player[0] != null)
 		{
