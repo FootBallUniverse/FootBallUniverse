@@ -658,6 +658,7 @@ public class CPlayer1 : CPlayer {
             case CPlayerManager.ePLAYER_STATUS.eWAIT:
             case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN:
             case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT:
+			case CPlayerManager.ePLAYER_STATUS.eTUTORIAL:
                 m_animator.Move(m_speed); break;
             case CPlayerManager.ePLAYER_STATUS.eSHOOTCHARGE: 
                 m_animator.ShootCharge(); break;

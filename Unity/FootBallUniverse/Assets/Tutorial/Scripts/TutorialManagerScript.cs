@@ -13,11 +13,11 @@ public class TutorialManagerScript : MonoBehaviour {
 		"ここは、宇宙ステーション内に建設された球体スタジアムの中。\nこれから“スペースフットボール”の、４年に１度の祭典…スペースワールドカップが行われる",
 		"地上のスタジアムのそれとは、比べ物にならない浮遊感だろう？\n試合が始まるまで少し時間がある。今のうちに、体を馴らしておこうか",
 		"まずは、そうだな… 上を見てくれ",
-		"今向かい合っている相手が、君のチームメイトだ。隣にいる、と言ったほうがわかりやすいかもしれないが",
-		"試合では、２人で協力して戦ってもらうことになる。今のうちに、連携を深めておいてくれ",
+		"今向かい合っている相手が、君のチームメイトだ。\n隣にいる、と言ったほうがわかりやすいかもしれないが",
+		"試合では、２人で協力して戦ってもらうことになる。\n今のうちに、連携を深めておいてくれ",
 		// シーン２
-		"次に、ボールの場所を確認しよう。[1P:左/2P:右]を見てくれ",
-		"見ての通り、ボールだ。試合では、そいつを相手チームのゴールに蹴りこむことを目指す",
+		"次に、ボールの場所を確認しよう。\n[1P:左/2P:右]を見てくれ",
+		"見ての通り、ボールだ。\n試合では、そいつを相手チームのゴールに蹴りこむことを目指す",
 		"ボールは近づくと勝手に”ホールド”されて、足元についてくる",
 		"試しに近くまで移動して、ボールをホールドしてみるんだ",
 		"よし、いいぞ。次はボールを蹴ってみようか",
@@ -638,6 +638,8 @@ public class TutorialManagerScript : MonoBehaviour {
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Message01:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
 					message = this.MainMessage[9];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
@@ -740,12 +742,6 @@ public class TutorialManagerScript : MonoBehaviour {
 						if (this.takeBallTeamNo != i)
 							for (int j = 0; j < 4; j++)
 							{
-								this.player[j].GetComponent<CPlayer>().m_controlePermission.move_x   = false;
-								this.player[j].GetComponent<CPlayer>().m_controlePermission.move_z   = false;
-								this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
-								this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
-								this.player[j].GetComponent<CPlayer>().m_controlePermission.shoote   = false;
-								this.player[j].GetComponent<CPlayer>().m_controlePermission.charge   = false;
 								this.buttonCheck[j] = true;
 							}
 					break;
@@ -753,6 +749,16 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Instruction04:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
+
+					for (int j = 0; j < 4; j++)
+					{
+						this.player[j].GetComponent<CPlayer>().m_controlePermission.move_x = false;
+						this.player[j].GetComponent<CPlayer>().m_controlePermission.move_z = false;
+						this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+						this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+						this.player[j].GetComponent<CPlayer>().m_controlePermission.shoote = false;
+						this.player[j].GetComponent<CPlayer>().m_controlePermission.charge = false;
+					}
 
 					SetButton_START();
 					break;
@@ -799,13 +805,13 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.time = 0;
 					this.messageLog[i].SetActive(true);
 					this.guidSubVewer[i].SetActive(false);
-					message = this.MainMessage[4];
+					message = this.MainMessage[14];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Message06:
-					message = this.MainMessage[4];
+					message = this.MainMessage[15];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
 					break;
@@ -867,13 +873,13 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.messageLog[i].SetActive(true);
 					this.guidSubVewer[i].SetActive(false);
 
-					message = this.MainMessage[4];
+					message = this.MainMessage[16];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Message08:
-					message = this.MainMessage[4];
+					message = this.MainMessage[17];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
 					break;
@@ -937,7 +943,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.messageLog[i].SetActive(true);
 					this.guidSubVewer[i].SetActive(false);
 
-					message = this.MainMessage[4];
+					message = this.MainMessage[18];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
 					break;
