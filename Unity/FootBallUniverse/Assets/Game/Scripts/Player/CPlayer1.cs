@@ -53,6 +53,7 @@ public class CPlayer1 : CPlayer {
 
         switch (m_status)
         {
+			case CPlayerManager.ePLAYER_STATUS.eTUTORIAL: PlayerTutorial();                 break;    // チュートリアル中の状態
             case CPlayerManager.ePLAYER_STATUS.eWAIT: PlayerStatusWait();                   break;    // 始めの待機状態
             case CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN: PlayerStatusGameStartWait();     break;    // カウントダウンの状態
             case CPlayerManager.ePLAYER_STATUS.eNONE: PlayerStatusNone();                   break;    // 何もしてない状態
@@ -749,4 +750,42 @@ public class CPlayer1 : CPlayer {
         }
 
     }
+
+	public void PlayerTutorial()
+	{
+		Vector3 speed;
+		Vector2 angle;
+		/*
+		// 移動
+		if (this.m_controlePermission.move_x) ;
+		if (this.m_controlePermission.move_y) ;
+		this.Move(speed);
+
+		// 回転
+		if (this.m_controlePermission.rotate_x) ;
+		if (this.m_controlePermission.rotate_y) ;
+		this.Rotation(angle);
+
+		if (this.m_controlePermission.charge) ;
+
+		if (this.m_controlePermission.shoote) ;
+
+		if (this.m_controlePermission.rockOn) ;
+
+		// 移動
+        Vector3 speed = new Vector3(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X), 0.0f, Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y));
+        this.Move(speed);
+
+        // 回転
+        Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));
+        this.Rotation(angle);
+		*/
+    
+        this.LTDashTackle();        // ダッシュかタックルの判定
+        this.RTShootPass();         // パスかシュートの判定
+
+        this.GaugeAction();         // ゲージのアクション状態
+
+        this.ChangeViewPoint();     // 視点変更
+	}
 }

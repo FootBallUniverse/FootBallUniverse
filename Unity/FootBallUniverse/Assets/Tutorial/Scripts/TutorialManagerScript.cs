@@ -94,6 +94,7 @@ public class TutorialManagerScript : MonoBehaviour {
 		public bool rotation;
 		public bool shoote;
 		public bool takkle;
+		public bool rockOn;
 	};
 
 	DEF[] controle = new DEF[4];
@@ -121,7 +122,7 @@ public class TutorialManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-#if false
+#if true
 		Application.LoadLevel("MainGame");
 		return;
 #endif

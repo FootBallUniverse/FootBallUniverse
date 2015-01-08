@@ -38,6 +38,19 @@ public class CPlayer : MonoBehaviour {
     public PlayerCamera m_camera;
     public Transform m_trans;
 
+	public struct CONTROLE_PERMISSTION
+	{
+		public bool move_x;
+		public bool move_y;
+		public bool rotate_x;
+		public bool rotate_y;
+		public bool shoote;
+		public bool charge;
+		public bool rockOn;
+	};
+
+	public CONTROLE_PERMISSTION m_controlePermission;
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
