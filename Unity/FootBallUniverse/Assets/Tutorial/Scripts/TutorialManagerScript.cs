@@ -88,20 +88,8 @@ public class TutorialManagerScript : MonoBehaviour {
 		NO_VIEW
 	};
 
-	struct DEF
-	{
-		public bool move;
-		public bool rotation;
-		public bool shoote;
-		public bool takkle;
-		public bool rockOn;
-	};
-
-	DEF[] controle = new DEF[4];
 
 	GameObject[] player           = new GameObject[4];
-	Vector3[] playerOldPositon    = new Vector3[4];
-	Quaternion[] playerOldRotaton = new Quaternion[4];
 	GameObject[] keeper           = new GameObject[2];
 	TUTORIAL_STATE[] state        = new TUTORIAL_STATE[2];
 	BUTTON_TYPE[] buttonType      = new BUTTON_TYPE[2];
@@ -122,7 +110,7 @@ public class TutorialManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-#if true
+#if false
 		Application.LoadLevel("MainGame");
 		return;
 #endif
@@ -147,11 +135,6 @@ public class TutorialManagerScript : MonoBehaviour {
 			this.buttonAicon[i, 0] = GameObject.Find("Next_" + i).transform.FindChild("button_A").gameObject;
 			this.buttonAicon[i, 1] = GameObject.Find("Next_" + i).transform.FindChild("button_Start").gameObject;
 		}
-
-		// コントロールの初期化
-		for(int i = 0; i < 2; i ++)
-			for(int j = 0; j < 2; j++)
-				this.controle[i].move = this.controle[i].rotation = this.controle[i].shoote = this.controle[i].takkle = false;
 	}
 
 
@@ -182,6 +165,7 @@ public class TutorialManagerScript : MonoBehaviour {
 
 	void Controle()
 	{
+		/*
 		for (int i = 0; i < 4; i++)
 		{
 			// 行動を無効化
@@ -190,6 +174,7 @@ public class TutorialManagerScript : MonoBehaviour {
 			if (!this.controle[i].shoote)   player[i].GetComponent<CPlayer>().m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
 			if (!this.controle[i].takkle)   player[i].GetComponent<CPlayer>().m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
 		}
+		 */
 	}
 
 	//----------------------------------------------------------------------
@@ -233,8 +218,15 @@ public class TutorialManagerScript : MonoBehaviour {
 		this.player[3].transform.Rotate(new Vector3(90.0f, 260.0f, 0.0f));
 		for (int i = 0; i < 4; i++)
 		{
-			this.playerOldPositon[i] = this.player[i].transform.position;
-			this.playerOldRotaton[i] = this.player[i].transform.rotation;
+			this.player[i].GetComponent<CPlayer>().m_status = CPlayerManager.ePLAYER_STATUS.eTUTORIAL;
+			this.player[i].GetComponent<CPlayer>().m_controlePermission.move_x   = false;
+			this.player[i].GetComponent<CPlayer>().m_controlePermission.move_z   = false;
+			this.player[i].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+			this.player[i].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+			this.player[i].GetComponent<CPlayer>().m_controlePermission.rockOn   = false;
+			this.player[i].GetComponent<CPlayer>().m_controlePermission.shoote   = false;
+			this.player[i].GetComponent<CPlayer>().m_controlePermission.gauge    = false;
+			this.player[i].GetComponent<CPlayer>().m_controlePermission.charge   = false;
 		}
 
 		
@@ -567,9 +559,9 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE0_Play00:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
-					this.controle[i*2].rotation     = true;
-					this.controle[i * 2 + 1].rotation = true;
-
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					/*
 					// お互いがむいたらチェック
 					if (GetCheck2ObjectDegree(this.player[i * 2], this.player[i * 2 + 1], 30))
 					{
@@ -580,14 +572,14 @@ public class TutorialManagerScript : MonoBehaviour {
 					{
 						this.buttonCheck[i * 2 + 1] = true;
 						this.controle[i * 2].rotation = false;
-					}
+					}*/
 					break;
 
 				case TUTORIAL_STATE.SCENE0_Message04:
 					this.messageLog[i].SetActive(true);
 					this.guidSubVewer[i].SetActive(false);
-					this.controle[i*2].rotation     = false;
-					this.controle[i*2 + 1].rotation = false;
+					//this.controle[i*2].rotation     = false;
+					//this.controle[i*2 + 1].rotation = false;
 					message = this.MainMessage[6];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
@@ -614,27 +606,27 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Play00:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
-					this.controle[i*2].rotation     = true;
-					this.controle[i*2 + 1].rotation = true;
+					//this.controle[i*2].rotation     = true;
+					//this.controle[i*2 + 1].rotation = true;
 					
 					// 全員がボールを見たらチェック
 					if (GetCheck2ObjectDegree(this.player[i * 2], this.ball, 10))
 					{
 						this.buttonCheck[i * 2] = true;
-						this.controle[i * 2].rotation = false;
+						//this.controle[i * 2].rotation = false;
 					}
 					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.player[i * 2], 10))
 					{
 						this.buttonCheck[i * 2 + 1] = true;
-						this.controle[i * 2].rotation = false;
+						//this.controle[i * 2].rotation = false;
 					}
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Message01:
 					message = this.MainMessage[9];
 					this.messageLog[i].GetComponent<UILabel>().text = message;
-					this.controle[i*2].rotation     = false;
-					this.controle[i*2 + 1].rotation = false;
+					//this.controle[i*2].rotation     = false;
+					//this.controle[i*2 + 1].rotation = false;
 					SetButton_A();
 					break;
 
@@ -667,20 +659,20 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Play01:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
-					this.controle[i*2].rotation     = true;
-					this.controle[i*2 + 1].rotation = true;
-					this.controle[i*2].move         = true;
-					this.controle[i*2 + 1].move     = true;
+					//this.controle[i*2].rotation     = true;
+					//this.controle[i*2 + 1].rotation = true;
+					//this.controle[i*2].move         = true;
+					//this.controle[i*2 + 1].move     = true;
 
 					if (this.ball.GetComponent<CSoccerBall>().m_isPlayer)
 					{
 						if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 2].GetComponent<CPlayer>().m_isGetBall == true) this.takeBallTeamNo = i;
 						this.buttonCheck[i * 2] = true;
 						this.buttonCheck[i * 2+1] = true;
-						this.controle[i * 2].rotation     = false;
-						this.controle[i * 2 + 1].rotation = false;
-						this.controle[i * 2].move         = false;
-						this.controle[i * 2 + 1].move     = false;
+						//this.controle[i * 2].rotation     = false;
+						//this.controle[i * 2 + 1].rotation = false;
+						//this.controle[i * 2].move         = false;
+						//this.controle[i * 2 + 1].move     = false;
 					}
 					break;
 
@@ -705,14 +697,14 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Play02:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
-					this.controle[i*2].rotation     = true;
-					this.controle[i*2 + 1].rotation = true;
-					this.controle[i*2].move         = true;
-					this.controle[i*2 + 1].move     = true;
-					this.controle[i*2].shoote       = true;
-					this.controle[i*2 + 1].shoote   = true;
-					this.controle[i*2].takkle       = true;
-					this.controle[i*2 + 1].takkle   = true;
+					//this.controle[i*2].rotation     = true;
+					//this.controle[i*2 + 1].rotation = true;
+					//this.controle[i*2].move         = true;
+					//this.controle[i*2 + 1].move     = true;
+					//this.controle[i*2].shoote       = true;
+					//this.controle[i*2 + 1].shoote   = true;
+					//this.controle[i*2].takkle       = true;
+					//this.controle[i*2 + 1].takkle   = true;
 
 					if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 2].GetComponent<CPlayer>().m_isGetBall == true)
 						if (this.takeBallTeamNo != i)
@@ -724,14 +716,14 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
 
-					this.controle[i*2].rotation     = false;
-					this.controle[i*2 + 1].rotation = false;
-					this.controle[i*2].move         = false;
-					this.controle[i*2 + 1].move     = false;
-					this.controle[i*2].shoote       = false;
-					this.controle[i*2 + 1].shoote   = false;
-					this.controle[i*2].takkle       = false;
-					this.controle[i*2 + 1].takkle   = false;
+					//this.controle[i*2].rotation     = false;
+					//this.controle[i*2 + 1].rotation = false;
+					//this.controle[i*2].move         = false;
+					//this.controle[i*2 + 1].move     = false;
+					//this.controle[i*2].shoote       = false;
+					//this.controle[i*2 + 1].shoote   = false;
+					//this.controle[i*2].takkle       = false;
+					//this.controle[i*2 + 1].takkle   = false;
 
 					SetButton_START();
 					break;
@@ -740,14 +732,14 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
 
-					this.controle[i*2].rotation     = true;
-					this.controle[i*2 + 1].rotation = true;
-					this.controle[i*2].move         = true;
-					this.controle[i*2 + 1].move     = true;
-					this.controle[i*2].shoote       = true;
-					this.controle[i*2 + 1].shoote   = true;
-					this.controle[i*2].takkle       = true;
-					this.controle[i*2 + 1].takkle   = true;
+					//this.controle[i*2].rotation     = true;
+					//this.controle[i*2 + 1].rotation = true;
+					//this.controle[i*2].move         = true;
+					//this.controle[i*2 + 1].move     = true;
+					//this.controle[i*2].shoote       = true;
+					//this.controle[i*2 + 1].shoote   = true;
+					//this.controle[i*2].takkle       = true;
+					//this.controle[i*2 + 1].takkle   = true;
 
 
 					break;
@@ -774,8 +766,8 @@ public class TutorialManagerScript : MonoBehaviour {
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				this.playerOldPositon[i] = this.player[i].transform.position;
-				this.playerOldRotaton[i] = this.player[i].transform.rotation;
+				//this.playerOldPositon[i] = this.player[i].transform.position;
+				//this.playerOldRotaton[i] = this.player[i].transform.rotation;
 			}
 		}
 	}

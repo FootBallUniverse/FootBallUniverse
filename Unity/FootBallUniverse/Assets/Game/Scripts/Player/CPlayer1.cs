@@ -39,7 +39,8 @@ public class CPlayer1 : CPlayer {
     //----------------------------------------------------------------------
     // @Param	none		
     // @Return	none
-    // @Date	2014/10/15  @Update 2014/11/11  @Author T.Kawashita      
+    // @Date	2014/10/15  @Update 2014/11/11  @Author T.Kawashita
+    //          2015/01/09  @Update 2015/01/09  @Author T.Takeuchi  
     //----------------------------------------------------------------------
     void Update () 
 	{
@@ -466,7 +467,8 @@ public class CPlayer1 : CPlayer {
     {
         // シュートかパスが打てる状態になったら(ボールが手持ちにある場合）
         if ((m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
-             m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT ) &&
+             m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT ||
+			 m_status == CPlayerManager.ePLAYER_STATUS.eTUTORIAL) &&
              m_isBall == true && 
              InputXBOX360.IsGetRTButton(InputXBOX360.P1_XBOX_RT) == true && 
              m_isRtPress == false )
@@ -558,7 +560,8 @@ public class CPlayer1 : CPlayer {
     {
         // ダッシュが出来る状態になったら(ボールを持っていなかったら)
         if ((m_status == CPlayerManager.ePLAYER_STATUS.eNONE || 
-            m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT) &&
+            m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT ||
+			m_status == CPlayerManager.ePLAYER_STATUS.eTUTORIAL) &&
              m_isBall == false && 
              InputXBOX360.IsGetLTButton(InputXBOX360.P1_XBOX_LT) == true &&
              m_isLtPress == false)
@@ -751,41 +754,32 @@ public class CPlayer1 : CPlayer {
 
     }
 
+
+	//----------------------------------------------------------------------
+	// チュートリアル用アクション
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2015/1/9  @Update 2015/1/9  @Author T.Takeuchi    
+	//----------------------------------------------------------------------
 	public void PlayerTutorial()
 	{
-		Vector3 speed;
-		Vector2 angle;
-		/*
+		Vector3 speed = new Vector3(0.0f,0.0f,0.0f);
+		Vector2 angle = new Vector2(0.0f,0.0f);
+
 		// 移動
-		if (this.m_controlePermission.move_x) ;
-		if (this.m_controlePermission.move_y) ;
+		if (this.m_controlePermission.move_x) speed.x = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X);
+		if (this.m_controlePermission.move_z) speed.z = Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y);
 		this.Move(speed);
 
 		// 回転
-		if (this.m_controlePermission.rotate_x) ;
-		if (this.m_controlePermission.rotate_y) ;
+		if (this.m_controlePermission.rotate_x) angle.x = Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X);
+		if (this.m_controlePermission.rotate_y) angle.y = Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y);
 		this.Rotation(angle);
 
-		if (this.m_controlePermission.charge) ;
-
-		if (this.m_controlePermission.shoote) ;
-
-		if (this.m_controlePermission.rockOn) ;
-
-		// 移動
-        Vector3 speed = new Vector3(Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_X), 0.0f, Input.GetAxis(InputXBOX360.P1_XBOX_LEFT_ANALOG_Y));
-        this.Move(speed);
-
-        // 回転
-        Vector2 angle = new Vector2(Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_X), Input.GetAxis(InputXBOX360.P1_XBOX_RIGHT_ANALOG_Y));
-        this.Rotation(angle);
-		*/
-    
-        this.LTDashTackle();        // ダッシュかタックルの判定
-        this.RTShootPass();         // パスかシュートの判定
-
-        this.GaugeAction();         // ゲージのアクション状態
-
-        this.ChangeViewPoint();     // 視点変更
+		if (this.m_controlePermission.charge) this.LTDashTackle();       // ダッシュかタックルの判定
+		if (this.m_controlePermission.shoote) this.RTShootPass();        // パスかシュートの判定
+		if (this.m_controlePermission.rockOn) this.ChangeViewPoint();    // 視点変更
+		if (this.m_controlePermission.gauge)  this.GaugeAction();         // ゲージのアクション状態
 	}
 }

@@ -41,12 +41,13 @@ public class CPlayer : MonoBehaviour {
 	public struct CONTROLE_PERMISSTION
 	{
 		public bool move_x;
-		public bool move_y;
+		public bool move_z;
 		public bool rotate_x;
 		public bool rotate_y;
 		public bool shoote;
 		public bool charge;
 		public bool rockOn;
+		public bool gauge;
 	};
 
 	public CONTROLE_PERMISSTION m_controlePermission;
@@ -232,7 +233,8 @@ public class CPlayer : MonoBehaviour {
         Vector3 angle = new Vector3(0.0f, 0.0f, 0.0f);
         if (m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
             m_status == CPlayerManager.ePLAYER_STATUS.eCOUNTDOWN ||
-            m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT)
+            m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT ||
+			m_status == CPlayerManager.ePLAYER_STATUS.eTUTORIAL)
         {
             angle.y = _angle.x * m_human.m_cameraMoveSpeed;
             angle.x = _angle.y * m_human.m_cameraMoveSpeed;
