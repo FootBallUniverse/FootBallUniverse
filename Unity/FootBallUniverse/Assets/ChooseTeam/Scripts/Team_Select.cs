@@ -81,7 +81,7 @@ public class Team_Select : MonoBehaviour {
                 {
                     TeamData.teamNationality[1] = TeamData.TEAM_NATIONALITY.JAPAN;
                 }
-                Application.LoadLevel("Tutorial");
+                Application.LoadLevel("MainGame");
             }
         }
 	
