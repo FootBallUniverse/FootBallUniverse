@@ -35,6 +35,10 @@ public class CGaugeManager : MonoBehaviour {
     public static float m_p3Gauge;
     public static float m_p4Gauge;
 
+    public static float m_level1GaugeScaleUp;   // レベル1のゲージのスケールUP値
+    public static float m_level2GaugeScaleUp;   // レベル2のゲージのスケールUP値
+    public static float m_level3GaugeScaleUp;   // レベル3のゲージのスケールUP値
+
     //----------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------
@@ -55,6 +59,11 @@ public class CGaugeManager : MonoBehaviour {
 
         // CSVのデータをロードして格納
         this.LoadData();
+
+        // スケールのUP値変更
+        m_level1GaugeScaleUp = 160.0f / 70.0f;
+        m_level2GaugeScaleUp = 160.0f / 70.0f;
+        m_level3GaugeScaleUp = 160.0f / 70.0f;
 	}
 
     //----------------------------------------------------------------------

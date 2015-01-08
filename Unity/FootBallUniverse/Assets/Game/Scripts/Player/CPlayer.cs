@@ -148,8 +148,6 @@ public class CPlayer : MonoBehaviour {
         m_isOverRimit = false;
         m_isSE = false;
 
-        m_gauge.Init();
-
         return true;
     }
 
@@ -161,7 +159,6 @@ public class CPlayer : MonoBehaviour {
     // @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
     //----------------------------------------------------------------------
 	void Update () {
-		Debug.Log("test");
 	}
 
     //----------------------------------------------------------------------
