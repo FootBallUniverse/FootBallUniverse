@@ -11,6 +11,7 @@ public class CGoalKeeper : CCpu {
 		CAT,
 		PASS,
 		BACK_HOME,
+        TACKLE_DAMAGE,
 		GK_STATE_MAX
 	};
 
@@ -138,11 +139,13 @@ public class CGoalKeeper : CCpu {
 
 				// タックルのやられモーション中
 				case CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE:
+                    this.gkState = GK_State.TACKLE_DAMAGE;
 					if (m_action.TackleDamage(ref m_pos, -this.transform.forward) == true)
 					{
 						// やられモーション終了
 						m_animator.Wait();
 						m_status = CPlayerManager.ePLAYER_STATUS.eNONE;
+                        this.gkState = GK_State.STAY;
 					}
 
 					break;
@@ -156,6 +159,7 @@ public class CGoalKeeper : CCpu {
 				case GK_State.TAKE_BALL: TakeBall(); break;
 				case GK_State.CAT: Cach(); break;
 				case GK_State.PASS: Pass(); break;
+                case GK_State.TACKLE_DAMAGE: break;
 				case GK_State.BACK_HOME: BackHome(); break;
 			}
 		}
