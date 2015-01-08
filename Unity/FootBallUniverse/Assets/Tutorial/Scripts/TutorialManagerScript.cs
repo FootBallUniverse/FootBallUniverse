@@ -73,8 +73,17 @@ public class TutorialManagerScript : MonoBehaviour {
 		SCENE1_Play02,
 		SCENE1_Instruction04,
 		SCENE1_Play03,
-		// シーン４
-		SCENE2_Message00,
+		
+		SCENE1_Message05,
+		SCENE1_Message06,
+		SCENE1_Instruction05,
+		SCENE1_Play04,
+		SCENE1_Message07,
+		SCENE1_Message08,
+		SCENE1_Instruction06,
+		SCENE1_Instruction07,
+		SCENE1_Play05,
+		SCENE1_Message09,
 
 		// 終了処理
 		FAID_OUT,
@@ -105,6 +114,8 @@ public class TutorialManagerScript : MonoBehaviour {
 
 	int takeBallTeamNo = 2;
 	int oldTakeBallTeamNo = 2;
+
+	int time = 0;
 
 	CSoundPlayer m_soundPlayer;
 
@@ -764,9 +775,172 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
 					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.charge   = true;
 
+					this.time++;
+
+					if (this.time >= 900)
+					{
+						for (int j = 0; j < 4; j++)
+						{
+							this.buttonCheck[j] = true;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.move_x   = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.move_z   = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.shoote   = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.charge   = false;
+						}
+					}
+
 
 					break;
 
+				//============================================================
+				case TUTORIAL_STATE.SCENE1_Message05:
+					this.time = 0;
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+					message = this.MainMessage[4];
+					this.messageLog[i].GetComponent<UILabel>().text = message;
+					SetButton_A();
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message06:
+					message = this.MainMessage[4];
+					this.messageLog[i].GetComponent<UILabel>().text = message;
+					SetButton_A();
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction05:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					SetButton_START();
+					break;
+
+
+				case TUTORIAL_STATE.SCENE1_Play04:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.charge   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.gauge  = true;
+
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.charge   = true;
+					this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.gauge = true;
+					
+				
+					// オーバー脱出
+					if (this.player[i * 2].GetComponent<CPlayer>().m_gauge.m_gauge <= 0)
+					{
+						this.buttonCheck[i * 2] = true;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_x   = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_z   = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.shoote   = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.charge   = false;
+						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.gauge    = false;
+					}
+					if (this.player[i * 2+1].GetComponent<CPlayer>().m_gauge.m_gauge <= 0)
+					{
+						this.buttonCheck[i * 2+1] = true;
+						this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.move_x = false;
+						this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.move_z = false;
+						this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+						this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+						this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.shoote = false;
+						this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.charge = false;
+						this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.gauge = false;
+					}
+
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message07:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+
+					message = this.MainMessage[4];
+					this.messageLog[i].GetComponent<UILabel>().text = message;
+					SetButton_A();
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message08:
+					message = this.MainMessage[4];
+					this.messageLog[i].GetComponent<UILabel>().text = message;
+					SetButton_A();
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction06:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					SetButton_START();
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction07:
+					SetButton_START();
+					break;
+
+
+				case TUTORIAL_STATE.SCENE1_Play05:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(false);
+
+					// ゲージ強制注入
+					player[i * 2].GetComponent<CPlayer>().m_gauge.m_gauge++;
+					player[i * 2 +1].GetComponent<CPlayer>().m_gauge.m_gauge++;
+
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
+					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.charge   = true;
+					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.gauge  = true;
+
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
+					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.charge   = true;
+					this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.gauge = true;
+
+					this.time++;
+
+					// 時間経過
+					if (this.time >= 1800)
+					{
+						for (int j = 0; j < 4; j++)
+						{
+							this.buttonCheck[j] = true;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.move_x = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.move_z = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.shoote = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.charge = false;
+							this.player[j].GetComponent<CPlayer>().m_controlePermission.gauge = false;
+						}
+					}
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message09:
+					this.time = 0;
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+
+					message = this.MainMessage[4];
+					this.messageLog[i].GetComponent<UILabel>().text = message;
+					SetButton_A();
+					break;
 
 				case TUTORIAL_STATE.FAID_OUT:
 					if ( !this.bloackOut[0].GetComponent<TweenAlpha>().enabled &&
