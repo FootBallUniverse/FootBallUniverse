@@ -124,10 +124,10 @@ public class TeamData
 	{
 
 		int[] teamScore = new int[2] { GetTeamScore(0), GetTeamScore(1) };
-    
-	if (teamScore[0] == teamScore[1]) return 2;
-		else if (teamScore[0] > teamScore[1]) return 0;
-		else return 1;
+
+	    if (teamScore[0] == teamScore[1]) return 2;
+		    else if (teamScore[0] > teamScore[1]) return 0;
+		    else return 1;
 	}
 
 	// サポーターの追加
