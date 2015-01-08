@@ -12,6 +12,9 @@ public class CEffect : MonoBehaviour {
 	GameObject effectCharge;
 	GameObject effectChargeMax;
 	GameObject effectShoot;
+	GameObject effectOverRimit;
+	GameObject effectGaugeUp;
+	GameObject effectJapan;
 
 	// Use this for initialization
 	void Start()
@@ -19,6 +22,7 @@ public class CEffect : MonoBehaviour {
 		// 親情報取得
 		this.cplayer = this.transform.parent.gameObject.GetComponent<CPlayer>();
 		this.rightFoot = this.transform.parent.transform.FindChild("group1").transform.FindChild("FOOT_R").gameObject;
+		this.effectOverRimit    = this.transform.FindChild("Effect_OverRimit").gameObject;
 		// エフェクト情報取得
 		if (this.transform.parent.gameObject.layer == 8 || this.transform.parent.gameObject.layer == 9)
 		{
@@ -26,17 +30,22 @@ public class CEffect : MonoBehaviour {
 			this.transform.FindChild("Effect_Tackle1").gameObject.SetActive(false);
 			this.effectChargeMax = this.transform.FindChild("Effect_ChargeMax0").gameObject;
 			this.transform.FindChild("Effect_ChargeMax1").gameObject.SetActive(false);
+			this.effectOverRimit = this.transform.FindChild("Effect_Japan0").gameObject;
+			this.transform.FindChild("Effect_Japan1").gameObject.SetActive(false);
 		}else{
 			this.effectTackle = this.transform.FindChild("Effect_Tackle1").gameObject;
 			this.transform.FindChild("Effect_Tackle0").gameObject.SetActive(false);
 			this.effectChargeMax = this.transform.FindChild("Effect_ChargeMax1").gameObject;
 			this.transform.FindChild("Effect_ChargeMax0").gameObject.SetActive(false);
+			this.effectOverRimit = this.transform.FindChild("Effect_Japan1").gameObject;
+			this.transform.FindChild("Effect_Japan0").gameObject.SetActive(false);
 		}
 
 		this.effectTackleDamage = this.transform.FindChild("Effect_TackleDamage").gameObject;
 		this.effectDash         = this.transform.FindChild("Effect_Dash").gameObject;
 		this.effectCharge       = this.transform.FindChild("Effect_Charge").gameObject;
 		this.effectShoot        = this.transform.FindChild("Effect_Shoot").gameObject;
+		this.effectGaugeUp      = this.transform.FindChild("Effect_GaugeUp").gameObject;
 
 		// 色指定
 		if (this.transform.parent.gameObject.layer == 8 || this.transform.parent.gameObject.layer == 9)
@@ -61,6 +70,7 @@ public class CEffect : MonoBehaviour {
 		this.effectCharge.SetActive(false);
 		this.effectChargeMax.SetActive(false);
 		this.effectShoot.SetActive(false);
+//		this.effectJapan.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -114,7 +124,6 @@ public class CEffect : MonoBehaviour {
 		this.effectCharge.SetActive(false);
 	}
 
-
 	void PlayerStatusShootCharge()
 	{
 		// 右足セット
@@ -139,5 +148,17 @@ public class CEffect : MonoBehaviour {
 			this.effectCharge.SetActive(true);
 		//if (this.cplayer.m_chargeFrame >= 120)
 		//	this.effectShoot.SetActive(true);
+	}
+	void OverRimitOn()
+	{
+		this.effectOverRimit.SetActive(true);
+	}
+	void OverRimitOff()
+	{
+		this.effectOverRimit.SetActive(false);
+	}
+	void PlayerGaugeUp()
+	{
+		this.effectGaugeUp.particleSystem.Play();
 	}
 }
