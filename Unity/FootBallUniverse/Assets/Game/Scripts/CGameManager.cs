@@ -186,7 +186,7 @@ public class CGameManager : MonoBehaviour {
     private void GamePlay()
     {
         this.PlayTime();    // 時間計測用
- //       this.DebugKey();    // デバッグ用
+        this.DebugKey();    // デバッグ用
     }
 
     //----------------------------------------------------------------------
@@ -337,8 +337,7 @@ public class CGameManager : MonoBehaviour {
     private void DebugKey()
     {
         // 残り時間を0秒にする
-        if (Input.GetKeyDown(KeyCode.Escape) ||
-            InputXBOX360.IsGetAllSelectButton())
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             m_isGamePlay = false;
             CGameData.m_gamePlayTime = 0;
