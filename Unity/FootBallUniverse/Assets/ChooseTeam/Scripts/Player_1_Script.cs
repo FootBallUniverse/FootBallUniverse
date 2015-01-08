@@ -255,8 +255,8 @@ public class Player_1_Script : MonoBehaviour
         }
         else
         {
-            // m_Right_RotateFlag = false;
-            // m_Left_RotateFlag = false;
+            m_Right_RotateFlag = false;
+            m_Left_RotateFlag = false;
         }
 
         //================================================================================================

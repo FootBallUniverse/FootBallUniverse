@@ -29,6 +29,7 @@ public class Result : MonoBehaviour {
 	private int[] suppoterBffByWorld  = new int[2];
 	private int AddSuppoterTime = 120;      // ロールの速さ調整用(フレーム数)
 	private int count;
+    private float m_time;
 	public int  countMax = 120;
 
     public CSoundPlayer m_soundPlayer;
@@ -45,12 +46,13 @@ public class Result : MonoBehaviour {
 	void Start() 
     {
 		Init();
-
+        m_time = 0.0f; 
 		// music
 		m_soundPlayer = new CSoundPlayer();
-        m_soundPlayer.PlayBGMFadeIn("result/bgm_01", 0.002f);
+        m_soundPlayer.PlayBGMFadeIn("result/bgm_01", 0.2f);
         CResultManager.m_soundPlayer.StopSE();
         m_soundPlayer.ChangeSEVolume(0.2f);
+        //m_soundPlayer.LoopSE("result/supoter_countup");
     }
 
 	//----------------------------------------------------------------------
@@ -220,8 +222,6 @@ public class Result : MonoBehaviour {
         CResultManager.m_resultMain.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("MainPanel").transform.GetComponent<UIPanel>().alpha = 1;
         CResultManager.m_resultSub1.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("SubPanel0").transform.GetComponent<UIPanel>().alpha = 1;
         CResultManager.m_resultSub2.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("SubPanel1").transform.GetComponent<UIPanel>().alpha = 1;
-
-        this.suppoterBffByTeam[0, 1] = 500;
 	}
 
 
@@ -383,13 +383,15 @@ public class Result : MonoBehaviour {
 
 				// 全サポーターに加算
 				case RESULT_STATE.ADDING_WORLD_SUPPORTER:
+                    m_time += Time.deltaTime;
+                    //m_soundPlayer.LoopSE("result/supoter_countup");
 					if (this.suppoterBffByTeam[i,0] == 0 && this.suppoterBffByTeam[i,1] == 0)
 					{
 						this.state[i] = RESULT_STATE.STAY_TWO;
 						ReSetButtonCheck(i, false);
 						this.SubPanels[i,0].GetComponent<TweenScale>().enabled = false;
+                        m_soundPlayer.StopSE();
 					}else{
-                        //m_soundPlayer.PlaySE("result/supoter_countup");
 						for (int j = 0; j < 2; j++)
 						{
 							if (this.suppoterBffByTeam[i,j] >= works[j])
@@ -401,6 +403,12 @@ public class Result : MonoBehaviour {
 								this.suppoterBffByWorld[i]++;
 							}
 						}
+                        if (m_time >= 0.2f)
+                        {
+                           m_soundPlayer.PlaySE("result/supoter_countup");
+                           m_time = 0.0f;
+                          // m_soundPlayer.StopSE();
+                        }
 					}
 					break;
 
@@ -469,3 +477,7 @@ public class Result : MonoBehaviour {
 }
 
 // End of File
+
+
+
+
