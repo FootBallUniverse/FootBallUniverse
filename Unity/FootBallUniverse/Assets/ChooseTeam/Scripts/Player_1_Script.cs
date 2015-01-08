@@ -214,16 +214,6 @@ public class Player_1_Script : MonoBehaviour
                 m_Control = false;
             }
         }
-        // STARTボタンが押されたら遷移
-        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START) 
-            || Input.GetKeyDown(InputXBOX360.P2_XBOX_START)
-            || Input.GetKeyDown(InputXBOX360.P3_XBOX_START)
-            || Input.GetKeyDown(InputXBOX360.P4_XBOX_START))       // フェードアウトしているか
-        {
-            // フェードインのフラグを1に変更
-            m_SceneFlag = true;
-            m_Fade_flag_1.m_FadeFlag = 2;
-        }
 
         // Aが押されたら
         if (Input.GetKeyDown(InputXBOX360.P1_XBOX_A)
