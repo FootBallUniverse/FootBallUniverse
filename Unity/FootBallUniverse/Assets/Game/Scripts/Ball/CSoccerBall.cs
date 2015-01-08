@@ -91,7 +91,7 @@ public class CSoccerBall : MonoBehaviour {
     //----------------------------------------------------------------------
     public void StartGame()
     {
-        this.rigidbody.velocity = new Vector3(Random.Range(-1.0f,1.0f) * 3.0f, Random.Range(-1.0f,1.0f) * 3.0f, 0.0f);
+        this.rigidbody.velocity = new Vector3(Random.Range(-1.0f,1.0f) * 5.0f, Random.Range(-1.0f,1.0f) * 5.0f, 0.0f);
     }
 
     //----------------------------------------------------------------------

@@ -116,15 +116,7 @@ public class CGameManager : MonoBehaviour {
         {
 
         }
-
-        // セレクトボタンでレディ画面をスキップ
-        if (InputXBOX360.IsGetAllSelectButton() == true)
-        {
-            m_nowStatus = eSTATUS.eGAME;
-            m_frame = 0;
-            m_isGamePlay = true;
-        }
-    }
+   }
 
     //----------------------------------------------------------------------
     // カウントダウン状態
@@ -194,7 +186,7 @@ public class CGameManager : MonoBehaviour {
     private void GamePlay()
     {
         this.PlayTime();    // 時間計測用
-        this.DebugKey();    // デバッグ用
+ //       this.DebugKey();    // デバッグ用
     }
 
     //----------------------------------------------------------------------
