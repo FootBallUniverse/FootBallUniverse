@@ -38,8 +38,6 @@ public class Flag_Select1 : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            Debug.Log("右回転は" + m_team1.m_Left_RotateFlag);
-            Debug.Log("左回転は" + m_team1.m_Right_RotateFlag);
             m_Flag[i] = m_team1.m_Country[i].m_Flag;
             if (m_team1.m_Left_RotateFlag == true)
             {

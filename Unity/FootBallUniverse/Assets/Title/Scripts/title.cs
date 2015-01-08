@@ -70,8 +70,7 @@ public class title : MonoBehaviour {
         }
 
         // スペースキーで強制的に次のシーンに飛ばす
-		if(Input.GetKeyDown(KeyCode.Space) ||
-           InputXBOX360.IsGetAllStartButton() == true)
+		if(Input.GetKeyDown(KeyCode.Space))
 		{
             m_SceneFlag = true;
 		}
