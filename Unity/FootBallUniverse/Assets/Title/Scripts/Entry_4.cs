@@ -45,7 +45,7 @@ public class Entry_4 : MonoBehaviour
                 Input.GetKeyDown(InputXBOX360.P4_XBOX_A) ||
                 InputXBOX360.IsGetAllStartButton() == true)
             {
-                m_SE.VolumeSE(1.0f);
+                m_SE.VolumeSE(0.1f);
                 a += 1;
                 m_SE.PlaySE("title/entry_go");
                 m_inFlag = true;

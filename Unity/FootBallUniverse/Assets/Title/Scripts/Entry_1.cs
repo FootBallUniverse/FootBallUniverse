@@ -45,7 +45,7 @@ public class Entry_1 : MonoBehaviour
                 Input.GetKeyDown(InputXBOX360.P1_XBOX_A) ||
                 InputXBOX360.IsGetAllStartButton() == true)
             {
-                m_SE.VolumeSE(1.0f);
+                m_SE.VolumeSE(0.1f);
                 m_SE.PlaySE("title/entry_go");
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす

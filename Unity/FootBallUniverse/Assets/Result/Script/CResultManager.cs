@@ -53,9 +53,9 @@ public class CResultManager : MonoBehaviour {
 		}
 
         m_soundPlayer = new CSoundPlayer();
-        m_soundPlayer.ChangeSEVolume(0.4f);
+        m_soundPlayer.ChangeSEVolume(0.2f);
         m_soundPlayer.PlaySE("result/supoter_finish");
-
+        
 		// パネル取得
 		m_mainUIPanel = GameObject.Find ("MainUI").transform.FindChild ("Camera").transform.FindChild ("Anchor").transform.FindChild ("Panel").gameObject;	
 		m_1p2pUIPanel = GameObject.Find ("1p2pUI").transform.FindChild ("Camera").transform.FindChild ("Anchor").transform.FindChild ("Panel").gameObject;

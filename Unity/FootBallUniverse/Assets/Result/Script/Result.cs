@@ -50,6 +50,7 @@ public class Result : MonoBehaviour {
 		m_soundPlayer = new CSoundPlayer();
         m_soundPlayer.PlayBGMFadeIn("result/bgm_01", 0.002f);
         CResultManager.m_soundPlayer.StopSE();
+        m_soundPlayer.ChangeSEVolume(0.2f);
     }
 
 	//----------------------------------------------------------------------
@@ -220,6 +221,7 @@ public class Result : MonoBehaviour {
         CResultManager.m_resultSub1.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("SubPanel0").transform.GetComponent<UIPanel>().alpha = 1;
         CResultManager.m_resultSub2.transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("SubPanel1").transform.GetComponent<UIPanel>().alpha = 1;
 
+        this.suppoterBffByTeam[0, 1] = 500;
 	}
 
 
@@ -247,22 +249,22 @@ public class Result : MonoBehaviour {
         if ((Input.GetKeyDown(InputXBOX360.P1_XBOX_A) || Input.GetKeyDown(KeyCode.Alpha1)) && this.buttonCheck[0,0] == false)
         {
             this.buttonCheck[0, 0] = true;
-            m_soundPlayer.PlaySE("result/button_push");
+            m_soundPlayer.PlaySE("select/selector_select");
         }
         // 2P
         if ((Input.GetKeyDown(InputXBOX360.P2_XBOX_A) || Input.GetKeyDown(KeyCode.Alpha2)) && this.buttonCheck[0,1] == false)
         {
-            m_soundPlayer.PlaySE("result/button_push");
+            m_soundPlayer.PlaySE("select/selector_select");
             this.buttonCheck[0, 1] = true;
         }
         if ((Input.GetKeyDown(InputXBOX360.P3_XBOX_A) || Input.GetKeyDown(KeyCode.Alpha3)) && this.buttonCheck[1,0] == false)
         {
-            m_soundPlayer.PlaySE("result/button_push");
+            m_soundPlayer.PlaySE("select/selector_select");
             this.buttonCheck[1, 0] = true;
         }
         if ((Input.GetKeyDown(InputXBOX360.P4_XBOX_A) || Input.GetKeyDown(KeyCode.Alpha4 )) && this.buttonCheck[1,1] == false)
         {
-            m_soundPlayer.PlaySE("result/button_push");
+            m_soundPlayer.PlaySE("select/selector_select");
             this.buttonCheck[1, 1] = true;
         }
 
@@ -387,6 +389,7 @@ public class Result : MonoBehaviour {
 						ReSetButtonCheck(i, false);
 						this.SubPanels[i,0].GetComponent<TweenScale>().enabled = false;
 					}else{
+                        //m_soundPlayer.PlaySE("result/supoter_countup");
 						for (int j = 0; j < 2; j++)
 						{
 							if (this.suppoterBffByTeam[i,j] >= works[j])

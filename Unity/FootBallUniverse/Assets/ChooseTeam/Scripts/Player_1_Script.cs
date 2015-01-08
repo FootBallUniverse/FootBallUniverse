@@ -115,7 +115,7 @@ public class Player_1_Script : MonoBehaviour
             if (m_Right_RotateFlag == false && m_Left_RotateFlag == false)
             {
                 m_Right_RotateFlag = true;      // 右回転のフラグをtrueにする
-                m_SE.VolumeSE(1.0f);
+                m_SE.VolumeSE(0.1f);
                 if (m_Fade_flag_1.m_FadeFlag == 0)
                 {
                     m_SE.PlaySE("select/selector_swap");
@@ -129,7 +129,7 @@ public class Player_1_Script : MonoBehaviour
             if (m_Left_RotateFlag == false && m_Right_RotateFlag == false)
             {
                 m_Left_RotateFlag = true;    // 左回転のフラグをtrueにする
-                m_SE.VolumeSE(1.0f);
+                m_SE.VolumeSE(0.1f);
                 if (m_Fade_flag_1.m_FadeFlag == 0)
                 {
                     m_SE.PlaySE("select/selector_swap");
@@ -152,7 +152,7 @@ public class Player_1_Script : MonoBehaviour
         {
             // フェードインのフラグを1に変更
             m_Fade_flag_1.m_FadeFlag = 1;
-            m_SE.VolumeSE(1.0f);
+            m_SE.VolumeSE(0.1f);
             m_SE.PlaySE("select/selector_select");
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift) && m_Fade_flag_1.m_FadeFlag == 1)
