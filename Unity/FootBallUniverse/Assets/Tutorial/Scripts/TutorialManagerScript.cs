@@ -49,7 +49,7 @@ public class TutorialManagerScript : MonoBehaviour {
 		WAIT = 0,
 		INIT,
 		FAID_IN,
-		// 各自チュートリアル
+		// シーン１
 		SCENE0_Message00,
 		SCENE0_Message01,
 		SCENE0_Message02,
@@ -58,7 +58,7 @@ public class TutorialManagerScript : MonoBehaviour {
 		SCENE0_Play00,
 		SCENE0_Message04,
 		SCENE0_Message05,
-		// 各自チュートリアル
+		// シーン２
 		SCENE1_Message00,
 		SCENE1_Instruction00,
 		SCENE1_Play00,
@@ -68,7 +68,11 @@ public class TutorialManagerScript : MonoBehaviour {
 		SCENE1_Message03,
 		SCENE1_Instruction02,
 		SCENE1_Play01,
+		SCENE1_Message04,
+		SCENE1_Instruction03,
 		SCENE1_Play02,
+		SCENE1_Instruction04,
+		SCENE1_Play03,
 		// シーン４
 		SCENE2_Message00,
 
@@ -610,12 +614,12 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.controle[i*2 + 1].rotation = true;
 					
 					// 全員がボールを見たらチェック
-					if (GetCheck2ObjectDegree(this.player[i * 2], this.ball, 30))
+					if (GetCheck2ObjectDegree(this.player[i * 2], this.ball, 10))
 					{
 						this.buttonCheck[i * 2] = true;
 						this.controle[i * 2].rotation = false;
 					}
-					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.player[i * 2], 30))
+					if (GetCheck2ObjectDegree(this.player[i * 2 + 1], this.player[i * 2], 10))
 					{
 						this.buttonCheck[i * 2 + 1] = true;
 						this.controle[i * 2].rotation = false;
@@ -659,10 +663,37 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Play01:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(false);
+					this.controle[i*2].rotation     = true;
+					this.controle[i*2 + 1].rotation = true;
+					this.controle[i*2].move         = true;
+					this.controle[i*2 + 1].move     = true;
 
-					// test
+					if (this.ball.GetComponent<CSoccerBall>().m_isPlayer)
+					{
+						this.buttonCheck[i * 2] = true;
+						this.controle[i * 2].rotation     = false;
+						this.controle[i * 2 + 1].rotation = false;
+						this.controle[i * 2].move         = false;
+						this.controle[i * 2 + 1].move     = false;
+					}
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Message04:
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
+
+					if(this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2+2].GetComponent<CPlayer>().m_isGetBall == true)
+						 message = this.MainMessage[12];
+					else message = this.MainMessage[13];
+
+					this.messageLog[i].GetComponent<UILabel>().text = message;
 					SetButton_A();
-					// endTest
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction03:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					SetButton_START();
 					break;
 
 				case TUTORIAL_STATE.SCENE1_Play02:
@@ -670,6 +701,12 @@ public class TutorialManagerScript : MonoBehaviour {
 					// test
 					SetButton_A();
 					// endTest
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction04:
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Play03:
 					break;
 
 
