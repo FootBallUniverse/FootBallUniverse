@@ -144,6 +144,11 @@ public class CGameManager : MonoBehaviour {
         // ステータス変更
         m_nowStatus = eSTATUS.eGOALPERFOMANCE;
         m_frame = 0.0f;
+		CGameManager.m_soundPlayer.PlaySE("game/kickoff");
+		GameObject.Find("Player1").transform.FindChild("player").transform.GetComponent<CPlayer1> ().m_playerSE.StopSE ();
+		GameObject.Find("Player2").transform.FindChild("player").transform.GetComponent<CPlayer2> ().m_playerSE.StopSE ();
+		GameObject.Find("Player3").transform.FindChild("player").transform.GetComponent<CPlayer3> ().m_playerSE.StopSE ();
+		GameObject.Find("Player4").transform.FindChild("player").transform.GetComponent<CPlayer4> ().m_playerSE.StopSE ();
 
     }
 
@@ -267,6 +272,8 @@ public class CGameManager : MonoBehaviour {
 	public static void RestartGame()
 	{
 		CSoccerBallManager.Restart ();
+		CGameManager.m_soundPlayer.PlaySE("game/kickoff");
+
 	}
 
     //----------------------------------------------------------------------

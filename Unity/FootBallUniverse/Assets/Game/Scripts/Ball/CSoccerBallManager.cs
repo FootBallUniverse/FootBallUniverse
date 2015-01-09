@@ -101,7 +101,7 @@ public class CSoccerBallManager : MonoBehaviour {
     public bool ChangeOwner(Transform _parent,Vector3 _pos)
     {
         // サッカーボール自体をプレイヤーの親にする
-        m_soccerBall.transform.parent = _parent; 
+        m_soccerBall.transform.parent = _parent;
 
         // サッカーボールの位置変更
         m_soccerBall.GetComponent<CSoccerBall>().Init(_pos);

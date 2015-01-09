@@ -70,6 +70,33 @@ public class CGauge : MonoBehaviour {
         // 前回までのレベルと違った場合
         if (level != m_gaugeLevel)
         {
+			if(level>m_gaugeLevel)
+			{
+				switch (this.name)
+				{
+				case "1PGauge":
+					GameObject.Find("Player1").transform.FindChild("player").transform.GetComponent<CPlayer1> ().m_playerSE.PlaySE ("charge_finish");
+					GameObject.Find("Player1").transform.FindChild("player").transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().PlayerGaugeUp();
+					break;
+					
+				case "2PGauge":
+					GameObject.Find("Player2").transform.FindChild("player").transform.GetComponent<CPlayer2> ().m_playerSE.PlaySE ("charge_finish");
+					GameObject.Find("Player2").transform.FindChild("player").transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().PlayerGaugeUp();
+					break;
+					
+				case "3PGauge":
+					GameObject.Find("Player3").transform.FindChild("player").transform.GetComponent<CPlayer3> ().m_playerSE.PlaySE ("charge_finish");
+					GameObject.Find("Player3").transform.FindChild("player").transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().PlayerGaugeUp();
+					break;
+					
+				case "4PGauge":
+					GameObject.Find("Player4").transform.FindChild("player").transform.GetComponent<CPlayer4> ().m_playerSE.PlaySE ("charge_finish");
+					GameObject.Find("Player4").transform.FindChild("player").transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().PlayerGaugeUp();
+					break;
+				}
+
+			}
+
             m_gaugeLevel = level;
             if (m_gaugeLevel == 0)
                 m_sprite.spriteName = "gage_00";

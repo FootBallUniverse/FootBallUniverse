@@ -139,6 +139,7 @@ public class CPlayer : MonoBehaviour {
 
         // ボールの取れる範囲をセット
         this.GetComponent<SphereCollider>().radius = m_human.m_holdRangeRadius;
+		this.transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().OverRimitOff();
 
         // その他変数初期化
         m_chargeFrame = 0;
