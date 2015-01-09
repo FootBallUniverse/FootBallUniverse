@@ -43,6 +43,28 @@ public class TeamData
 	private static ArrayList          logs            = new ArrayList(); // ログデータ格納（カプセル化）
 	public  static int                suppoterByWorld;                   // 世界中のサポーター数
 
+	//================セーブデータ管理==============================
+	public static void Save()
+	{
+		PlayerPrefs.SetInt("FBU_SUPPORTER", suppoterByWorld);
+	}
+
+	public static void Load()
+	{
+		suppoterByWorld = PlayerPrefs.GetInt("FBU_SUPPORTER");
+	}
+
+	public static void ReSetData()
+	{
+		suppoterByWorld = 0;
+		Save();
+	}
+
+	public static void DeleteData()
+	{
+		PlayerPrefs.DeleteAll();
+	}
+
 	//================以下、シュートログ操作メソッド================
 	//----------------------------------------------------------------------
 	// シュートログデータを追加する

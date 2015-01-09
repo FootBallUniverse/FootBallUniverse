@@ -215,6 +215,7 @@ public class Result : MonoBehaviour {
 		// TeamDataを統合、クリア
 		TeamData.suppoterByWorld += (TeamData.suppoterByTeam[0] + TeamData.suppoterByTeam[1]);
 		TeamData.suppoterByTeam[0] = TeamData.suppoterByTeam[1] = 0;
+		TeamData.Save();
 		
         // シュートログをクリア
 		TeamData.ClearLog();

@@ -35,6 +35,9 @@ public class title : MonoBehaviour {
         m_SE = this.gameObject.GetComponent<SEPlay>();
         m_soundPlayer.PlayBGMFadeIn("title/bgm_01", 0.1f);
         m_SE.VolumeSE(0.1f);
+
+		// スコアロード
+		TeamData.Load();
     }
 
 	// Update is called once per frame
