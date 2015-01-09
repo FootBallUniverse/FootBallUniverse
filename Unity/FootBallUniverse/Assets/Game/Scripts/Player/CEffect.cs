@@ -12,7 +12,7 @@ public class CEffect : MonoBehaviour {
 	GameObject effectCharge;
 	GameObject effectChargeMax;
 	GameObject effectShoot;
-	GameObject effectOverRimit;
+	public GameObject effectOverRimit;
 	GameObject effectGaugeUp;
 	GameObject effectJapan;
 
@@ -30,15 +30,21 @@ public class CEffect : MonoBehaviour {
 			this.transform.FindChild("Effect_Tackle1").gameObject.SetActive(false);
 			this.effectChargeMax = this.transform.FindChild("Effect_ChargeMax0").gameObject;
 			this.transform.FindChild("Effect_ChargeMax1").gameObject.SetActive(false);
-			this.effectOverRimit = this.transform.FindChild("Effect_Japan0").gameObject;
-			this.transform.FindChild("Effect_Japan1").gameObject.SetActive(false);
+//			if(this.transform.parent.GetComponent<CPlayer>().m_playerData.m_teamNo == 0)
+//			{
+//				this.effectOverRimit = this.transform.FindChild("Effect_Japan0").gameObject;
+//				this.transform.FindChild("Effect_Japan1").gameObject.SetActive(false);
+//			}
 		}else{
 			this.effectTackle = this.transform.FindChild("Effect_Tackle1").gameObject;
 			this.transform.FindChild("Effect_Tackle0").gameObject.SetActive(false);
 			this.effectChargeMax = this.transform.FindChild("Effect_ChargeMax1").gameObject;
 			this.transform.FindChild("Effect_ChargeMax0").gameObject.SetActive(false);
-			this.effectOverRimit = this.transform.FindChild("Effect_Japan1").gameObject;
-			this.transform.FindChild("Effect_Japan0").gameObject.SetActive(false);
+//			if(this.transform.parent.GetComponent<CPlayer>().m_playerData.m_teamNo == 0)
+//			{
+//				this.effectOverRimit = this.transform.FindChild("Effect_Japan1").gameObject;
+//				this.transform.FindChild("Effect_Japan0").gameObject.SetActive(false);
+//			}
 		}
 
 		this.effectTackleDamage = this.transform.FindChild("Effect_TackleDamage").gameObject;
@@ -70,7 +76,6 @@ public class CEffect : MonoBehaviour {
 		this.effectCharge.SetActive(false);
 		this.effectChargeMax.SetActive(false);
 		this.effectShoot.SetActive(false);
-//		this.effectJapan.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -149,15 +154,15 @@ public class CEffect : MonoBehaviour {
 		//if (this.cplayer.m_chargeFrame >= 120)
 		//	this.effectShoot.SetActive(true);
 	}
-	void OverRimitOn()
+	public void OverRimitOn()
 	{
 		this.effectOverRimit.SetActive(true);
 	}
-	void OverRimitOff()
+	public void OverRimitOff()
 	{
 		this.effectOverRimit.SetActive(false);
 	}
-	void PlayerGaugeUp()
+	public void PlayerGaugeUp()
 	{
 		this.effectGaugeUp.particleSystem.Play();
 	}

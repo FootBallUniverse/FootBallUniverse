@@ -213,6 +213,9 @@ public class CPlayer4 : CPlayer {
             }
 
             // 終了エフェクト
+			this.transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().OverRimitOff();
+			m_playerSE.PlaySE("game/alert_pass");
+
         }
     }
 	
@@ -735,6 +738,8 @@ public class CPlayer4 : CPlayer {
             if (m_gauge.GaugeDecrement() != 0)
             {
                 // ここにエフェクトの開始とかを入れる
+				this.transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().OverRimitOn();
+				m_playerSE.PlaySE("game/kick_smash_echor");
                 m_status = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
                 m_isOverRimit = true;
 
@@ -743,6 +748,8 @@ public class CPlayer4 : CPlayer {
                 {
                     // ボールの取れる範囲を変更
                     this.GetComponent<SphereCollider>().radius = CGaugeManager.m_japanHoldRadius;
+					this.transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().effectOverRimit.particleSystem.startSize = CGaugeManager.m_japanHoldRadius * 50;
+
                 }
             }
         }
