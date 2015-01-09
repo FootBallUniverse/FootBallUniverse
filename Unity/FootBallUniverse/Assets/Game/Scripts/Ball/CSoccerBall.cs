@@ -187,6 +187,11 @@ public class CSoccerBall : MonoBehaviour {
 			CPlayer ballPlayer = this.transform.parent.GetComponent<CPlayer> ();
 			this.transform.parent.transform.parent.GetComponent<CPlayerAnimator> ().TackleDamage ();
 			ballPlayer.m_isBall = false;
+			if(ballPlayer.m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT)
+				ballPlayer.m_oldStatus = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
+			else
+				ballPlayer.m_oldStatus = CPlayerManager.ePLAYER_STATUS.eNONE; 
+
 			ballPlayer.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
 			ballPlayer.m_action.InitTackleDamage (ballPlayer.m_human.m_stealDamageLength, 0.0f, ballPlayer.m_human.m_stealDamageLength);
             
