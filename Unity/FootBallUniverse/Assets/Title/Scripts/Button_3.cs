@@ -40,8 +40,7 @@ public class Button_3 : MonoBehaviour
             // エントリー
             if (Input.GetKeyDown(KeyCode.Alpha3) ||
                 Input.GetKeyDown(KeyCode.Space) ||
-                Input.GetKeyDown(InputXBOX360.P3_XBOX_A) ||
-                InputXBOX360.IsGetAllStartButton() == true)
+                Input.GetKeyDown(InputXBOX360.P3_XBOX_A))
             {
                 m_inFlag = true;
                 // 代入したPositionに対して大きな値を代入し、テクスチャを画面外へ吹っ飛ばす
