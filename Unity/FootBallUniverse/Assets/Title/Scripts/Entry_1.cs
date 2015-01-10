@@ -42,8 +42,7 @@ public class Entry_1 : MonoBehaviour
             // エントリー
             if (Input.GetKeyDown(KeyCode.Alpha1) ||
                 Input.GetKeyDown(KeyCode.Space) ||
-                Input.GetKeyDown(InputXBOX360.P1_XBOX_A) ||
-                InputXBOX360.IsGetAllStartButton() == true)
+                Input.GetKeyDown(InputXBOX360.P1_XBOX_A))
             {
                 m_SE.VolumeSE(0.1f);
                 m_SE.PlaySE("title/entry_go");

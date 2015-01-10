@@ -42,8 +42,7 @@ public class Entry_4 : MonoBehaviour
             // エントリー
             if (Input.GetKeyDown(KeyCode.Alpha4) ||
                 Input.GetKeyDown(KeyCode.Space) ||
-                Input.GetKeyDown(InputXBOX360.P4_XBOX_A) ||
-                InputXBOX360.IsGetAllStartButton() == true)
+                Input.GetKeyDown(InputXBOX360.P4_XBOX_A))
             {
                 m_SE.VolumeSE(0.1f);
                 a += 1;
