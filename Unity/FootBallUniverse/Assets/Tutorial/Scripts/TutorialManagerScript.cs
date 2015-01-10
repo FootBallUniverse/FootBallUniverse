@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if true
+using UnityEngine;
 using System.Collections;
 
 public class TutorialManagerScript : MonoBehaviour {
@@ -7,23 +8,26 @@ public class TutorialManagerScript : MonoBehaviour {
 	// チュートリアル用メッセージ（仮置）
 	string[] MainMessage = new string[24]{
 		// シーン１
-		"やあ、私は君たちのチーム…",
-		"代表の監督を努めさせてもらっている",
-		"だ。確か君たちは、このスタジアムは初めてだったね？",
-		"ここは、宇宙ステーション内に建設された球体スタジアムの中。これから“スペースフットボール”の、４年に１度の祭典…スペースワールドカップが行われる",
-		"地上のスタジアムのそれとは、比べ物にならない浮遊感だろう？試合が始まるまで少し時間がある。今のうちに、体を馴らしておこうか",
-		"まずは、そうだな… 上を見てくれ",
-		"今向かい合っている相手が、君のチームメイトだ。隣にいる、と言ったほうがわかりやすいかもしれないが",
-		"試合では、２人で協力して戦ってもらうことになる。今のうちに、連携を深めておいてくれ",
+/*0*/		"やあ、私は君たちのチーム…",
+/*1*/		"代表の監督を努めさせてもらっている",
+/*2*/		"者だ。\n確か君たちは、このスタジアムは初めてだったね？",
+/*3*/		"ここは、宇宙ステーション内に建設された球体スタジアムの中。\nこれから“スペースフットボール”の、４年に１度の祭典…スペースワールドカップが行われる",
+/*4*/		"地上のスタジアムのそれとは、比べ物にならない浮遊感だろう？\n試合が始まるまで少し時間がある。今のうちに、体を馴らしておこうか",
+/*5*/		"まずは、そうだな… 上を見てくれ",
+/*6*/		"今向かい合っている相手が、君のチームメイトだ。\n隣にいる、と言ったほうがわかりやすいかもしれないが",
+/*7*/		"試合では、２人で協力して戦ってもらうことになる。\n今のうちに、連携を深めておいてくれ",
 		// シーン２
-		"次に、ボールの場所を確認しよう。[1P:左/2P:右]を見てくれ",
-		"見ての通り、ボールだ。試合では、そいつを相手チームのゴールに蹴りこむことを目指す",
-		"ボールは近づくと勝手に”ホールド”されて、足元についてくる",
-		"試しに近くまで移動して、ボールをホールドしてみるんだ",
-		"よし、いいぞ。次はボールを蹴ってみようか",
-		// シーン３
-		"チームメイトに向けて、”パス”を出してみよう。ボールは君が見ている場所に、まっすぐに飛ぶ",
-		"いいパスだ。体も動かしながら、何度かボールを蹴り合ってみようか",
+/*8*/		"次に、ボールの場所を確認しよう。[1P:左/2P:右]を見てくれ",
+/*9*/		"見ての通り、ボールだ。試合では、そいつを相手チームのゴールに蹴りこむことを目指す",
+/*10*/		"ボールは近づくと勝手に”ホールド”されて、足元についてくる",
+/*11*/		"正面に見えるのが、相手チームの選手たちだ。\n相手より先に中央のボールを取って、主導権を掴もう",
+
+/*12*/		"よし、ボールを取ったな。相手はボールをスティールしようとしてくるはずだ。\n彼らをかわして、ゴールにボールをシュートしろ！",
+/*13*/		"ボールを取られてしまったな。なら取り返すんだ！\nダッシュやタックルを使って追いつき、ボールをスティールしてやれ！",
+
+/*14*/		"おっと、いつの間にかこんな時間だ。もうすぐ試合が始まってしまうな…君たちなら、きっと勝てる。最高の試合を見せてくれ！",
+
+
 		"ボールを蹴る感覚も、だいぶ掴めてきたか？相手チームのキーパーに来てもらった。彼をかいくぐってゴールにシュートしてみよう",
 		"やるね！今の感覚は、しっかり覚えておくんだ",
 		"次は、相手チームの選手と一緒にウォーミングアップしようと思ったけど…まだ時間がかかるようだ。少し自由にしておいてくれ",
@@ -72,18 +76,10 @@ public class TutorialManagerScript : MonoBehaviour {
 		SCENE1_Instruction03,
 		SCENE1_Play02,
 		SCENE1_Instruction04,
-		SCENE1_Play03,
-		
-		SCENE1_Message05,
-		SCENE1_Message06,
 		SCENE1_Instruction05,
-		SCENE1_Play04,
-		SCENE1_Message07,
-		SCENE1_Message08,
 		SCENE1_Instruction06,
-		SCENE1_Instruction07,
-		SCENE1_Play05,
-		SCENE1_Message09,
+		SCENE1_Message05,
+		SCENE1_Play03,
 
 		// 終了処理
 		FAID_OUT,
@@ -131,8 +127,8 @@ public class TutorialManagerScript : MonoBehaviour {
 		this.state[0] = this.state[1] = TUTORIAL_STATE.WAIT;
 		ReSetAllButtonCheck();
 		// オブジェクト挿入
-		for (int i = 0; i < 3; i++)
-			this.guidVewer[i] = GameObject.Find("GuidVewer" + i);
+		//for (int i = 0; i < 3; i++)
+		//	this.guidVewer[i] = GameObject.Find("GuidVewer" + i);
 
 		for (int i = 0; i < 2; i++)
 			this.guidSubVewer[i] = GameObject.Find("SubPanel"+i).transform.FindChild("GuidVewer").gameObject;
@@ -251,10 +247,10 @@ public class TutorialManagerScript : MonoBehaviour {
 		this.ball = GameObject.Find("SoccerBall").gameObject;
 
 		// 最初の画面に合わせて設定
-		this.guidVewer[0].SetActive(true);
-		this.guidVewer[0].GetComponent<UISprite>().spriteName = "user'sGuide_1";
-		this.guidVewer[1].SetActive(false);
-		this.guidVewer[2].SetActive(false);
+		//this.guidVewer[0].SetActive(true);
+		//this.guidVewer[0].GetComponent<UISprite>().spriteName = "user'sGuide_1";
+		//this.guidVewer[1].SetActive(false);
+		//this.guidVewer[2].SetActive(false);
 		this.guidSubVewer[0].SetActive(false);
 		this.guidSubVewer[1].SetActive(false);
 
@@ -510,6 +506,8 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.INIT:
 					if (i == 0) InitTutorial();
 					this.state[i] = TUTORIAL_STATE.FAID_IN;
+					message = this.MainMessage[0] + TeamData.GetTeamNationalityName(TeamData.teamNationality[i]) + this.MainMessage[1] + this.MainMessage[2];
+					this.messageLog[i].transform.FindChild("logs").GetComponent<UILabel>().text = message;
 					break;
 
 				case TUTORIAL_STATE.FAID_IN:
@@ -523,7 +521,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					break;
 
 				case TUTORIAL_STATE.SCENE0_Message00:
-					message = this.MainMessage[0] + TeamData.GetTeamNationalityName(TeamData.teamNationality[i]) + this.MainMessage[1] + "○○" + this.MainMessage[2];
+					message = this.MainMessage[0] + TeamData.GetTeamNationalityName(TeamData.teamNationality[i]) + this.MainMessage[1] + this.MainMessage[2];
 					this.messageLog[i].transform.FindChild("logs").GetComponent<UILabel>().text = message;
 					SetButton_A();
 					break;
@@ -550,6 +548,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.buttonType = BUTTON_TYPE.START;
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
+					this.guidSubVewer[i].GetComponent<UISprite>().spriteName = "Instruction01";
 					SetButton_START();
 					break;
 
@@ -599,6 +598,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.buttonType = BUTTON_TYPE.START;
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
+					//this.guidSubVewer[i].GetComponent<UISprite>().spriteName = "Instruction02";
 					SetButton_START();
 					break;
 
@@ -628,6 +628,8 @@ public class TutorialManagerScript : MonoBehaviour {
 
 				case TUTORIAL_STATE.SCENE1_Message01:
 					this.buttonType = BUTTON_TYPE.A;
+					this.messageLog[i].SetActive(true);
+					this.guidSubVewer[i].SetActive(false);
 					message = this.MainMessage[9];
 					this.messageLog[i].transform.FindChild("logs").GetComponent<UILabel>().text = message;
 					SetButton_A();
@@ -637,6 +639,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.buttonType = BUTTON_TYPE.START;
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
+					this.guidSubVewer[i].GetComponent<UISprite>().spriteName = "Instruction02";
 					SetButton_START();
 					break;
 
@@ -659,6 +662,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.buttonType = BUTTON_TYPE.START;
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
+					this.guidSubVewer[i].GetComponent<UISprite>().spriteName = "Instruction03";
 					SetButton_START();
 					break;
 
@@ -676,7 +680,7 @@ public class TutorialManagerScript : MonoBehaviour {
 					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
 					this.player[i * 2 + 1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
 
-
+					// ボールをとる
 					if (this.ball.GetComponent<CSoccerBall>().m_isPlayer)
 					{
 						if (this.player[i * 2].GetComponent<CPlayer>().m_isGetBall == true || this.player[i * 2 + 1].GetComponent<CPlayer>().m_isGetBall == true) this.takeBallTeamNo = i;
@@ -710,6 +714,7 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Instruction03:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
+					this.guidSubVewer[i].GetComponent<UISprite>().spriteName = "Instruction04";
 					SetButton_START();
 					break;
 
@@ -747,7 +752,21 @@ public class TutorialManagerScript : MonoBehaviour {
 				case TUTORIAL_STATE.SCENE1_Instruction04:
 					this.messageLog[i].SetActive(false);
 					this.guidSubVewer[i].SetActive(true);
+					this.guidSubVewer[i].GetComponent<UISprite>().spriteName = "Instruction05";
+					SetButton_START();
+					break;
 
+				case TUTORIAL_STATE.SCENE1_Instruction05:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					this.guidSubVewer[i].GetComponent<UISprite>().spriteName = "Instruction06";
+					SetButton_START();
+					break;
+
+				case TUTORIAL_STATE.SCENE1_Instruction06:
+					this.messageLog[i].SetActive(false);
+					this.guidSubVewer[i].SetActive(true);
+					this.guidSubVewer[i].GetComponent<UISprite>().spriteName = "Instruction07";
 					SetButton_START();
 					break;
 
@@ -788,143 +807,13 @@ public class TutorialManagerScript : MonoBehaviour {
 
 					break;
 
-				//============================================================
 				case TUTORIAL_STATE.SCENE1_Message05:
-					this.time = 0;
-					this.messageLog[i].SetActive(true);
-					this.guidSubVewer[i].SetActive(false);
-					message = this.MainMessage[4];
+					message = this.MainMessage[14];
 					this.messageLog[i].transform.FindChild("logs").GetComponent<UILabel>().text = message;
 					SetButton_A();
 					break;
 
-				case TUTORIAL_STATE.SCENE1_Message06:
-					message = this.MainMessage[4];
-					this.messageLog[i].transform.FindChild("logs").GetComponent<UILabel>().text = message;
-					SetButton_A();
-					break;
-
-				case TUTORIAL_STATE.SCENE1_Instruction05:
-					this.messageLog[i].SetActive(false);
-					this.guidSubVewer[i].SetActive(true);
-					SetButton_START();
-					break;
-
-
-				case TUTORIAL_STATE.SCENE1_Play04:
-					this.messageLog[i].SetActive(false);
-					this.guidSubVewer[i].SetActive(false);
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.charge   = true;
-					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.gauge  = true;
-
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.charge   = true;
-					this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.gauge = true;
-					
-				
-					// オーバー脱出
-					if (this.player[i * 2].GetComponent<CPlayer>().m_gauge.m_gauge <= 0)
-					{
-						this.buttonCheck[i*2] = true;
-						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_x = true;
-						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.move_z = true;
-						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
-						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
-						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.shoote = true;
-						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.charge = true;
-						this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.gauge = true;
-					}
-
-					break;
-
-				case TUTORIAL_STATE.SCENE1_Message07:
-					this.messageLog[i].SetActive(true);
-					this.guidSubVewer[i].SetActive(false);
-
-					message = this.MainMessage[4];
-					this.messageLog[i].transform.FindChild("logs").GetComponent<UILabel>().text = message;
-					SetButton_A();
-					break;
-
-				case TUTORIAL_STATE.SCENE1_Message08:
-					message = this.MainMessage[4];
-					this.messageLog[i].transform.FindChild("logs").GetComponent<UILabel>().text = message;
-					SetButton_A();
-					break;
-
-				case TUTORIAL_STATE.SCENE1_Instruction06:
-					this.messageLog[i].SetActive(false);
-					this.guidSubVewer[i].SetActive(true);
-					SetButton_START();
-					break;
-
-				case TUTORIAL_STATE.SCENE1_Instruction07:
-					SetButton_START();
-					break;
-
-
-				case TUTORIAL_STATE.SCENE1_Play05:
-					this.messageLog[i].SetActive(false);
-					this.guidSubVewer[i].SetActive(false);
-
-					// ゲージ強制注入
-					player[i * 2].GetComponent<CPlayer>().m_gauge.m_gauge++;
-					player[i * 2 +1].GetComponent<CPlayer>().m_gauge.m_gauge++;
-
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
-					this.player[i*2].GetComponent<CPlayer>().m_controlePermission.charge   = true;
-					this.player[i * 2].GetComponent<CPlayer>().m_controlePermission.gauge  = true;
-
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.move_x   = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.move_z   = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.rotate_x = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.rotate_y = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.shoote   = true;
-					this.player[i*2+1].GetComponent<CPlayer>().m_controlePermission.charge   = true;
-					this.player[i * 2+1].GetComponent<CPlayer>().m_controlePermission.gauge = true;
-
-					this.time++;
-
-					// 時間経過
-					if (this.time >= 1800)
-					{
-						for (int j = 0; j < 4; j++)
-						{
-							this.buttonCheck[j] = true;
-							this.player[j].GetComponent<CPlayer>().m_controlePermission.move_x = false;
-							this.player[j].GetComponent<CPlayer>().m_controlePermission.move_z = false;
-							this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_x = false;
-							this.player[j].GetComponent<CPlayer>().m_controlePermission.rotate_y = false;
-							this.player[j].GetComponent<CPlayer>().m_controlePermission.shoote = false;
-							this.player[j].GetComponent<CPlayer>().m_controlePermission.charge = false;
-							this.player[j].GetComponent<CPlayer>().m_controlePermission.gauge = false;
-						}
-					}
-					break;
-
-				case TUTORIAL_STATE.SCENE1_Message09:
-					this.time = 0;
-					this.messageLog[i].SetActive(true);
-					this.guidSubVewer[i].SetActive(false);
-
-					message = this.MainMessage[4];
-					this.messageLog[i].transform.FindChild("logs").GetComponent<UILabel>().text = message;
-					SetButton_A();
-					break;
-
+				//============================================================
 				case TUTORIAL_STATE.FAID_OUT:
 					if ( !this.bloackOut[0].GetComponent<TweenAlpha>().enabled &&
 						 !this.bloackOut[1].GetComponent<TweenAlpha>().enabled &&
@@ -958,3 +847,284 @@ public class TutorialManagerScript : MonoBehaviour {
 		}
 	}
 }
+
+#else
+using UnityEngine;
+using System.Collections;
+
+public class TutorialManagerScript : MonoBehaviour {
+	GameObject[] guidVewer = new GameObject[3];
+
+	enum TUTORIAL_STATE
+	{
+		WAIT,
+		INIT,
+		FAID_IN,
+		TUTORIAL0,
+		TUTORIAL1,
+		TUTORIAL2,
+		TUTORIAL3,
+		FAID_OUT,
+		STATE_MAX
+	};
+
+	TUTORIAL_STATE state     = TUTORIAL_STATE.WAIT;
+	bool[] buttonCheck       = new bool[4];
+	GameObject[] buttonVewer = new GameObject[4];
+	GameObject[] bloackOut   = new GameObject[3];
+
+    CSoundPlayer m_soundPlayer;
+
+	// Use this for initialization
+	void Start () {
+		// メインゲーム呼び出し
+		Application.LoadLevelAdditive("MainGame");
+
+	}
+
+	//----------------------------------------------------------------------
+	// チュートリアル画面の初期化
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
+	void InitTutorial()
+	{
+        CGameManager.m_nowStatus = CGameManager.eSTATUS.eGAME;
+        CGameData.m_isTimer = false;
+
+		// 配信用カメラ削除
+		GameObject.Find("DeliveryCamera").SetActive(false);
+		// チュートリアルに必要のない機能を無効化
+		GameObject.Find("goal1_collision").SetActive(false);
+		GameObject.Find("goal2_collision").SetActive(false);
+		GameObject.Find("goal1_collision2").SetActive(false);
+		GameObject.Find("goal2_collision2").SetActive(false);
+		// NPCの削除
+		GameObject.Find("CPU1").SetActive(false);
+		GameObject.Find("CPU2").SetActive(false);
+		GameObject.Find("GoalKeeper1").SetActive(false);
+		GameObject.Find("GoalKeeper2").SetActive(false);
+		// メインUI削除
+		GameObject.Find("MainUI").SetActive(false);
+		// フェードアウト用
+		this.bloackOut[0] = GameObject.Find("MainPanelFeed").gameObject;
+		this.bloackOut[1] = GameObject.Find("SubPanelFeed0").gameObject;
+		this.bloackOut[2] = GameObject.Find("SubPanelFeed1").gameObject;
+		// 制限時間OFF
+		GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_colon").gameObject.SetActive(false);
+		GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_sec").gameObject.SetActive(false);
+		GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_tensec").gameObject.SetActive(false);
+		GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_min").gameObject.SetActive(false);
+
+		GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_colon").gameObject.SetActive(false);
+		GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_sec").gameObject.SetActive(false);
+		GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_tensec").gameObject.SetActive(false);
+		GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("time_min").gameObject.SetActive(false);
+
+        GameObject.Find("P1&P2").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("BlackOut").gameObject.SetActive(false);
+        GameObject.Find("P3&P4").transform.FindChild("UI").transform.FindChild("Camera").transform.FindChild("Anchor").transform.FindChild("Panel").transform.FindChild("BlackOut").gameObject.SetActive(false);
+
+        GameObject.Find("BGMObject").gameObject.SetActive(false);
+        GameObject.Find("SEObject").gameObject.SetActive(false);
+
+        m_soundPlayer = new CSoundPlayer();
+        m_soundPlayer.PlayBGMFadeIn("tutorial/bgm_01", 0.05f);
+
+        // オブジェクト挿入
+		for (int i = 0; i < 3; i++)
+			this.guidVewer[i] = GameObject.Find("GuidVewer" + i);
+
+		for (int i = 0; i < 4; i++)
+			this.buttonVewer[i] = GameObject.Find("Next_" + i);
+
+		// 最初の画面に合わせて設定
+		this.guidVewer[0].SetActive(true);
+		this.guidVewer[0].GetComponent<UISprite>().spriteName = "user'sGuide_1";
+		this.guidVewer[1].SetActive(false);
+		this.guidVewer[2].SetActive(false);
+
+		ReSetButtonCheck();
+	}
+
+	//----------------------------------------------------------------------
+	// ４人ともボタンを押したかを返す
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Param   check  true:ボタンがおされた/false:ボタンがおされていない
+	// @Return  none
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
+	bool GetButtonCheck()
+	{
+		for (int i = 0; i < 4; i++)
+			if(!this.buttonCheck[i])
+				return false;
+
+		return true;
+	}
+
+	//----------------------------------------------------------------------
+	// ボタンが押されたかのチェックを初期化
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
+	void ReSetButtonCheck()
+	{
+		for (int i = 0; i < 4; i++)
+			this.buttonCheck[i] = false;
+	}
+
+	//----------------------------------------------------------------------
+	// ボタンを押せ　を描するかしないかを判断させる
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/13  @Update 2014/12/13  @Author T.Takeuichi
+	//----------------------------------------------------------------------
+	void ButtonDraw()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (this.buttonCheck[i]) this.buttonVewer[i].SetActive(false);
+			else                     this.buttonVewer[i].SetActive(true);
+		}
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+		// Input
+        if (Input.GetKeyDown(InputXBOX360.P1_XBOX_START) && this.buttonCheck[0] == false)
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[0] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P2_XBOX_START) && this.buttonCheck[1] == false)
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[1] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P3_XBOX_START) && this.buttonCheck[2] == false)
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[2] = true;
+        }
+        if (Input.GetKeyDown(InputXBOX360.P4_XBOX_START) && this.buttonCheck[3] == false)
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[3] = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[0] = this.buttonCheck[1] = true;
+        }
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            m_soundPlayer.PlaySE("tutorial/button_push");
+            this.buttonCheck[2] = this.buttonCheck[3] = true;
+        }
+
+		// 遷移
+		switch (this.state)
+		{
+			case TUTORIAL_STATE.WAIT:
+				this.state = TUTORIAL_STATE.INIT;
+				return;
+
+
+			case TUTORIAL_STATE.INIT:
+				InitTutorial();
+				this.state = TUTORIAL_STATE.FAID_IN;
+				break;
+
+
+			case TUTORIAL_STATE.FAID_IN:
+				// 仮
+
+				if ( !this.bloackOut[0].GetComponent<TweenAlpha>().enabled &&
+				     !this.bloackOut[1].GetComponent<TweenAlpha>().enabled &&
+				     !this.bloackOut[2].GetComponent<TweenAlpha>().enabled )
+				{
+					ReSetButtonCheck();
+					this.state = TUTORIAL_STATE.TUTORIAL0;
+				}
+				break;
+
+
+			case TUTORIAL_STATE.TUTORIAL0:
+				if (GetButtonCheck())
+				{
+                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
+					ReSetButtonCheck();
+					this.state = TUTORIAL_STATE.TUTORIAL1;
+				}
+				break;
+
+
+			case TUTORIAL_STATE.TUTORIAL1:
+				this.guidVewer[0].SetActive(false);
+				this.guidVewer[1].SetActive(true);
+				this.guidVewer[1].GetComponent<UISprite>().spriteName = "user'sGuide_2";
+				this.guidVewer[2].SetActive(true);
+				this.guidVewer[2].GetComponent<UISprite>().spriteName = "user'sGuide_3";
+
+				if (GetButtonCheck())
+				{
+                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
+					ReSetButtonCheck();
+					this.state = TUTORIAL_STATE.TUTORIAL2;
+				}
+				break;
+			case TUTORIAL_STATE.TUTORIAL2:
+				this.guidVewer[0].SetActive(false);
+				this.guidVewer[1].SetActive(true);
+				this.guidVewer[1].GetComponent<UISprite>().spriteName = "user'sGuide_4";
+				this.guidVewer[2].SetActive(true);
+				this.guidVewer[2].GetComponent<UISprite>().spriteName = "user'sGuide_5";
+
+				if (GetButtonCheck())
+				{
+                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
+					ReSetButtonCheck();
+					this.state = TUTORIAL_STATE.TUTORIAL3;
+				}
+				break;
+
+
+			case TUTORIAL_STATE.TUTORIAL3:
+				this.guidVewer[0].SetActive(true);
+				this.guidVewer[0].GetComponent<UISprite>().spriteName = "user'sGuide_6";
+				this.guidVewer[1].SetActive(false);
+				this.guidVewer[2].SetActive(false);
+				if (GetButtonCheck())
+				{
+                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
+					for (int i = 0; i < 3; i++)
+						this.bloackOut[i].GetComponent<TweenAlpha>().Play(false);
+					this.state = TUTORIAL_STATE.FAID_OUT;
+				}
+				break;
+
+
+			case TUTORIAL_STATE.FAID_OUT:
+				if ( !this.bloackOut[0].GetComponent<TweenAlpha>().enabled &&
+					 !this.bloackOut[1].GetComponent<TweenAlpha>().enabled &&
+					 !this.bloackOut[2].GetComponent<TweenAlpha>().enabled)
+				{
+                    TeamData.suppoterByTeam[0] = 0;
+                    TeamData.suppoterByTeam[1] = 0;
+					Application.LoadLevel("MainGame");
+                    
+				}
+				break;
+		}
+
+		ButtonDraw();
+	}
+}
+#endif
