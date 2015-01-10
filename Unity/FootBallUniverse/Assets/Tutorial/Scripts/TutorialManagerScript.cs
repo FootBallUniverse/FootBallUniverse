@@ -1,4 +1,4 @@
-﻿#if true
+﻿#if false
 using UnityEngine;
 using System.Collections;
 
@@ -864,6 +864,8 @@ public class TutorialManagerScript : MonoBehaviour {
 		TUTORIAL1,
 		TUTORIAL2,
 		TUTORIAL3,
+		TUTORIAL4,
+		TUTORIAL5,
 		FAID_OUT,
 		STATE_MAX
 	};
@@ -872,6 +874,7 @@ public class TutorialManagerScript : MonoBehaviour {
 	bool[] buttonCheck       = new bool[4];
 	GameObject[] buttonVewer = new GameObject[4];
 	GameObject[] bloackOut   = new GameObject[3];
+	GameObject[] player = new GameObject[4];
 
     CSoundPlayer m_soundPlayer;
 
@@ -931,6 +934,9 @@ public class TutorialManagerScript : MonoBehaviour {
 
         m_soundPlayer = new CSoundPlayer();
         m_soundPlayer.PlayBGMFadeIn("tutorial/bgm_01", 0.05f);
+
+		// PlayerMode
+		for (int i = 1; i < 5; i++) this.player[i - 1] = GameObject.Find("Player" + i).transform.FindChild("player").gameObject;
 
         // オブジェクト挿入
 		for (int i = 0; i < 3; i++)
@@ -1051,7 +1057,7 @@ public class TutorialManagerScript : MonoBehaviour {
 				     !this.bloackOut[2].GetComponent<TweenAlpha>().enabled )
 				{
 					ReSetButtonCheck();
-					this.state = TUTORIAL_STATE.TUTORIAL0;
+					this.state += 1;
 				}
 				break;
 
@@ -1061,7 +1067,7 @@ public class TutorialManagerScript : MonoBehaviour {
 				{
                     m_soundPlayer.PlaySE("tutorial/tutorial_next");
 					ReSetButtonCheck();
-					this.state = TUTORIAL_STATE.TUTORIAL1;
+					this.state += 1;
 				}
 				break;
 
@@ -1077,7 +1083,7 @@ public class TutorialManagerScript : MonoBehaviour {
 				{
                     m_soundPlayer.PlaySE("tutorial/tutorial_next");
 					ReSetButtonCheck();
-					this.state = TUTORIAL_STATE.TUTORIAL2;
+					this.state +=1;
 				}
 				break;
 			case TUTORIAL_STATE.TUTORIAL2:
@@ -1091,22 +1097,59 @@ public class TutorialManagerScript : MonoBehaviour {
 				{
                     m_soundPlayer.PlaySE("tutorial/tutorial_next");
 					ReSetButtonCheck();
-					this.state = TUTORIAL_STATE.TUTORIAL3;
+					this.state += 1;
 				}
 				break;
 
-
 			case TUTORIAL_STATE.TUTORIAL3:
+				this.guidVewer[0].SetActive(false);
+				this.guidVewer[1].SetActive(true);
+				this.guidVewer[1].GetComponent<UISprite>().spriteName = "Instruction06";
+				this.guidVewer[2].SetActive(true);
+				this.guidVewer[2].GetComponent<UISprite>().spriteName = "Instruction07";
+
+				for (int i = 0; i < 4; i++) player[i].GetComponent<CPlayer>().m_gauge.m_gauge = 210;
+
+				if (GetButtonCheck())
+				{
+					m_soundPlayer.PlaySE("tutorial/tutorial_next");
+					ReSetButtonCheck();
+					this.state += 1;
+				}
+				break;
+
+			case TUTORIAL_STATE.TUTORIAL4:
+				this.guidVewer[0].SetActive(true);
+				this.guidVewer[0].GetComponent<UISprite>().spriteName = "Instruction08";
+				this.guidVewer[1].SetActive(false);
+				this.guidVewer[2].SetActive(false);
+
+				for (int i = 0; i < 4; i++) player[i].GetComponent<CPlayer>().m_gauge.m_gauge = 210;
+
+				if (GetButtonCheck())
+				{
+					ReSetButtonCheck();
+					m_soundPlayer.PlaySE("tutorial/tutorial_next");
+					for (int i = 0; i < 3; i++)
+						this.bloackOut[i].GetComponent<TweenAlpha>().Play(false);
+					this.state += 1;
+				}
+				break;
+
+			case TUTORIAL_STATE.TUTORIAL5:
 				this.guidVewer[0].SetActive(true);
 				this.guidVewer[0].GetComponent<UISprite>().spriteName = "user'sGuide_6";
 				this.guidVewer[1].SetActive(false);
 				this.guidVewer[2].SetActive(false);
+
+				for (int i = 0; i < 4; i++) player[i].GetComponent<CPlayer>().m_gauge.m_gauge = 210;
+
 				if (GetButtonCheck())
 				{
-                    m_soundPlayer.PlaySE("tutorial/tutorial_next");
+					m_soundPlayer.PlaySE("tutorial/tutorial_next");
 					for (int i = 0; i < 3; i++)
 						this.bloackOut[i].GetComponent<TweenAlpha>().Play(false);
-					this.state = TUTORIAL_STATE.FAID_OUT;
+					this.state += 1;
 				}
 				break;
 

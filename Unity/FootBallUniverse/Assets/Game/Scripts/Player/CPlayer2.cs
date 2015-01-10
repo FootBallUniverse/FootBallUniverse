@@ -509,7 +509,7 @@ public class CPlayer2 : CPlayer {
 		    m_isBall == true && 
 		    m_chargeFrame >= m_human.m_shootChargeLengthMax)
 		{
-            m_status = m_status;
+            m_status = m_oldStatus;
 			m_animator.ChangeAnimation(m_animator.m_isWait);
 			m_playerSE.StopSE();
 			m_isSE = false;
@@ -601,7 +601,7 @@ public class CPlayer2 : CPlayer {
 		   m_isBall == false &&
 		   m_chargeFrame >= m_human.m_dashChargeLengthMax )
 		{
-            m_status = m_status;
+            m_status = m_oldStatus;
 			m_animator.Wait();
 			m_playerSE.StopSE();
 			m_isSE = false;
