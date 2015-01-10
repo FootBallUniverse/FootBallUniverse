@@ -30,21 +30,21 @@ public class CEffect : MonoBehaviour {
 			this.transform.FindChild("Effect_Tackle1").gameObject.SetActive(false);
 			this.effectChargeMax = this.transform.FindChild("Effect_ChargeMax0").gameObject;
 			this.transform.FindChild("Effect_ChargeMax1").gameObject.SetActive(false);
-//			if(this.transform.parent.GetComponent<CPlayer>().m_playerData.m_teamNo == 0)
-//			{
-//				this.effectOverRimit = this.transform.FindChild("Effect_Japan0").gameObject;
-//				this.transform.FindChild("Effect_Japan1").gameObject.SetActive(false);
-//			}
+			if(TeamData.teamNationality[this.transform.parent.transform.GetComponent<CPlayer>().m_playerData.m_teamNo - 1] == TeamData.TEAM_NATIONALITY.JAPAN)
+			{
+				this.effectOverRimit = this.transform.FindChild("Effect_Japan0").gameObject;
+				this.transform.FindChild("Effect_Japan1").gameObject.SetActive(false);
+			}
 		}else{
 			this.effectTackle = this.transform.FindChild("Effect_Tackle1").gameObject;
 			this.transform.FindChild("Effect_Tackle0").gameObject.SetActive(false);
 			this.effectChargeMax = this.transform.FindChild("Effect_ChargeMax1").gameObject;
 			this.transform.FindChild("Effect_ChargeMax0").gameObject.SetActive(false);
-//			if(this.transform.parent.GetComponent<CPlayer>().m_playerData.m_teamNo == 0)
-//			{
-//				this.effectOverRimit = this.transform.FindChild("Effect_Japan1").gameObject;
-//				this.transform.FindChild("Effect_Japan0").gameObject.SetActive(false);
-//			}
+			if(TeamData.teamNationality[this.transform.parent.transform.GetComponent<CPlayer>().m_playerData.m_teamNo - 1] == TeamData.TEAM_NATIONALITY.JAPAN)
+			{  
+				this.effectOverRimit = this.transform.FindChild("Effect_Japan1").gameObject;
+				this.transform.FindChild("Effect_Japan0").gameObject.SetActive(false);
+			}
 		}
 
 		this.effectTackleDamage = this.transform.FindChild("Effect_TackleDamage").gameObject;
@@ -64,7 +64,6 @@ public class CEffect : MonoBehaviour {
 			this.effectCharge.particleSystem.startColor       = Color.blue;
 			this.effectShoot.particleSystem.startColor        = Color.blue;
 		}
-
 		AllReSet();
 	}
 

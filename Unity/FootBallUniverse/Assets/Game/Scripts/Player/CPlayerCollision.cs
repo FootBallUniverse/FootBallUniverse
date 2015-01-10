@@ -167,7 +167,12 @@ public class CPlayerCollision : MonoBehaviour
             CPlayer colPlayerScript = obj.GetComponent<CPlayer>();
             obj.transform.LookAt(this.transform);
             obj.transform.parent.GetComponent<CPlayerAnimator>().TackleDamage();
-            colPlayerScript.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
+        	
+			if(colPlayerScript.m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT)
+				colPlayerScript.m_oldStatus = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
+			else
+				colPlayerScript.m_oldStatus = CPlayerManager.ePLAYER_STATUS.eNONE; 
+			colPlayerScript.m_status = CPlayerManager.ePLAYER_STATUS.eTACKLEDAMAGE;
 			colPlayerScript.m_playerSE.StopSE();
 
             colPlayerScript.m_action.InitTackleDamage(colPlayerScript.m_human.m_tackleDamageMotionLength,
