@@ -62,7 +62,6 @@ public class CPlayerControler : MonoBehaviour {
 
 			// 何もしてない状態
 			case CPlayerManager.ePLAYER_STATUS.eNONE:
-            case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT:
 				ChangePlayer();    
 				Move ();
 				Rotation();
@@ -70,7 +69,20 @@ public class CPlayerControler : MonoBehaviour {
 				InitDashCharge();
 				InitShootCharge();
 				ChangeView();
+                GaugeAction();
 				break;
+
+            // オーバーリミット状態
+            case CPlayerManager.ePLAYER_STATUS.eOVERRIMIT:
+				ChangePlayer();    
+				Move ();
+				Rotation();
+				SetBall();
+				InitDashCharge();
+				InitShootCharge();
+				ChangeView();               
+                
+                break;
 
 			// ダッシュ中
 			case CPlayerManager.ePLAYER_STATUS.eDASH: 
@@ -263,7 +275,9 @@ public class CPlayerControler : MonoBehaviour {
 	public void InitDashCharge()
 	{        
 		// ダッシュが出来る状態になったら(ボールを持っていなかったら)
-		if (m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
+		if ((m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eNONE || 
+             m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT ||
+             m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eTUTORIAL) &&
 			m_playerScript.m_isBall == false && 
 			Input.GetKeyDown (KeyCode.LeftShift) == true &&
 			m_playerScript.m_isLtPress == false) 
@@ -300,7 +314,9 @@ public class CPlayerControler : MonoBehaviour {
 	public void InitShootCharge()
 	{
 		// シュートかパスが打てる状態になったら(ボールが手持ちにある場合）
-		if (m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eNONE &&
+		if ((m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eNONE ||
+             m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eOVERRIMIT ||
+             m_playerScript.m_status == CPlayerManager.ePLAYER_STATUS.eTUTORIAL )&&
 		    m_playerScript.m_isBall == true && 
 		    Input.GetKeyDown(KeyCode.Space) && 
 		    m_playerScript.m_isRtPress == false )
@@ -522,4 +538,50 @@ public class CPlayerControler : MonoBehaviour {
 		}
 
 	}
+
+
+    //----------------------------------------------------------------------
+    // Gキーが押されたらゲージ解放
+    //----------------------------------------------------------------------
+    // @Param	none		
+    // @Return	none
+    // @Date	2015/1/16  @Update 2015/1/16  @Author T.Kawashita     
+    //----------------------------------------------------------------------
+    private void GaugeAction()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (m_playerScript.m_gauge.GaugeDecrement() != 0)
+            {
+                m_player.transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().OverRimitOn();
+                m_playerScript.m_playerSE.PlaySE("game/kick_smash_echor");
+                m_playerScript.m_status = CPlayerManager.ePLAYER_STATUS.eOVERRIMIT;
+                m_playerScript.m_isOverRimit = true;
+
+                // 日本の場合はボールをとれる範囲を増やす
+                switch (m_playerStatus)
+                {
+                    case ePLAYER_STATUS.ePLAYER1:
+                    case ePLAYER_STATUS.ePLAYER2:
+                        if (TeamData.teamNationality[0] == TeamData.TEAM_NATIONALITY.JAPAN)
+                        {
+                            // ボールの取れる範囲を変更
+                            this.GetComponent<SphereCollider>().radius = CGaugeManager.m_japanHoldRadius;
+                            this.transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().effectOverRimit.particleSystem.startSize = CGaugeManager.m_japanHoldRadius * 50;
+                        }
+                        break;
+
+                    case ePLAYER_STATUS.ePLAYER3:
+                    case ePLAYER_STATUS.ePLAYER4:
+                        if (TeamData.teamNationality[1] == TeamData.TEAM_NATIONALITY.JAPAN)
+                        {
+                            // ボールの撮れる範囲を変更
+                            this.GetComponent<SphereCollider>().radius = CGaugeManager.m_japanHoldRadius;
+                            this.transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().effectOverRimit.particleSystem.startSize = CGaugeManager.m_japanHoldRadius * 50;
+                        }
+                        break;
+                }
+            }
+        }
+    }
 }

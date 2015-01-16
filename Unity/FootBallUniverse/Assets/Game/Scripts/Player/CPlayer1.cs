@@ -763,13 +763,11 @@ public class CPlayer1 : CPlayer {
                     // ボールの取れる範囲を変更
                     this.GetComponent<SphereCollider>().radius = CGaugeManager.m_japanHoldRadius;
 					this.transform.FindChild("PlayerEffect").transform.GetComponent<CEffect>().effectOverRimit.particleSystem.startSize = CGaugeManager.m_japanHoldRadius * 50;
-
                 }
             }
         }
 
     }
-
 
 	//----------------------------------------------------------------------
 	// チュートリアル用アクション
