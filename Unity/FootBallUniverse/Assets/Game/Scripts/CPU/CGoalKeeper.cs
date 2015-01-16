@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class CGoalKeeper : CCpu {
+	// ゴールキーパ用状態遷移
 	public enum GK_State
 	{
 		WAIT,
@@ -15,11 +16,11 @@ public class CGoalKeeper : CCpu {
 		GK_STATE_MAX
 	};
 
-	protected GK_State gkState            = GK_State.STAY;
-	protected Vector3 HOME_POSITION       = new Vector3(0.0f, 0.0f, 0.0f);
-	protected CGameManager gameManager    = new CGameManager();
-	protected const float ARAT_SPACE      = 15.0f;
-	protected const float TAKE_BALL_SPACE = 10.0f;
+	protected GK_State gkState            = GK_State.STAY;                  // 状態遷移
+	protected Vector3 HOME_POSITION       = new Vector3(0.0f, 0.0f, 0.0f);  // キーパーの初期位置
+	protected CGameManager gameManager    = new CGameManager();             // ゲームマネージャーオブジェクト
+	protected const float ARAT_SPACE      = 15.0f;                          // AIが警戒する距離
+	protected const float TAKE_BALL_SPACE = 10.0f;                          // AIがボールを取りに行く距離
 
 	//----------------------------------------------------------------------
 	// コンストラクタ
@@ -199,6 +200,13 @@ public class CGoalKeeper : CCpu {
 
 	}
 
+	//----------------------------------------------------------------------
+	// AI:AIの停止（ボールが一定数はなれるまで）
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2014/12/7  @Update 2014/12/7  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	void Wait()
 	{
 		BackHome();
@@ -308,13 +316,12 @@ public class CGoalKeeper : CCpu {
 	{
 		Vector3 targetPosition = new Vector3();
 
+		// ボールを見る
 		targetPosition = GetFuterBallPosition();
 		this.transform.LookAt(targetPosition);
-
-		//if (1 < Vector3.Distance(this.transform.position, targetPosition)) Move(new Vector3(0.0f, 0.0f, 1.0f));
-		//else this.transform.position = targetPosition;
+		// 移動
 		Move(new Vector3(0.0f, 0.0f, 1.0f));
-		
+		// 視点を元に戻す
 		this.transform.LookAt(new Vector3(0.0f, 0.0f, 0.0f));
 
 		// ボールをキャッチ（→パス）
@@ -405,6 +412,7 @@ public class CGoalKeeper : CCpu {
 	// @Param	none		
 	// @Return	none
 	// @Date	2014/12/11  @Update 2014/12/11  @Author T.Kawashita      
+	// @Date    2014/12/12  @Update 2014/12/12  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void Animation()
 	{
@@ -448,3 +456,5 @@ public class CGoalKeeper : CCpu {
 	public GK_State GetGKState()     { return this.gkState; }
 	public Vector3 GetHomePosition() { return this.HOME_POSITION; }
 }
+
+// End of File

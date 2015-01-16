@@ -31,7 +31,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita      
+	// @Date	2014/10/15  @Update 2014/10/31  @Author T.Kawashita  
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void Start()
 	{
@@ -60,7 +61,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/10/15  @Update 2014/11/11  @Author T.Kawashita      
+	// @Date	2014/10/15  @Update 2014/11/11  @Author T.Kawashita  
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void Update()
 	{
@@ -93,6 +95,7 @@ public class CCpu : CPlayer {
 	// @Param	none		
 	// @Return	none
 	// @Date	2014/11/11  @Update 2014/11/17  @Author T.Kawashita      
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void LateUpdate()
 	{
@@ -114,7 +117,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/10/28  @Update 2014/11/17  @Author T.Kawashita      
+	// @Date	2014/10/28  @Update 2014/11/17  @Author T.Kawashita     
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusNone()
 	{
@@ -137,7 +141,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/18  @Update 2014/11/18  @Author T.Kawashita      
+	// @Date	2014/11/18  @Update 2014/11/18  @Author T.Kawashita
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi  
 	//----------------------------------------------------------------------
 	private void PlayerStatusWait()
 	{
@@ -153,7 +158,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/18  @Update 2014/11/18  @Author T.Kawashita      
+	// @Date	2014/11/18  @Update 2014/11/18  @Author T.Kawashita    
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusGameStartWait()
 	{
@@ -173,7 +179,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/25  @Update 2014/11/25  @Author T.Kawashita      
+	// @Date	2014/11/25  @Update 2014/11/25  @Author T.Kawashita   
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusGoal()
 	{
@@ -189,7 +196,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/10/28  @Update 2014/11/11  @Author T.Kawashita      
+	// @Date	2014/10/28  @Update 2014/11/11  @Author T.Kawashita    
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusDash()
 	{
@@ -203,7 +211,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+	// @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita    
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusTackle()
 	{
@@ -217,7 +226,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita    
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusTackleSuccess()
 	{
@@ -237,7 +247,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita  
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusTackleDamage()
 	{
@@ -257,7 +268,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param   none		
 	// @Return	none
-	// @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita      
+	// @Date	2014/10/28  @Update 2014/10/28  @Author T.Kawashita  
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusShoot()
 	{
@@ -271,7 +283,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+	// @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita  
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void PlayerStatusPass()
 	{
@@ -285,7 +298,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita      
+	// @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi  
 	//----------------------------------------------------------------------
 	private void PlayerStatusCharge()
 	{
@@ -307,7 +321,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	Vector3     移動量		
 	// @Return	none
-	// @Date	2014/10/16  @Update 2014/11/11  @Author T.Kawashita      
+	// @Date	2014/10/16  @Update 2014/11/11  @Author T.Kawashita  
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	public override void Move(Vector3 _speed)
 	{
@@ -334,7 +349,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	Vector2     回転量		
 	// @Return	none
-	// @Date	2014/10/16  @Update 2014/11/12   @Author T.Kawashita      
+	// @Date	2014/10/16  @Update 2014/11/12   @Author T.Kawashita
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi  
 	//----------------------------------------------------------------------
 	public override void Rotation(Vector2 _angle)
 	{
@@ -351,7 +367,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	bool    ダッシュが終了したかどうか
-	// @Date	2014/10/16  @Update 2014/10/28  @Author T.Kawashita     
+	// @Date	2014/10/16  @Update 2014/10/28  @Author T.Kawashita    
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private bool Dash()
 	{
@@ -366,7 +383,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+	// @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi  
 	//----------------------------------------------------------------------
 	private bool Tackle()
 	{
@@ -380,7 +398,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	bool    シュート状態が終わったかどうか
-	// @Date	2014/10/27  @Update 2014/11/13  @Author T.Kawashita      
+	// @Date	2014/10/27  @Update 2014/11/13  @Author T.Kawashita 
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi 
 	//----------------------------------------------------------------------
 	private bool Shoot()
 	{
@@ -396,7 +415,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	bool    パス状態が終わったかどうか
-	// @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+	// @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita 
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi 
 	//----------------------------------------------------------------------
 	private bool Pass()
 	{
@@ -412,7 +432,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+	// @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita 
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi 
 	//----------------------------------------------------------------------
 	private void RTShootPass()
 	{
@@ -440,7 +461,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+	// @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita 
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi 
 	//----------------------------------------------------------------------
 	private void ShootHold()
 	{
@@ -486,7 +508,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita      
+	// @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita  
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	private void LTDashTackle()
 	{
@@ -513,7 +536,8 @@ public class CCpu : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita      
+	// @Date	2014/11/17  @Update 2014/11/17  @Author T.Kawashita
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi  
 	//----------------------------------------------------------------------
 	private void DashHold()
 	{

@@ -9,6 +9,7 @@ public class C1P2PCpu : CCpu {
     // @Param   none			
     // @Return	none
     // @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
     //----------------------------------------------------------------------
     void Start () {
         this.Init();
@@ -56,3 +57,5 @@ public class C1P2PCpu : CCpu {
     }
 
 }
+
+// End of File

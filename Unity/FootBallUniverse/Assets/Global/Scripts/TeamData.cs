@@ -15,7 +15,7 @@ public class TeamData
 		BRASIL,
 		NATIONALITY_MAX,
 	};
-
+	// 国籍表（文字）
 	private static string[] TeamNationalityName = new string[(int)TEAM_NATIONALITY.NATIONALITY_MAX] {
 		"NONE",
         "日本",
@@ -44,22 +44,53 @@ public class TeamData
 	public  static int                suppoterByWorld;                   // 世界中のサポーター数
 
 	//================セーブデータ管理==============================
+	//----------------------------------------------------------------------
+	// サポーター数を保存する
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2015/01/09  @Update 2054/01/09  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	public static void Save()
 	{
 		PlayerPrefs.SetInt("FBU_SUPPORTER", suppoterByWorld);
 	}
 
+
+	//----------------------------------------------------------------------
+	// サポーター数を読み込む
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2015/01/09  @Update 2054/01/09  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	public static void Load()
 	{
 		suppoterByWorld = PlayerPrefs.GetInt("FBU_SUPPORTER");
 	}
 
+
+	//----------------------------------------------------------------------
+	// サポーター数を初期化
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2015/01/09  @Update 2054/01/09  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	public static void ReSetData()
 	{
 		suppoterByWorld = 0;
 		Save();
 	}
 
+
+	//----------------------------------------------------------------------
+	// サポーター数保存データを削除
+	//----------------------------------------------------------------------
+	// @Param   none
+	// @Return  none
+	// @Date    2015/01/09  @Update 2054/01/09  @Author T.Takeuchi
+	//----------------------------------------------------------------------
 	public static void DeleteData()
 	{
 		PlayerPrefs.DeleteAll();

@@ -6,16 +6,15 @@ public class DrawNumber : MonoBehaviour {
 	public bool zeroNumberPlaceVewFlag;      // 左側の桁が０の時、表示するかしないか
 	public GameObject[] numberPlace;         // 数字オブジェクト格納（さわっちゃダメ！）
 	
-	// Use this for initialization
-	void Start () {
-    }
+	// 本来の初期化は無効
+	void Start () {}
 
     //----------------------------------------------------------------------
     // 初期化
     //----------------------------------------------------------------------
     // @Param   none			
     // @Return	none
-    // @Date	2014/12/29  @Update 2014/12/29  @Author T.Kawashita      
+    // @Date	2014/12/29  @Update 2014/12/29  @Author T.Takeuchi      
     //----------------------------------------------------------------------
     public void Init()
     {
@@ -41,8 +40,14 @@ public class DrawNumber : MonoBehaviour {
             this.numberPlace[i].GetComponent<UISprite>().spriteName = "count_" + workNumber;
         }
     }
-	
-	// Update is called once per frame
+
+	//----------------------------------------------------------------------
+	// 更新
+	//----------------------------------------------------------------------
+	// @Param	none		
+	// @Return	none
+	// @Date	2014/12/29  @Update 2014/12/29  @Author T.Takeuchi      
+	//----------------------------------------------------------------------
 	void Update()
 	{
         uint workNumber;
@@ -69,3 +74,5 @@ public class DrawNumber : MonoBehaviour {
 
 	}
 }
+
+// End of File

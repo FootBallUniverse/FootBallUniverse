@@ -7,7 +7,8 @@ public class C1P2PKeeper : CGoalKeeper {
 	//----------------------------------------------------------------------
 	// @Param   none
 	// @Return  none
-	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Kawashita       
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Kawashita     
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void Start (){
 		this.enemyData[0] = GameObject.Find("Player3").transform.FindChild("player").gameObject;
@@ -28,6 +29,7 @@ public class C1P2PKeeper : CGoalKeeper {
 	// @Param   none			
 	// @Return	none
 	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void Update () {
 		this.CGoalKeeperUpdate();
@@ -48,3 +50,5 @@ public class C1P2PKeeper : CGoalKeeper {
 
     }
 }
+
+// End of File

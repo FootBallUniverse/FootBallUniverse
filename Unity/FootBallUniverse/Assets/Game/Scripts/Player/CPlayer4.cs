@@ -39,7 +39,8 @@ public class CPlayer4 : CPlayer {
 	// @Param	none		
 	// @Return	none
 	// @Date	2014/10/15  @Update 2014/11/11  @Author T.Kawashita  
-	//          2015/01/09  @Update 2015/01/09  @Author T.Takeuchi  
+	// @Data    2015/01/08  @Update 2015/01/08  @Author T.Takeuchi
+	// @Update  2015/01/08  チュートリアル対応
 	//----------------------------------------------------------------------
 	void Update () 
 	{
@@ -455,7 +456,9 @@ public class CPlayer4 : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita      
+	// @Date	2014/11/13  @Update 2014/11/13  @Author T.Kawashita
+	// @Data    2015/01/08  @Update 2015/01/08  @Author T.Takeuchi
+	// @Update  2015/01/08  チュートリアル対応
 	//----------------------------------------------------------------------
 	private void RTShootPass()
 	{
@@ -548,7 +551,9 @@ public class CPlayer4 : CPlayer {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita      
+	// @Date	2014/11/14  @Update 2014/11/14  @Author T.Kawashita
+	// @Data    2015/01/08  @Update 2015/01/08  @Author T.Takeuchi
+	// @Update  2015/01/08  チュートリアル対応
 	//----------------------------------------------------------------------
 	private void LTDashTackle()
 	{
@@ -642,7 +647,9 @@ public class CPlayer4 : CPlayer {
 	// @Param	none
 	// @Return	none
 	// @Date	2014/11/11  @Update 2014/11/11  @Author T.Kawashita
-	// @Update  2014/11/26  タックルモーション追加  
+	// @Data    2015/01/08  @Update 2015/01/08  @Author T.Takeuchi
+	// @Update  2014/11/26  タックルモーション追加 
+ 	// @Update  2015/01/08  チュートリアル対応
 	//----------------------------------------------------------------------
 	private void Animation()
 	{

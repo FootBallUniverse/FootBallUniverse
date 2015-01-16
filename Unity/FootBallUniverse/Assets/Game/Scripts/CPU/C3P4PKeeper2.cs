@@ -7,7 +7,8 @@ public class C3P4PKeeper2 : CGoalKeeper {
 	//----------------------------------------------------------------------
 	// @Param   none
 	// @Return  none
-	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Kawashita       
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Kawashita     
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void Start()
 	{
@@ -28,7 +29,8 @@ public class C3P4PKeeper2 : CGoalKeeper {
 	//----------------------------------------------------------------------
 	// @Param   none			
 	// @Return	none
-	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita 
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi 
 	//----------------------------------------------------------------------
 	void Update()
 	{
@@ -40,7 +42,8 @@ public class C3P4PKeeper2 : CGoalKeeper {
 	//----------------------------------------------------------------------
 	// @Param	none		
 	// @Return	none
-	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita      
+	// @Date	2014/12/1  @Update 2014/12/1  @Author T.Kawashita  
+	// @Date    2014/12/1  @Update 2014/12/1  @Author T.Takeuchi
 	//----------------------------------------------------------------------
 	void LateUpdate()
 	{
@@ -49,3 +52,5 @@ public class C3P4PKeeper2 : CGoalKeeper {
         CCpuManager.m_cpuManager.m_cpuP3P4Keeper = this.transform;
 	}
 }
+
+// End of File
